@@ -7,6 +7,7 @@ const RootError: React.FC<{ error: Error }> = ({ error }) => {
     return (
         <div className="flex h-screen w-screen items-center justify-center">
             <Error />
+            {error.message}
         </div>
     );
 };
