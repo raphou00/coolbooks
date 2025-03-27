@@ -1,0 +1,82 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Currency {
+  USD
+  EUR
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model User {
+  id            String    @id @default(uuid())
+  name          String
+  email         String    @unique
+  emailVerified Boolean   @default(false)
+  password      String?
+  currency      Currency  @default(USD)
+  locale        String?
+  role          Role      @default(USER)
+  creators      String[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  sessions      Session[]
+  tokens        Token[]
+  cards         Card[]
+}
+
+model Session {
+  id        String   @id @default(uuid())
+  ip        String?
+  browser   String?
+  os        String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Token {
+  id        String   @id @default(uuid())
+  token     String
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Creator {
+  id          String   @id @default(uuid())
+  name        String
+  description String
+  avatar      String
+  cover       String
+  medias      String[]
+  price       Int
+  origin      String
+  bought      Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Card {
+  id        String   @id @default(uuid())
+  number    String
+  expiry    String
+  cvc       String
+  User      User?    @relation(fields: [userId], references: [id])
+  userId    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

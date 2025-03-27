@@ -1,0 +1,70 @@
+import { createEnv } from "@t3-oss/env-nextjs";
+import { z } from "zod";
+
+export default createEnv({
+    skipValidation: !!process.env.SKIP_ENV_VALIDATION,
+    server: {
+        NODE_ENV: z
+            .enum(["development", "test", "production"])
+            .default("development"),
+
+        APP_URL: z
+            .string()
+            .url({ message: "App URL is invalid" })
+            .min(1, { message: "App URL is missing" }),
+
+        AWS_REGION: z.string().min(1, { message: "AWS Region is missing" }),
+
+        AWS_ACCESS_KEY_ID: z
+            .string()
+            .min(1, { message: "AWS Access Key ID is missing" }),
+
+        AWS_SECRET_ACCESS_KEY: z
+            .string()
+            .min(1, { message: "AWS Secret Access Key is missing" }),
+
+        DATABASE_URL: z.string().min(1, { message: "Database URL is missing" }),
+
+        BUCKET_NAME: z.string().min(1, { message: "Bucket name is missing" }),
+
+        CLOUDFRONT_URL: z
+            .string()
+            .min(1, { message: "Cloudinary URL is missing" }),
+
+        RESEND_API_KEY: z
+            .string()
+            .min(1, { message: "Resend API key is missing" }),
+
+        SENDER_EMAIL: z.string().min(1, { message: "Sender Email is missing" }),
+
+        STRIPE_SECRET_KEY: z
+            .string()
+            .min(1, { message: "Stripe Secret Key is missing" }),
+    },
+    client: {
+        NEXT_PUBLIC_APP_URL: z
+            .string()
+            .url({ message: "Public app URL is invalid" })
+            .min(1, { message: "Public app URL is missing" }),
+
+        NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: z
+            .string()
+            .min(1, { message: "Stripe Publishable Key is missing" }),
+    },
+    runtimeEnv: {
+        NODE_ENV: process.env.NODE_ENV,
+        APP_URL: process.env.APP_URL,
+        NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
+        AWS_REGION: process.env.AWS_REGION,
+        AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID,
+        AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY,
+        DATABASE_URL: process.env.DATABASE_URL,
+        BUCKET_NAME: process.env.BUCKET_NAME,
+        CLOUDFRONT_URL: process.env.CLOUDFRONT_URL,
+        RESEND_API_KEY: process.env.RESEND_API_KEY,
+        SENDER_EMAIL: process.env.SENDER_EMAIL,
+        NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY:
+            process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
+        STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
+    },
+});
