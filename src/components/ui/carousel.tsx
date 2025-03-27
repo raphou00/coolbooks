@@ -1,9 +1,9 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { motion } from "motion/react";
+import { Link } from "@/lib/navigation";
 import { cn } from "@/lib/utils";
 import Image from "@/components/ui/image";
 

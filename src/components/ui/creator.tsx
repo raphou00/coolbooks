@@ -2,13 +2,13 @@
 
 import type { Creator } from "@prisma/client";
 import type { User } from "lucia";
+import { useTranslations } from "next-intl";
 import { formatAmountForDisplay } from "@/lib/utils";
+import { Link } from "@/lib/navigation";
 import { useCurrency } from "@/hook/use-currency";
 import Title from "@/components/ui/title";
 import ChipTabs from "@/components/ui/chips-tabs";
 import Image from "@/components/ui/image";
-import { useTranslations } from "next-intl";
-import Link from "next/link";
 
 type CreatorProps = {
     creator: Creator;

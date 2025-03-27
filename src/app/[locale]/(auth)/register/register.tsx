@@ -1,16 +1,16 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
-import Link from "next/link";
+import { type ActionsState } from "@/lib/types";
+import { handleFormPost } from "@/lib/utils";
+import { Link } from "@/lib/navigation";
 import Form from "@/components/ui/form";
 import FormInput from "@/components/ui/form-input";
 import FormButton from "@/components/ui/form-button";
 import FormReponse from "@/components/ui/form-response";
-import { type ActionsState } from "@/lib/types";
 import { type RegisterSchema } from "@/schema/register";
-import { useTranslations } from "next-intl";
-import { handleFormPost } from "@/lib/utils";
 
 const Register: React.FC = () => {
     const t = useTranslations("pages.register");

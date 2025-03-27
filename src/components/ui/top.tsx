@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect } from "react";
-import Image from "next/image";
 import { type Creator } from "@prisma/client";
 import { formatAmountForDisplay } from "@/lib/utils";
 import { Link } from "@/lib/navigation";
 import { useCurrency } from "@/hook/use-currency";
+import Image from "@/components/ui/image";
 
 type TopProps = {
     top: Creator[];

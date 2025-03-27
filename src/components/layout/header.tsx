@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
 import { useTheme } from "next-themes";
@@ -33,6 +32,7 @@ import { useGetLinks } from "@/config/links";
 import useScroll from "@/hook/use-scroll";
 import useSwitchLocale from "@/hook/use-switch-locale";
 import { type ExchangeRateApiKey, useCurrency } from "@/hook/use-currency";
+import Image from "@/components/ui/image";
 import Logo from "@/components/ui/logo";
 import LogoText from "@/components/ui/logo-text";
 import Avatar from "@/components/ui/avatar";

@@ -1,8 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import { type User } from "lucia";
-import { usePathname } from "@/lib/navigation";
+import { Link, usePathname } from "@/lib/navigation";
 import { useGetAccountLinks } from "@/config/links";
 import { cn } from "@/lib/utils";
 import Avatar from "@/components/ui/avatar";

@@ -1,16 +1,16 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
-import Link from "next/link";
 import Form from "@/components/ui/form";
 import FormInput from "@/components/ui/form-input";
 import FormButton from "@/components/ui/form-button";
 import FormReponse from "@/components/ui/form-response";
+import { Link } from "@/lib/navigation";
 import { type ActionsState } from "@/lib/types";
-import { type LoginSchema } from "@/schema/login";
-import { useTranslations } from "next-intl";
 import { handleFormPost } from "@/lib/utils";
+import { type LoginSchema } from "@/schema/login";
 
 const Login: React.FC = () => {
     const t = useTranslations("pages.login");

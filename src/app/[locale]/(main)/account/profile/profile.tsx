@@ -1,10 +1,10 @@
 "use client";
 
-import Link from "next/link";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslations } from "next-intl";
 import { AlertCircle, Check } from "lucide-react";
+import { Link } from "@/lib/navigation";
 import FormReponse from "@/components/ui/form-response";
 import FormInput from "@/components/ui/form-input";
 import FormButton from "@/components/ui/form-button";

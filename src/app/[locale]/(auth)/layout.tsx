@@ -1,15 +1,14 @@
 "use client";
 
-import Link from "next/link";
-import Image from "next/image";
 import { useState } from "react";
-import { useLocale, useTranslations } from "next-intl";
 import { useTheme } from "next-themes";
+import { useLocale, useTranslations } from "next-intl";
 import { Currency } from "@prisma/client";
 import { Home, Languages, SunMoon } from "lucide-react";
-import { locales, localesTitle } from "@/lib/navigation";
+import { Link, locales, localesTitle } from "@/lib/navigation";
 import { type ExchangeRateApiKey, useCurrency } from "@/hook/use-currency";
 import useSwitchLocale from "@/hook/use-switch-locale";
+import Image from "@/components/ui/image";
 import Modal from "@/components/ui/modal";
 import Title from "@/components/ui/title";
 import {
