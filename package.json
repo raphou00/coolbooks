@@ -38,6 +38,7 @@
         "@vercel/functions": "^1.4.2",
         "axios": "^1.7.7",
         "bcrypt": "^5.1.1",
+        "caniuse-lite": "^1.0.30001707",
         "clsx": "^2.1.1",
         "date-fns": "^4.1.0",
         "fabric": "^6.6.1",
