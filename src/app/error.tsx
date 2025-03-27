@@ -2,12 +2,10 @@
 
 import Error from "@/components/ui/error";
 
-const RootError: React.FC<{ error: Error }> = ({ error }) => {
-    console.error(error);
+const RootError: React.FC = () => {
     return (
         <div className="flex h-screen w-screen items-center justify-center">
             <Error />
-            {error.message}
         </div>
     );
 };

@@ -11,11 +11,8 @@ export type ExchangeRateApi = {
 export type ExchangeRateApiKey = keyof ExchangeRateApi["rates"];
 
 export const useCurrency = (defaultCurrency: ExchangeRateApiKey = "USD") => {
-    const [currency, setCurrency] = useState<ExchangeRateApiKey>(
-        typeof window !== "undefined" ?
-            (localStorage.getItem("currency") as ExchangeRateApiKey)
-        :   defaultCurrency
-    );
+    const [currency, setCurrency] =
+        useState<ExchangeRateApiKey>(defaultCurrency);
     const [rates, setRates] = useState<ExchangeRateApi["rates"]>({
         USD: 1,
         EUR: 1,
@@ -39,6 +36,17 @@ export const useCurrency = (defaultCurrency: ExchangeRateApiKey = "USD") => {
             }
         }
         fetchRates();
+    }, []);
+
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+            const storedCurrency = localStorage.getItem(
+                "currency"
+            ) as ExchangeRateApiKey | null;
+            if (storedCurrency) {
+                setCurrency(storedCurrency);
+            }
+        }
     }, []);
 
     const convert = (
