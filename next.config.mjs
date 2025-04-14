@@ -1,9 +1,4 @@
 import createNextIntlPlugin from "next-intl/plugin";
-import dotenv from "dotenv";
-
-dotenv.config();
-
-const CLOUDFRONT_URL = process.env.CLOUDFRONT_URL.replace(/https?:\/\//, "");
 
 const withNextIntl = createNextIntlPlugin("./src/lib/i18n.ts");
 
@@ -15,7 +10,7 @@ const nextConfig = withNextIntl({
         remotePatterns: [
             {
                 protocol: "https",
-                hostname: CLOUDFRONT_URL,
+                hostname: "d1uq5d0ebwyvwd.cloudfront.net",
                 port: "",
                 pathname: "/**",
             },
