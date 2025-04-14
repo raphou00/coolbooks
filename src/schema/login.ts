@@ -6,12 +6,12 @@ const loginSchema = (t: TranslationsFunc) =>
         email: z
             .string()
             .trim()
-            .min(1, { message: t("required") }),
+            .min(1, { message: t("messages.required") }),
 
         password: z
             .string()
             .trim()
-            .min(1, { message: t("required") }),
+            .min(1, { message: t("messages.required") }),
     });
 
 export type LoginSchema = z.infer<ReturnType<typeof loginSchema>>;

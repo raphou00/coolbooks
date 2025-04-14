@@ -1,4 +1,9 @@
 import createNextIntlPlugin from "next-intl/plugin";
+import dotenv from "dotenv";
+
+dotenv.config();
+
+const CLOUDFRONT_URL = process.env.CLOUDFRONT_URL.replace(/https?:\/\//, "");
 
 const withNextIntl = createNextIntlPlugin("./src/lib/i18n.ts");
 
@@ -10,24 +15,12 @@ const nextConfig = withNextIntl({
         remotePatterns: [
             {
                 protocol: "https",
-                hostname: "images.unsplash.com",
+                hostname: CLOUDFRONT_URL,
                 port: "",
                 pathname: "/**",
             },
-            {
-                protocol: "https",
-                hostname: "tailwindui.com",
-                port: "",
-                pathname: "/**",
-            },
-            {
-                protocol: "https",
-                hostname: "flowbite.s3.amazonaws.com",
-                port: "",
-                pathname: "/**",
-            },
-        ]
-    }
+        ],
+    },
 });
 
 export default nextConfig;

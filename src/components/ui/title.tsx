@@ -1,9 +1,9 @@
 "use client";
 
-import { Lilita_One } from "next/font/google";
+import { Archivo_Black } from "next/font/google";
 import { cn } from "@/lib/utils";
 
-const font = Lilita_One({
+const font = Archivo_Black({
     subsets: ["latin"],
     weight: "400",
 });
@@ -21,12 +21,12 @@ const Title: React.FC<TitleProps> = ({
 }: TitleProps) => {
     return (
         <h1 className={cn("text-2xl", className, font.className)}>
-            {text}
+            <span className="">{text}</span>
             {underline && (
-                <>
-                    <span className="block h-0.5 w-full bg-primary"></span>
-                    <span className="block h-0.5 w-full bg-secondary translate-x-2"></span>
-                </>
+                <div className="-mt-1 static z-0">
+                    <span className="block h-[3px] w-full bg-primary"></span>
+                    <span className="block h-[3px] w-full bg-secondary ml-2"></span>
+                </div>
             )}
         </h1>
     );

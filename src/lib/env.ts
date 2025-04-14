@@ -50,6 +50,10 @@ export default createEnv({
         NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: z
             .string()
             .min(1, { message: "Stripe Publishable Key is missing" }),
+
+        NEXT_PUBLIC_CLOUDFRONT_URL: z
+            .string()
+            .min(1, { message: "Cloudinary URL is missing" }),
     },
     runtimeEnv: {
         NODE_ENV: process.env.NODE_ENV,
@@ -61,6 +65,7 @@ export default createEnv({
         DATABASE_URL: process.env.DATABASE_URL,
         BUCKET_NAME: process.env.BUCKET_NAME,
         CLOUDFRONT_URL: process.env.CLOUDFRONT_URL,
+        NEXT_PUBLIC_CLOUDFRONT_URL: process.env.NEXT_PUBLIC_CLOUDFRONT_URL,
         RESEND_API_KEY: process.env.RESEND_API_KEY,
         SENDER_EMAIL: process.env.SENDER_EMAIL,
         NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY:

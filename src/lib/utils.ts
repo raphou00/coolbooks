@@ -28,10 +28,11 @@ export const createSixDigitNumber = () =>
 
 export const handleFormPost = async <T>(
     url: string,
-    data: unknown
+    data: unknown,
+    headers?: Record<string, string>
 ): Promise<ActionsState<T>> => {
     const res = await axios.post<ActionsState<T>>(`${url}`, data, {
-        headers: {
+        headers: headers || {
             "Content-Type": "application/json",
         },
     });
@@ -78,4 +79,22 @@ export const formatAmountForStripe = (
     }
 
     return zeroDecimalCurrency ? amount : Math.round(amount * 100);
+};
+
+export const formatDuration = (seconds: number) => {
+    const h = Math.floor(seconds / 3600);
+    const m = Math.floor((seconds % 3600) / 60);
+    const s = Math.floor(seconds % 60);
+
+    return [
+        h > 0 ? h.toString().padStart(2, "0") : null,
+        m.toString().padStart(2, "0"),
+        s.toString().padStart(2, "0"),
+    ]
+        .filter(Boolean)
+        .join(":");
+};
+
+export const getImage = (key: string) => {
+    return `${env.NEXT_PUBLIC_CLOUDFRONT_URL}/${key}`;
 };

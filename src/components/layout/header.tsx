@@ -1,9 +1,8 @@
 "use client";
 
-import { useLocale, useTranslations } from "next-intl";
-import { useState } from "react";
+import { useTranslations } from "next-intl";
+import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
-import { Currency, type Creator } from "@prisma/client";
 import { motion } from "framer-motion";
 import type { User } from "lucia";
 import axios from "axios";
@@ -16,50 +15,23 @@ import {
     Settings2,
     SunMoon,
     UserIcon,
-    UserCircle,
     SearchIcon,
     X,
+    Home,
 } from "lucide-react";
-import {
-    Link,
-    locales,
-    localesTitle,
-    usePathname,
-    useRouter,
-} from "@/lib/navigation";
+import { Link, usePathname, useRouter } from "@/lib/navigation";
 import { cn, formatAmountForDisplay } from "@/lib/utils";
 import { useGetLinks } from "@/config/links";
 import useScroll from "@/hook/use-scroll";
-import useSwitchLocale from "@/hook/use-switch-locale";
-import { type ExchangeRateApiKey, useCurrency } from "@/hook/use-currency";
+import { useCurrency } from "@/hook/use-currency";
 import Image from "@/components/ui/image";
 import Logo from "@/components/ui/logo";
 import LogoText from "@/components/ui/logo-text";
 import Avatar from "@/components/ui/avatar";
 import Title from "@/components/ui/title";
 import Modal from "@/components/ui/modal";
-import {
-    Select,
-    SelectContent,
-    SelectGroup,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select";
-
-const searchs: Creator[] = Array.from({ length: 6 }, (_, i) => ({
-    id: i === 0 ? "1dab5116-4763-486a-b40a-fc4e5b01819f" : i.toString(),
-    name: `Creator ${i}`,
-    avatar: "/images/creator.jpeg",
-    cover: "/images/creator.jpeg",
-    medias: ["/images/creator.jpeg"],
-    price: 9.99,
-    origin: "United States",
-    bought: 100,
-    description: "Hi, I'm Creator ❤️. I'm 21 years old. and from Florida",
-    createdAt: new Date("2023-01-01"),
-    updatedAt: new Date("2023-01-01"),
-}));
+import LocaleModal from "@/components//ui/locale-modal";
+import type { GirlWithMedia } from "@/components//ui/girls";
 
 type HeaderProps = {
     user?: User | null;
@@ -70,30 +42,34 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
     const [localeOpen, setLocaleOpen] = useState<boolean>(false);
     const [searchOpen, setSearchOpen] = useState<boolean>(false);
     const [search, setSearch] = useState("");
+    const [girls, setGirls] = useState<GirlWithMedia[]>([]);
     const t = useTranslations("links");
     const links = useGetLinks();
     const router = useRouter();
     const pathname = usePathname();
     const scroll = useScroll(0);
-    const switchLocale = useSwitchLocale();
-    const locale = useLocale();
     const { setTheme } = useTheme();
-    const { currency, setCurrency, convert } = useCurrency();
+    const { currency, convert } = useCurrency();
 
     const handleLogout = async () => {
         await axios.post("/api/auth/logout");
         router.refresh();
     };
 
-    const handleSearch = () => {
-        if (search) {
-            router.push(`/search/${encodeURIComponent(search)}`);
-        }
+    const handleSearch = async () => {
+        const res = await axios.get(`/api/search?q=${search}`);
+        setGirls(res.data.girls);
     };
 
     const toggleTheme = () => {
         setTheme((e) => (e === "dark" ? "light" : "dark"));
     };
+
+    useEffect(() => {
+        handleSearch();
+        // eslint-disable-next-line react-compiler/react-compiler
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
         <>
@@ -191,7 +167,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                 onClick={() => setSearchOpen(true)}
                                 className="input text-left rounded-full w-full border-2 border-neutral/20 text-neutral bg-base-100 pr-9 tracking-wide"
                             >
-                                {t("search-creator")}
+                                {t("search-girl")}
                                 <div className="size-9 bg-secondary rounded-full flex items-center justify-center absolute right-0 top-1/2 mx-1.5 -translate-y-1/2">
                                     <Search className="size-5 text-white" />
                                 </div>
@@ -239,12 +215,12 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                             </div>
 
                                             <Link
-                                                href="/profile"
+                                                href="/"
                                                 className="btn btn-ghost h-10 min-h-10 w-full justify-start"
                                             >
                                                 <span className="flex items-center gap-2">
-                                                    <UserCircle className="size-6" />
-                                                    {t("profile")}
+                                                    <Home className="size-6" />
+                                                    {t("home")}
                                                 </span>
                                             </Link>
 
@@ -259,6 +235,16 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                             </Link>
                                         </>
                                     :   <>
+                                            <Link
+                                                href="/"
+                                                className="btn btn-ghost h-10 min-h-10 w-full justify-start"
+                                            >
+                                                <span className="flex items-center gap-2">
+                                                    <Home className="size-6" />
+                                                    {t("home")}
+                                                </span>
+                                            </Link>
+
                                             <Link
                                                 href="/login"
                                                 className="btn btn-ghost h-10 min-h-10 w-full justify-start"
@@ -327,96 +313,18 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
 
             {children}
 
-            <Modal
-                isOpen={localeOpen}
-                setIsOpen={setLocaleOpen}
-                className="z-100 w-full"
-            >
-                <div className="flex flex-col items-center justify-center mx-auto gap-y-6 w-full max-w-lg p-6">
-                    <Title
-                        text={t("language-currency")}
-                        className="text-3xl mb-6"
-                        underline
-                    />
+            <LocaleModal open={localeOpen} setOpen={setLocaleOpen} />
 
-                    <div className="w-full">
-                        <p className="mb-1 ml-1">{t("language")}</p>
-                        <Select
-                            defaultValue={locale}
-                            value={locale}
-                            onValueChange={(l) => switchLocale(l)}
-                        >
-                            <SelectTrigger className="w-full">
-                                <SelectValue placeholder={t("language")} />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectGroup>
-                                    {locales.map((l) => (
-                                        <SelectItem key={l} value={l}>
-                                            <div className="flex items-center gap-2">
-                                                <Image
-                                                    src={`/images/locales/${l}.png`}
-                                                    alt={l}
-                                                    width={32}
-                                                    height={32}
-                                                    className="size-6"
-                                                />
-                                                {
-                                                    localesTitle[
-                                                        l as keyof typeof localesTitle
-                                                    ]
-                                                }
-                                            </div>
-                                        </SelectItem>
-                                    ))}
-                                </SelectGroup>
-                            </SelectContent>
-                        </Select>
-                    </div>
-                    <div className="w-full">
-                        <p className="mb-1 ml-1">{t("currency")}</p>
-                        <Select
-                            defaultValue={currency}
-                            value={currency}
-                            onValueChange={(c: ExchangeRateApiKey) =>
-                                setCurrency(c)
-                            }
-                        >
-                            <SelectTrigger className="w-full">
-                                <SelectValue placeholder={t("currency")} />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectGroup>
-                                    {Object.values(Currency).map((c) => (
-                                        <SelectItem key={c} value={c}>
-                                            <div className="flex items-center gap-2">
-                                                <Image
-                                                    src={`/images/currencies/${c}.svg`}
-                                                    alt={c}
-                                                    width={32}
-                                                    height={32}
-                                                    className="size-6"
-                                                />
-                                                {c}
-                                            </div>
-                                        </SelectItem>
-                                    ))}
-                                </SelectGroup>
-                            </SelectContent>
-                        </Select>
-                    </div>
-                </div>
-            </Modal>
             <Modal
                 isOpen={searchOpen}
                 setIsOpen={setSearchOpen}
-                className="z-100 w-full p-0"
+                className="z-100 w-full p-0 max-h-screen m-1 overflow-y-auto"
             >
                 <div className="flex flex-col items-center w-full">
                     <div className="relative w-full">
                         <input
                             type="text"
-                            placeholder={t("search-creator")}
+                            placeholder={t("search-girl")}
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
                             className="w-full h-16 rounded-tl-xl rounded-tr-xl py-4 px-14 text-lg tracking-wide border-b border-neutral/20 transition placeholder:text-neutral-400 focus:outline-none focus:bg-base-300"
@@ -424,9 +332,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                             autoComplete="off"
                             autoCapitalize="off"
                             autoCorrect="off"
-                            onKeyDown={(e) =>
-                                e.key === "Enter" && handleSearch()
-                            }
+                            onKeyUp={handleSearch}
                         />
                         <SearchIcon className="absolute top-5 left-5 text-neutral" />
                         <button
@@ -436,18 +342,18 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                             <X className="size-6" />
                         </button>
                     </div>
-                    <div className="flex flex-col gap-y-2 w-full h-full overflow-y-scroll p-4">
-                        {searchs.map((creator) => (
+                    <div className="flex flex-col gap-y-2 w-full h-full overflow-y-auto p-4">
+                        {girls.map((girl) => (
                             <Link
-                                key={creator.id}
-                                href={`/creator/${creator.id}`}
+                                key={girl.id}
+                                href={`/${girl.username}`}
                                 onClick={() => setSearchOpen(false)}
                                 className="flex justify-between w-full rounded-lg hover:bg-base-200 p-2"
                             >
                                 <div className="flex items-center gap-2">
                                     <div className="relative w-14 h-14 mask mask-squircle">
                                         <Image
-                                            src={creator.avatar}
+                                            src={girl.avatar}
                                             alt="avatar"
                                             width={256}
                                             height={256}
@@ -456,17 +362,17 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                     </div>
                                     <div className="h-full flex flex-col">
                                         <div className="text-lg font-bold">
-                                            {creator.name}
+                                            {girl.name}
                                         </div>
                                         <div className="text-sm opacity-50">
-                                            {creator.origin}
+                                            {girl.origin}
                                         </div>
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-2 mr-2">
                                     <div className="font-bold text-lg text-neutral">
                                         {formatAmountForDisplay(
-                                            convert(creator!.price),
+                                            convert(girl!.price),
                                             currency
                                         )}
                                     </div>

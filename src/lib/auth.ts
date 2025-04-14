@@ -1,6 +1,7 @@
 import { cache } from "react";
 import { userAgent } from "next/server";
 import { cookies, headers } from "next/headers";
+import type { Role } from "@prisma/client";
 import { PrismaAdapter } from "@lucia-auth/adapter-prisma";
 import { Lucia, TimeSpan } from "lucia";
 import db from "./db";
@@ -23,9 +24,10 @@ export const lucia = new Lucia(adapter, {
             name: user.name,
             email: user.email,
             emailVerified: user.emailVerified,
-            creators: user.creators,
+            girls: user.girls,
             currency: user.currency,
             locale: user.locale,
+            role: user.role,
         };
     },
 });
@@ -98,7 +100,8 @@ type DatabaseUserAttributes = {
     name: string;
     email: string;
     emailVerified: boolean;
-    creators: string[];
+    girls: string[];
     currency: string;
     locale: string;
+    role: Role;
 };

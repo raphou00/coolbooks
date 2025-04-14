@@ -2,15 +2,12 @@ import { type NextRequest, NextResponse } from "next/server";
 import { getTranslations } from "next-intl/server";
 import { compare } from "bcrypt";
 import db from "@/lib/db";
-import sendEmail from "@/lib/email";
 import { createSession } from "@/lib/auth";
 import loginSchema, { type LoginSchema } from "@/schema/login";
-import Login from "@/components/emails/login";
 
 export const POST = async (req: NextRequest) => {
     const t = await getTranslations({
         locale: req.cookies.get("NEXT_LOCALE")!.value,
-        namespace: "messages",
     });
     try {
         const body = (await req.json()) as LoginSchema;
@@ -35,15 +32,9 @@ export const POST = async (req: NextRequest) => {
 
             return NextResponse.json({
                 success: false,
-                message: t("invalid-credentials"),
+                message: t("messages.invalid-credentials"),
             });
         }
-
-        await sendEmail(
-            user.email,
-            "Someone logged into your account",
-            <Login />
-        );
 
         await createSession(user.id);
 
@@ -55,7 +46,7 @@ export const POST = async (req: NextRequest) => {
         console.error(err);
         return NextResponse.json({
             success: false,
-            message: t("server-error"),
+            message: t("messages.server-error"),
         });
     }
 };

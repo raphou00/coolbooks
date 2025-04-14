@@ -24,7 +24,6 @@ const Page = async () => {
             <div className="w-full">
                 <UpdateProfile
                     email={user.user.email}
-                    emailVerified={user.user.emailVerified}
                     name={user.user.name}
                 />
             </div>

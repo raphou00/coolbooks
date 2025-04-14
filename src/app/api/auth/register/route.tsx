@@ -6,7 +6,7 @@ import sendEmail from "@/lib/email";
 import { createSession } from "@/lib/auth";
 import { createSixDigitNumber } from "@/lib/utils";
 import registerSchema, { type RegisterSchema } from "@/schema/register";
-import VerifyEmail from "@/components/emails/verify-email";
+import Register from "@/components/emails/register";
 
 export const POST = async (req: NextRequest) => {
     const t = await getTranslations({
@@ -49,8 +49,8 @@ export const POST = async (req: NextRequest) => {
 
         await sendEmail(
             user.email,
-            "Verify your e-mail",
-            <VerifyEmail code={code} />
+            t("emails.register.title"),
+            <Register t={t} name={user.name} />
         );
 
         return NextResponse.json({

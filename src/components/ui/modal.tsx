@@ -3,6 +3,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { useEffect } from "react";
+import { X } from "lucide-react";
 
 type ModalProps = {
     isOpen: boolean;
@@ -45,6 +46,12 @@ const Modal: React.FC<ModalProps> = ({
                             className
                         )}
                     >
+                        <button
+                            className="absolute right-0 top-0 m-2 btn btn-ghost btn-square btn-sm"
+                            onClick={() => setIsOpen(false)}
+                        >
+                            <X />
+                        </button>
                         <div className="relative z-10">{children}</div>
                     </motion.div>
                 </motion.div>

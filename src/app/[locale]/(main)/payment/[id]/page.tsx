@@ -13,13 +13,13 @@ const generateMetadata = async ({
 }): Promise<Metadata> => {
     const t = await getTranslations("pages");
     const modelId = params.id;
-    const creator = await db.creator.findUnique({
+    const girl = await db.girl.findUnique({
         where: { id: modelId },
     });
 
     return {
-        title: t("payment.title", { name: creator?.name }),
-        description: t("payment.description", { name: creator?.name }),
+        title: t("payment.title", { name: girl?.name }),
+        description: t("payment.description", { name: girl?.name }),
     };
 };
 
@@ -31,18 +31,18 @@ const Page = async ({ params }: { params: { id: string } }) => {
     }
 
     const modelId = params.id;
-    const creator = await db.creator.findUnique({
+    const girl = await db.girl.findUnique({
         where: { id: modelId },
     });
 
-    if (!creator) {
+    if (!girl) {
         redirect("/");
         return null;
     }
 
     return (
         <Main>
-            <Payment creator={creator} />
+            <Payment girl={girl} />
         </Main>
     );
 };

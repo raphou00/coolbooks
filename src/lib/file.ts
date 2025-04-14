@@ -17,15 +17,17 @@ const s3 = new S3Client({
     },
 });
 
-export const getObject = async (key: string) => {
+export const getObject = (key: string) => {
     return `${env.CLOUDFRONT_URL}/${key}`;
 };
 
-export const putObject = async (file: File, key: string) => {
+export const putObject = async (file: File | Buffer, key: string) => {
+    const body =
+        file instanceof File ? Buffer.from(await file.arrayBuffer()) : file;
     const params: PutObjectCommandInput = {
         Bucket: env.BUCKET_NAME,
         Key: key,
-        Body: file,
+        Body: body,
     };
 
     try {
@@ -33,7 +35,7 @@ export const putObject = async (file: File, key: string) => {
 
         return res;
     } catch (err) {
-        console.log("Error", err);
+        console.error("Error", err);
     }
 };
 
@@ -48,6 +50,6 @@ export const deleteObject = async (key: string) => {
 
         return res;
     } catch (err) {
-        console.log("Error", err);
+        console.error("Error", err);
     }
 };

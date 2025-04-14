@@ -6,7 +6,10 @@
         "or": "or",
         "copyright": "All Rights Reserved",
         "try": "Try now",
-        "description": "Get closer to your favorite pinksea creator"
+        "description": "Get closer to your favorite pinksea girl",
+        "no-results": "No results found",
+        "not-found": "Page Not Found",
+        "back-home": "Back to Home"
     },
     "pages": {
         "login": {
@@ -70,9 +73,6 @@
             "email-placeholder": "Enter your e-mail...",
             "password": "Password",
             "password-placeholder": "Enter your password...",
-            "email-info": "You will have to verify your new e-mail",
-            "email-verified": "E-Mail verified",
-            "email-not-verified": "E-Mail not verified <link>Click here to verify</link>",
             "submit": "Update"
         },
         "account-password": {
@@ -106,24 +106,43 @@
         "home": {
             "title": "Home",
             "description": "",
-            "popular": "Popular",
+            "your-favorites": "Your favorites",
+            "people-favorites": "People's favorites",
             "recommended": "Recommended",
             "more": "View all",
-            "top-creators": "Top creators"
+            "top-girls": "Top girls"
         },
-        "creators": {
-            "title": "Creators",
-            "description": "View all creators",
+        "favorites": {
+            "title": "Favorites",
+            "description": "View your favorites",
+            "search-title": "Favorites",
+            "search-girl": "My research..."
+        },
+        "girls": {
+            "title": "Girls",
+            "description": "View all girls",
             "check": "Check some photos of {name} 👀",
             "profile": "Go to profile",
             "gallery": "Gallery",
-            "pay": "{price} / just once"
+            "pay": "{price} / forever",
+            "search-girl": "My research...",
+            "search-title": "Discover",
+            "search-description": "Explore the most beautiful girls from around the world"
+        },
+        "girl": {
+            "title": "{name}",
+            "description": "View {name}'s profile",
+            "check": "Check some photos of {name} 👀",
+            "profile": "Go to profile",
+            "gallery": "Gallery",
+            "pay": "{price} / forever",
+            "payed": "{name} is already yours ✌️"
         },
         "payment": {
             "title": "Buy {name}'s profile",
-            "description": "Buy {name} pinksea profile, to get closer to your favorite pinksea creator",
+            "description": "Buy {name} pinksea profile, to get closer to your favorite pinksea girl",
             "price": "Price",
-            "buy": "Buy {price}",
+            "buy-now": "Buy now",
             "success": "Payment successfully processed",
             "failed": "Payment failed",
             "email": "E-Mail",
@@ -132,7 +151,29 @@
             "name-placeholder": "Enter your full card name...",
             "number": "Card Number",
             "expiry": "Expiry",
-            "cvc": "CVC"
+            "cvc": "CVC",
+            "payment": "Payment for {name}",
+            "subtotal": "Subtotal",
+            "taxes": "Taxes",
+            "total": "Total",
+            "powered-by": "Powered by",
+            "note": "If purchases are final — no refunds will be issued. Once payment is complete, you’ll have lifetime access to the content. If your account is deleted, access will be lost and a new payment will be required."
+        }
+    },
+    "emails": {
+        "register": {
+            "title": "Welcome to Pinksea!",
+            "hello": "Hello {name}!",
+            "body": "Welcome to Pinksea, the best place to get closer to your favorite pinksea girl.",
+            "get-started": "Get started",
+            "best": "Best regards, Pinksea Team"
+        },
+        "reset-password": {
+            "title": "Reset your Pinksea password",
+            "hello": "Hello {name}!",
+            "body": "Please click on the link below to reset your password.",
+            "warning": "If you did not request a password reset, please ignore this email.",
+            "link": "You can also click or copy paste the link below."
         }
     },
     "messages": {
@@ -163,7 +204,7 @@
         "email-verified": "E-Mail successfully verified",
         "payment-success": "Payment successfully processed",
         "payment-failed": "Payment failed",
-        "creator-not-found": "Creator not found"
+        "girl-not-found": "Girl not found"
     },
     "links": {
         "login": "Login",
@@ -184,12 +225,14 @@
         "cookies": "Cookies Policy",
         "home": "Home",
         "favorites": "Favorites",
-        "creators": "Creators",
+        "girls": "Girls",
         "theme": "Theme",
         "language": "Language",
         "currency": "Currency",
         "language-currency": "Language & Currency",
         "search": "Search",
-        "search-creator": "My research..."
+        "search-girl": "My research...",
+        "images": "Images",
+        "videos": "Videos"
     }
 }

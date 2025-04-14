@@ -1,40 +1,24 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { useTheme } from "next-themes";
-import { Currency } from "@prisma/client";
 import { Languages, SunMoon } from "lucide-react";
 import { Link } from "@/lib/navigation";
 import { title } from "@/config/seo";
-import { locales, localesTitle } from "@/lib/navigation";
-import { type ExchangeRateApiKey, useCurrency } from "@/hook/use-currency";
-import useSwitchLocale from "@/hook/use-switch-locale";
 import {
     useGetCardsLinks,
     useGetFooterLinks,
     useGetSocialLinks,
 } from "@/config/links";
 import LogoText from "@/components/ui/logo-text";
-import Image from "@/components/ui/image";
-import Modal from "@/components/ui/modal";
-import Title from "@/components/ui/title";
-import {
-    Select,
-    SelectContent,
-    SelectGroup,
-    SelectItem,
-    SelectValue,
-    SelectTrigger,
-} from "@/components/ui/select";
+import LocaleModal from "@/components/ui/locale-modal";
 
 const Footer: React.FC = () => {
     const [localeOpen, setLocaleOpen] = useState<boolean>(false);
     const t = useTranslations();
-    const switchLocale = useSwitchLocale();
-    const locale = useLocale();
     const { setTheme } = useTheme();
-    const { currency, setCurrency } = useCurrency();
 
     const footerLinks = useGetFooterLinks();
     const socials = useGetSocialLinks();
@@ -46,12 +30,12 @@ const Footer: React.FC = () => {
 
     return (
         <>
-            <footer className="py-10">
+            <footer className="mt-10">
                 <div className="mx-auto w-full text-sm max-w-8xl px-4 md:px-6 lg:py-8 xl:px-12">
                     <div className="grid grid-cols-[repeat(auto-fill,minmax(160px,1fr))] items-stretch justify-between gap-y-10 sm:gap-x-6 md:flex md:flex-wrap">
                         <div className="col-span-full flex items-center justify-between gap-4 md:flex-col">
                             <Link href="/" className="flex items-center gap-2">
-                                <LogoText />
+                                <LogoText className="w-auto h-10" />
                             </Link>
                         </div>
 
@@ -79,7 +63,7 @@ const Footer: React.FC = () => {
                         ))}
                     </div>
 
-                    <div className="flex-col md:flex-row md:navbar mt-10 p-0 max-md:py-1 border-t border-b border-neutral/50 flex justify-between items-center">
+                    <div className="flex-col md:flex-row md:navbar mt-10 p-0 max-md:py-1 border-t border-b border-neutral/20 flex justify-between items-center">
                         <div className="navbar-start flex gap-x-2 max-md:w-full">
                             {socials.map((social) => (
                                 <Link
@@ -137,90 +121,7 @@ const Footer: React.FC = () => {
                     </div>
                 </div>
             </footer>
-            <Modal
-                isOpen={localeOpen}
-                setIsOpen={setLocaleOpen}
-                className="z-100 w-full"
-            >
-                <div className="flex flex-col items-center justify-center mx-auto gap-y-6 w-full max-w-lg p-6">
-                    <Title
-                        text={t("links.language-currency")}
-                        className="text-3xl mb-6"
-                        underline
-                    />
-
-                    <div className="w-full">
-                        <p className="mb-1 ml-1">{t("links.language")}</p>
-                        <Select
-                            defaultValue={locale}
-                            value={locale}
-                            onValueChange={(l) => switchLocale(l)}
-                        >
-                            <SelectTrigger className="w-full">
-                                <SelectValue
-                                    placeholder={t("links.language")}
-                                />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectGroup>
-                                    {locales.map((l) => (
-                                        <SelectItem key={l} value={l}>
-                                            <div className="flex items-center gap-2">
-                                                <Image
-                                                    src={`/images/locales/${l}.png`}
-                                                    alt={l}
-                                                    width={32}
-                                                    height={32}
-                                                    className="size-6"
-                                                />
-                                                {
-                                                    localesTitle[
-                                                        l as keyof typeof localesTitle
-                                                    ]
-                                                }
-                                            </div>
-                                        </SelectItem>
-                                    ))}
-                                </SelectGroup>
-                            </SelectContent>
-                        </Select>
-                    </div>
-                    <div className="w-full">
-                        <p className="mb-1 ml-1">{t("links.currency")}</p>
-                        <Select
-                            defaultValue={currency}
-                            value={currency}
-                            onValueChange={(c: ExchangeRateApiKey) =>
-                                setCurrency(c)
-                            }
-                        >
-                            <SelectTrigger className="w-full">
-                                <SelectValue
-                                    placeholder={t("links.currency")}
-                                />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectGroup>
-                                    {Object.values(Currency).map((c) => (
-                                        <SelectItem key={c} value={c}>
-                                            <div className="flex items-center gap-2">
-                                                <Image
-                                                    src={`/images/currencies/${c}.svg`}
-                                                    alt={c}
-                                                    width={32}
-                                                    height={32}
-                                                    className="size-6"
-                                                />
-                                                {c}
-                                            </div>
-                                        </SelectItem>
-                                    ))}
-                                </SelectGroup>
-                            </SelectContent>
-                        </Select>
-                    </div>
-                </div>
-            </Modal>
+            <LocaleModal open={localeOpen} setOpen={setLocaleOpen} />
         </>
     );
 };

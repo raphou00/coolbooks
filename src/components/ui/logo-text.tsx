@@ -1,10 +1,10 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 import { title } from "@/config/seo";
 import { cn } from "@/lib/utils";
-import Image from "@/components/ui/image";
 
 type LogoTextProps = {
     className?: string;

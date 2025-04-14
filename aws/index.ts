@@ -1,7 +1,6 @@
 import * as aws from "@pulumi/aws";
 import * as pulumi from "@pulumi/pulumi";
 import * as random from "@pulumi/random";
-import fs from "fs";
 
 const stack = pulumi.getStack();
 
@@ -108,10 +107,28 @@ const rds = new aws.rds.Instance(`pinksea-rds-${stack}`, {
 });
 
 const dbUrl = pulumi.interpolate`postgresql://${rds.username}:${rdsPassword}@${rds.endpoint}/${rds.dbName}`;
-dbUrl.apply((url) => fs.writeFileSync("dburl", url.toString(), "utf8"));
 
 const files = new aws.s3.Bucket(`pinksea-files-${stack}`, {
     bucket: `pinksea-files-${stack}`,
+    acl: "public-read",
+    forceDestroy: true,
+});
+
+new aws.s3.BucketPolicy(`pinksea-files-policy-${stack}`, {
+    bucket: files.bucket,
+    policy: files.bucket.apply((bucketName) =>
+        JSON.stringify({
+            Version: "2012-10-17",
+            Statement: [
+                {
+                    Effect: "Allow",
+                    Principal: "*",
+                    Action: ["s3:GetObject"],
+                    Resource: [`arn:aws:s3:::${bucketName}/*`],
+                },
+            ],
+        })
+    ),
 });
 
 const s3Origin = `pinksea-s3-origin-${stack}`;
@@ -164,4 +181,5 @@ const cloudfront = new aws.cloudfront.Distribution(
 
 export const dbEndpoint = rds.endpoint;
 export const bucketName = files.bucket;
-export const cloudFrontDomain = cloudfront.domainName;
+export const cloudfrontUrl = cloudfront.domainName;
+export const dbUrlSecret = dbUrl;

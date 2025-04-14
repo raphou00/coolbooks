@@ -5,8 +5,8 @@ export const useGetLinks = () => {
     const t = useTranslations("links");
     return [
         {
-            title: t("creators"),
-            path: "/creators",
+            title: t("girls"),
+            path: "/girls",
             icon: Sparkles,
         },
         {
@@ -54,8 +54,8 @@ export const useGetFooterLinks = () => {
                     path: "/",
                 },
                 {
-                    title: t("creators"),
-                    path: "/creators",
+                    title: t("girls"),
+                    path: "/girls",
                 },
                 {
                     title: t("favorites"),

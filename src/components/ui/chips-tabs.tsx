@@ -1,7 +1,12 @@
 "use client";
 
-import { useState } from "react";
 import { motion } from "framer-motion";
+
+type CipsTabsProps = {
+    value: string;
+    onChange: React.Dispatch<React.SetStateAction<string>>;
+    tabs: string[];
+};
 
 type ChipProps = {
     text: string;
@@ -9,18 +14,14 @@ type ChipProps = {
     setSelected: (text: string) => void;
 };
 
-const tabs = ["Negro", "Nigga", "Niggers"];
-
-const ChipTabs: React.FC = () => {
-    const [selected, setSelected] = useState(tabs[0]);
-
+const ChipTabs: React.FC<CipsTabsProps> = ({ value, onChange, tabs }) => {
     return (
         <div className="flex items-center flex-wrap gap-2">
             {tabs.map((tab) => (
                 <Chip
                     text={tab}
-                    selected={selected === tab}
-                    setSelected={setSelected}
+                    selected={value === tab}
+                    setSelected={onChange}
                     key={tab}
                 />
             ))}

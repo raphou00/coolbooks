@@ -1,4 +1,3 @@
-import { useRouter } from "@/lib/navigation";
 import { useState, useEffect } from "react";
 
 export type ExchangeRateApi = {
@@ -11,20 +10,19 @@ export type ExchangeRateApi = {
 export type ExchangeRateApiKey = keyof ExchangeRateApi["rates"];
 
 export const useCurrency = (defaultCurrency: ExchangeRateApiKey = "USD") => {
-    const [currency, setCurrency] =
+    const [currency, setCurrencyDih] =
         useState<ExchangeRateApiKey>(defaultCurrency);
     const [rates, setRates] = useState<ExchangeRateApi["rates"]>({
         USD: 1,
         EUR: 1,
     });
-    const router = useRouter();
 
     useEffect(() => {
         localStorage.setItem("currency", currency);
     }, [currency]);
 
     useEffect(() => {
-        async function fetchRates() {
+        const fetchRates = async () => {
             try {
                 const response = await fetch(
                     "https://api.exchangerate-api.com/v4/latest/USD"
@@ -34,7 +32,7 @@ export const useCurrency = (defaultCurrency: ExchangeRateApiKey = "USD") => {
             } catch (error) {
                 console.error("Error fetching exchange rates", error);
             }
-        }
+        };
         fetchRates();
     }, []);
 
@@ -59,10 +57,9 @@ export const useCurrency = (defaultCurrency: ExchangeRateApiKey = "USD") => {
         return (amount / rates[from]) * rates[to];
     };
 
-    const setCurrencyDih = (currency: ExchangeRateApiKey) => {
-        setCurrency(currency);
-        router.refresh();
+    const setCurrency = (currency: ExchangeRateApiKey) => {
+        setCurrencyDih(currency);
     };
 
-    return { currency, setCurrency: setCurrencyDih, convert };
+    return { currency, setCurrency, convert };
 };

@@ -13,7 +13,7 @@ const RootProviders: React.FC<React.PropsWithChildren> = ({ children }) => {
             <Toaster
                 position="top-right"
                 toastOptions={{
-                    className: "rounded-md p-4 bg-base-200 text-base-content",
+                    className: "rounded-xl p-4 bg-base-200 text-base-content",
                 }}
             />
             {children}

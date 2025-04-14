@@ -7,7 +7,6 @@ import forgotPasswordSchema, {
     type ForgotPasswordSchema,
 } from "@/schema/forgot-password";
 import ResetPasswordEmail from "@/components/emails/reset-password";
-import env from "@/lib/env";
 
 export const POST = async (req: NextRequest) => {
     const t = await getTranslations({
@@ -41,8 +40,6 @@ export const POST = async (req: NextRequest) => {
 
         const code = createSixDigitNumber();
 
-        const link = new URL(`/reset-password?token=${code}`, env.APP_URL!);
-
         await db.token.create({
             data: {
                 userId: user.id,
@@ -53,8 +50,8 @@ export const POST = async (req: NextRequest) => {
 
         await sendEmail(
             user.email,
-            "Reset your password",
-            <ResetPasswordEmail link={link.toString()} />
+            t("emails.forgot-password.title"),
+            <ResetPasswordEmail t={t} code={code} name={user.name} />
         );
 
         return NextResponse.json({

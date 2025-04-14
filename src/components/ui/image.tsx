@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import type { ImageProps } from "next/image";
-import { cn } from "@/lib/utils";
+import { cn, getImage } from "@/lib/utils";
 
 const BlurImage: React.FC<ImageProps> = ({
     height,
@@ -23,7 +23,7 @@ const BlurImage: React.FC<ImageProps> = ({
                 className
             )}
             onLoad={() => setLoading(false)}
-            src={src}
+            src={getImage(src as string)}
             width={width}
             height={height}
             loading="lazy"

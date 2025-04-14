@@ -6,6 +6,7 @@ import { motion } from "motion/react";
 import { Link } from "@/lib/navigation";
 import { cn } from "@/lib/utils";
 import Image from "@/components/ui/image";
+import Title from "./title";
 
 type CarouselProps = {
     items: JSX.Element[];
@@ -15,8 +16,8 @@ type CarouselProps = {
 type Card = {
     id: string;
     src: string;
-    title: string;
-    category: string;
+    name: string;
+    tags: string[];
 };
 
 type CardProps = {
@@ -126,23 +127,26 @@ export const Carousel: React.FC<CarouselProps> = ({
 
 export const Card: React.FC<CardProps> = ({ card }) => {
     return (
-        <Link href={"/creator/" + card.id}>
-            <div className="rounded-3xl bg-base-300 h-64 w-96 overflow-hidden flex flex-col items-start justify-start relative z-10 transition hover:-translate-y-1 hover:shadow-lg">
+        <Link href={"/" + card.id}>
+            <div className="rounded-3xl bg-base-300 max-[500px]:w-[calc(100vw-2rem)] w-96 h-auto aspect-video overflow-hidden flex flex-col items-start justify-start relative z-10 transition hover:-translate-y-1 hover:shadow-lg">
                 <div className="absolute h-full top-0 inset-x-0 bg-gradient-to-b from-black/50 via-transparent to-transparent z-30 pointer-events-none" />
                 <div className="relative z-40 p-8">
-                    <p className="text-sm md:text-base badge badge-secondary text-white text-left">
-                        {card.category}
-                    </p>
-                    <p className="text-lg md:text-xl font-semibold max-w-xs text-white text-left [text-wrap:balance] mt-2">
-                        {card.title}
+                    <Title
+                        className="text-lg md:text-xl font-semibold max-w-xs text-white text-left [text-wrap:balance] mt-1"
+                        text={card.name}
+                    />
+                    <p className="text-sm md:text-base text-left text-white font-bold">
+                        {card.tags.map((tag) => `#${tag}`).join(" ")}
                     </p>
                 </div>
                 <Image
                     src={card.src}
-                    alt={card.title}
+                    alt={card.name}
                     className="object-cover absolute z-10 inset-0 user-select-none pointer-events-none"
                     sizes="100vw"
                     fill
+                    loading="eager"
+                    priority
                 />
             </div>
         </Link>
