@@ -1,4 +1,11 @@
-import { Column, Container, Link, Row, Section, Text } from "@react-email/components"; 
+import {
+    Column,
+    Container,
+    Link,
+    Row,
+    Section,
+    Text,
+} from "@react-email/components";
 import TemplateEmail from "./template";
 import type { TranslationsFunc } from "@/lib/types";
 import env from "@/lib/env";
@@ -15,7 +22,9 @@ const Register: React.FC<EmailProps> = async ({ t, name }) => {
                 <Container>
                     <Column>
                         <Row>
-                            <Text className="text-xl font-bold">{t("emails.register.hello", { name })}</Text>
+                            <Text className="text-xl font-bold">
+                                {t("emails.register.hello", { name })}
+                            </Text>
                         </Row>
                         <Row>
                             <Text>{t("emails.register.title")}</Text>

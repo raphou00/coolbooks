@@ -22,10 +22,7 @@ const Page = async () => {
     return (
         <>
             <div className="w-full">
-                <UpdateProfile
-                    email={user.user.email}
-                    name={user.user.name}
-                />
+                <UpdateProfile email={user.user.email} name={user.user.name} />
             </div>
         </>
     );
