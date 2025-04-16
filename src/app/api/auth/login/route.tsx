@@ -4,12 +4,24 @@ import { compare } from "bcrypt";
 import db from "@/lib/db";
 import { createSession } from "@/lib/auth";
 import loginSchema, { type LoginSchema } from "@/schema/login";
+import { ratelimitLogin } from "@/lib/rate-limiter";
 
 export const POST = async (req: NextRequest) => {
     const t = await getTranslations({
         locale: req.cookies.get("NEXT_LOCALE")!.value,
     });
     try {
+        const identifier = req.ip || req.headers.get("x-forwarded-for");
+
+        if (!identifier) {
+            return NextResponse.redirect(new URL("/error?error=403", req.url));
+        }
+
+        const { success } = await ratelimitLogin.limit(identifier);
+        if (!success) {
+            return NextResponse.redirect(new URL("/error?error=429", req.url));
+        }
+
         const body = (await req.json()) as LoginSchema;
 
         const { error } = loginSchema(t).safeParse(body);

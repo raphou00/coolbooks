@@ -24,9 +24,6 @@ export const AccoutMenu: React.FC<AccoutProps> = ({ user, children }) => {
 
                     <div className="flex flex-col">
                         <Title text={user.name} />
-                        <p className="text-sm text-base-content/80">
-                            @{user.name}
-                        </p>
                     </div>
                     <span className="text-lg mt-0.5 text-gray-500">/</span>
                     <Title

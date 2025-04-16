@@ -5,6 +5,9 @@ import { formatAmountForStripe } from "@/lib/utils";
 import { stripe } from "@/lib/stripe";
 import { getUser } from "@/lib/auth";
 import paymentSchema, { type PaymentSchema } from "@/schema/payment";
+import sendEmail from "@/lib/email";
+import Payment from "@/components/emails/payment";
+import { ratelimitPayment } from "@/lib/rate-limiter";
 
 export const POST = async (req: NextRequest) => {
     const t = await getTranslations({
@@ -12,6 +15,17 @@ export const POST = async (req: NextRequest) => {
         namespace: "messages",
     });
     try {
+        const identifier = req.ip || req.headers.get("x-forwarded-for");
+
+        if (!identifier) {
+            return NextResponse.redirect(new URL("/error?error=403", req.url));
+        }
+
+        const { success } = await ratelimitPayment.limit(identifier);
+        if (!success) {
+            return NextResponse.redirect(new URL("/error?error=429", req.url));
+        }
+
         const user = await getUser();
         const body = (await req.json()) as PaymentSchema;
 
@@ -62,6 +76,17 @@ export const POST = async (req: NextRequest) => {
                 message: t("payment-failed"),
             });
         }
+
+        await sendEmail(
+            user.user.email,
+            t("payment-success", { name: girl.name }),
+            <Payment
+                t={t}
+                amount={girl.price}
+                girlName={girl.name}
+                name={user.user.name}
+            />
+        );
 
         await db.girl.update({
             where: {

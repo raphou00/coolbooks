@@ -7,6 +7,7 @@ import { createSession } from "@/lib/auth";
 import { createSixDigitNumber } from "@/lib/utils";
 import registerSchema, { type RegisterSchema } from "@/schema/register";
 import Register from "@/components/emails/register";
+import { ratelimitRegiser } from "@/lib/rate-limiter";
 
 export const POST = async (req: NextRequest) => {
     const t = await getTranslations({
@@ -14,6 +15,17 @@ export const POST = async (req: NextRequest) => {
         namespace: "messages",
     });
     try {
+        const identifier = req.ip || req.headers.get("x-forwarded-for");
+
+        if (!identifier) {
+            return NextResponse.redirect(new URL("/error?error=403", req.url));
+        }
+
+        const { success } = await ratelimitRegiser.limit(identifier);
+        if (!success) {
+            return NextResponse.redirect(new URL("/error?error=429", req.url));
+        }
+
         const body = (await req.json()) as RegisterSchema;
 
         const { error } = await registerSchema(t).safeParseAsync(body);

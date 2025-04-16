@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import { getTranslations } from "next-intl/server";
 import db from "@/lib/db";
 import { lucia, getUser } from "@/lib/auth";
+import { ratelimitBasePost } from "@/lib/rate-limiter";
 
 export const POST = async (req: NextRequest) => {
     const t = await getTranslations({
@@ -10,6 +11,17 @@ export const POST = async (req: NextRequest) => {
         namespace: "messages",
     });
     try {
+        const identifier = req.ip || req.headers.get("x-forwarded-for");
+
+        if (!identifier) {
+            return NextResponse.redirect(new URL("/error?error=403", req.url));
+        }
+
+        const { success } = await ratelimitBasePost.limit(identifier);
+        if (!success) {
+            return NextResponse.redirect(new URL("/error?error=429", req.url));
+        }
+
         const user = await getUser();
 
         if (!user?.session) {

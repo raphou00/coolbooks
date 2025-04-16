@@ -31,6 +31,14 @@ export default createEnv({
             .string()
             .min(1, { message: "Cloudinary URL is missing" }),
 
+        UPSTASH_REDIS_REST_URL: z
+            .string()
+            .min(1, { message: "Upstash Redis REST URL is missing" }),
+
+        UPSTASH_REDIS_REST_TOKEN: z
+            .string()
+            .min(1, { message: "Upstash Redis REST Token is missing" }),
+
         RESEND_API_KEY: z
             .string()
             .min(1, { message: "Resend API key is missing" }),
@@ -40,6 +48,22 @@ export default createEnv({
         STRIPE_SECRET_KEY: z
             .string()
             .min(1, { message: "Stripe Secret Key is missing" }),
+
+        GOOGLE_CLIENT_ID: z
+            .string()
+            .min(1, { message: "Google Client ID is missing" }),
+
+        GOOGLE_CLIENT_SECRET: z
+            .string()
+            .min(1, { message: "Google Client Secret is missing" }),
+
+        DISCORD_CLIENT_ID: z
+            .string()
+            .min(1, { message: "Google Client ID is missing" }),
+
+        DISCORD_CLIENT_SECRET: z
+            .string()
+            .min(1, { message: "Google Client Secret is missing" }),
     },
     client: {
         NEXT_PUBLIC_APP_URL: z
@@ -66,10 +90,16 @@ export default createEnv({
         BUCKET_NAME: process.env.BUCKET_NAME,
         CLOUDFRONT_URL: process.env.CLOUDFRONT_URL,
         NEXT_PUBLIC_CLOUDFRONT_URL: process.env.NEXT_PUBLIC_CLOUDFRONT_URL,
+        UPSTASH_REDIS_REST_URL: process.env.UPSTASH_REDIS_REST_URL,
+        UPSTASH_REDIS_REST_TOKEN: process.env.UPSTASH_REDIS_REST_TOKEN,
         RESEND_API_KEY: process.env.RESEND_API_KEY,
         SENDER_EMAIL: process.env.SENDER_EMAIL,
         NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY:
             process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
         STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
+        GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
+        GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
+        DISCORD_CLIENT_ID: process.env.DISCORD_CLIENT_ID,
+        DISCORD_CLIENT_SECRET: process.env.DISCORD_CLIENT_SECRET,
     },
 });

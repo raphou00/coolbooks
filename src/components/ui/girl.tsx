@@ -83,10 +83,10 @@ const GirlEl: React.FC<GirlProps> = ({ girl, user }) => {
                         className="text-2xl md:text-3xl lg:text-4xl"
                     />
                 </div>
-                <p className="text-sm md:text-base text-base-content/80">
+                <p className="text-sm md:text-base text-base-content">
                     {girl.bio}
                 </p>
-                <p className="text-sm md:text-base text-base-content/80 font-bold">
+                <p className="text-sm md:text-base text-base-content/70 font-bold">
                     {girl.tags.map((tag) => `#${tag}`).join(" ")}
                 </p>
             </div>

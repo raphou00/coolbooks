@@ -1,8 +1,10 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
+import axios from "axios";
 import { type ActionsState } from "@/lib/types";
 import { handleFormPost } from "@/lib/utils";
 import { Link } from "@/lib/navigation";
@@ -33,12 +35,56 @@ const Register: React.FC = () => {
         setState(res);
     };
 
+    const google = async () => {
+        const res = await axios.get("/api/auth/google");
+        window.location.href = res.data.url;
+    };
+
+    const discord = async () => {
+        const res = await axios.get("/api/auth/discord");
+        window.location.href = res.data.url;
+    };
+
     return (
         <Form title={t("title")} description={t("description")}>
             <form
                 onSubmit={handleSubmit(submit)}
                 className="w-full flex flex-col gap-y-2"
             >
+                <div className="flex justify-between gap-x-2">
+                    <button
+                        type="button"
+                        onClick={google}
+                        className="btn btn-outline text-lg w-[49%]"
+                    >
+                        <Image
+                            src="/images/icons/google.svg"
+                            alt="Google"
+                            className="size-6"
+                            width={100}
+                            height={100}
+                        />
+                        Google
+                    </button>
+
+                    <button
+                        type="button"
+                        onClick={discord}
+                        className="btn btn-outline text-lg w-[49%]"
+                    >
+                        <Image
+                            src="/images/icons/discord.svg"
+                            alt="Discord"
+                            className="size-6"
+                            width={100}
+                            height={100}
+                        />
+                        Discord
+                    </button>
+                </div>
+
+                <div className="divider my-1" />
+
                 <FormReponse success={state.success} message={state.message} />
 
                 <FormInput

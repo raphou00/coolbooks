@@ -5,6 +5,7 @@ import { getUser } from "@/lib/auth";
 import deleteAccountSchema, {
     type DeleteAccountSchema,
 } from "@/schema/delete-account";
+import { ratelimitBasePost } from "@/lib/rate-limiter";
 
 export const POST = async (req: NextRequest) => {
     const t = await getTranslations({
@@ -12,6 +13,17 @@ export const POST = async (req: NextRequest) => {
         namespace: "messages",
     });
     try {
+        const identifier = req.ip || req.headers.get("x-forwarded-for");
+
+        if (!identifier) {
+            return NextResponse.redirect(new URL("/error?error=403", req.url));
+        }
+
+        const { success } = await ratelimitBasePost.limit(identifier);
+        if (!success) {
+            return NextResponse.redirect(new URL("/error?error=429", req.url));
+        }
+
         const user = await getUser();
         const body = (await req.json()) as DeleteAccountSchema;
 

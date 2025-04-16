@@ -23,10 +23,11 @@ model User {
   email         String    @unique
   emailVerified Boolean   @default(false)
   password      String?
-  currency      Currency  @default(USD)
   locale        String?
   role          Role      @default(USER)
   girls         String[]
+  googleId      String?   @unique
+  discordId     String?   @unique
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
   sessions      Session[]
@@ -39,7 +40,7 @@ model Session {
   browser   String?
   os        String?
   userId    String
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   expiresAt DateTime
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -49,7 +50,7 @@ model Token {
   id        String   @id @default(uuid())
   token     String
   userId    String
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   expiresAt DateTime
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -76,7 +77,7 @@ model Media {
   images      Image[]
   videos      Video[]
   description String
-  Girl        Girl    @relation(fields: [girlId], references: [id])
+  Girl        Girl    @relation(fields: [girlId], references: [id], onDelete: Cascade)
   girlId      String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -89,7 +90,7 @@ model Image {
   width     Int
   height    Int
   free      Boolean
-  Media     Media    @relation(fields: [mediaId], references: [id])
+  Media     Media    @relation(fields: [mediaId], references: [id], onDelete: Cascade)
   mediaId   String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -104,7 +105,7 @@ model Video {
   height    Int
   time      Int
   free      Boolean
-  Media     Media    @relation(fields: [mediaId], references: [id])
+  Media     Media    @relation(fields: [mediaId], references: [id], onDelete: Cascade)
   mediaId   String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

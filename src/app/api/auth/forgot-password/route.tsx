@@ -7,6 +7,7 @@ import forgotPasswordSchema, {
     type ForgotPasswordSchema,
 } from "@/schema/forgot-password";
 import ResetPasswordEmail from "@/components/emails/reset-password";
+import { ratelimitForgotPassword } from "@/lib/rate-limiter";
 
 export const POST = async (req: NextRequest) => {
     const t = await getTranslations({
@@ -14,6 +15,17 @@ export const POST = async (req: NextRequest) => {
         namespace: "messages",
     });
     try {
+        const identifier = req.ip || req.headers.get("x-forwarded-for");
+
+        if (!identifier) {
+            return NextResponse.redirect(new URL("/error?error=403", req.url));
+        }
+
+        const { success } = await ratelimitForgotPassword.limit(identifier);
+        if (!success) {
+            return NextResponse.redirect(new URL("/error?error=429", req.url));
+        }
+
         const body = (await req.json()) as ForgotPasswordSchema;
 
         const { error } = forgotPasswordSchema(t).safeParse(body);

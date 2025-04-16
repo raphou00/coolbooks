@@ -4,6 +4,7 @@ import db from "@/lib/db";
 import resetPasswordSchema, {
     type ResetPasswordSchema,
 } from "@/schema/reset-password";
+import { ratelimitBasePost } from "@/lib/rate-limiter";
 
 export const POST = async (req: NextRequest) => {
     const t = await getTranslations({
@@ -11,6 +12,17 @@ export const POST = async (req: NextRequest) => {
         namespace: "messages",
     });
     try {
+        const identifier = req.ip || req.headers.get("x-forwarded-for");
+
+        if (!identifier) {
+            return NextResponse.redirect(new URL("/error?error=403", req.url));
+        }
+
+        const { success } = await ratelimitBasePost.limit(identifier);
+        if (!success) {
+            return NextResponse.redirect(new URL("/error?error=429", req.url));
+        }
+
         const body = (await req.json()) as ResetPasswordSchema;
 
         const { error } = resetPasswordSchema(t).safeParse(body);

@@ -2,6 +2,7 @@ import { type NextRequest, NextResponse } from "next/server";
 import { getTranslations } from "next-intl/server";
 import db from "@/lib/db";
 import { findGirlsWithMedias } from "@/config/girl";
+import { ratelimitSearch } from "@/lib/rate-limiter";
 
 export const GET = async (req: NextRequest) => {
     const t = await getTranslations({
@@ -9,6 +10,17 @@ export const GET = async (req: NextRequest) => {
         namespace: "messages",
     });
     try {
+        const identifier = req.ip || req.headers.get("x-forwarded-for");
+
+        if (!identifier) {
+            return NextResponse.redirect(new URL("/error?error=403", req.url));
+        }
+
+        const { success } = await ratelimitSearch.limit(identifier);
+        if (!success) {
+            return NextResponse.redirect(new URL("/error?error=429", req.url));
+        }
+
         const q = req.nextUrl.searchParams.get("q")?.toLowerCase() || "";
 
         const girls = await db.girl.findMany({

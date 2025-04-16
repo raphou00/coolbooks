@@ -17,8 +17,8 @@ const updatePasswordSchema = (t: TranslationsFunc) =>
             newPassword: z
                 .string()
                 .trim()
-                .max(255, { message: t("min", { min: 255 }) })
-                .min(8, { message: t("max", { min: 8 }) })
+                .max(255, { message: t("max", { max: 255 }) })
+                .min(8, { message: t("min", { min: 8 }) })
                 .min(1, { message: t("required") }),
         })
         .superRefine(({ newPassword, confirmPassword }, ctx) => {

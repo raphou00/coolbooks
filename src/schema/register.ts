@@ -1,13 +1,20 @@
 import * as z from "zod";
 import db from "@/lib/db";
 import { type TranslationsFunc } from "@/lib/types";
+import {
+    maxPasswordLength,
+    maxUsernameLength,
+    minPasswordLength,
+} from "@/config/user";
 
 const registerSchema = (t: TranslationsFunc) =>
     z.object({
         name: z
             .string()
             .trim()
-            .max(255, { message: t("max", { max: 255 }) })
+            .max(maxUsernameLength, {
+                message: t("max", { max: maxUsernameLength }),
+            })
             .min(1, { message: t("required") }),
 
         email: z
@@ -28,8 +35,12 @@ const registerSchema = (t: TranslationsFunc) =>
         password: z
             .string()
             .trim()
-            .max(255, { message: t("max", { max: 255 }) })
-            .min(8, { message: t("min", { min: 8 }) })
+            .max(maxPasswordLength, {
+                message: t("max", { max: maxPasswordLength }),
+            })
+            .min(minPasswordLength, {
+                message: t("min", { min: minPasswordLength }),
+            })
             .min(1, { message: t("required") }),
     });
 

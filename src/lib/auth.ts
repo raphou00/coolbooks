@@ -6,6 +6,7 @@ import { PrismaAdapter } from "@lucia-auth/adapter-prisma";
 import { Lucia, TimeSpan } from "lucia";
 import db from "./db";
 import env from "./env";
+import { Discord, Google } from "arctic";
 
 const adapter = new PrismaAdapter(db.session, db.user);
 
@@ -80,6 +81,18 @@ export const createSession = async (userId: string) => {
         sessionCookie.attributes
     );
 };
+
+export const google = new Google(
+    env.GOOGLE_CLIENT_ID,
+    env.GOOGLE_CLIENT_SECRET,
+    env.APP_URL + "/api/auth/google/callback"
+);
+
+export const discord = new Discord(
+    env.DISCORD_CLIENT_ID,
+    env.DISCORD_CLIENT_SECRET,
+    env.APP_URL + "/api/auth/discord/callback"
+);
 
 declare module "lucia" {
     interface Register {

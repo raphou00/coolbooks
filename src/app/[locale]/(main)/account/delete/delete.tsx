@@ -29,6 +29,8 @@ export const DeleteAccount: React.FC = () => {
             data
         );
         setState(res);
+
+        window.location.replace("/");
     };
 
     return (

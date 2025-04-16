@@ -108,6 +108,20 @@ const rds = new aws.rds.Instance(`pinksea-rds-${stack}`, {
 
 const dbUrl = pulumi.interpolate`postgresql://${rds.username}:${rdsPassword}@${rds.endpoint}/${rds.dbName}`;
 
+const redisSubnetGroup = new aws.elasticache.SubnetGroup("redis-subnet-group", {
+    subnetIds: [publicSubnetA.id, publicSubnetB.id],
+});
+
+const redis = new aws.elasticache.Cluster(`pinksea-redis-${stack}`, {
+    engine: "redis",
+    nodeType: "cache.t4g.micro",
+    numCacheNodes: 1,
+    parameterGroupName: "default.redis7",
+    port: 6379,
+    subnetGroupName: redisSubnetGroup.name,
+    securityGroupIds: [securityGroup.id],
+});
+
 const files = new aws.s3.Bucket(`pinksea-files-${stack}`, {
     bucket: `pinksea-files-${stack}`,
     acl: "public-read",
@@ -182,4 +196,5 @@ const cloudfront = new aws.cloudfront.Distribution(
 export const dbEndpoint = rds.endpoint;
 export const bucketName = files.bucket;
 export const cloudfrontUrl = cloudfront.domainName;
+export const redisEndpoint = redis.cacheNodes[0].address;
 export const dbUrlSecret = dbUrl;

@@ -1,0 +1,59 @@
+import {
+    Column,
+    Container,
+    Link,
+    Row,
+    Section,
+    Text,
+} from "@react-email/components";
+import TemplateEmail from "./template";
+import type { TranslationsFunc } from "@/lib/types";
+import env from "@/lib/env";
+
+type EmailProps = {
+    t: TranslationsFunc;
+    amount: number;
+    name: string;
+    girlName: string;
+};
+
+const Payment: React.FC<EmailProps> = async ({ t, amount, name, girlName }) => {
+    return (
+        <TemplateEmail t={t} title={t("emails.payment.title", { girlName })}>
+            <Section>
+                <Container>
+                    <Column>
+                        <Row>
+                            <Text className="text-xl font-bold">
+                                {t("emails.payment.hello", { name })}
+                            </Text>
+                        </Row>
+                        <Row>
+                            <Text>
+                                {t("emails.payment.title", { girlName })}
+                            </Text>
+                        </Row>
+                        <Row>
+                            <Text>
+                                {t("emails.payment.body", { girlName })}
+                            </Text>
+                        </Row>
+                        <Row>
+                            <Link
+                                href={env.APP_URL}
+                                className="rounded-xl bg-secondary w-full px-6 py-4 text-center text-3xl font-bold text-white"
+                            >
+                                {amount}
+                            </Link>
+                        </Row>
+                        <Row>
+                            <Text>{t("emails.payment.best")}</Text>
+                        </Row>
+                    </Column>
+                </Container>
+            </Section>
+        </TemplateEmail>
+    );
+};
+
+export default Payment;

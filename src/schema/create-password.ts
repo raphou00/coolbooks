@@ -1,5 +1,6 @@
 import * as z from "zod";
 import { type TranslationsFunc } from "@/lib/types";
+import { maxPasswordLength, minPasswordLength } from "@/config/user";
 
 const createPasswordSchema = (t: TranslationsFunc) =>
     z
@@ -12,8 +13,12 @@ const createPasswordSchema = (t: TranslationsFunc) =>
             newPassword: z
                 .string()
                 .trim()
-                .max(255, { message: t("min", { min: 255 }) })
-                .min(8, { message: t("max", { min: 8 }) })
+                .max(maxPasswordLength, {
+                    message: t("max", { max: maxPasswordLength }),
+                })
+                .min(minPasswordLength, {
+                    message: t("min", { min: minPasswordLength }),
+                })
                 .min(1, { message: t("required") }),
         })
         .superRefine(({ newPassword, confirmPassword }, ctx) => {
