@@ -7,6 +7,10 @@ import { putObject } from "./file";
 import db from "./db";
 import env from "./env";
 
+export const getS3 = (key: string) => {
+    return `https://${env.BUCKET_NAME}.s3.${env.AWS_REGION}.amazonaws.com/${key}`;
+};
+
 export const getExtension = (filename: string) => {
     const parts = filename.split(".");
     return parts[parts.length - 1];
@@ -138,22 +142,15 @@ export const createVideo = async (
     const thumbnailBlurredName =
         crypto.randomUUID() + "." + getExtension(file.name);
 
-    const thumbnail = await getVideoThumbnail(
-        `${env.CLOUDFRONT_URL}/${fileName}`
-    );
-    const blurredThumbnail = await sharp(
-        `${env.CLOUDFRONT_URL}/${thumbnailName}`
-    )
-        .blur(20)
-        .toBuffer();
-
     await putObject(file, fileName);
+
+    const thumbnail = await getVideoThumbnail(getS3(fileName));
     await putObject(thumbnail, thumbnailName);
+
+    const blurredThumbnail = await sharp(thumbnail).blur(20).toBuffer();
     await putObject(blurredThumbnail, thumbnailBlurredName);
 
-    const metadata = await getVideoMetadata(
-        `${env.CLOUDFRONT_URL}/${fileName}`
-    );
+    const metadata = await getVideoMetadata(getS3(fileName));
 
     const media = await db.video.create({
         data: {

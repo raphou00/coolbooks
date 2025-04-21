@@ -8,6 +8,7 @@ import paymentSchema, { type PaymentSchema } from "@/schema/payment";
 import sendEmail from "@/lib/email";
 import Payment from "@/components/emails/payment";
 import { ratelimitPayment } from "@/lib/rate-limiter";
+import { currency } from "@/config/stripe";
 
 export const POST = async (req: NextRequest) => {
     const t = await getTranslations({
@@ -60,8 +61,8 @@ export const POST = async (req: NextRequest) => {
 
         try {
             const paymentIntent = await stripe.paymentIntents.create({
-                amount: formatAmountForStripe(girl.price, body.currency),
-                currency: body.currency,
+                amount: formatAmountForStripe(girl.price),
+                currency: currency,
                 payment_method_types: ["card"],
                 payment_method: body.paymentMethodId,
                 confirm: true,

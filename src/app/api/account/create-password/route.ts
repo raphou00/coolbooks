@@ -24,7 +24,7 @@ export const POST = async (req: NextRequest) => {
         if (!success) {
             return NextResponse.redirect(new URL("/error?error=429", req.url));
         }
-        
+
         const user = await getUser();
         const body = (await req.json()) as CreatePasswordSchema;
 

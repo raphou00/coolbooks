@@ -6,7 +6,7 @@ import { PrismaAdapter } from "@lucia-auth/adapter-prisma";
 import { Lucia, TimeSpan } from "lucia";
 import db from "./db";
 import env from "./env";
-import { Discord, Google } from "arctic";
+import { Discord, Google, Facebook } from "arctic";
 
 const adapter = new PrismaAdapter(db.session, db.user);
 
@@ -26,7 +26,6 @@ export const lucia = new Lucia(adapter, {
             email: user.email,
             emailVerified: user.emailVerified,
             girls: user.girls,
-            currency: user.currency,
             locale: user.locale,
             role: user.role,
         };
@@ -94,6 +93,12 @@ export const discord = new Discord(
     env.APP_URL + "/api/auth/discord/callback"
 );
 
+export const facebook = new Facebook(
+    env.FACEBOOK_CLIENT_ID,
+    env.FACEBOOK_CLIENT_SECRET,
+    env.APP_URL + "/api/auth/facebook/callback"
+);
+
 declare module "lucia" {
     interface Register {
         Lucia: typeof lucia;
@@ -114,7 +119,6 @@ type DatabaseUserAttributes = {
     email: string;
     emailVerified: boolean;
     girls: string[];
-    currency: string;
     locale: string;
     role: Role;
 };

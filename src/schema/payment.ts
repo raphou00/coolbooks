@@ -8,11 +8,6 @@ const paymentSchema = (t: TranslationsFunc) =>
             .trim()
             .min(1, { message: t("required") }),
 
-        currency: z
-            .string()
-            .trim()
-            .min(1, { message: t("required") }),
-
         name: z
             .string()
             .trim()

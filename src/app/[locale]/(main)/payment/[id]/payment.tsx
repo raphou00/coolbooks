@@ -19,12 +19,12 @@ import {
 import getStripe, { formatAmountForDisplay, handleFormPost } from "@/lib/utils";
 import { type ActionsState } from "@/lib/types";
 import { type PaymentSchema } from "@/schema/payment";
-import { useCurrency } from "@/hook/use-currency";
 import FormInput from "@/components/ui/form-input";
 import FormButton from "@/components/ui/form-button";
 import FormReponse from "@/components/ui/form-response";
 import Image from "@/components/ui/image";
 import Title from "@/components/ui/title";
+import { currency } from "@/config/stripe";
 
 type PaymentProps = {
     girl: Girl;
@@ -49,7 +49,6 @@ const CheckoutForm: React.FC<PaymentProps> = ({ girl }) => {
     const { theme } = useTheme();
     const stripe = useStripe();
     const elements = useElements();
-    const { currency, convert } = useCurrency();
 
     const submit = async (data: PaymentSchema) => {
         if (!stripe || !elements) {
@@ -80,7 +79,6 @@ const CheckoutForm: React.FC<PaymentProps> = ({ girl }) => {
             return;
         }
 
-        data.currency = currency;
         data.paymentMethodId = paymentMethod.id;
 
         const res = await handleFormPost<PaymentSchema>("/api/payment", data);
@@ -200,10 +198,7 @@ const CheckoutForm: React.FC<PaymentProps> = ({ girl }) => {
                             {t("subtotal")}
                         </div>
                         <div className="text-sm">
-                            {formatAmountForDisplay(
-                                convert(girl.price),
-                                currency
-                            )}
+                            {formatAmountForDisplay(girl.price)}
                         </div>
                     </div>
 
@@ -212,7 +207,7 @@ const CheckoutForm: React.FC<PaymentProps> = ({ girl }) => {
                             {t("taxes")}
                         </div>
                         <div className="text-sm">
-                            {formatAmountForDisplay(convert(0), currency)}
+                            {formatAmountForDisplay(0)}
                         </div>
                     </div>
 
@@ -221,10 +216,7 @@ const CheckoutForm: React.FC<PaymentProps> = ({ girl }) => {
                             {t("total")}
                         </div>
                         <div className="text-sm">
-                            {formatAmountForDisplay(
-                                convert(girl.price),
-                                currency
-                            )}
+                            {formatAmountForDisplay(girl.price)}
                         </div>
                     </div>
 
@@ -268,7 +260,6 @@ const CheckoutForm: React.FC<PaymentProps> = ({ girl }) => {
 
 const Payment: React.FC<PaymentProps> = ({ girl }) => {
     const locale = useLocale();
-    const { currency } = useCurrency();
     return (
         <Elements
             stripe={getStripe()}

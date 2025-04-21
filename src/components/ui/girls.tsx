@@ -4,16 +4,14 @@ import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { BadgeCheck, Heart } from "lucide-react";
 import type { Media, Girl, Image, Video } from "@prisma/client";
-import { formatAmountForDisplay } from "@/lib/utils";
+import { formatAmountForDisplay, getImage } from "@/lib/utils";
 import { Link, useRouter } from "@/lib/navigation";
 import useWindowSize from "@/hook/use-window-size";
-import { useCurrency } from "@/hook/use-currency";
 import ImageEl from "./image";
 import Modal from "./modal";
 import Title from "./title";
-import VideoEl from "./video";
 
-type MediaProps = Media & {
+export type MediaProps = Media & {
     images: Image[];
     videos: Video[];
 };
@@ -32,7 +30,6 @@ const Girls: React.FC<GirlsProps> = ({ girls }) => {
     const [modalOpen, setModalOpen] = useState<boolean>(false);
     const router = useRouter();
     const windowSize = useWindowSize();
-    const { currency, convert } = useCurrency();
 
     const openModal = (username: string) => {
         if (windowSize.width < MAX_WIDTH) {
@@ -45,15 +42,32 @@ const Girls: React.FC<GirlsProps> = ({ girls }) => {
     };
 
     useEffect(() => {
+        const keyDownHandler = (event: KeyboardEvent) => {
+            if (event.key === "Escape") {
+                setModalOpen(false);
+            }
+        };
+        document.addEventListener("keydown", keyDownHandler);
+        return () => {
+            document.removeEventListener("keydown", keyDownHandler);
+        };
+    }, []);
+
+    useEffect(() => {
         if (windowSize.width < MAX_WIDTH) {
             setModalOpen(false);
         }
     }, [windowSize]);
 
-    const girlMedias =
-        girl ?
-            girl.medias.flatMap((media) => [...media.images, ...media.videos])
-        :   [];
+    const girlMedias: (Image | Video)[] = [];
+    girl?.medias.forEach((media) => {
+        media.images.forEach((image) => {
+            if (image.free) girlMedias.push(image);
+        });
+        media.videos.forEach((video) => {
+            if (video.free) girlMedias.push(video);
+        });
+    });
 
     return (
         <>
@@ -100,7 +114,7 @@ const Girls: React.FC<GirlsProps> = ({ girls }) => {
             <Modal
                 isOpen={modalOpen}
                 setIsOpen={setModalOpen}
-                className="w-full h-full max-h-[80vh] max-md:hidden"
+                className="w-full max-md:hidden"
             >
                 {girl && (
                     <div className="flex flex-col items-start gap-y-6">
@@ -131,8 +145,7 @@ const Girls: React.FC<GirlsProps> = ({ girls }) => {
                                                 {" "}
                                                 -{" "}
                                                 {formatAmountForDisplay(
-                                                    convert(girl!.price),
-                                                    currency
+                                                    girl.price
                                                 )}
                                             </span>
                                         </div>
@@ -154,7 +167,7 @@ const Girls: React.FC<GirlsProps> = ({ girls }) => {
                                 </Link>
                             </div>
                         </div>
-                        <div className="h-40">
+                        {/* <div className="h-40">
                             <div className="flex items-center gap-x-4">
                                 <Title
                                     text={t("gallery")}
@@ -170,7 +183,6 @@ const Girls: React.FC<GirlsProps> = ({ girls }) => {
                                             {m && "time" in m ?
                                                 <VideoEl
                                                     video={m as Video}
-                                                    description={""}
                                                     bought
                                                 />
                                             :   <ImageEl
@@ -185,7 +197,13 @@ const Girls: React.FC<GirlsProps> = ({ girls }) => {
                                     ))}
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
+                        <div
+                            className="w-full aspect-[7/2] bg-cover bg-center rounded-xl"
+                            style={{
+                                backgroundImage: `url('${getImage(girl.cover)}')`,
+                            }}
+                        />
                     </div>
                 )}
             </Modal>

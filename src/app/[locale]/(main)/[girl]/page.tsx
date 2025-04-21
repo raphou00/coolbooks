@@ -5,8 +5,8 @@ import db from "@/lib/db";
 import { getUser } from "@/lib/auth";
 import { redirect } from "@/lib/navigation";
 import Main from "@/components/layout/main";
-import Girl from "@/components/ui/girl";
 import type { GirlWithMedia } from "@/components/ui/girls";
+import Girl from "./girl";
 
 const generateMetadata = async ({
     params,

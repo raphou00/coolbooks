@@ -42,9 +42,7 @@ const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
                             className="btn btn-sm max-sm:btn-circle btn-outline"
                         >
                             <Home className="size-5" />
-                            <span className="hidden sm:block">
-                                {t("home")}
-                            </span>
+                            <span className="hidden sm:block">{t("home")}</span>
                         </Link>
                         <div className="space-x-2">
                             <button

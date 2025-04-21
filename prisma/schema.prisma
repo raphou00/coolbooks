@@ -7,11 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum Currency {
-  USD
-  EUR
-}
-
 enum Role {
   USER
   ADMIN

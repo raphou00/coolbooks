@@ -11,6 +11,7 @@ export const findGirlsWithMedias = {
     bio: true,
     medias: {
         select: {
+            id: true,
             description: true,
             videos: {
                 select: {
@@ -25,6 +26,7 @@ export const findGirlsWithMedias = {
             },
             images: {
                 select: {
+                    blurred: true,
                     src: true,
                     width: true,
                     height: true,

@@ -13,7 +13,6 @@ const intlMiddleware = createMiddleware({
     localePrefix,
 });
 
-
 export const middleware = async (req: NextRequest) => {
     const { pathname } = req.nextUrl;
     const identifier = req.ip || req.headers.get("x-forwarded-for");
@@ -31,7 +30,7 @@ export const middleware = async (req: NextRequest) => {
         const originHeader = req.headers.get("Origin");
         const hostHeader =
             req.headers.get("Host") || req.headers.get("X-Forwarded-Host");
-        
+
         if (
             !originHeader ||
             !hostHeader ||
@@ -44,7 +43,7 @@ export const middleware = async (req: NextRequest) => {
     } else if (pathname.startsWith("/api")) {
         return NextResponse.next();
     }
-    
+
     const res = intlMiddleware(req);
 
     if (req.method === "GET") {

@@ -52,7 +52,7 @@ const Login: React.FC = () => {
                     <button
                         type="button"
                         onClick={google}
-                        className="btn btn-outline text-lg w-[49%]"
+                        className="btn text-lg w-[49%]"
                     >
                         <Image
                             src="/images/icons/google.svg"
@@ -67,7 +67,7 @@ const Login: React.FC = () => {
                     <button
                         type="button"
                         onClick={discord}
-                        className="btn btn-outline text-lg w-[49%]"
+                        className="btn text-lg w-[49%]"
                     >
                         <Image
                             src="/images/icons/discord.svg"

@@ -23,7 +23,6 @@ import { Link, usePathname, useRouter } from "@/lib/navigation";
 import { cn, formatAmountForDisplay } from "@/lib/utils";
 import { useGetLinks } from "@/config/links";
 import useScroll from "@/hook/use-scroll";
-import { useCurrency } from "@/hook/use-currency";
 import Image from "@/components/ui/image";
 import Logo from "@/components/ui/logo";
 import LogoText from "@/components/ui/logo-text";
@@ -49,7 +48,6 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
     const pathname = usePathname();
     const scroll = useScroll(0);
     const { setTheme } = useTheme();
-    const { currency, convert } = useCurrency();
 
     const handleLogout = async () => {
         await axios.post("/api/auth/logout");
@@ -371,10 +369,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                 </div>
                                 <div className="flex items-center gap-2 mr-2">
                                     <div className="font-bold text-lg text-neutral">
-                                        {formatAmountForDisplay(
-                                            convert(girl!.price),
-                                            currency
-                                        )}
+                                        {formatAmountForDisplay(girl!.price)}
                                     </div>
                                 </div>
                             </Link>

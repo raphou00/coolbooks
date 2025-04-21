@@ -39,17 +39,14 @@ export async function GET(request: Request): Promise<Response> {
 
     const token = tokens.accessToken();
 
-    const discordResponse = await fetch(
-        "https://discord.com/api/users/@me",
-        {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        }
-    );
+    const discordResponse = await fetch("https://discord.com/api/users/@me", {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
 
     const discordData = await discordResponse.json();
-    
+
     const discordId = discordData.id;
     const name = discordData.global_name ?? discordData.username;
     const email = discordData.email;

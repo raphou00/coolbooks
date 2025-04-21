@@ -4,6 +4,7 @@ import { twMerge } from "tailwind-merge";
 import { type Stripe, loadStripe } from "@stripe/stripe-js";
 import env from "./env";
 import type { ActionsState } from "./types";
+import { currency } from "@/config/stripe";
 
 let stripePromise: Promise<Stripe | null>;
 
@@ -46,10 +47,7 @@ export const handleFormPost = async <T>(
     return resData;
 };
 
-export const formatAmountForDisplay = (
-    amount: number,
-    currency: string
-): string => {
+export const formatAmountForDisplay = (amount: number): string => {
     const numberFormat = new Intl.NumberFormat(["en-US"], {
         style: "currency",
         currency: currency,
@@ -59,10 +57,7 @@ export const formatAmountForDisplay = (
     return numberFormat.format(amount);
 };
 
-export const formatAmountForStripe = (
-    amount: number,
-    currency: string
-): number => {
+export const formatAmountForStripe = (amount: number): number => {
     const numberFormat = new Intl.NumberFormat(["en-US"], {
         style: "currency",
         currency: currency,

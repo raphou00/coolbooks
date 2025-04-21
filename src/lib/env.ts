@@ -59,11 +59,19 @@ export default createEnv({
 
         DISCORD_CLIENT_ID: z
             .string()
-            .min(1, { message: "Google Client ID is missing" }),
+            .min(1, { message: "Discord Client ID is missing" }),
 
         DISCORD_CLIENT_SECRET: z
             .string()
-            .min(1, { message: "Google Client Secret is missing" }),
+            .min(1, { message: "Discord Client Secret is missing" }),
+
+        FACEBOOK_CLIENT_ID: z
+            .string()
+            .min(1, { message: "Facebook Client ID is missing" }),
+
+        FACEBOOK_CLIENT_SECRET: z
+            .string()
+            .min(1, { message: "Facebook Client Secret is missing" }),
     },
     client: {
         NEXT_PUBLIC_APP_URL: z
@@ -101,5 +109,7 @@ export default createEnv({
         GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
         DISCORD_CLIENT_ID: process.env.DISCORD_CLIENT_ID,
         DISCORD_CLIENT_SECRET: process.env.DISCORD_CLIENT_SECRET,
+        FACEBOOK_CLIENT_ID: process.env.FACEBOOK_CLIENT_ID,
+        FACEBOOK_CLIENT_SECRET: process.env.FACEBOOK_CLIENT_SECRET,
     },
 });
