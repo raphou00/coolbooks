@@ -8,12 +8,13 @@ import env from "@/lib/env";
 
 export async function GET(req: NextRequest) {
     try {
-        const user = await getUser()
+        const user = await getUser();
         const url = new URL(req.url);
         const code = url.searchParams.get("code");
         const state = url.searchParams.get("state");
         const storedState = cookies().get("google_oauth_state")?.value ?? null;
-        const codeVerifier = cookies().get("google_code_verifier")?.value ?? null;
+        const codeVerifier =
+            cookies().get("google_code_verifier")?.value ?? null;
 
         if (
             code === null ||
@@ -50,7 +51,9 @@ export async function GET(req: NextRequest) {
                     googleId,
                 },
             });
-            return NextResponse.redirect(new URL("/account/socials", env.APP_URL));
+            return NextResponse.redirect(
+                new URL("/account/socials", env.APP_URL)
+            );
         }
 
         const existingUser = await db.user.findFirst({

@@ -31,16 +31,16 @@ export const Socials: React.FC<SocialsProps> = ({ googleId, discordId }) => {
 
     const connectDiscord = async () => {
         if (google) {
-            const res = await axios.get("/api/auth/google/disconnect");
+            const res = await axios.get("/api/auth/discord/disconnect");
             if (res.data.success) toast.success(res.data.message);
             else toast.error(res.data.message);
-            setGoogle(null);
+            setDiscord(null);
         } else {
-            const res = await axios.get("/api/auth/google");
+            const res = await axios.get("/api/auth/discord");
             window.location.href = res.data.url;
         }
     };
-    
+
     return (
         <>
             <div className="">
@@ -56,9 +56,7 @@ export const Socials: React.FC<SocialsProps> = ({ googleId, discordId }) => {
                             />
                             <div className="min-w-0 flex-auto">
                                 <p className="text-lg">
-                                    <span className="font-bold">
-                                        Google
-                                    </span>
+                                    <span className="font-bold">Google</span>
                                 </p>
                                 <p className="mt-1 text-sm text-neutral">
                                     {t("google")}
@@ -68,7 +66,10 @@ export const Socials: React.FC<SocialsProps> = ({ googleId, discordId }) => {
                         <div className="flex shrink-0 items-start gap-4 ">
                             <div className="flex items-center justify-center gap-2">
                                 <button
-                                    className={cn("btn", google ? "btn-error" : "btn-secondary")}
+                                    className={cn(
+                                        "btn",
+                                        google ? "btn-error" : "btn-secondary"
+                                    )}
                                     onClick={connectGoogle}
                                 >
                                     {google ? t("disconnect") : t("connect")}
@@ -87,9 +88,7 @@ export const Socials: React.FC<SocialsProps> = ({ googleId, discordId }) => {
                             />
                             <div className="min-w-0 flex-auto">
                                 <p className="text-lg">
-                                    <span className="font-bold">
-                                        Discord
-                                    </span>
+                                    <span className="font-bold">Discord</span>
                                 </p>
                                 <p className="mt-1 text-sm text-neutral">
                                     {t("discord")}
@@ -99,7 +98,10 @@ export const Socials: React.FC<SocialsProps> = ({ googleId, discordId }) => {
                         <div className="flex shrink-0 items-start gap-4 ">
                             <div className="flex items-center justify-center gap-2">
                                 <button
-                                    className={cn("btn", discord ? "btn-error" : "btn-secondary")}
+                                    className={cn(
+                                        "btn",
+                                        discord ? "btn-error" : "btn-secondary"
+                                    )}
                                     onClick={connectDiscord}
                                 >
                                     {discord ? t("disconnect") : t("connect")}

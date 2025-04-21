@@ -37,9 +37,7 @@ export const LogoutSessions: React.FC<SessionsProps> = ({
         <>
             <div className="">
                 <ul role="list" className="divide-y divide-neutral">
-                    {sessions.length === 0 && (
-                        <NoResults />
-                    )}
+                    {sessions.length === 0 && <NoResults />}
                     {sessions.map((session: Session) => (
                         <li
                             key={session.id}

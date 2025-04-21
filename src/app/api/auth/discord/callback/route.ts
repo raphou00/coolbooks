@@ -12,7 +12,8 @@ export async function GET(req: NextRequest) {
         const code = url.searchParams.get("code");
         const state = url.searchParams.get("state");
         const storedState = cookies().get("discord_oauth_state")?.value ?? null;
-        const codeVerifier = cookies().get("discord_code_verifier")?.value ?? null;
+        const codeVerifier =
+            cookies().get("discord_code_verifier")?.value ?? null;
 
         if (
             code === null ||
@@ -28,18 +29,24 @@ export async function GET(req: NextRequest) {
 
         let tokens: OAuth2Tokens;
         try {
-            tokens = await discord.validateAuthorizationCode(code, codeVerifier);
+            tokens = await discord.validateAuthorizationCode(
+                code,
+                codeVerifier
+            );
         } catch {
             return NextResponse.redirect(new URL("/error?error=400", req.url));
         }
 
         const token = tokens.accessToken();
 
-        const discordResponse = await fetch("https://discord.com/api/users/@me", {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
+        const discordResponse = await fetch(
+            "https://discord.com/api/users/@me",
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        );
 
         const discordData = await discordResponse.json();
 
@@ -56,7 +63,9 @@ export async function GET(req: NextRequest) {
                     discordId,
                 },
             });
-            return NextResponse.redirect(new URL("/account/socials", env.APP_URL));
+            return NextResponse.redirect(
+                new URL("/account/socials", env.APP_URL)
+            );
         }
 
         const existingUser = await db.user.findFirst({
@@ -77,7 +86,7 @@ export async function GET(req: NextRequest) {
         });
 
         if (existingEmail) {
-            return NextResponse.redirect(new URL("/error?error=400", req.url))
+            return NextResponse.redirect(new URL("/error?error=400", req.url));
         }
 
         const newUser = await db.user.create({
@@ -92,6 +101,6 @@ export async function GET(req: NextRequest) {
 
         return NextResponse.redirect(new URL("/", env.APP_URL));
     } catch (_) {
-        return NextResponse.redirect(new URL("/error?error=403", req.url))
+        return NextResponse.redirect(new URL("/error?error=403", req.url));
     }
 }

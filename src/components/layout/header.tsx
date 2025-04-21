@@ -342,9 +342,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                         </button>
                     </div>
                     <div className="flex flex-col gap-y-2 w-full h-full overflow-y-auto p-4">
-                        {girls.length === 0 && (
-                            <NoResults />
-                        )}
+                        {girls.length === 0 && <NoResults />}
                         {girls.map((girl) => (
                             <Link
                                 key={girl.id}

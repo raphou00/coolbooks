@@ -30,7 +30,11 @@ const Page = () => {
     return (
         <Main className="mt-[30vh] flex flex-col w-full gap-y-2">
             <HeartCrack className="text-accent mx-auto h-16 w-auto" />
-            <Title text="Oops !" className="text-4xl mx-auto text-center w-fit" underline />
+            <Title
+                text="Oops !"
+                className="text-4xl mx-auto text-center w-fit"
+                underline
+            />
             <p className="text-center text-lg">{message}</p>
             <Link href="/" className="btn btn-secondary mx-auto">
                 {t("home")}

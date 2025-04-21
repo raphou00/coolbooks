@@ -135,7 +135,7 @@ const GirlEl: React.FC<GirlProps> = ({ girl, user }) => {
                                 className="flex flex-col cursor-pointer"
                                 onClick={() => openModal(m)}
                             >
-                                {m.images.length > 0 && (  
+                                {m.images.length > 0 && (
                                     <GirlImage
                                         image={m.images[0]}
                                         bought={bought}
@@ -149,7 +149,7 @@ const GirlEl: React.FC<GirlProps> = ({ girl, user }) => {
                 </div>
             </div>
             <AnimatePresence>
-                {(isModalOpen && media && selectedMedia) && (
+                {isModalOpen && media && selectedMedia && (
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}

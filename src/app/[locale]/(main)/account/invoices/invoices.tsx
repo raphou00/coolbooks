@@ -18,14 +18,12 @@ type InvoicesProps = {
 
 export const Invoices: React.FC<InvoicesProps> = ({ invoices }) => {
     const t = useTranslations("pages.account-invoices");
-    
+
     return (
         <>
             <div className="">
                 <ul role="list" className="divide-y divide-neutral">
-                    {invoices.length === 0 && (
-                        <NoResults />
-                    )}
+                    {invoices.length === 0 && <NoResults />}
                     {invoices.map((invoice: InvoiceWithGirl) => (
                         <li
                             key={invoice.id}
@@ -44,8 +42,15 @@ export const Invoices: React.FC<InvoicesProps> = ({ invoices }) => {
                                         <span className="font-bold">
                                             {invoice.girl.name}
                                         </span>{" "}
-                                        - {" "}
-                                        <span className={cn("font-bold", invoice.status === "PAID" ? "text-success" : "text-error")}>
+                                        -{" "}
+                                        <span
+                                            className={cn(
+                                                "font-bold",
+                                                invoice.status === "PAID" ?
+                                                    "text-success"
+                                                :   "text-error"
+                                            )}
+                                        >
                                             {invoice.status}
                                         </span>
                                     </p>
@@ -60,7 +65,9 @@ export const Invoices: React.FC<InvoicesProps> = ({ invoices }) => {
                             <div className="flex shrink-0 items-start gap-4 ">
                                 <div className="flex items-center justify-center gap-2">
                                     <Title
-                                        text={formatAmountForDisplay(invoice.amount)}
+                                        text={formatAmountForDisplay(
+                                            invoice.amount
+                                        )}
                                         className="font-bold text-primary"
                                     />
                                 </div>

@@ -20,7 +20,7 @@ const Page = async () => {
         redirect("/login");
     }
 
-    const invoices = await db.purchase.findMany({
+    const invoices = (await db.purchase.findMany({
         where: {
             userId: user.user.id,
         },
@@ -35,9 +35,9 @@ const Page = async () => {
                     name: true,
                     avatar: true,
                 },
-            }
-        }
-    }) as InvoiceWithGirl[];
+            },
+        },
+    })) as InvoiceWithGirl[];
 
     return (
         <>

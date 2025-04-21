@@ -117,7 +117,7 @@ export const POST = async (req: NextRequest) => {
                 amount: girl.price,
                 status: "PAID",
             },
-        })
+        });
 
         return NextResponse.json({
             success: true,

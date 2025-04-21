@@ -43,6 +43,6 @@ export async function GET(req: NextRequest) {
 
         return NextResponse.json({ url });
     } catch (_) {
-        return NextResponse.redirect(new URL("/error?error=500", req.url))
+        return NextResponse.redirect(new URL("/error?error=500", req.url));
     }
 }

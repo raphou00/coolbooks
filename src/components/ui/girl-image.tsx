@@ -13,7 +13,12 @@ type GirlImageProps = {
     className?: string;
 };
 
-const BlurImage: React.FC<GirlImageProps> = ({ image, bought, girlId, className }) => {
+const BlurImage: React.FC<GirlImageProps> = ({
+    image,
+    bought,
+    girlId,
+    className,
+}) => {
     const router = useRouter();
     const canSee = image.free || bought;
     const src = canSee ? image.src : image.blurred;
