@@ -1,6 +1,7 @@
 import * as aws from "@pulumi/aws";
 import * as pulumi from "@pulumi/pulumi";
 import * as random from "@pulumi/random";
+import { writeFileSync } from "fs";
 
 const stack = pulumi.getStack();
 
@@ -107,10 +108,10 @@ const rds = new aws.rds.Instance(`pinksea-rds-${stack}`, {
 });
 
 const dbUrl = pulumi.interpolate`postgresql://${rds.username}:${rdsPassword}@${rds.endpoint}/${rds.dbName}`;
+dbUrl.apply((url) => writeFileSync("../DATABASE_URL", url));
 
 const files = new aws.s3.Bucket(`pinksea-files-${stack}`, {
     bucket: `pinksea-files-${stack}`,
-    acl: "public-read",
     forceDestroy: true,
 });
 

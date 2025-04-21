@@ -117,7 +117,7 @@ const VideoEl: React.FC<VideoProps> = ({ video, bought, className }) => {
 
 const Locked: React.FC<LockedProps> = ({ src, width, height }) => {
     return (
-        <div className="relative overflow-hidden rounded-xl">
+        <div className="relative size-full overflow-hidden rounded-xl">
             <Image
                 src={getImage(src)}
                 alt="Locked"
@@ -126,7 +126,7 @@ const Locked: React.FC<LockedProps> = ({ src, width, height }) => {
                 className="w-full h-full object-cover"
             />
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center size-10 bg-secondary/50 rounded-full">
-                <Lock className="fill-white size-5" />
+                <Lock className="text-white size-5" />
             </div>
         </div>
     );

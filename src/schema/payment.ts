@@ -6,23 +6,23 @@ const paymentSchema = (t: TranslationsFunc) =>
         modelId: z
             .string()
             .trim()
-            .min(1, { message: t("required") }),
+            .min(1, { message: t("messages.required") }),
 
         name: z
             .string()
             .trim()
-            .min(1, { message: t("required") }),
+            .min(1, { message: t("messages.required") }),
 
         email: z
             .string()
             .trim()
-            .min(1, { message: t("required") })
-            .email({ message: t("invalid-email") }),
+            .min(1, { message: t("messages.required") })
+            .email({ message: t("messages.invalid-email") }),
 
         paymentMethodId: z
             .string()
             .trim()
-            .min(1, { message: t("required") }),
+            .min(1, { message: t("messages.required") }),
     });
 
 export type PaymentSchema = z.infer<ReturnType<typeof paymentSchema>>;

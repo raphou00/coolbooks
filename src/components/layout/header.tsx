@@ -31,6 +31,7 @@ import Title from "@/components/ui/title";
 import Modal from "@/components/ui/modal";
 import LocaleModal from "@/components//ui/locale-modal";
 import type { GirlWithMedia } from "@/components//ui/girls";
+import NoResults from "../ui/no-results";
 
 type HeaderProps = {
     user?: User | null;
@@ -341,6 +342,9 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                         </button>
                     </div>
                     <div className="flex flex-col gap-y-2 w-full h-full overflow-y-auto p-4">
+                        {girls.length === 0 && (
+                            <NoResults />
+                        )}
                         {girls.map((girl) => (
                             <Link
                                 key={girl.id}

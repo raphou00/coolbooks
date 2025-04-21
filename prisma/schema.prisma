@@ -12,6 +12,11 @@ enum Role {
   ADMIN
 }
 
+enum PurchaseStatus {
+  PAID
+  UNPAID
+}
+
 model User {
   id            String    @id @default(uuid())
   name          String
@@ -27,6 +32,7 @@ model User {
   updatedAt     DateTime  @updatedAt
   sessions      Session[]
   tokens        Token[]
+  purchases     Purchase[]
 }
 
 model Session {
@@ -65,6 +71,7 @@ model Girl {
   tags      String[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  purchases Purchase[]
 }
 
 model Media {
@@ -102,6 +109,18 @@ model Video {
   free      Boolean
   Media     Media    @relation(fields: [mediaId], references: [id], onDelete: Cascade)
   mediaId   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Purchase {
+  id        String   @id @default(uuid())
+  amount    Float
+  status    PurchaseStatus
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  girl      Girl     @relation(fields: [girlId], references: [id], onDelete: Cascade)
+  girlId    String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

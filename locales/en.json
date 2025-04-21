@@ -95,6 +95,23 @@
             "expires": "Expires:",
             "delete": "Delete"
         },
+        "account-socials": {
+            "title": "Socials",
+            "description": "Link your socials providers to your account",
+            "connect": "Connect",
+            "disconnect": "Disconnect",
+            "google": "Use google to login to your Pinksea account",
+            "discord": "Use discord to login to your Pinksea account"
+        },
+        "account-invoices": {
+            "title": "Invoices",
+            "description": "View your invoices",
+            "date": "Date",
+            "price": "Price",
+            "status": "Status",
+            "paid": "Paid",
+            "unpaid": "Unpaid"
+        },
         "account-delete": {
             "title": "Delete Account",
             "description": "Delete your account",
@@ -211,7 +228,14 @@
         "email-verified": "E-Mail successfully verified",
         "payment-success": "Payment successfully processed",
         "payment-failed": "Payment failed",
-        "girl-not-found": "Girl not found"
+        "girl-not-found": "Girl not found",
+        "add-password": "Please add a password before, <password>click here</password>",
+        "too-many-requests": "Too many requests, please try again later",
+        "forbidden": "Forbidden",
+        "bad-request": "Bad request",
+        "home": "Home",
+        "google-disconnected": "Google successfully disconnected",
+        "discord-disconnected": "Discord successfully disconnected"
     },
     "links": {
         "login": "Login",
@@ -221,6 +245,7 @@
         "profile": "Profile",
         "password": "Password",
         "sessions": "Sessions",
+        "invoices": "Invoices",
         "socials": "Socials",
         "delete-account": "Delete Account",
         "contact": "Contact us",

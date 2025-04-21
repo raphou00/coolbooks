@@ -45,7 +45,7 @@ export const AccoutMenu: React.FC<AccoutProps> = ({ user, children }) => {
                             className={cn(
                                 "link h-8 no-underline last:mt-1 last:text-error hover:underline ",
                                 link.path === pathname ?
-                                    "font-bold"
+                                    "font-bold underline"
                                 :   "font-normal"
                             )}
                         >

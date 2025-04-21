@@ -1,5 +1,5 @@
 import { useTranslations } from "next-intl";
-import { Lock, Settings2, Sparkles, Heart, Instagram } from "lucide-react";
+import { Lock, Settings2, Sparkles, Heart, Instagram, Coins } from "lucide-react";
 
 export const useGetLinks = () => {
     const t = useTranslations("links");
@@ -34,6 +34,16 @@ export const useGetAccountLinks = () => {
             title: t("sessions"),
             path: "/account/sessions",
             icon: Lock,
+        },
+        {
+            title: t("socials"),
+            path: "/account/socials",
+            icon: Coins,
+        },
+        {
+            title: t("invoices"),
+            path: "/account/invoices",
+            icon: Coins,
         },
         {
             title: t("delete-account"),

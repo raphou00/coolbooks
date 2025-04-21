@@ -13,7 +13,6 @@ import { currency } from "@/config/stripe";
 export const POST = async (req: NextRequest) => {
     const t = await getTranslations({
         locale: req.cookies.get("NEXT_LOCALE")!.value,
-        namespace: "messages",
     });
     try {
         const identifier = req.ip || req.headers.get("x-forwarded-for");
@@ -33,7 +32,7 @@ export const POST = async (req: NextRequest) => {
         if (!user?.user) {
             return NextResponse.json({
                 success: false,
-                message: t("unauthorized"),
+                message: t("messages.unauthorized"),
             });
         }
 
@@ -55,7 +54,7 @@ export const POST = async (req: NextRequest) => {
         if (!girl) {
             return NextResponse.json({
                 success: false,
-                message: t("girl-not-found"),
+                message: t("messages.girl-not-found"),
             });
         }
 
@@ -74,13 +73,13 @@ export const POST = async (req: NextRequest) => {
             console.error(err);
             return NextResponse.json({
                 success: false,
-                message: t("payment-failed"),
+                message: t("messages.payment-failed"),
             });
         }
 
         await sendEmail(
             user.user.email,
-            t("payment-success", { name: girl.name }),
+            t("messages.payment-success", { name: girl.name }),
             <Payment
                 t={t}
                 amount={girl.price}
@@ -111,6 +110,15 @@ export const POST = async (req: NextRequest) => {
             },
         });
 
+        await db.purchase.create({
+            data: {
+                userId: user.user.id,
+                girlId: body.modelId,
+                amount: girl.price,
+                status: "PAID",
+            },
+        })
+
         return NextResponse.json({
             success: true,
             redirect: "/",
@@ -119,7 +127,7 @@ export const POST = async (req: NextRequest) => {
         console.error(err);
         return NextResponse.json({
             success: false,
-            message: t("server-error"),
+            message: t("messages.server-error"),
         });
     }
 };

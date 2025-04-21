@@ -75,7 +75,7 @@ const GirlEl: React.FC<GirlProps> = ({ girl, user }) => {
     };
 
     const girlMedias = media ? [...media.images, ...media.videos] : [];
-    const m = girlMedias[currentMedia];
+    const selectedMedia = girlMedias[currentMedia];
 
     return (
         <>
@@ -135,23 +135,26 @@ const GirlEl: React.FC<GirlProps> = ({ girl, user }) => {
                                 className="flex flex-col cursor-pointer"
                                 onClick={() => openModal(m)}
                             >
-                                <GirlImage
-                                    image={m.images[0]}
-                                    bought={bought}
-                                    className="w-full h-auto rounded-xl"
-                                />
+                                {m.images.length > 0 && (  
+                                    <GirlImage
+                                        image={m.images[0]}
+                                        bought={bought}
+                                        girlId={girl.id}
+                                        className="w-full h-auto rounded-xl"
+                                    />
+                                )}
                             </div>
                         ))}
                     </div>
                 </div>
             </div>
             <AnimatePresence>
-                {isModalOpen && media && (
+                {(isModalOpen && media && selectedMedia) && (
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="fixed inset-0 h-screen w-full flex items-center justify-center z-[10000000000] bg-base-300/20 backdrop-blur sm:p-2"
+                        className="fixed inset-0 h-screen w-full flex items-center justify-center z-[10000000000] bg-base-300/50 backdrop-blur-lg sm:p-2"
                     >
                         <div className="absolute left-0 top-0 p-4 w-full flex items-center justify-between">
                             <p className="text-lg">{media.description}</p>
@@ -165,16 +168,17 @@ const GirlEl: React.FC<GirlProps> = ({ girl, user }) => {
 
                         <div className="">
                             <div className="w-[80vw] h-[80vh] w flex items-center justify-center">
-                                {m && "time" in m ?
+                                {selectedMedia && "time" in selectedMedia ?
                                     <GirlVideo
-                                        video={m as Video}
-                                        bought
-                                        className="object-contain size-full rounded-lg"
+                                        video={selectedMedia as Video}
+                                        bought={bought}
+                                        className=""
                                     />
                                 :   <GirlImage
-                                        image={m as Image}
-                                        bought
-                                        className="object-contain size-full rounded-lg"
+                                        image={selectedMedia as Image}
+                                        bought={bought}
+                                        girlId={girl.id}
+                                        className="object-contain size-full"
                                     />
                                 }
                             </div>

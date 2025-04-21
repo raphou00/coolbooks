@@ -6,7 +6,7 @@ import { PrismaAdapter } from "@lucia-auth/adapter-prisma";
 import { Lucia, TimeSpan } from "lucia";
 import db from "./db";
 import env from "./env";
-import { Discord, Google, Facebook } from "arctic";
+import { Discord, Google } from "arctic";
 
 const adapter = new PrismaAdapter(db.session, db.user);
 
@@ -91,12 +91,6 @@ export const discord = new Discord(
     env.DISCORD_CLIENT_ID,
     env.DISCORD_CLIENT_SECRET,
     env.APP_URL + "/api/auth/discord/callback"
-);
-
-export const facebook = new Facebook(
-    env.FACEBOOK_CLIENT_ID,
-    env.FACEBOOK_CLIENT_SECRET,
-    env.APP_URL + "/api/auth/facebook/callback"
 );
 
 declare module "lucia" {
