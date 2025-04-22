@@ -22,6 +22,11 @@ export const ratelimitLogin = new Ratelimit({
     limiter: Ratelimit.slidingWindow(5, "10m"),
 });
 
+export const ratelimitContact = new Ratelimit({
+    redis: redis,
+    limiter: Ratelimit.slidingWindow(3, "1h"),
+});
+
 export const ratelimitRegiser = new Ratelimit({
     redis: redis,
     limiter: Ratelimit.slidingWindow(10, "24h"),

@@ -12,7 +12,6 @@ import { ratelimitRegiser } from "@/lib/rate-limiter";
 export const POST = async (req: NextRequest) => {
     const t = await getTranslations({
         locale: req.cookies.get("NEXT_LOCALE")!.value,
-        namespace: "messages",
     });
     try {
         const identifier = req.ip || req.headers.get("x-forwarded-for");
@@ -72,7 +71,7 @@ export const POST = async (req: NextRequest) => {
     } catch (_) {
         return NextResponse.json({
             success: false,
-            message: t("server-error"),
+            message: t("messages.server-error"),
         });
     }
 };

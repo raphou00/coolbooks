@@ -48,8 +48,8 @@ const TemplateEmail: React.FC<TemplateEmailProps> = async ({
                         <Section className="mt-8">
                             <Img
                                 src={`${env.APP_URL}/pinksea.svg`}
-                                width="48"
-                                height="48"
+                                width="60px"
+                                height="60px"
                                 alt="Logo"
                             />
                         </Section>
@@ -62,11 +62,11 @@ const TemplateEmail: React.FC<TemplateEmailProps> = async ({
 
                         <Section>
                             <Row className="mb-8 w-full px-2">
-                                <Column className="w-1/3">
+                                <Column className="w-">
                                     <Img
                                         src={`${env.APP_URL}/favicon.svg`}
-                                        width="48"
-                                        height="48"
+                                        width="60px"
+                                        height="60px"
                                         alt="Logo"
                                     />
                                 </Column>
@@ -101,11 +101,11 @@ const TemplateEmail: React.FC<TemplateEmailProps> = async ({
                                         &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
                                         <Link
                                             className="text-underline text-gray-500"
-                                            href={env.APP_URL + "/cookies"}
+                                            href={env.APP_URL + "/contact"}
                                             target="_blank"
                                             rel="noopener noreferrer"
                                         >
-                                            {t("links.cookies")}
+                                            {t("links.contact")}
                                         </Link>
                                         <Text className="mb-12 text-left text-xs text-gray-500">
                                             &copy; {new Date().getFullYear()}{" "}

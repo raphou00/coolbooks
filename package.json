@@ -73,6 +73,7 @@
         "@pulumi/aws": "^6.68.0",
         "@pulumi/pulumi": "^3.149.0",
         "@pulumi/random": "^4.17.0",
+        "@react-email/preview": "^0.0.12",
         "@types/bcrypt": "^5.0.2",
         "@types/canvas-confetti": "^1.9.0",
         "@types/fluent-ffmpeg": "^2.1.27",

@@ -117,9 +117,9 @@ model Purchase {
   id        String   @id @default(uuid())
   amount    Float
   status    PurchaseStatus
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id])
   userId    String
-  girl      Girl     @relation(fields: [girlId], references: [id], onDelete: Cascade)
+  girl      Girl     @relation(fields: [girlId], references: [id])
   girlId    String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

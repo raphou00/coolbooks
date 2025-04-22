@@ -75,7 +75,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
             <header className="sticky w-full top-0 z-50">
                 <div
                     className={cn(
-                        "navbar mx-auto px-2 md:px-4 xl:px-8 bg-base-100 transition backdrop-blur-3xl",
+                        "navbar mx-auto px-2 md:px-4 bg-base-100 transition backdrop-blur-3xl",
                         scroll && ""
                     )}
                 >
@@ -160,7 +160,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                             ))}
                         </ul>
                     </div>
-                    <div className="navbar-end mr-2 space-x-2">
+                    <div className="navbar-end space-x-2">
                         <div className="relative max-w-96 w-full hidden lg:block">
                             <button
                                 onClick={() => setSearchOpen(true)}

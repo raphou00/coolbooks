@@ -1,6 +1,7 @@
 import { Resend, type CreateEmailOptions } from "resend";
 import { render } from "@react-email/components";
 import env from "@/lib/env";
+import { title } from "@/config/seo";
 
 const resend = new Resend(env.RESEND_API_KEY);
 
@@ -12,7 +13,7 @@ const sendEmail = async (
     const text = await render(react, { plainText: true });
 
     const params: CreateEmailOptions = {
-        from: env.SENDER_EMAIL,
+        from: title + " <" + env.SENDER_EMAIL + ">",
         to,
         subject,
         react,

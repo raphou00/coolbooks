@@ -5,7 +5,7 @@ export default createEnv({
     skipValidation: !!process.env.SKIP_ENV_VALIDATION,
     server: {
         NODE_ENV: z
-            .enum(["development", "test", "production"])
+            .enum(["development", "preview", "production"])
             .default("development"),
 
         APP_URL: z
@@ -29,7 +29,7 @@ export default createEnv({
 
         CLOUDFRONT_URL: z
             .string()
-            .min(1, { message: "Cloudinary URL is missing" }),
+            .min(1, { message: "Cloudfront URL is missing" }),
 
         UPSTASH_REDIS_REST_URL: z
             .string()
@@ -66,11 +66,6 @@ export default createEnv({
             .min(1, { message: "Discord Client Secret is missing" }),
     },
     client: {
-        NEXT_PUBLIC_APP_URL: z
-            .string()
-            .url({ message: "Public app URL is invalid" })
-            .min(1, { message: "Public app URL is missing" }),
-
         NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: z
             .string()
             .min(1, { message: "Stripe Publishable Key is missing" }),
@@ -80,9 +75,11 @@ export default createEnv({
             .min(1, { message: "Cloudinary URL is missing" }),
     },
     runtimeEnv: {
-        NODE_ENV: process.env.NODE_ENV,
-        APP_URL: process.env.APP_URL,
-        NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
+        NODE_ENV: process.env.VERCEL_ENV,
+        APP_URL:
+            process.env.VERCEL_URL ?
+                `https://${process.env.VERCEL_URL}`
+            :   process.env.APP_URL,
         AWS_REGION: process.env.AWS_REGION,
         AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID,
         AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY,

@@ -1,0 +1,294 @@
+{
+    "common": {
+        "yes": "はい",
+        "no": "いいえ",
+        "back": "戻る",
+        "or": "または",
+        "copyright": "全著作権所有",
+        "try": "今すぐ試す",
+        "description": "お気に入りのピンクシーガールに近づこう",
+        "no-results": "結果が見つかりません",
+        "not-found": "ページが見つかりません",
+        "back-home": "ホームに戻る"
+    },
+    "pages": {
+        "login": {
+            "title": "ログイン",
+            "description": "アカウントにログイン",
+            "email": "メールアドレス",
+            "email-placeholder": "メールアドレスを入力してください...",
+            "password": "パスワード",
+            "password-placeholder": "パスワードを入力してください...",
+            "forgot": "パスワードをお忘れですか？",
+            "submit": "ログイン",
+            "register": "アカウントをお持ちでないですか？"
+        },
+        "register": {
+            "title": "登録",
+            "description": "アカウントを作成",
+            "name": "名前",
+            "name-placeholder": "名前を入力してください...",
+            "email": "メールアドレス",
+            "email-placeholder": "メールアドレスを入力してください...",
+            "password": "パスワード",
+            "password-placeholder": "パスワードを入力してください...",
+            "submit": "登録",
+            "login": "すでにアカウントをお持ちですか？",
+            "legal": "アカウントを作成することで、<terms>利用規約</terms>と<privacy>プライバシーポリシー</privacy>に同意したことになります"
+        },
+        "logout": {
+            "title": "ログアウト",
+            "description": "ログアウトしました"
+        },
+        "reset-password": {
+            "title": "パスワードのリセット",
+            "description": "新しいパスワードを作成",
+            "password": "パスワード",
+            "password-placeholder": "パスワードを入力してください...",
+            "confirm-password": "パスワードの確認",
+            "confirm-password-placeholder": "パスワードを確認してください...",
+            "submit": "パスワードをリセット"
+        },
+        "forgot-password": {
+            "title": "パスワードを忘れた",
+            "description": "忘れたパスワードをリセット",
+            "email": "メールアドレス",
+            "email-placeholder": "メールアドレスを入力してください...",
+            "submit": "送信",
+            "info": "新しいパスワードを作成するためのリンクがメールで送信されます"
+        },
+        "verify-email": {
+            "title": "メールアドレスの確認",
+            "description": "メールアドレスに送信されたコードを入力してください",
+            "otp": "コード",
+            "submit": "確認",
+            "resend": "コードを再送信"
+        },
+        "account-profile": {
+            "title": "プロフィール",
+            "description": "プロフィールを編集",
+            "name": "名前",
+            "name-placeholder": "名前を入力してください...",
+            "email": "メールアドレス",
+            "email-placeholder": "メールアドレスを入力してください...",
+            "password": "パスワード",
+            "password-placeholder": "パスワードを入力してください...",
+            "submit": "更新"
+        },
+        "account-password": {
+            "title": "パスワード",
+            "description": "パスワードを変更",
+            "current": "現在のパスワード",
+            "current-placeholder": "現在のパスワードを入力してください...",
+            "new": "新しいパスワード",
+            "new-placeholder": "新しいパスワードを入力してください...",
+            "confirm": "パスワードの確認",
+            "confirm-placeholder": "新しいパスワードを確認してください...",
+            "change": "変更",
+            "create": "作成"
+        },
+        "account-sessions": {
+            "title": "セッション",
+            "description": "セッションを表示",
+            "current": "現在",
+            "last-seen": "最終閲覧日時：",
+            "expires": "有効期限：",
+            "delete": "削除"
+        },
+        "account-socials": {
+            "title": "ソーシャル",
+            "description": "ソーシャルプロバイダーをアカウントにリンク",
+            "connect": "接続",
+            "disconnect": "切断",
+            "google": "Googleを使用してPinkseaアカウントにログイン",
+            "discord": "Discordを使用してPinkseaアカウントにログイン"
+        },
+        "account-invoices": {
+            "title": "請求書",
+            "description": "請求書を表示",
+            "date": "日付",
+            "price": "価格",
+            "status": "状態",
+            "paid": "支払済み",
+            "unpaid": "未払い"
+        },
+        "account-delete": {
+            "title": "アカウント削除",
+            "description": "アカウントを削除",
+            "email": "メールアドレス",
+            "email-placeholder": "メールアドレスを入力してください...",
+            "confirm": "アカウントを削除するためにメールアドレスを確認してください",
+            "submit": "削除"
+        },
+        "home": {
+            "title": "ホーム",
+            "description": "",
+            "your-favorites": "お気に入り",
+            "people-favorites": "人気のお気に入り",
+            "recommended": "おすすめ",
+            "more": "すべて表示",
+            "top-girls": "注目の女の子"
+        },
+        "favorites": {
+            "title": "お気に入り",
+            "description": "お気に入りを表示",
+            "search-title": "お気に入り",
+            "search-girl": "検索..."
+        },
+        "girls": {
+            "title": "女の子",
+            "description": "すべての女の子を表示",
+            "check": "{name}の写真をチェック 👀",
+            "profile": "プロフィールへ",
+            "gallery": "ギャラリー",
+            "pay": "{price} / 永久",
+            "search-girl": "検索...",
+            "search-title": "発見",
+            "search-description": "世界中の最も美しい女の子を探索"
+        },
+        "girl": {
+            "title": "{name}",
+            "description": "{name}のプロフィールを表示",
+            "check": "{name}の写真をチェック 👀",
+            "profile": "プロフィールへ",
+            "gallery": "ギャラリー",
+            "pay": "{price} / 永久",
+            "payed": "{name}はもうあなたのものです ✌️"
+        },
+        "payment": {
+            "title": "{name}のプロフィールを購入",
+            "description": "{name}のPinkseaプロフィールを購入して、お気に入りのPinksea女の子に近づきましょう",
+            "price": "価格",
+            "buy-now": "今すぐ購入",
+            "success": "支払いが正常に処理されました",
+            "failed": "支払いに失敗しました",
+            "email": "メールアドレス",
+            "email-placeholder": "メールアドレスを入力してください...",
+            "name": "名前",
+            "name-placeholder": "カードの名義人の完全な名前を入力してください...",
+            "number": "カード番号",
+            "expiry": "有効期限",
+            "cvc": "CVC",
+            "payment": "{name}の支払い",
+            "subtotal": "小計",
+            "taxes": "税金",
+            "total": "合計",
+            "powered-by": "提供",
+            "note": "購入は最終的なものであり、返金は行われません。支払いが完了すると、コンテンツへの永久アクセスが得られます。アカウントが削除された場合、アクセスは失われ、新たな支払いが必要になります。"
+        },
+        "contact": {
+            "title": "お問い合わせ",
+            "description": "お問い合わせ",
+            "name": "名前",
+            "name-placeholder": "名前を入力してください...",
+            "email": "メールアドレス",
+            "email-placeholder": "メールアドレスを入力してください...",
+            "subject": "件名",
+            "subject-placeholder": "件名を入力してください...",
+            "message": "メッセージ",
+            "message-placeholder": "メッセージを入力してください...",
+            "submit": "送信"
+        },
+        "terms": {
+            "title": "利用規約",
+            "description": "利用規約を表示",
+            "date": "発効日: ",
+            "content": "<title>1. 概要</title>\nPinkseaは、ユーザーが限定コンテンツにアクセスするために購入できるデジタルコンテンツプラットフォームです。すべてのコンテンツはAIによって生成され、プラットフォームの所有物です。サブスクリプションはなく、コンテンツのロック解除には一回限りの支払いのみ必要です。\n\n<title>2. 適格性</title>\nPinkseaを使用するには18歳以上である必要があります。プラットフォームを使用することで、この要件を満たしていることを確認します。\n\n<title>3. ユーザーアカウント</title>\nあなたはアカウント認証情報とアクティビティに責任を持ちます。\nアカウントを共有したり、他のユーザーのアカウントにアクセスしようとしたりしないでください。\n利用規約に違反した場合、アカウントを一時停止または解除することがあります。\n\n<title>4. クリエイターとコンテンツ</title>\nPinkseaのすべてのコンテンツは、私たちが開発および管理するAIモデルによって作成されています。ユーザーによるアップロードやサードパーティのクリエイターはありません。\nPinkseaを使用することで、次のことに同意します：\n- すべてのモデルとコンテンツはフィクションであり、AIによって生成されています。\n- ユーザーはクリエイターになることやコンテンツをアップロードすることはできません。\n- プラットフォームでの支払いはすべてプラットフォームの所有者に行われます。\n\n<title>5. 支払いと返金</title>\nコンテンツへのアクセスは一回限りの支払いによって付与されます。\nすべての支払いは最終的なものであり、返金不可です。\n支払い処理は外部プロバイダーによって管理されています。\n\n<title>6. 知的財産権</title>\nPinkseaのすべてのコンテンツ、ブランド、技術は当社の所有物であるか、当社にライセンス供与されています。ユーザーはコンテンツを複製、配布、または変更することはできません。\n\n<title>7. 禁止行為</title>\n以下を行わないことに同意します：\n- コンテンツのコピー、配布、または再販\n- プラットフォームのリバースエンジニアリングや悪用を試みる\n- Pinkseaを使用する際に適用法に違反する\n\n<title>8. 終了</title>\n利用規約に違反した場合、または他の運用上または法的理由により、いつでもアクセスを一時停止または終了することがあります。\n\n<title>9. 免責事項</title>\nプラットフォームは「現状のまま」提供されています。サービスが中断されないことやエラーがないことを保証するものではありません。\nコンテンツはフィクションのキャラクター、テーマ、またはシナリオを表現している場合があり、現実を反映しているわけではありません。\n\n<title>10. 責任の制限</title>\n法律で許可される範囲内で、Pinkseaの使用に関連する間接的、偶発的、または結果的な損害に対して責任を負いません。\n\n<title>11. 変更</title>\n利用規約はいつでも更新することがあります。プラットフォームの継続的な使用は、改訂された利用規約に同意したことを意味します。\n\n<title>12. 準拠法</title>\nこれらの利用規約はスイスの法律に準拠します。紛争はスイスの管轄裁判所によって処理されます。\n\n<title>13. お問い合わせ</title>\nメール：admin@pinksea.app\n所在地：スイス"
+        },
+        "privacy": {
+            "title": "プライバシーポリシー",
+            "description": "プライバシーポリシーを表示",
+            "date": "発効日: ",
+            "content": "<title>1. はじめに</title>\nこのプライバシーポリシーは、Pinkseaがあなたの個人データをどのように収集、使用、保存、保護するかを説明しています。プラットフォームを使用することで、このポリシーに同意したことになります。\n\n<title>2. データ管理者</title>\nPinkseaはスイスから運営されており、スイスのデータ保護法（nFADP）に基づくデータ管理者として機能しています。\n\n<title>3. 収集するデータ</title>\n次の情報を収集することがあります：\n- メールアドレス\n- 支払い詳細（外部プロセッサーを通じて管理）\n- 使用データ（訪問したページ、インタラクション）\n- IPアドレスとデバイス/ブラウザ情報\n\n<title>4. データの使用方法</title>\nデータを次の目的で使用します：\n- 購入したコンテンツへのアクセスを提供する\n- プラットフォームのセキュリティを確保し、乱用を防止する\n- サービスを改善する\n- 法的義務を履行する\n\n<title>5. クッキーとトラッキング</title>\n使用パターンを理解し、プラットフォームを改善するためにクッキーと分析ツールを使用することがあります。ブラウザを通じてクッキーの設定を制御できます。\n\n<title>6. データの共有</title>\n個人データを販売することはありません。\nデータを共有するのは以下の場合のみです：\n- 支払いプロバイダー\n- 守秘義務契約の下でのサービスプロバイダー\n- 法的に要求された場合の当局\n\n<title>7. データストレージ</title>\nデータはスイスまたはEU内で安全に保存されます。データを保護するための適切な技術的および組織的対策を実施しています。\n\n<title>8. データ保持</title>\n上記の目的に必要な期間、または法律で要求される期間のみ、データを保持します。\n\n<title>9. あなたの権利</title>\nスイスのデータ保護法の下で、あなたには以下の権利があります：\n- データにアクセスする\n- 不正確なデータを修正または削除する\n- 処理に反対または制限する\n- 同意を撤回する\n権利を行使するには、admin@pinksea.appにお問い合わせください。\n\n<title>10. 国際転送</title>\nデータがスイスまたはEU外に転送される場合、標準契約条項などの法的保護措置が整っていることを確認します。\n\n<title>11. このポリシーの変更</title>\nプライバシーポリシーを更新することがあります。プラットフォームの継続的な使用は、更新されたポリシーに同意したことを意味します。\n\n<title>12. お問い合わせ</title>\nこのポリシーについて質問がある場合は、お問い合わせください：\nメール：admin@pinksea.app\n所在地：スイス"
+        }
+    },
+    "emails": {
+        "register": {
+            "title": "Pinkseaへようこそ！",
+            "hello": "こんにちは{name}さん！",
+            "body": "こんにちは、お気に入りのPinksea女の子に近づくための最高の場所に来ました。開始するには下のリンクをクリックしてください。🙏",
+            "get-started": "開始する",
+            "best": "よろしくお願いします、Pinkseaチーム"
+        },
+        "reset-password": {
+            "title": "Pinkseaのパスワードをリセット",
+            "hello": "こんにちは{name}さん！",
+            "body": "パスワードをリセットするには、下のリンクをクリックしてください。",
+            "warning": "パスワードのリセットをリクエストしていない場合は、このメールを無視してください。",
+            "link": "または、下のリンクをクリックまたはコピーして貼り付けることもできます。"
+        },
+        "payment": {
+            "title": "{girlName}の支払い",
+            "hello": "こんにちは{name}さん！",
+            "body": "{girlName}のプロフィールの支払いが完了しました。",
+            "amount": "税込みでお支払いいただいた金額は以下の通りです：",
+            "best": "よろしくお願いします、Pinkseaチーム"
+        }
+    },
+    "messages": {
+        "required": "必須",
+        "invalid-email": "無効なメールアドレス",
+        "taken-email": "すでに使用されているメールアドレス",
+        "invalid-password": "無効なパスワード",
+        "passwords-dont-match": "パスワードが一致しません",
+        "min": "最低{min}文字が必要です",
+        "max": "最大{max}文字まで許可されています",
+        "unauthorized": "権限がありません",
+        "server-error": "問題が発生しました",
+        "profile-updated": "プロフィールが正常に更新されました",
+        "already-have-password": "すでにパスワードを持っています",
+        "password-created": "パスワードが正常に作成されました",
+        "wrong-email": "メールアドレスが間違っています",
+        "account-deleted": "アカウントが正常に削除されました",
+        "session-deleted": "セッションが正常に削除されました",
+        "set-password-first": "先にパスワードを設定する必要があります",
+        "current-password-wrong": "現在のパスワードが間違っています",
+        "password-updated": "パスワードが正常に更新されました",
+        "email-sent": "メールが正常に送信されました",
+        "invalid-credentials": "無効な認証情報",
+        "logged-in": "ログインしました",
+        "logged-out": "ログアウトしました",
+        "code-invalid": "コードが無効または期限切れです",
+        "code-not-found": "コードが見つかりません",
+        "email-verified": "メールアドレスが正常に確認されました",
+        "payment-success": "支払いが正常に処理されました",
+        "payment-failed": "支払いに失敗しました",
+        "girl-not-found": "女の子が見つかりません",
+        "add-password": "先にパスワードを追加してください、<password>ここをクリック</password>",
+        "too-many-requests": "リクエストが多すぎます、後でもう一度お試しください",
+        "forbidden": "禁止されています",
+        "bad-request": "不正なリクエスト",
+        "home": "ホーム",
+        "google-disconnected": "Googleが正常に切断されました",
+        "discord-disconnected": "Discordが正常に切断されました",
+        "message-sent": "メッセージが正常に送信されました"
+    },
+    "links": {
+        "login": "ログイン",
+        "register": "登録",
+        "logout": "ログアウト",
+        "account": "アカウント",
+        "profile": "プロフィール",
+        "password": "パスワード",
+        "sessions": "セッション",
+        "invoices": "請求書",
+        "socials": "ソーシャル",
+        "delete-account": "アカウント削除",
+        "contact": "お問い合わせ",
+        "faq": "よくある質問",
+        "support": "サポート",
+        "legal": "法的情報",
+        "privacy": "プライバシーポリシー",
+        "terms": "利用規約",
+        "cookies": "クッキーポリシー",
+        "home": "ホーム",
+        "favorites": "お気に入り",
+        "girls": "女の子",
+        "theme": "テーマ",
+        "language": "言語",
+        "search": "検索",
+        "search-girl": "検索...",
+        "images": "画像",
+        "videos": "動画"
+    }
+}

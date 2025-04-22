@@ -1,0 +1,294 @@
+{
+    "common": {
+        "yes": "Sí",
+        "no": "No",
+        "back": "Atrás",
+        "or": "o",
+        "copyright": "Todos los Derechos Reservados",
+        "try": "Probar ahora",
+        "description": "Acércate a tu chica pinksea favorita",
+        "no-results": "No se encontraron resultados",
+        "not-found": "Página No Encontrada",
+        "back-home": "Volver al Inicio"
+    },
+    "pages": {
+        "login": {
+            "title": "Iniciar Sesión",
+            "description": "Inicia sesión en tu cuenta",
+            "email": "Correo Electrónico",
+            "email-placeholder": "Introduce tu correo electrónico...",
+            "password": "Contraseña",
+            "password-placeholder": "Introduce tu contraseña...",
+            "forgot": "¿Olvidaste tu Contraseña?",
+            "submit": "Iniciar Sesión",
+            "register": "¿No tienes una cuenta?"
+        },
+        "register": {
+            "title": "Registrarse",
+            "description": "Crear una cuenta",
+            "name": "Nombre",
+            "name-placeholder": "Introduce tu nombre...",
+            "email": "Correo Electrónico",
+            "email-placeholder": "Introduce tu correo electrónico...",
+            "password": "Contraseña",
+            "password-placeholder": "Introduce tu contraseña...",
+            "submit": "Registrarse",
+            "login": "¿Ya tienes una cuenta?",
+            "legal": "Al crear una cuenta, aceptas los <terms>Términos de Servicio</terms> y la <privacy>Política de Privacidad</privacy>"
+        },
+        "logout": {
+            "title": "Cerrar Sesión",
+            "description": "Sesión Cerrada"
+        },
+        "reset-password": {
+            "title": "Restablecer Contraseña",
+            "description": "Crear una nueva contraseña",
+            "password": "Contraseña",
+            "password-placeholder": "Introduce tu contraseña...",
+            "confirm-password": "Confirmar Contraseña",
+            "confirm-password-placeholder": "Confirma tu contraseña...",
+            "submit": "Restablecer Contraseña"
+        },
+        "forgot-password": {
+            "title": "Contraseña Olvidada",
+            "description": "Restablece tu contraseña olvidada",
+            "email": "Correo Electrónico",
+            "email-placeholder": "Introduce tu correo electrónico...",
+            "submit": "Enviar",
+            "info": "Se enviará un correo electrónico con un enlace para crear una nueva contraseña"
+        },
+        "verify-email": {
+            "title": "Verificar Correo Electrónico",
+            "description": "Ingresa el código enviado a tu correo electrónico",
+            "otp": "Código",
+            "submit": "Verificar",
+            "resend": "Reenviar Código"
+        },
+        "account-profile": {
+            "title": "Perfil",
+            "description": "Edita tu perfil",
+            "name": "Nombre",
+            "name-placeholder": "Introduce tu nombre...",
+            "email": "Correo Electrónico",
+            "email-placeholder": "Introduce tu correo electrónico...",
+            "password": "Contraseña",
+            "password-placeholder": "Introduce tu contraseña...",
+            "submit": "Actualizar"
+        },
+        "account-password": {
+            "title": "Contraseña",
+            "description": "Cambia tu contraseña",
+            "current": "Contraseña Actual",
+            "current-placeholder": "Introduce tu contraseña actual...",
+            "new": "Nueva Contraseña",
+            "new-placeholder": "Introduce tu nueva contraseña...",
+            "confirm": "Confirmar Contraseña",
+            "confirm-placeholder": "Confirma tu nueva contraseña...",
+            "change": "Cambiar",
+            "create": "Crear"
+        },
+        "account-sessions": {
+            "title": "Sesiones",
+            "description": "Ver tus sesiones",
+            "current": "Actual",
+            "last-seen": "Última vez visto:",
+            "expires": "Expira:",
+            "delete": "Eliminar"
+        },
+        "account-socials": {
+            "title": "Redes Sociales",
+            "description": "Vincula tus proveedores de redes sociales a tu cuenta",
+            "connect": "Conectar",
+            "disconnect": "Desconectar",
+            "google": "Usa Google para iniciar sesión en tu cuenta Pinksea",
+            "discord": "Usa Discord para iniciar sesión en tu cuenta Pinksea"
+        },
+        "account-invoices": {
+            "title": "Facturas",
+            "description": "Ver tus facturas",
+            "date": "Fecha",
+            "price": "Precio",
+            "status": "Estado",
+            "paid": "Pagado",
+            "unpaid": "No pagado"
+        },
+        "account-delete": {
+            "title": "Eliminar Cuenta",
+            "description": "Elimina tu cuenta",
+            "email": "Correo Electrónico",
+            "email-placeholder": "Introduce tu correo electrónico...",
+            "confirm": "Confirma tu correo electrónico para eliminar tu cuenta",
+            "submit": "Eliminar"
+        },
+        "home": {
+            "title": "Inicio",
+            "description": "",
+            "your-favorites": "Tus favoritas",
+            "people-favorites": "Favoritas de la gente",
+            "recommended": "Recomendadas",
+            "more": "Ver todas",
+            "top-girls": "Chicas destacadas"
+        },
+        "favorites": {
+            "title": "Favoritas",
+            "description": "Ver tus favoritas",
+            "search-title": "Favoritas",
+            "search-girl": "Mi búsqueda..."
+        },
+        "girls": {
+            "title": "Chicas",
+            "description": "Ver todas las chicas",
+            "check": "Mira algunas fotos de {name} 👀",
+            "profile": "Ir al perfil",
+            "gallery": "Galería",
+            "pay": "{price} / para siempre",
+            "search-girl": "Mi búsqueda...",
+            "search-title": "Descubrir",
+            "search-description": "Explora las chicas más hermosas de todo el mundo"
+        },
+        "girl": {
+            "title": "{name}",
+            "description": "Ver el perfil de {name}",
+            "check": "Mira algunas fotos de {name} 👀",
+            "profile": "Ir al perfil",
+            "gallery": "Galería",
+            "pay": "{price} / para siempre",
+            "payed": "{name} ya es tuya ✌️"
+        },
+        "payment": {
+            "title": "Comprar el perfil de {name}",
+            "description": "Compra el perfil pinksea de {name}, para acercarte más a tu chica pinksea favorita",
+            "price": "Precio",
+            "buy-now": "Comprar ahora",
+            "success": "Pago procesado con éxito",
+            "failed": "Pago fallido",
+            "email": "Correo Electrónico",
+            "email-placeholder": "Introduce tu correo electrónico...",
+            "name": "Nombre",
+            "name-placeholder": "Introduce el nombre completo de la tarjeta...",
+            "number": "Número de Tarjeta",
+            "expiry": "Fecha de Caducidad",
+            "cvc": "CVC",
+            "payment": "Pago por {name}",
+            "subtotal": "Subtotal",
+            "taxes": "Impuestos",
+            "total": "Total",
+            "powered-by": "Impulsado por",
+            "note": "Si las compras son definitivas — no se emitirán reembolsos. Una vez completado el pago, tendrás acceso de por vida al contenido. Si tu cuenta es eliminada, se perderá el acceso y se requerirá un nuevo pago."
+        },
+        "contact": {
+            "title": "Contacto",
+            "description": "Contáctanos",
+            "name": "Nombre",
+            "name-placeholder": "Introduce tu nombre...",
+            "email": "Correo Electrónico",
+            "email-placeholder": "Introduce tu correo electrónico...",
+            "subject": "Asunto",
+            "subject-placeholder": "Introduce un asunto...",
+            "message": "Mensaje",
+            "message-placeholder": "Introduce tu mensaje...",
+            "submit": "Enviar"
+        },
+        "terms": {
+            "title": "Términos de Servicio",
+            "description": "Ver nuestros términos de servicio",
+            "date": "Fecha de entrada en vigor: ",
+            "content": "<title>1. Visión General</title>\nPinksea es una plataforma de contenido digital donde los usuarios pueden comprar acceso a contenido exclusivo. Todo el contenido es generado por IA y es propiedad de la plataforma. Sin suscripciones — solo pagos únicos para desbloquear contenido.\n\n<title>2. Elegibilidad</title>\nDebes tener 18 años o más para usar Pinksea. Al usar la plataforma, confirmas que cumples con este requisito.\n\n<title>3. Cuentas de Usuario</title>\nEres responsable de tus credenciales de cuenta y actividad.\nNo compartas tu cuenta ni intentes acceder a la cuenta de otro usuario.\nPodemos suspender o cancelar tu cuenta si violas estos Términos.\n\n<title>4. Creadores y Contenido</title>\nTodo el contenido en Pinksea es creado por modelos de IA desarrollados y gestionados por nosotros. No hay cargas de usuarios ni creadores de terceros.\nAl usar Pinksea, aceptas que:\n- Todos los modelos y contenidos son ficticios y generados por IA.\n- Los usuarios no pueden convertirse en creadores ni subir ningún contenido.\n- Todos los pagos realizados en la plataforma van al propietario de la plataforma.\n\n<title>5. Pagos y Reembolsos</title>\nEl acceso al contenido se concede mediante pagos únicos.\nTodos los pagos son finales y no reembolsables.\nEl procesamiento de pagos es gestionado por proveedores externos.\n\n<title>6. Propiedad Intelectual</title>\nTodo el contenido, marca y tecnología en Pinksea son propiedad nuestra o están licenciados para nosotros. Los usuarios no pueden reproducir, distribuir o modificar ningún contenido.\n\n<title>7. Conducta Prohibida</title>\nAceptas no:\n- Copiar, distribuir o revender cualquier contenido\n- Intentar realizar ingeniería inversa o hacer un mal uso de la plataforma\n- Violar cualquier ley aplicable mientras usas Pinksea\n\n<title>8. Terminación</title>\nPodemos suspender o terminar tu acceso en cualquier momento si incumples estos Términos o por cualquier otra razón operativa o legal.\n\n<title>9. Descargos de Responsabilidad</title>\nLa plataforma se proporciona \"tal cual\". No garantizamos que el servicio sea ininterrumpido o esté libre de errores.\nEl contenido puede representar personajes, temas o escenarios ficticios que no reflejan la realidad.\n\n<title>10. Limitación de Responsabilidad</title>\nEn la medida permitida por la ley, no somos responsables de ningún daño indirecto, incidental o consecuente relacionado con tu uso de Pinksea.\n\n<title>11. Modificaciones</title>\nPodemos actualizar estos Términos en cualquier momento. El uso continuado de la plataforma significa que aceptas los Términos revisados.\n\n<title>12. Ley Aplicable</title>\nEstos Términos se rigen por las leyes de Suiza. Cualquier disputa será manejada por los tribunales competentes en Suiza.\n\n<title>13. Contacto</title>\nCorreo electrónico: admin@pinksea.app\nUbicación: Suiza"
+        },
+        "privacy": {
+            "title": "Política de Privacidad",
+            "description": "Ver nuestra política de privacidad",
+            "date": "Fecha de entrada en vigor: ",
+            "content": "<title>1. Introducción</title>\nEsta Política de Privacidad explica cómo Pinksea recopila, utiliza, almacena y protege tus datos personales. Al usar la plataforma, aceptas esta política.\n\n<title>2. Responsable del Tratamiento de Datos</title>\nPinksea opera desde Suiza y actúa como responsable del tratamiento de datos según las leyes suizas de protección de datos (nFADP).\n\n<title>3. Datos que Recopilamos</title>\nPodemos recopilar la siguiente información:\n- Dirección de correo electrónico\n- Detalles de pago (gestionados a través de procesadores externos)\n- Datos de uso (páginas visitadas, interacciones)\n- Dirección IP e información del dispositivo/navegador\n\n<title>4. Cómo Utilizamos tus Datos</title>\nUtilizamos tus datos para:\n- Proporcionar acceso a contenido comprado\n- Garantizar la seguridad de la plataforma y prevenir abusos\n- Mejorar nuestros servicios\n- Cumplir con obligaciones legales\n\n<title>5. Cookies y Seguimiento</title>\nPodemos utilizar cookies y herramientas de análisis para entender los patrones de uso y mejorar la plataforma. Puedes controlar la configuración de cookies a través de tu navegador.\n\n<title>6. Compartición de Datos</title>\nNo vendemos tus datos personales.\nSolo compartimos datos con:\n- Proveedores de pago\n- Proveedores de servicios bajo acuerdos de confidencialidad\n- Autoridades cuando sea legalmente requerido\n\n<title>7. Almacenamiento de Datos</title>\nLos datos se almacenan de forma segura en Suiza o en la UE. Implementamos medidas técnicas y organizativas apropiadas para proteger tus datos.\n\n<title>8. Retención de Datos</title>\nConservamos tus datos solo durante el tiempo necesario para los fines mencionados anteriormente o según lo requiera la ley.\n\n<title>9. Tus Derechos</title>\nBajo la ley suiza de protección de datos, tienes derecho a:\n- Acceder a tus datos\n- Corregir o eliminar datos inexactos\n- Oponerte o restringir el procesamiento\n- Retirar el consentimiento\nContáctanos en admin@pinksea.app para ejercer tus derechos.\n\n<title>10. Transferencias Internacionales</title>\nSi los datos se transfieren fuera de Suiza o la UE, nos aseguramos de que existan salvaguardas legales como cláusulas contractuales estándar.\n\n<title>11. Cambios en esta Política</title>\nPodemos actualizar esta Política de Privacidad. El uso continuado de la plataforma significa que aceptas la política actualizada.\n\n<title>12. Contacto</title>\nSi tienes preguntas sobre esta política, contacta:\nCorreo electrónico: admin@pinksea.app\nUbicación: Suiza"
+        }
+    },
+    "emails": {
+        "register": {
+            "title": "¡Bienvenido a Pinksea!",
+            "hello": "¡Hola {name}!",
+            "body": "Hola, ahora estás en el mejor lugar para acercarte a tu chica pinksea favorita. Haz clic en el enlace de abajo para comenzar. 🙏",
+            "get-started": "Comenzar",
+            "best": "Saludos cordiales, Equipo Pinksea"
+        },
+        "reset-password": {
+            "title": "Restablece tu contraseña de Pinksea",
+            "hello": "¡Hola {name}!",
+            "body": "Por favor, haz clic en el enlace de abajo para restablecer tu contraseña.",
+            "warning": "Si no solicitaste un restablecimiento de contraseña, por favor ignora este correo electrónico.",
+            "link": "También puedes hacer clic o copiar y pegar el enlace de abajo."
+        },
+        "payment": {
+            "title": "Pago por {girlName}",
+            "hello": "¡Hola {name}!",
+            "body": "Has pagado con éxito por el perfil de {girlName}.",
+            "amount": "Esta es la cantidad que has pagado, impuestos incluidos:",
+            "best": "Saludos cordiales, Equipo Pinksea"
+        }
+    },
+    "messages": {
+        "required": "Requerido",
+        "invalid-email": "Correo Electrónico Inválido",
+        "taken-email": "Correo Electrónico ya en uso",
+        "invalid-password": "Contraseña inválida",
+        "passwords-dont-match": "Las contraseñas no coinciden",
+        "min": "Se requieren mínimo {min} caracteres",
+        "max": "Máximo {max} caracteres permitidos",
+        "unauthorized": "No autorizado",
+        "server-error": "Algo salió mal",
+        "profile-updated": "Perfil actualizado con éxito",
+        "already-have-password": "Ya tienes una contraseña",
+        "password-created": "Contraseña creada con éxito",
+        "wrong-email": "Correo Electrónico incorrecto",
+        "account-deleted": "Cuenta eliminada con éxito",
+        "session-deleted": "Sesión eliminada con éxito",
+        "set-password-first": "Necesitas establecer una contraseña primero",
+        "current-password-wrong": "La contraseña actual es incorrecta",
+        "password-updated": "Contraseña actualizada con éxito",
+        "email-sent": "Correo electrónico enviado con éxito",
+        "invalid-credentials": "Credenciales inválidas",
+        "logged-in": "Sesión iniciada",
+        "logged-out": "Sesión cerrada",
+        "code-invalid": "Código inválido o expirado",
+        "code-not-found": "Código no encontrado",
+        "email-verified": "Correo electrónico verificado con éxito",
+        "payment-success": "Pago procesado con éxito",
+        "payment-failed": "Pago fallido",
+        "girl-not-found": "Chica no encontrada",
+        "add-password": "Por favor añade una contraseña antes, <password>haz clic aquí</password>",
+        "too-many-requests": "Demasiadas solicitudes, por favor intenta de nuevo más tarde",
+        "forbidden": "Prohibido",
+        "bad-request": "Solicitud incorrecta",
+        "home": "Inicio",
+        "google-disconnected": "Google desconectado con éxito",
+        "discord-disconnected": "Discord desconectado con éxito",
+        "message-sent": "Mensaje enviado con éxito"
+    },
+    "links": {
+        "login": "Iniciar Sesión",
+        "register": "Registrarse",
+        "logout": "Cerrar Sesión",
+        "account": "Cuenta",
+        "profile": "Perfil",
+        "password": "Contraseña",
+        "sessions": "Sesiones",
+        "invoices": "Facturas",
+        "socials": "Redes Sociales",
+        "delete-account": "Eliminar Cuenta",
+        "contact": "Contáctanos",
+        "faq": "Preguntas Frecuentes",
+        "support": "Soporte",
+        "legal": "Legal",
+        "privacy": "Política de Privacidad",
+        "terms": "Términos de Servicio",
+        "cookies": "Política de Cookies",
+        "home": "Inicio",
+        "favorites": "Favoritas",
+        "girls": "Chicas",
+        "theme": "Tema",
+        "language": "Idioma",
+        "search": "Buscar",
+        "search-girl": "Mi búsqueda...",
+        "images": "Imágenes",
+        "videos": "Videos"
+    }
+}

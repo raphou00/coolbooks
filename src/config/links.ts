@@ -92,21 +92,8 @@ export const useGetFooterLinks = () => {
                     path: "/terms",
                 },
                 {
-                    title: t("cookies"),
-                    path: "/cookies",
-                },
-            ],
-        },
-        {
-            title: t("support"),
-            links: [
-                {
                     title: t("contact"),
                     path: "/contact",
-                },
-                {
-                    title: t("faq"),
-                    path: "/faq",
                 },
             ],
         },

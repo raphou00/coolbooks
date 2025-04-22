@@ -13,15 +13,15 @@ const registerSchema = (t: TranslationsFunc) =>
             .string()
             .trim()
             .max(maxUsernameLength, {
-                message: t("max", { max: maxUsernameLength }),
+                message: t("messages.max", { max: maxUsernameLength }),
             })
-            .min(1, { message: t("required") }),
+            .min(1, { message: t("messages.required") }),
 
         email: z
             .string()
             .trim()
-            .email({ message: t("invalid-email") })
-            .min(1, { message: t("required") })
+            .email({ message: t("messages.invalid-email") })
+            .min(1, { message: t("messages.required") })
             .refine(
                 async (email) => {
                     const user = await db.user.findUnique({
@@ -29,19 +29,19 @@ const registerSchema = (t: TranslationsFunc) =>
                     });
                     return !user;
                 },
-                { message: t("taken-email") }
+                { message: t("messages.taken-email") }
             ),
 
         password: z
             .string()
             .trim()
             .max(maxPasswordLength, {
-                message: t("max", { max: maxPasswordLength }),
+                message: t("messages.max", { max: maxPasswordLength }),
             })
             .min(minPasswordLength, {
-                message: t("min", { min: minPasswordLength }),
+                message: t("messages.min", { min: minPasswordLength }),
             })
-            .min(1, { message: t("required") }),
+            .min(1, { message: t("messages.required") }),
     });
 
 export type RegisterSchema = z.infer<ReturnType<typeof registerSchema>>;

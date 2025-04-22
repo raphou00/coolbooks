@@ -1,12 +1,43 @@
+import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 import Main from "@/components/layout/main";
 import Title from "@/components/ui/title";
+import DateEl from "@/components/ui/date";
+
+const generateMetadata = async (): Promise<Metadata> => {
+    const t = await getTranslations("pages");
+    return {
+        title: t("terms.title"),
+        description: t("terms.description"),
+    };
+};
 
 const Page = async () => {
+    const t = await getTranslations("pages.terms");
     return (
-        <Main>
-            <Title text="Terms" className="text-4xl mx-auto" underline />
+        <Main className="max-w-3xl mx-auto">
+            <Title
+                text={t("title")}
+                className="text-4xl mx-auto w-fit text-center"
+                underline
+            />
+            <p className="mt-2 text-center">
+                {t("date")} <DateEl date={new Date("2025-04-20")} />
+            </p>
+
+            <div className="mt-6">
+                {t.rich("content", {
+                    title: (chunk) => (
+                        <Title
+                            text={chunk!.toString()}
+                            className="text-lg mt-4"
+                        />
+                    ),
+                })}
+            </div>
         </Main>
     );
 };
 
+export { generateMetadata };
 export default Page;

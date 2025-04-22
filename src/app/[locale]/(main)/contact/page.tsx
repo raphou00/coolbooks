@@ -1,12 +1,23 @@
+import { type Metadata } from "next";
 import Main from "@/components/layout/main";
-import Title from "@/components/ui/title";
+import Contact from "./contact";
+import { getTranslations } from "next-intl/server";
+
+const generateMetadata = async (): Promise<Metadata> => {
+    const t = await getTranslations("pages");
+    return {
+        title: t("contact.title"),
+        description: t("contact.description"),
+    };
+};
 
 const Page = async () => {
     return (
-        <Main>
-            <Title text="Contact" className="text-4xl mx-auto" underline />
+        <Main className="mt-8">
+            <Contact />
         </Main>
     );
 };
 
+export { generateMetadata };
 export default Page;
