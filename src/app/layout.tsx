@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
+import { Inter } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages, getTranslations } from "next-intl/server";
 import { locales } from "@/lib/navigation";
@@ -9,7 +9,7 @@ import * as metadata from "@/config/seo";
 import RootProviders from "./providers";
 import "@/styles/globals.css";
 
-const poppins = Poppins({
+const inter = Inter({
     subsets: ["latin"],
     weight: ["500"],
 });
@@ -52,7 +52,7 @@ const Root = async ({ children }: React.PropsWithChildren) => {
 
     return (
         <html lang={locale} suppressHydrationWarning>
-            <body className={cn("bg-base-100", poppins.className)}>
+            <body className={cn("bg-base-100", inter.className)}>
                 <RootProviders>
                     <NextIntlClientProvider messages={messages}>
                         {children}
