@@ -76,10 +76,7 @@ export default createEnv({
     },
     runtimeEnv: {
         NODE_ENV: process.env.VERCEL_ENV,
-        APP_URL:
-            process.env.VERCEL_URL ?
-                `https://${process.env.VERCEL_URL}`
-            :   process.env.APP_URL,
+        APP_URL: process.env.APP_URL,
         AWS_REGION: process.env.AWS_REGION,
         AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID,
         AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY,
