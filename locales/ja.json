@@ -123,8 +123,7 @@
         "home": {
             "title": "ホーム",
             "description": "",
-            "your-favorites": "お気に入り",
-            "people-favorites": "人気のお気に入り",
+            "favorites": "お気に入り",
             "recommended": "おすすめ",
             "more": "すべて表示",
             "top-girls": "注目の女の子"

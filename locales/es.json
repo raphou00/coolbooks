@@ -123,8 +123,7 @@
         "home": {
             "title": "Inicio",
             "description": "",
-            "your-favorites": "Tus favoritas",
-            "people-favorites": "Favoritas de la gente",
+            "favorites": "Favoritas",
             "recommended": "Recomendadas",
             "more": "Ver todas",
             "top-girls": "Chicas destacadas"

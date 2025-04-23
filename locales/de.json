@@ -123,8 +123,7 @@
         "home": {
             "title": "Startseite",
             "description": "",
-            "your-favorites": "Deine Favoriten",
-            "people-favorites": "Favoriten der anderen",
+            "favorites": "Favoriten",
             "recommended": "Empfohlen",
             "more": "Alle anzeigen",
             "top-girls": "Top Girls"

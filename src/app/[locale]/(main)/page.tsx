@@ -11,7 +11,6 @@ import { Carousel, Card } from "@/components/ui/carousel";
 
 const Page = async () => {
     const t = await getTranslations("pages.home");
-    const user = await getUser();
 
     const popular = await db.girl.findMany({
         orderBy: {
@@ -59,11 +58,7 @@ const Page = async () => {
                     <div className="flex items-center gap-x-2">
                         <Heart className="size-6 text-secondary fill-primary" />
                         <Title
-                            text={
-                                user ?
-                                    t("your-favorites")
-                                :   t("people-favorites")
-                            }
+                            text={t("favorites")}
                             className="text-lg md:text-xl lg:text-2xl"
                         />
                     </div>
