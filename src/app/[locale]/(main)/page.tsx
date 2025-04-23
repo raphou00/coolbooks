@@ -1,7 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import { ArrowRight, Heart, Sparkles } from "lucide-react";
 import db from "@/lib/db";
-import { getUser } from "@/lib/auth";
 import { Link } from "@/lib/navigation";
 import { findGirlsWithMedias } from "@/config/girl";
 import Main from "@/components/layout/main";
