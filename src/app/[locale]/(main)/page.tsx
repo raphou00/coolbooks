@@ -53,7 +53,7 @@ const Page = async () => {
                 <Carousel items={cards} />
             </div>
             <div className="mb-6 mt-1">
-                <div className="flex items-center justify-start gap-x-10 mb-6">
+                <div className="flex items-center justify-start max-sm:justify-between gap-x-4 mb-6">
                     <div className="flex items-center gap-x-2">
                         <Heart className="size-6 text-secondary fill-primary" />
                         <Title
@@ -74,7 +74,7 @@ const Page = async () => {
             </div>
 
             <div className="my-12">
-                <div className="flex items-center justify-start gap-x-10 mb-6">
+                <div className="flex items-center justify-start max-sm:justify-between gap-x-4 mb-6">
                     <div className="flex items-center gap-x-2">
                         <Sparkles className="size-6 text-secondary fill-primary" />
                         <Title

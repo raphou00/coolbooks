@@ -18,6 +18,7 @@ import {
     SearchIcon,
     X,
     Home,
+    MapPin,
 } from "lucide-react";
 import { Link, usePathname, useRouter } from "@/lib/navigation";
 import { cn, formatAmountForDisplay } from "@/lib/utils";
@@ -117,7 +118,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                 </div>
                             </div>
                             <div tabIndex={0} className="dropdown-content pt-2">
-                                <div className="w-[calc(100vw-30px)] space-y-1 rounded-xl bg-base-200 border border-neutral/10 p-2 shadow-lg md:w-72">
+                                <div className="w-[calc(100vw-16px)] space-y-1 rounded-xl bg-base-100 p-2 shadow-xl md:w-72">
                                     {links.map((item) => (
                                         <Link
                                             key={item.title}
@@ -174,7 +175,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                         </div>
 
                         <button
-                            className="btn w-10 h-10 min-h-10 btn-circle btn-outline lg:hidden"
+                            className="btn btn-circle bg-neutral/10 lg:hidden"
                             onClick={() => setSearchOpen(true)}
                         >
                             <Search className="size-5" />
@@ -192,13 +193,13 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                         alt={user.name}
                                         className="size-11 lg:size-12"
                                     />
-                                :   <button className="btn btn-circle bg-neutral/20">
+                                :   <button className="btn btn-circle bg-neutral/10">
                                         <UserIcon className="size-6" />
                                     </button>
                                 }
                             </div>
                             <div tabIndex={0} className="dropdown-content pt-2">
-                                <div className="w-[calc(100vw-30px)] space-y-1 rounded-xl bg-base-200 border border-neutral/10 p-2 shadow-lg md:w-72">
+                                <div className="w-[calc(100vw-16px)] space-y-1 rounded-xl bg-base-100 p-2 shadow-xl md:w-72">
                                     {user ?
                                         <>
                                             <div className="my-2 flex flex-col items-center justify-center gap-y-2">
@@ -364,7 +365,8 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                         <div className="text-lg font-bold">
                                             {girl.name}
                                         </div>
-                                        <div className="text-sm opacity-50">
+                                        <div className="text-sm opacity-50 flex gap-x-1 items-center">
+                                            <MapPin className="size-4" />
                                             {girl.origin}
                                         </div>
                                     </div>

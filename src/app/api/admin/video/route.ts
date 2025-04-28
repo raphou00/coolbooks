@@ -20,9 +20,7 @@ export const POST = async (req: NextRequest) => {
             });
         }
 
-        body.free = Boolean(body.free);
-
-        await createVideo(body.mediaId, body.video, body.free);
+        await createVideo(body.mediaId, body.video, body.free === "true");
 
         return NextResponse.json({
             success: true,

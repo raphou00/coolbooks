@@ -60,7 +60,7 @@ export const POST = async (req: NextRequest) => {
 
         try {
             const paymentIntent = await stripe.paymentIntents.create({
-                amount: formatAmountForStripe(girl.price),
+                amount: formatAmountForStripe(body.amount),
                 currency: currency,
                 payment_method_types: ["card"],
                 payment_method: body.paymentMethodId,

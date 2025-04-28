@@ -152,7 +152,8 @@
             "profile": "Go to profile",
             "gallery": "Gallery",
             "pay": "{price} / forever",
-            "payed": "{name} is already yours ✌️"
+            "payed": "{name} is already yours ✌️",
+            "tip": "Tip {name}"
         },
         "payment": {
             "title": "Buy {name}'s profile",
@@ -165,6 +166,8 @@
             "email-placeholder": "Enter your e-mail...",
             "name": "Name",
             "name-placeholder": "Enter your full card name...",
+            "amount": "Amount",
+            "amount-placeholder": "10.00",
             "number": "Card Number",
             "expiry": "Expiry",
             "cvc": "CVC",
@@ -260,7 +263,9 @@
         "home": "Home",
         "google-disconnected": "Google successfully disconnected",
         "discord-disconnected": "Discord successfully disconnected",
-        "message-sent": "Message successfully sent"
+        "message-sent": "Message successfully sent",
+        "min-amount": "Minimum amount is {amount}",
+        "max-amount": "Maximum amount is {amount}"
     },
     "links": {
         "login": "Login",
