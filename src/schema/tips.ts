@@ -8,11 +8,15 @@ const tipsSchema = (t: TranslationsFunc) =>
             .string()
             .trim()
             .min(1, { message: t("messages.required") }),
-        
+
         amount: z
             .number()
-            .max(maxAmount, { message: t("messages.max-amount", { max: maxAmount }) })
-            .min(minAmount, { message: t("messages.min-amount", { min: minAmount }) }),
+            .max(maxAmount, {
+                message: t("messages.max-amount", { max: maxAmount }),
+            })
+            .min(minAmount, {
+                message: t("messages.min-amount", { min: minAmount }),
+            }),
 
         name: z
             .string()

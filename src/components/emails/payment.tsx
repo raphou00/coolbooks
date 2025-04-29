@@ -1,10 +1,4 @@
-import {
-    Column,
-    Container,
-    Row,
-    Section,
-    Text,
-} from "@react-email/components";
+import { Column, Container, Row, Section, Text } from "@react-email/components";
 import TemplateEmail from "./template";
 import type { TranslationsFunc } from "@/lib/types";
 
@@ -37,9 +31,7 @@ const Payment: React.FC<EmailProps> = async ({ t, amount, name, girlName }) => {
                             </Text>
                         </Row>
                         <Row>
-                            <Text
-                                className="rounded-xl bg-secondary w-full px-6 py-4 text-center text-3xl font-bold text-white"
-                            >
+                            <Text className="rounded-xl bg-secondary w-full px-6 py-4 text-center text-3xl font-bold text-white">
                                 {amount}
                             </Text>
                         </Row>

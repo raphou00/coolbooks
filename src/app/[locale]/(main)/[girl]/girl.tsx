@@ -3,7 +3,14 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import type { Image, Video } from "@prisma/client";
-import { ChevronLeft, ChevronRight, Heart, ImageIcon, MapPin, X } from "lucide-react";
+import {
+    ChevronLeft,
+    ChevronRight,
+    Heart,
+    ImageIcon,
+    MapPin,
+    X,
+} from "lucide-react";
 import { useTranslations } from "next-intl";
 import type { User } from "lucia";
 import { formatAmountForDisplay, getImage } from "@/lib/utils";
@@ -25,7 +32,9 @@ const GirlEl: React.FC<GirlProps> = ({ girl, user }) => {
     const [currentMedia, setCurrentMedia] = useState<number>(0);
     const [media, setMedia] = useState<MediaProps | null>(null);
     const mediaCount = media ? media.images.length + media.videos.length : 0;
-    const totalMediaCount = girl.medias.map(e => e.images.length + e.videos.length).reduce((a, b) => a + b, 0);
+    const totalMediaCount = girl.medias
+        .map((e) => e.images.length + e.videos.length)
+        .reduce((a, b) => a + b, 0);
     const bought = user?.girls.includes(girl.id) || false;
 
     const openModal = (media: MediaProps) => {
@@ -78,12 +87,17 @@ const GirlEl: React.FC<GirlProps> = ({ girl, user }) => {
                 </div>
                 <div className="flex items-center justify-end gap-x-4 mt-2">
                     <Link
-                        href={bought ? `/tips/${girl.id}` : `/payment/${girl.id}`}
+                        href={
+                            bought ? `/tips/${girl.id}` : `/payment/${girl.id}`
+                        }
                         className="btn rounded-full h-11 min-h-11 btn-secondary"
                     >
-                        {bought ? t("tip") : t("pay", {
-                            price: formatAmountForDisplay(girl.price),
-                        })}
+                        {bought ?
+                            t("tip")
+                        :   t("pay", {
+                                price: formatAmountForDisplay(girl.price),
+                            })
+                        }
                     </Link>
                 </div>
                 <div className="flex flex-col mt-6 md:mt-8 space-y-2">
