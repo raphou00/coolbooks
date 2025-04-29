@@ -152,8 +152,11 @@
             "profile": "Go to profile",
             "gallery": "Gallery",
             "pay": "{price} / forever",
-            "payed": "{name} is already yours ✌️",
-            "tip": "Tip {name}"
+            "tip": "Tip",
+            "payment-success": "Payment successfully processed",
+            "payment-failed": "Payment failed",
+            "tips-success": "Tip successfully processed",
+            "tips-failed": "Tip failed"
         },
         "payment": {
             "title": "Buy {name}'s profile",
@@ -180,7 +183,7 @@
             "title": "Tip for {name}",
             "description": "Send a tip to {name}",
             "price": "Price",
-            "buy-now": "Buy now",
+            "tip-now": "Send tip",
             "success": "Payment successfully processed",
             "failed": "Payment failed",
             "email": "E-Mail",
@@ -192,7 +195,7 @@
             "number": "Card Number",
             "expiry": "Expiry",
             "cvc": "CVC",
-            "payment": "Payment for {name}",
+            "tip": "Tip for {name}",
             "subtotal": "Subtotal",
             "taxes": "Taxes",
             "total": "Total",
@@ -295,8 +298,8 @@
         "google-disconnected": "Google successfully disconnected",
         "discord-disconnected": "Discord successfully disconnected",
         "message-sent": "Message successfully sent",
-        "min-amount": "Minimum amount is {amount}",
-        "max-amount": "Maximum amount is {amount}"
+        "min-amount": "Minimum amount is {min}",
+        "max-amount": "Maximum amount is {max}"
     },
     "links": {
         "login": "Login",

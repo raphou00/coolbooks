@@ -27,6 +27,7 @@ export const POST = async (req: NextRequest) => {
         const { error } = tipsSchema(t).safeParse(body);
 
         if (error) {
+            console.error(error);
             return NextResponse.json({
                 success: false,
                 errors: error.flatten().fieldErrors,
@@ -60,8 +61,8 @@ export const POST = async (req: NextRequest) => {
         } catch (err) {
             console.error(err);
             return NextResponse.json({
-                success: false,
-                message: t("messages.tips-failed"),
+                success: true,
+                redirect: `/${girl.username}?tips=failed`,
             });
         }
 

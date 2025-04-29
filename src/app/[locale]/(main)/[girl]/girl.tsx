@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import type { Image, Video } from "@prisma/client";
 import {
@@ -10,6 +10,7 @@ import {
     ImageIcon,
     MapPin,
     X,
+    DollarSign
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import type { User } from "lucia";
@@ -20,6 +21,8 @@ import ImageEl from "@/components/ui/image";
 import GirlVideo from "@/components/ui/girl-video";
 import GirlImage from "@/components/ui/girl-image";
 import type { GirlWithMedia, MediaProps } from "@/components/ui/girls";
+import { useSearchParams } from "next/navigation";
+import toast from "react-hot-toast";
 
 type GirlProps = {
     girl: GirlWithMedia;
@@ -36,6 +39,21 @@ const GirlEl: React.FC<GirlProps> = ({ girl, user }) => {
         .map((e) => e.images.length + e.videos.length)
         .reduce((a, b) => a + b, 0);
     const bought = user?.girls.includes(girl.id) || false;
+    const searchParams = useSearchParams();
+    const payment = searchParams.get("payment");
+    const tip = searchParams.get("tips");
+
+    useEffect(() => {
+        if (payment === "success") {
+            toast.success(t("payment-success"));
+        } else if (payment === "failed") {
+            toast.error(t("payment-failed"));
+        } else if (tip === "success") {
+            toast.success(t("tips-success"));
+        } else if (tip === "failed") {
+            toast.error(t("tips-failed"));
+        }
+    }, []);
 
     const openModal = (media: MediaProps) => {
         setMedia(media);
@@ -92,6 +110,7 @@ const GirlEl: React.FC<GirlProps> = ({ girl, user }) => {
                         }
                         className="btn rounded-full h-11 min-h-11 btn-secondary"
                     >
+                        <DollarSign className="size-4 md:size-5" />
                         {bought ?
                             t("tip")
                         :   t("pay", {

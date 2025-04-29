@@ -23,12 +23,6 @@ const tipsSchema = (t: TranslationsFunc) =>
             .trim()
             .min(1, { message: t("messages.required") }),
 
-        email: z
-            .string()
-            .trim()
-            .min(1, { message: t("messages.required") })
-            .email({ message: t("messages.invalid-email") }),
-
         paymentMethodId: z
             .string()
             .trim()

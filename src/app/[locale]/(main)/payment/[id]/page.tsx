@@ -4,6 +4,7 @@ import db from "@/lib/db";
 import { redirect } from "@/lib/navigation";
 import Main from "@/components/layout/main";
 import Payment from "./payment";
+import { getUser } from "@/lib/auth";
 
 const generateMetadata = async ({
     params,
@@ -23,6 +24,12 @@ const generateMetadata = async ({
 };
 
 const Page = async ({ params }: { params: { id: string } }) => {
+    const user = await getUser();
+
+    if (!user?.user) {
+        redirect("/login");
+    }
+    
     const modelId = params.id;
     const girl = await db.girl.findUnique({
         where: { id: modelId },

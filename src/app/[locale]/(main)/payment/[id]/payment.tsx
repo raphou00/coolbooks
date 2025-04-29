@@ -64,7 +64,6 @@ const CheckoutForm: React.FC<PaymentProps> = ({ girl }) => {
             card: cardNumberElement!,
             billing_details: {
                 name: data.name,
-                email: data.email,
             },
         });
 
@@ -98,14 +97,6 @@ const CheckoutForm: React.FC<PaymentProps> = ({ girl }) => {
                     <FormReponse
                         success={state.success}
                         message={state.message}
-                    />
-
-                    <FormInput
-                        type="text"
-                        label={t("email")}
-                        placeholder={t("email-placeholder")}
-                        error={state.errors?.email![0]}
-                        {...register("email")}
                     />
 
                     <FormInput

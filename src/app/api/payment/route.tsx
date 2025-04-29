@@ -72,8 +72,8 @@ export const POST = async (req: NextRequest) => {
         } catch (err) {
             console.error(err);
             return NextResponse.json({
-                success: false,
-                message: t("messages.payment-failed"),
+                success: true,
+                redirect: `/${girl.username}?payment=failed`,
             });
         }
 

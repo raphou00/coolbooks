@@ -37,6 +37,7 @@ const CheckoutForm: React.FC<TipsProps> = ({ girl }) => {
         errors: undefined,
     });
     const {
+        watch,
         register,
         handleSubmit,
         formState: { isSubmitting: loading },
@@ -47,6 +48,7 @@ const CheckoutForm: React.FC<TipsProps> = ({ girl }) => {
     });
     const stripe = useStripe();
     const elements = useElements();
+    const amount = watch("amount");
 
     const submit = async (data: TipsSchema) => {
         if (!stripe || !elements) {
@@ -64,7 +66,6 @@ const CheckoutForm: React.FC<TipsProps> = ({ girl }) => {
             card: cardNumberElement!,
             billing_details: {
                 name: data.name,
-                email: data.email,
             },
         });
 
@@ -78,6 +79,7 @@ const CheckoutForm: React.FC<TipsProps> = ({ girl }) => {
         }
 
         data.paymentMethodId = paymentMethod.id;
+        data.amount = Number(amount);
 
         const res = await handleFormPost<TipsSchema>("/api/tips", data);
         setState(res);
@@ -91,7 +93,7 @@ const CheckoutForm: React.FC<TipsProps> = ({ girl }) => {
                     className="flex flex-col gap-y-2 md:w-1/2"
                 >
                     <Title
-                        text={t("payment", { name: girl.name })}
+                        text={t("tip", { name: girl.name })}
                         className="text-xl md:text-2xl lg:text-3xl"
                     />
 
@@ -101,11 +103,11 @@ const CheckoutForm: React.FC<TipsProps> = ({ girl }) => {
                     />
 
                     <FormInput
-                        type="text"
-                        label={t("email")}
-                        placeholder={t("email-placeholder")}
-                        error={state.errors?.email![0]}
-                        {...register("email")}
+                        type="number"
+                        label={t("amount")}
+                        placeholder={t("amount-placeholder")}
+                        error={state.errors?.amount![0]}
+                        {...register("amount")}
                     />
 
                     <FormInput
@@ -114,14 +116,6 @@ const CheckoutForm: React.FC<TipsProps> = ({ girl }) => {
                         placeholder={t("name-placeholder")}
                         error={state.errors?.name![0]}
                         {...register("name")}
-                    />
-
-                    <FormInput
-                        type="number"
-                        label={t("amount")}
-                        placeholder={t("amount-placeholder")}
-                        error={state.errors?.amount![0]}
-                        {...register("amount")}
                     />
 
                     <div className="flex flex-col">
@@ -194,7 +188,7 @@ const CheckoutForm: React.FC<TipsProps> = ({ girl }) => {
                             {t("subtotal")}
                         </div>
                         <div className="text-sm">
-                            {formatAmountForDisplay(girl.price)}
+                            {formatAmountForDisplay(amount)}
                         </div>
                     </div>
 
@@ -212,11 +206,11 @@ const CheckoutForm: React.FC<TipsProps> = ({ girl }) => {
                             {t("total")}
                         </div>
                         <div className="text-sm">
-                            {formatAmountForDisplay(girl.price)}
+                            {formatAmountForDisplay(amount)}
                         </div>
                     </div>
 
-                    <FormButton title={t("buy-now")} loading={loading} />
+                    <FormButton title={t("tip-now")} loading={loading} />
                 </form>
                 <div className="max-md:hidden w-1/2">
                     <Image
