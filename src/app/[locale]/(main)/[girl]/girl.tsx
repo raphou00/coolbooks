@@ -3,10 +3,16 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import type { Image, Video } from "@prisma/client";
-import { ChevronLeft, ChevronRight, X } from "lucide-react";
+import {
+    ChevronLeft,
+    ChevronRight,
+    Heart,
+    ImageIcon,
+    MapPin,
+    X,
+} from "lucide-react";
 import { useTranslations } from "next-intl";
 import type { User } from "lucia";
-import confetti from "canvas-confetti";
 import { formatAmountForDisplay, getImage } from "@/lib/utils";
 import { Link } from "@/lib/navigation";
 import Title from "@/components/ui/title";
@@ -26,30 +32,14 @@ const GirlEl: React.FC<GirlProps> = ({ girl, user }) => {
     const [currentMedia, setCurrentMedia] = useState<number>(0);
     const [media, setMedia] = useState<MediaProps | null>(null);
     const mediaCount = media ? media.images.length + media.videos.length : 0;
+    const totalMediaCount = girl.medias
+        .map((e) => e.images.length + e.videos.length)
+        .reduce((a, b) => a + b, 0);
     const bought = user?.girls.includes(girl.id) || false;
 
     const openModal = (media: MediaProps) => {
         setMedia(media);
         setIsModalOpen(true);
-    };
-
-    const handleParticles = () => {
-        const heart = confetti.shapeFromText({ text: "❤️", scalar: 2 });
-
-        const defaults = {
-            spread: 360,
-            ticks: 60,
-            gravity: 0,
-            decay: 0.96,
-            startVelocity: 20,
-            shapes: [heart],
-            scalar: 2,
-        };
-
-        confetti({
-            ...defaults,
-            particleCount: 50,
-        });
     };
 
     const handleCloseModal = () => {
@@ -81,9 +71,9 @@ const GirlEl: React.FC<GirlProps> = ({ girl, user }) => {
         <>
             <div className="max-w-3xl mx-auto overflow-hidden">
                 <div
-                    className="w-full aspect-[7/2] bg-cover bg-center rounded-xl"
+                    className="w-full flex gap-x-4 justify-start items-start aspect-[7/2] bg-cover bg-center rounded-xl p-1 text-white"
                     style={{
-                        backgroundImage: `url('${getImage(girl.cover)}')`,
+                        background: `url('${getImage(girl.cover)}') no-repeat center center / cover`,
                     }}
                 />
                 <div className="absolute size-32 md:size-40 border-2 border-base-200 rounded-full overflow-hidden translate-x-1/4 -translate-y-1/2">
@@ -95,32 +85,41 @@ const GirlEl: React.FC<GirlProps> = ({ girl, user }) => {
                         className="w-full h-full object-cover"
                     />
                 </div>
-                <div className="flex items-center justify-end mt-2">
-                    {user?.girls.includes(girl.id) ?
-                        <button
-                            onClick={handleParticles}
-                            className="btn rounded-full btn-secondary"
-                        >
-                            {t("payed", { name: girl.name })}
-                        </button>
-                    :   <Link
-                            href={`/payment/${girl.id}`}
-                            className="btn rounded-full btn-secondary"
-                        >
-                            {t("pay", {
+                <div className="flex items-center justify-end gap-x-4 mt-2">
+                    <Link
+                        href={
+                            bought ? `/tips/${girl.id}` : `/payment/${girl.id}`
+                        }
+                        className="btn rounded-full h-11 min-h-11 btn-secondary"
+                    >
+                        {bought ?
+                            t("tip")
+                        :   t("pay", {
                                 price: formatAmountForDisplay(girl.price),
-                            })}
-                        </Link>
-                    }
+                            })
+                        }
+                    </Link>
                 </div>
                 <div className="flex flex-col mt-6 md:mt-8 space-y-2">
-                    <div>
+                    <div className="flex items-center gap-x-2">
                         <Title
                             text={girl.name}
                             className="text-2xl md:text-3xl lg:text-4xl"
                         />
+                        <div className="flex items-center gap-x-1 w-fit">
+                            <MapPin className=" size-4 md:size-5" />
+                            {girl.origin}
+                        </div>
+                        <div className="flex items-center gap-x-1 w-fit">
+                            <Heart className=" size-4 md:size-5" />
+                            {girl.likes}
+                        </div>
+                        <div className="flex items-center gap-x-1 w-fit">
+                            <ImageIcon className="size-4 md:size-5" />
+                            {totalMediaCount}
+                        </div>
                     </div>
-                    <p className="text-sm md:text-base text-base-content">
+                    <p className="text-sm md:text-base text-base-content md:w-1/2">
                         {girl.bio}
                     </p>
                     <p className="text-sm md:text-base text-base-content/70 font-bold">
@@ -128,7 +127,7 @@ const GirlEl: React.FC<GirlProps> = ({ girl, user }) => {
                     </p>
                 </div>
                 <div className="w-full overflow-y-scroll rounded-xl mt-6">
-                    <div className="gap-4 columns-1 sm:columns-2">
+                    <div className="w-full gap-1 columns-3">
                         {girl.medias.map((m) => (
                             <div
                                 key={m.id}
@@ -139,8 +138,7 @@ const GirlEl: React.FC<GirlProps> = ({ girl, user }) => {
                                     <GirlImage
                                         image={m.images[0]}
                                         bought={bought}
-                                        girlId={girl.id}
-                                        className="w-full h-auto rounded-xl"
+                                        className="w-full aspect-square rounded-md"
                                     />
                                 )}
                             </div>
@@ -177,7 +175,6 @@ const GirlEl: React.FC<GirlProps> = ({ girl, user }) => {
                                 :   <GirlImage
                                         image={selectedMedia as Image}
                                         bought={bought}
-                                        girlId={girl.id}
                                         className="object-contain size-full"
                                     />
                                 }

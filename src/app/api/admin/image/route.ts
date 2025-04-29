@@ -20,9 +20,7 @@ export const POST = async (req: NextRequest) => {
             });
         }
 
-        body.free = Boolean(body.free);
-
-        await createImage(body.mediaId, body.image, body.free);
+        await createImage(body.mediaId, body.image, body.free === "true");
 
         return NextResponse.json({
             success: true,

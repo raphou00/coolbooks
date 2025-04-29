@@ -152,7 +152,8 @@
             "profile": "Go to profile",
             "gallery": "Gallery",
             "pay": "{price} / forever",
-            "payed": "{name} is already yours ✌️"
+            "payed": "{name} is already yours ✌️",
+            "tip": "Tip {name}"
         },
         "payment": {
             "title": "Buy {name}'s profile",
@@ -165,6 +166,29 @@
             "email-placeholder": "Enter your e-mail...",
             "name": "Name",
             "name-placeholder": "Enter your full card name...",
+            "number": "Card Number",
+            "expiry": "Expiry",
+            "cvc": "CVC",
+            "payment": "Payment for {name}",
+            "subtotal": "Subtotal",
+            "taxes": "Taxes",
+            "total": "Total",
+            "powered-by": "Powered by",
+            "note": "If purchases are final — no refunds will be issued. Once payment is complete, you’ll have lifetime access to the content. If your account is deleted, access will be lost and a new payment will be required."
+        },
+        "tips": {
+            "title": "Tip for {name}",
+            "description": "Send a tip to {name}",
+            "price": "Price",
+            "buy-now": "Buy now",
+            "success": "Payment successfully processed",
+            "failed": "Payment failed",
+            "email": "E-Mail",
+            "email-placeholder": "Enter your e-mail...",
+            "name": "Name",
+            "name-placeholder": "Enter your full card name...",
+            "amount": "Amount",
+            "amount-placeholder": "5.00",
             "number": "Card Number",
             "expiry": "Expiry",
             "cvc": "CVC",
@@ -192,13 +216,13 @@
             "title": "Terms of Service",
             "description": "View our terms of service",
             "date": "Effective Date: ",
-            "content": "<title>1. Overview</title>\nPinksea is a digital content platform where users can purchase access to exclusive content. All content is AI-generated and owned by the platform. No subscriptions — just one-time payments to unlock content.\n\n<title>2. Eligibility</title>\nYou must be 18 years or older to use Pinksea. By using the platform, you confirm that you meet this requirement.\n\n<title>3. User Accounts</title>\nYou are responsible for your account credentials and activity.\nDo not share your account or attempt to access another user’s account.\nWe may suspend or terminate your account if you violate these Terms.\n\n<title>4. Creators and Content</title>\nAll content on Pinksea is created by AI models developed and managed by us. There are no user-submitted uploads or third-party creators.\nBy using Pinksea, you agree that:\n- All models and content are fictional and AI-generated.\n- Users cannot become creators or upload any content.\n- All payments made on the platform go to the platform owner.\n\n<title>5. Payments and Refunds</title>\nAccess to content is granted via one-time payments.\nAll payments are final and non-refundable.\nPayment processing is handled by third-party providers.\n\n<title>6. Intellectual Property</title>\nAll content, branding, and technology on Pinksea are owned by us or licensed to us. Users may not reproduce, distribute, or modify any content.\n\n<title>7. Prohibited Conduct</title>\nYou agree not to:\n- Copy, distribute, or resell any content\n- Attempt to reverse engineer or misuse the platform\n- Violate any applicable laws while using Pinksea\n\n<title>8. Termination</title>\nWe may suspend or terminate your access at any time if you breach these Terms or for any other operational or legal reason.\n\n<title>9. Disclaimers</title>\nThe platform is provided “as is.” We do not guarantee that the service will be uninterrupted or error-free.\nContent may depict fictional characters, themes, or scenarios that do not reflect reality.\n\n<title>10. Limitation of Liability</title>\nTo the extent permitted by law, we are not liable for any indirect, incidental, or consequential damages related to your use of Pinksea.\n\n<title>11. Modifications</title>\nWe may update these Terms at any time. Continued use of the platform means you accept the revised Terms.\n\n<title>12. Governing Law</title>\nThese Terms are governed by the laws of Switzerland. Any disputes will be handled by the competent courts in Switzerland.\n\n<title>13. Contact</title>\nEmail: admin@pinksea.app\nLocation: Switzerland"
+            "content": "<title>1. Overview</title>Welcome to Pinksea. By accessing or using our platform, you agree to the following terms:<return/><return/><title>1. Eligibility</title><return/>You must be at least 18 years old to use this service. By using the platform, you confirm you are of legal age in your jurisdiction.<return/><return/><title>2. Content</title><return/>All content on the platform is fictional and created by artificial intelligence. Any resemblance to real individuals is purely coincidental.<return/><return/><title>3. Payments</title><return/>- All payments grant one-time access to a specific creator’s content.<return/>- All sales are final. No refunds will be provided under any circumstances.<return/>- Optional tips can be sent to creators (also AI-generated). These are also non-refundable.<return/><return/><title>4. Ownership</title><return/>All content and revenue belong solely to [Your Name/Company]. Users do not obtain any ownership or licensing rights by purchasing access to content.<return/><return/><title>5. User Conduct</title><return/>Users may not:<return/>- Share or distribute content from the platform.<return/>- Attempt to impersonate or contact the creators.<return/>- Violate any local, national, or international laws in connection with the use of the platform.<return/><return/><title>6. Limitation of Liability</title><return/>We provide the service “as is” without warranties. We are not responsible for damages arising from use of the platform.<return/><return/><title>7. Modifications</title><return/>We may update these terms at any time. Continued use after changes constitutes acceptance.<return/><return/><title>8. Contact</title><return/>For any questions, contact us at: [Insert Contact Email]<return/><return/><title>Privacy Policy</title><return/><return/>Effective Date: [Insert Date]<return/>[Your App Name] (“we”, “us”, “our”) is committed to protecting your privacy. This policy explains how we collect, use, and protect your data.<return/><return/><title>1. Information We Collect</title><return/>We may collect:<return/>- Email address (if provided)<return/>- Payment information (processed by third-party providers)<return/>- Usage data (pages viewed, time spent, etc.)<return/><return/>We do not collect personal chats or messages, as no messaging exists on the platform.<return/><return/><title>2. How We Use Information</title><return/>- To deliver purchased content<return/>- To process payments<return/>- To improve our services<return/>- To comply with legal obligations<return/><return/><title>3. Sharing of Information</title><return/>We do not sell your data. We may share it with:<return/>- Payment processors<return/>- Analytics providers<return/>- Legal authorities if required<return/><return/><title>4. Data Security</title><return/>We use reasonable measures to protect your data. However, no system is 100% secure.<return/><return/><title>5. Your Rights</title><return/>Depending on your location, you may have rights to:<return/>- Access your data<return/>- Delete your data<return/>- Correct inaccurate data<return/>Contact us to make a request: [Insert Contact Email]<return/><return/><title>6. Cookies</title><return/>We may use cookies to improve functionality and analyze usage.<return/><return/><title>7. Changes to This Policy</title><return/>We may update this policy at any time. Continued use of the service means you accept the changes.<return/><return/><title>8. Contact</title><return/>For privacy concerns, email: admin@pinksea.me"
         },
         "privacy": {
             "title": "Privacy Policy",
             "description": "View our privacy policy",
             "date": "Effective Date: ",
-            "content": "<title>1. Introduction</title>\nThis Privacy Policy explains how Pinksea collects, uses, stores, and protects your personal data. By using the platform, you agree to this policy.\n\n<title>2. Data Controller</title>\nPinksea is operated from Switzerland and acts as the data controller under Swiss data protection laws (nFADP).\n\n<title>3. Data We Collect</title>\nWe may collect the following information:\n- Email address\n- Payment details (handled via third-party processors)\n- Usage data (pages visited, interactions)\n- IP address and device/browser information\n\n<title>4. How We Use Your Data</title>\nWe use your data to:\n- Provide access to purchased content\n- Ensure platform security and prevent abuse\n- Improve our services\n- Comply with legal obligations\n\n<title>5. Cookies and Tracking</title>\nWe may use cookies and analytics tools to understand usage patterns and improve the platform. You can control cookie settings via your browser.\n\n<title>6. Data Sharing</title>\nWe do not sell your personal data.\nWe only share data with:\n- Payment providers\n- Service providers under confidentiality agreements\n- Authorities when legally required\n\n<title>7. Data Storage</title>\nData is stored securely in Switzerland or the EU. We implement appropriate technical and organizational measures to protect your data.\n\n<title>8. Data Retention</title>\nWe retain your data only as long as necessary for the purposes listed above or as required by law.\n\n<title>9. Your Rights</title>\nUnder Swiss data protection law, you have the right to:\n- Access your data\n- Correct or delete inaccurate data\n- Object to or restrict processing\n- Withdraw consent\nContact us at admin@pinksea.app to exercise your rights.\n\n<title>10. International Transfers</title>\nIf data is transferred outside Switzerland or the EU, we ensure legal safeguards such as standard contractual clauses are in place.\n\n<title>11. Changes to This Policy</title>\nWe may update this Privacy Policy. Continued use of the platform means you accept the updated policy.\n\n<title>12. Contact</title>\nIf you have questions about this policy, contact:\nEmail: admin@pinksea.app\nLocation: Switzerland"
+            "content": "<title>1. Overview</title>Pinksea is committed to protecting your privacy. This policy explains how we collect, use, and protect your data.<return/><title>1. Information We Collect</title><return/>We may collect:<return/>- Email address (if provided)<return/>- Payment information (processed by third-party providers)<return/>- Usage data (pages viewed, time spent, etc.)<return/>We do not collect personal chats or messages, as no messaging exists on the platform.<return/><title>2. How We Use Information</title><return/>- To deliver purchased content<return/>- To process payments<return/>- To improve our services<return/>- To comply with legal obligations<return/><title>3. Sharing of Information</title><return/>We do not sell your data. We may share it with:<return/>- Payment processors<return/>- Analytics providers<return/>- Legal authorities if required<return/><title>4. Data Security</title><return/>We use reasonable measures to protect your data. However, no system is 100% secure.<return/><title>5. Your Rights</title><return/>Depending on your location, you may have rights to:<return/>- Access your data<return/>- Delete your data<return/>- Correct inaccurate data<return/>Contact us to make a request: [Insert Contact Email]<return/><title>6. Cookies</title><return/>We may use cookies to improve functionality and analyze usage.<return/><title>7. Changes to This Policy</title><return/>We may update this policy at any time. Continued use of the service means you accept the changes.<return/><title>8. Contact</title><return/>For privacy concerns, email: admin@pinksea.me"
         }
     },
     "emails": {
@@ -220,6 +244,13 @@
             "title": "Payment for {girlName}",
             "hello": "Hello {name}!",
             "body": "You have successfully paid for {girlName}'s profile.",
+            "amount": "This is the amount you have paid, taxes included:",
+            "best": "Best regards, Pinksea Team"
+        },
+        "tips": {
+            "title": "Tips for {girlName}",
+            "hello": "Hello {name}!",
+            "body": "Thank you for your tip for {girlName}.",
             "amount": "This is the amount you have paid, taxes included:",
             "best": "Best regards, Pinksea Team"
         }
@@ -252,6 +283,9 @@
         "email-verified": "E-Mail successfully verified",
         "payment-success": "Payment successfully processed",
         "payment-failed": "Payment failed",
+        "tips-success": "Tip successfully processed",
+        "tips-failed": "Tip failed",
+        "tips-unauthorized": "First pay for this profile",
         "girl-not-found": "Girl not found",
         "add-password": "Please add a password before, <password>click here</password>",
         "too-many-requests": "Too many requests, please try again later",
@@ -260,7 +294,9 @@
         "home": "Home",
         "google-disconnected": "Google successfully disconnected",
         "discord-disconnected": "Discord successfully disconnected",
-        "message-sent": "Message successfully sent"
+        "message-sent": "Message successfully sent",
+        "min-amount": "Minimum amount is {amount}",
+        "max-amount": "Maximum amount is {amount}"
     },
     "links": {
         "login": "Login",

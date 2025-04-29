@@ -121,7 +121,7 @@ export const POST = async (req: NextRequest) => {
 
         return NextResponse.json({
             success: true,
-            redirect: "/",
+            redirect: `/${girl.username}?payment=success`,
         });
     } catch (err) {
         console.error(err);

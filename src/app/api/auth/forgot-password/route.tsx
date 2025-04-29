@@ -2,7 +2,6 @@ import { type NextRequest, NextResponse } from "next/server";
 import { getTranslations } from "next-intl/server";
 import db from "@/lib/db";
 import sendEmail from "@/lib/email";
-import { createSixDigitNumber } from "@/lib/utils";
 import forgotPasswordSchema, {
     type ForgotPasswordSchema,
 } from "@/schema/forgot-password";
@@ -50,7 +49,7 @@ export const POST = async (req: NextRequest) => {
             });
         }
 
-        const code = createSixDigitNumber();
+        const code = crypto.randomUUID();
 
         await db.token.create({
             data: {

@@ -4,7 +4,6 @@ import Link from "next/link";
 import NextImage from "next/image";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useTheme } from "next-themes";
 import { useLocale, useTranslations } from "next-intl";
 import { type Girl } from "@prisma/client";
 import type { StripeElementLocale } from "@stripe/stripe-js";
@@ -46,7 +45,6 @@ const CheckoutForm: React.FC<PaymentProps> = ({ girl }) => {
             modelId: girl.id,
         },
     });
-    const { theme } = useTheme();
     const stripe = useStripe();
     const elements = useElements();
 
@@ -132,10 +130,6 @@ const CheckoutForm: React.FC<PaymentProps> = ({ girl }) => {
                                         base: {
                                             fontSize: "16px",
                                             fontWeight: "500",
-                                            color:
-                                                theme === "dark" ? "white" : (
-                                                    "black"
-                                                ),
                                         },
                                     },
                                 }}
@@ -158,9 +152,6 @@ const CheckoutForm: React.FC<PaymentProps> = ({ girl }) => {
                                             base: {
                                                 fontSize: "16px",
                                                 fontWeight: "500",
-                                                color:
-                                                    theme === "dark" ? "white"
-                                                    :   "black",
                                             },
                                         },
                                     }}
@@ -182,9 +173,6 @@ const CheckoutForm: React.FC<PaymentProps> = ({ girl }) => {
                                             base: {
                                                 fontSize: "16px",
                                                 fontWeight: "500",
-                                                color:
-                                                    theme === "dark" ? "white"
-                                                    :   "black",
                                             },
                                         },
                                     }}

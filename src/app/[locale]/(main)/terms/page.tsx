@@ -22,11 +22,12 @@ const Page = async () => {
                 underline
             />
             <p className="mt-2 text-center">
-                {t("date")} <DateEl date={new Date("2025-04-20")} />
+                {t("date")} <DateEl date={new Date("2025-04-29")} />
             </p>
 
             <div className="mt-6">
                 {t.rich("content", {
+                    return: () => <br />,
                     title: (chunk) => (
                         <Title
                             text={chunk!.toString()}
