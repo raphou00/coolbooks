@@ -4,22 +4,18 @@ import { Lock } from "lucide-react";
 import type { Image } from "@prisma/client";
 import { cn } from "@/lib/utils";
 import ImageEl from "./image";
-import { useRouter } from "@/lib/navigation";
 
 type GirlImageProps = {
     image: Image;
     bought: boolean;
-    girlId: string;
     className?: string;
 };
 
 const BlurImage: React.FC<GirlImageProps> = ({
     image,
     bought,
-    girlId,
     className,
 }) => {
-    const router = useRouter();
     const canSee = image.free || bought;
     const src = canSee ? image.src : image.blurred;
 
@@ -31,11 +27,6 @@ const BlurImage: React.FC<GirlImageProps> = ({
                 width={image.width}
                 height={image.height}
                 className={cn("rounded-xl", className)}
-                onClick={() => {
-                    if (!canSee) {
-                        router.push("/payment/" + girlId);
-                    }
-                }}
             />
             {!canSee && (
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center size-10 bg-secondary rounded-full">

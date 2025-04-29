@@ -1,3 +1,3 @@
 export const title = "Pinksea";
-export const keywords = ["pinksea", "money transfer", "crypto", "tips"];
+export const keywords = ["pinksea", "leak", "of leaks"];
 export const category = "finance";

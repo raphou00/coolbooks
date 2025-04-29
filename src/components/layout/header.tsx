@@ -118,7 +118,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                 </div>
                             </div>
                             <div tabIndex={0} className="dropdown-content pt-2">
-                                <div className="w-[calc(100vw-16px)] space-y-1 rounded-xl bg-base-100 p-2 shadow-xl md:w-72">
+                                <div className="w-[calc(100vw-20px)] space-y-1 rounded-xl bg-base-100 p-2 shadow-xl md:w-72">
                                     {links.map((item) => (
                                         <Link
                                             key={item.title}
