@@ -391,7 +391,9 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                     </div>
                                     <div className="flex items-center gap-2 mr-2">
                                         <div className="font-bold text-lg text-neutral">
-                                            {formatAmountForDisplay(girl!.price)}
+                                            {formatAmountForDisplay(
+                                                girl!.price
+                                            )}
                                         </div>
                                     </div>
                                 </Link>

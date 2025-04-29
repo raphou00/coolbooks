@@ -36,7 +36,10 @@ const Page = () => {
                 underline
             />
             <p className="text-center text-lg">{message}</p>
-            <Link href="/" className="btn btn-sm btn-secondary rounded-full mx-auto">
+            <Link
+                href="/"
+                className="btn btn-sm btn-secondary rounded-full mx-auto"
+            >
                 {t("home")}
             </Link>
         </Main>

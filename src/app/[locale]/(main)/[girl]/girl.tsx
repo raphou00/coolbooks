@@ -112,9 +112,11 @@ const GirlEl: React.FC<GirlProps> = ({ girl, user }) => {
                         }
                         className="btn rounded-full h-10 min-h-10 btn-secondary"
                     >
-                        <Coins className="size-5" />
                         {bought ?
-                            t("tip")
+                            <>
+                                <Coins className="size-5" />
+                                {t("tip")}
+                            </>
                         :   t("pay", {
                                 price: formatAmountForDisplay(girl.price),
                             })
@@ -148,7 +150,7 @@ const GirlEl: React.FC<GirlProps> = ({ girl, user }) => {
                     </p>
                 </div>
                 <div className="w-full overflow-y-scroll rounded-xl mt-6">
-                    <div className="w-full gap-1 columns-3">
+                    <div className="w-full grid grid-cols-2 md:grid-cols-3 gap-1">
                         {girl.medias.map((m) => (
                             <div
                                 key={m.id}
@@ -159,7 +161,7 @@ const GirlEl: React.FC<GirlProps> = ({ girl, user }) => {
                                     <GirlImage
                                         image={m.images[0]}
                                         bought={bought}
-                                        className="w-full aspect-square rounded-md"
+                                        className="w-full aspect-square object-cover"
                                     />
                                 )}
                             </div>

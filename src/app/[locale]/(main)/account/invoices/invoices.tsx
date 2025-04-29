@@ -45,20 +45,34 @@ export const Invoices: React.FC<InvoicesProps> = ({ invoices }) => {
                                         -{" "}
                                         <span
                                             className={cn(
-                                                "font-bold",
+                                                "font-bold text-md uppercase",
                                                 invoice.status === "PAID" ?
                                                     "text-success"
                                                 :   "text-error"
                                             )}
                                         >
-                                            {invoice.status}
+                                            {invoice.status == "PAID" ?
+                                                t("paid")
+                                            :   t("unpaid")}
                                         </span>
                                     </p>
                                     <p className="text-sm">
                                         <span className="font-bold">
                                             {t("date")}:
                                         </span>{" "}
-                                        <Date date={invoice.createdAt} />
+                                        <span className="text-neutral">
+                                            <Date date={invoice.createdAt} />
+                                        </span>
+                                    </p>
+                                    <p className="text-sm">
+                                        <span className="font-bold">
+                                            {t("reason")}:
+                                        </span>{" "}
+                                        <span className="uppercase text-neutral">
+                                            {invoice.reason == "PAYMENT" ?
+                                                t("payment")
+                                            :   t("tip")}
+                                        </span>
                                     </p>
                                 </div>
                             </div>

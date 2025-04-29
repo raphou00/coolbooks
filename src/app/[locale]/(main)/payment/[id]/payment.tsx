@@ -24,6 +24,7 @@ import FormReponse from "@/components/ui/form-response";
 import Image from "@/components/ui/image";
 import Title from "@/components/ui/title";
 import { currency } from "@/config/stripe";
+import { useTheme } from "next-themes";
 
 type PaymentProps = {
     girl: Girl;
@@ -47,6 +48,7 @@ const CheckoutForm: React.FC<PaymentProps> = ({ girl }) => {
     });
     const stripe = useStripe();
     const elements = useElements();
+    const { theme } = useTheme();
 
     const submit = async (data: PaymentSchema) => {
         if (!stripe || !elements) {
@@ -115,12 +117,16 @@ const CheckoutForm: React.FC<PaymentProps> = ({ girl }) => {
                         </div>
                         <label className="input input-bordered w-full border-2 bg-base-100 tracking-wide transition placeholder:text-neutral-400 focus:border-secondary/50 focus:outline-none focus:bg-base-300">
                             <CardNumberElement
-                                className="w-full py-3"
+                                className="w-full py-3 text-base-content"
                                 options={{
                                     style: {
                                         base: {
                                             fontSize: "16px",
                                             fontWeight: "500",
+                                            color:
+                                                theme == "dark" ? "white" : (
+                                                    "black"
+                                                ),
                                         },
                                     },
                                 }}
@@ -143,6 +149,9 @@ const CheckoutForm: React.FC<PaymentProps> = ({ girl }) => {
                                             base: {
                                                 fontSize: "16px",
                                                 fontWeight: "500",
+                                                color:
+                                                    theme == "dark" ? "white"
+                                                    :   "black",
                                             },
                                         },
                                     }}
@@ -164,6 +173,9 @@ const CheckoutForm: React.FC<PaymentProps> = ({ girl }) => {
                                             base: {
                                                 fontSize: "16px",
                                                 fontWeight: "500",
+                                                color:
+                                                    theme == "dark" ? "white"
+                                                    :   "black",
                                             },
                                         },
                                     }}

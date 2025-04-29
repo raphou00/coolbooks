@@ -58,13 +58,17 @@ export const LogoutSessions: React.FC<SessionsProps> = ({
                                         <span className="font-bold">
                                             {t("last-seen")}
                                         </span>{" "}
-                                        <Date date={session.updatedAt} />
+                                        <span className="text-neutral">
+                                            <Date date={session.updatedAt} />
+                                        </span>
                                     </p>
                                     <p className="mt-1 text-xs">
                                         <span className="font-bold">
                                             {t("expires")}
                                         </span>{" "}
-                                        <Date date={session.expiresAt} />
+                                        <span className="text-neutral">
+                                            <Date date={session.expiresAt} />
+                                        </span>
                                     </p>
                                 </div>
                             </div>

@@ -18,7 +18,7 @@ export const getExtension = (filename: string) => {
 
 export const blurImage = async (file: File) => {
     return await sharp(await file.arrayBuffer())
-        .blur(20)
+        .blur(30)
         .toBuffer();
 };
 
@@ -147,7 +147,7 @@ export const createVideo = async (
     const thumbnail = await getVideoThumbnail(getS3(fileName));
     await putObject(thumbnail, thumbnailName);
 
-    const blurredThumbnail = await sharp(thumbnail).blur(20).toBuffer();
+    const blurredThumbnail = await sharp(thumbnail).blur(30).toBuffer();
     await putObject(blurredThumbnail, thumbnailBlurredName);
 
     const metadata = await getVideoMetadata(getS3(fileName));

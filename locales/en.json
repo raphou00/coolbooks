@@ -110,7 +110,10 @@
             "price": "Price",
             "status": "Status",
             "paid": "Paid",
-            "unpaid": "Unpaid"
+            "unpaid": "Unpaid",
+            "reason": "Reason",
+            "payment": "Payment",
+            "tip": "Tip"
         },
         "account-delete": {
             "title": "Delete Account",

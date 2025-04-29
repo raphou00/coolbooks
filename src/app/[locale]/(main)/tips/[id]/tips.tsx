@@ -24,6 +24,7 @@ import FormReponse from "@/components/ui/form-response";
 import Image from "@/components/ui/image";
 import Title from "@/components/ui/title";
 import { currency } from "@/config/stripe";
+import { useTheme } from "next-themes";
 
 type TipsProps = {
     girl: Girl;
@@ -48,6 +49,7 @@ const CheckoutForm: React.FC<TipsProps> = ({ girl }) => {
     });
     const stripe = useStripe();
     const elements = useElements();
+    const { theme } = useTheme();
     const amount = watch("amount");
 
     const submit = async (data: TipsSchema) => {
@@ -132,6 +134,10 @@ const CheckoutForm: React.FC<TipsProps> = ({ girl }) => {
                                         base: {
                                             fontSize: "16px",
                                             fontWeight: "500",
+                                            color:
+                                                theme == "dark" ? "white" : (
+                                                    "black"
+                                                ),
                                         },
                                     },
                                 }}
@@ -154,6 +160,9 @@ const CheckoutForm: React.FC<TipsProps> = ({ girl }) => {
                                             base: {
                                                 fontSize: "16px",
                                                 fontWeight: "500",
+                                                color:
+                                                    theme == "dark" ? "white"
+                                                    :   "black",
                                             },
                                         },
                                     }}
@@ -175,6 +184,9 @@ const CheckoutForm: React.FC<TipsProps> = ({ girl }) => {
                                             base: {
                                                 fontSize: "16px",
                                                 fontWeight: "500",
+                                                color:
+                                                    theme == "dark" ? "white"
+                                                    :   "black",
                                             },
                                         },
                                     }}

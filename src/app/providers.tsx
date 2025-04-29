@@ -1,6 +1,6 @@
 "use client";
 
-import { ThemeProvider } from "next-themes";
+import { ThemeProvider, useTheme } from "next-themes";
 import { Toaster } from "react-hot-toast";
 
 const RootProviders: React.FC<React.PropsWithChildren> = ({ children }) => {
@@ -10,14 +10,27 @@ const RootProviders: React.FC<React.PropsWithChildren> = ({ children }) => {
             attribute="data-theme"
             enableColorScheme
         >
-            <Toaster
-                position="top-right"
-                toastOptions={{
-                    className: "rounded-xl p-4 bg-base-200 text-base-content",
-                }}
-            />
+            <ToasterEl />
             {children}
         </ThemeProvider>
+    );
+};
+
+const ToasterEl: React.FC = () => {
+    const { theme } = useTheme();
+    return (
+        <Toaster
+            position="top-right"
+            toastOptions={{
+                style: {
+                    padding: "10px",
+                    border: "1px solid #555555",
+                    borderRadius: "100px",
+                    backgroundColor: theme == "dark" ? "#111" : "white",
+                    color: theme == "dark" ? "white" : "#111",
+                },
+            }}
+        />
     );
 };
 
