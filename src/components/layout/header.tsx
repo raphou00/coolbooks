@@ -19,6 +19,8 @@ import {
     X,
     Home,
     MapPin,
+    Heart,
+    ImageIcon,
 } from "lucide-react";
 import { Link, usePathname, useRouter } from "@/lib/navigation";
 import { cn, formatAmountForDisplay } from "@/lib/utils";
@@ -344,40 +346,57 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                     </div>
                     <div className="flex flex-col gap-y-2 w-full h-full overflow-y-auto p-4">
                         {girls.length === 0 && <NoResults />}
-                        {girls.map((girl) => (
-                            <Link
-                                key={girl.id}
-                                href={`/${girl.username}`}
-                                onClick={() => setSearchOpen(false)}
-                                className="flex justify-between w-full rounded-lg hover:bg-base-200 p-2"
-                            >
-                                <div className="flex items-center gap-2">
-                                    <div className="relative w-14 h-14 mask mask-squircle">
-                                        <Image
-                                            src={girl.avatar}
-                                            alt="avatar"
-                                            width={256}
-                                            height={256}
-                                            className="size-full rounded-lg"
-                                        />
-                                    </div>
-                                    <div className="h-full flex flex-col">
-                                        <div className="text-lg font-bold">
-                                            {girl.name}
+                        {girls.map((girl) => {
+                            const totalMediaCount = girl.medias
+                                .map((e) => e.images.length + e.videos.length)
+                                .reduce((a, b) => a + b, 0);
+                            return (
+                                <Link
+                                    key={girl.id}
+                                    href={`/${girl.username}`}
+                                    onClick={() => setSearchOpen(false)}
+                                    className="flex justify-between w-full rounded-lg hover:bg-base-200 p-2"
+                                >
+                                    <div className="flex items-center gap-2">
+                                        <div className="relative w-14 h-14 mask mask-squircle">
+                                            <Image
+                                                src={girl.avatar}
+                                                alt="avatar"
+                                                width={256}
+                                                height={256}
+                                                className="size-full rounded-lg"
+                                            />
                                         </div>
-                                        <div className="text-sm opacity-50 flex gap-x-1 items-center">
-                                            <MapPin className="size-4" />
-                                            {girl.origin}
+                                        <div className="h-full flex flex-col">
+                                            <div className="text-lg font-bold">
+                                                {girl.name}
+                                            </div>
+                                            <div className="text-sm opacity-50 flex gap-x-1 items-center">
+                                                <div className="flex items-center gap-x-2">
+                                                    <div className="flex items-center gap-x-1 w-fit">
+                                                        <MapPin className="size-4" />
+                                                        {girl.origin}
+                                                    </div>
+                                                    <div className="flex items-center gap-x-1 w-fit">
+                                                        <Heart className="size-4" />
+                                                        {girl.likes}
+                                                    </div>
+                                                    <div className="flex items-center gap-x-1 w-fit">
+                                                        <ImageIcon className="size-4" />
+                                                        {totalMediaCount}
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div className="flex items-center gap-2 mr-2">
-                                    <div className="font-bold text-lg text-neutral">
-                                        {formatAmountForDisplay(girl!.price)}
+                                    <div className="flex items-center gap-2 mr-2">
+                                        <div className="font-bold text-lg text-neutral">
+                                            {formatAmountForDisplay(girl!.price)}
+                                        </div>
                                     </div>
-                                </div>
-                            </Link>
-                        ))}
+                                </Link>
+                            );
+                        })}
                     </div>
                 </div>
             </Modal>

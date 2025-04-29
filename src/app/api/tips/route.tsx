@@ -1,5 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { getTranslations } from "next-intl/server";
+import { PurchaseReason, PurchaseStatus } from "@prisma/client";
 import db from "@/lib/db";
 import { formatAmountForStripe } from "@/lib/utils";
 import { stripe } from "@/lib/stripe";
@@ -82,7 +83,8 @@ export const POST = async (req: NextRequest) => {
                 userId: user.user.id,
                 girlId: body.modelId,
                 amount: body.amount,
-                status: "PAID",
+                reason: PurchaseReason.TIP,
+                status: PurchaseStatus.PAID,
             },
         });
 

@@ -17,6 +17,11 @@ enum PurchaseStatus {
   UNPAID
 }
 
+enum PurchaseReason {
+  PAYMENT
+  TIP
+}
+
 model User {
   id            String    @id @default(uuid())
   name          String
@@ -114,13 +119,14 @@ model Video {
 }
 
 model Purchase {
-  id        String   @id @default(uuid())
+  id        String         @id @default(uuid())
   amount    Float
   status    PurchaseStatus
-  user      User     @relation(fields: [userId], references: [id])
+  reason    PurchaseReason
+  user      User           @relation(fields: [userId], references: [id])
   userId    String
-  girl      Girl     @relation(fields: [girlId], references: [id])
+  girl      Girl           @relation(fields: [girlId], references: [id])
   girlId    String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
 }

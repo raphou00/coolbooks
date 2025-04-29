@@ -10,7 +10,7 @@ import {
     ImageIcon,
     MapPin,
     X,
-    DollarSign,
+    Coins,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import type { User } from "lucia";
@@ -53,6 +53,8 @@ const GirlEl: React.FC<GirlProps> = ({ girl, user }) => {
         } else if (tip === "failed") {
             toast.error(t("tips-failed"));
         }
+        // eslint-disable-next-line react-compiler/react-compiler
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const openModal = (media: MediaProps) => {
@@ -94,7 +96,7 @@ const GirlEl: React.FC<GirlProps> = ({ girl, user }) => {
                         background: `url('${getImage(girl.cover)}') no-repeat center center / cover`,
                     }}
                 />
-                <div className="absolute size-32 md:size-40 border-2 border-base-200 rounded-full overflow-hidden translate-x-1/4 -translate-y-1/2">
+                <div className="absolute size-32 md:size-40 border-2 border-base-200 bg-base-200 rounded-full overflow-hidden translate-x-1/4 -translate-y-1/2">
                     <ImageEl
                         src={girl.avatar}
                         alt={girl.name}
@@ -108,9 +110,9 @@ const GirlEl: React.FC<GirlProps> = ({ girl, user }) => {
                         href={
                             bought ? `/tips/${girl.id}` : `/payment/${girl.id}`
                         }
-                        className="btn rounded-full h-11 min-h-11 btn-secondary"
+                        className="btn rounded-full h-10 min-h-10 btn-secondary"
                     >
-                        <DollarSign className="size-4 md:size-5" />
+                        <Coins className="size-5" />
                         {bought ?
                             t("tip")
                         :   t("pay", {
