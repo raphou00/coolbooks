@@ -2,9 +2,9 @@ import { type Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import db from "@/lib/db";
 import { redirect } from "@/lib/navigation";
+import { getUser } from "@/lib/auth";
 import Main from "@/components/layout/main";
 import Payment from "./payment";
-import { getUser } from "@/lib/auth";
 
 const generateMetadata = async ({
     params,
@@ -29,7 +29,7 @@ const Page = async ({ params }: { params: { id: string } }) => {
     if (!user?.user) {
         redirect("/login");
     }
-    
+
     const modelId = params.id;
     const girl = await db.girl.findUnique({
         where: { id: modelId },

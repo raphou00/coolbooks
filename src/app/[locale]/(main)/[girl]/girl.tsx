@@ -10,7 +10,7 @@ import {
     ImageIcon,
     MapPin,
     X,
-    DollarSign
+    DollarSign,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import type { User } from "lucia";
