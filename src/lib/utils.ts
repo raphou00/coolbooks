@@ -22,11 +22,6 @@ export const cn = (...args: ClassValue[]): string | undefined =>
 
 export const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
-export const createSixDigitNumber = () =>
-    Array.from({ length: 6 }, () =>
-        String(Math.floor(Math.random() * 10))
-    ).join("");
-
 export const handleFormPost = async <T>(
     url: string,
     data: unknown,

@@ -116,14 +116,6 @@ const CheckoutForm: React.FC<PaymentProps> = ({ girl }) => {
                         {...register("name")}
                     />
 
-                    <FormInput
-                        type="number"
-                        label={t("amount")}
-                        placeholder={t("amount-placeholder")}
-                        error={state.errors?.amount![0]}
-                        {...register("amount")}
-                    />
-
                     <div className="flex flex-col">
                         <div className="label pb-1">
                             <span className="label-text font-bold">

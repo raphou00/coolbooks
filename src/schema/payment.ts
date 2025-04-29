@@ -1,6 +1,5 @@
 import * as z from "zod";
 import { type TranslationsFunc } from "@/lib/types";
-import { maxAmount, minAmount } from "@/config/user";
 
 const paymentSchema = (t: TranslationsFunc) =>
     z.object({
@@ -8,11 +7,6 @@ const paymentSchema = (t: TranslationsFunc) =>
             .string()
             .trim()
             .min(1, { message: t("messages.required") }),
-        
-        amount: z
-            .number()
-            .max(maxAmount, { message: t("messages.max-amount", { max: maxAmount }) })
-            .min(minAmount, { message: t("messages.min-amount", { min: minAmount }) }),
 
         name: z
             .string()

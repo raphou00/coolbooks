@@ -10,6 +10,7 @@ import { type ActionsState } from "@/lib/types";
 import { type ResetPasswordSchema } from "@/schema/reset-password";
 import { useTranslations } from "next-intl";
 import { handleFormPost } from "@/lib/utils";
+import { useSearchParams } from "next/navigation";
 
 const ResetPassword: React.FC = () => {
     const t = useTranslations("pages.reset-password");
@@ -23,6 +24,8 @@ const ResetPassword: React.FC = () => {
         handleSubmit,
         formState: { isSubmitting: loading },
     } = useForm<ResetPasswordSchema>();
+    const searchParams = useSearchParams();
+    const code = searchParams.get("code");
 
     const submit = async (data: ResetPasswordSchema) => {
         const res = await handleFormPost<ResetPasswordSchema>(
@@ -36,7 +39,7 @@ const ResetPassword: React.FC = () => {
         <Form title={t("title")} description={t("description")}>
             <form
                 onSubmit={handleSubmit(submit)}
-                className="w-full  flex flex-col gap-y-2"
+                className="w-full flex flex-col gap-y-2"
             >
                 <FormReponse success={state.success} message={state.message} />
 
@@ -55,6 +58,8 @@ const ResetPassword: React.FC = () => {
                     error={state.errors?.confirmPassword![0]}
                     {...register("confirmPassword")}
                 />
+
+                <input type="hidden" name="code" value={code || ""} />
 
                 <FormButton title={t("submit")} loading={loading} />
             </form>

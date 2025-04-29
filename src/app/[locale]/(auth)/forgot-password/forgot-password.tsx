@@ -36,7 +36,7 @@ const ForgotPassword: React.FC = () => {
         <Form title={t("title")} description={t("description")}>
             <form
                 onSubmit={handleSubmit(submit)}
-                className="w-full  flex flex-col gap-y-2"
+                className="w-full flex flex-col gap-y-2"
             >
                 <FormReponse success={state.success} message={state.message} />
 

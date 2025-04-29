@@ -60,7 +60,7 @@ export const POST = async (req: NextRequest) => {
 
         try {
             const paymentIntent = await stripe.paymentIntents.create({
-                amount: formatAmountForStripe(body.amount),
+                amount: formatAmountForStripe(girl.price),
                 currency: currency,
                 payment_method_types: ["card"],
                 payment_method: body.paymentMethodId,
@@ -121,7 +121,7 @@ export const POST = async (req: NextRequest) => {
 
         return NextResponse.json({
             success: true,
-            redirect: "/",
+            redirect: `/${girl.username}?payment=success`,
         });
     } catch (err) {
         console.error(err);

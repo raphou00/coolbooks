@@ -4,7 +4,6 @@ import { getTranslations } from "next-intl/server";
 import db from "@/lib/db";
 import sendEmail from "@/lib/email";
 import { createSession } from "@/lib/auth";
-import { createSixDigitNumber } from "@/lib/utils";
 import registerSchema, { type RegisterSchema } from "@/schema/register";
 import Register from "@/components/emails/register";
 import { ratelimitRegiser } from "@/lib/rate-limiter";
@@ -47,16 +46,6 @@ export const POST = async (req: NextRequest) => {
         });
 
         await createSession(user.id);
-
-        const code = createSixDigitNumber();
-
-        await db.token.create({
-            data: {
-                userId: user.id,
-                token: code,
-                expiresAt: new Date(Date.now() + 60 * 60 * 1000),
-            },
-        });
 
         await sendEmail(
             user.email,
