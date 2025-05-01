@@ -18,6 +18,7 @@ export const getExtension = (filename: string) => {
 
 export const blurImage = async (file: File) => {
     return await sharp(await file.arrayBuffer())
+        .rotate()
         .blur(30)
         .toBuffer();
 };
