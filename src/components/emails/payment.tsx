@@ -19,13 +19,6 @@ const Payment: React.FC<EmailProps> = async ({ t, amount, name, girlName }) => {
                             <Text className="text-xl font-bold">
                                 {t("emails.payment.hello", { name })}
                             </Text>
-                        </Row>
-                        <Row>
-                            <Text>
-                                {t("emails.payment.title", { girlName })}
-                            </Text>
-                        </Row>
-                        <Row>
                             <Text>
                                 {t("emails.payment.body", { girlName })}
                             </Text>

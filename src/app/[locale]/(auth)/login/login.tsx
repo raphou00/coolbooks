@@ -117,7 +117,10 @@ const Login: React.FC = () => {
                         </Link>
                     </span>
                     <span className="label-text-alt">
-                        <Link href="/register" className="link link-primary">
+                        <Link
+                            href={`/register?redirect=${redirect}`}
+                            className="link link-primary"
+                        >
                             {t("register")}
                         </Link>
                     </span>

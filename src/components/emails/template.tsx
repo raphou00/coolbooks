@@ -13,8 +13,7 @@ import {
     Tailwind,
     Text,
 } from "@react-email/components";
-import { title as siteTitle } from "@/config/seo";
-import env from "@/lib/env";
+import { domain, title as siteTitle } from "@/config/seo";
 import type { TranslationsFunc } from "@/lib/types";
 
 type TemplateEmailProps = {
@@ -47,7 +46,7 @@ const TemplateEmail: React.FC<TemplateEmailProps> = async ({
                     <Container className="mx-auto my-0 max-w-2xl">
                         <Section className="mt-8">
                             <Img
-                                src={`${env.APP_URL}/pinksea.svg`}
+                                src={`${domain}/pinksea.svg`}
                                 width="60px"
                                 height="60px"
                                 alt="Logo"
@@ -64,7 +63,7 @@ const TemplateEmail: React.FC<TemplateEmailProps> = async ({
                             <Row className="mb-8 w-full px-2">
                                 <Column className="w-">
                                     <Img
-                                        src={`${env.APP_URL}/favicon.svg`}
+                                        src={`${domain}/favicon.svg`}
                                         width="60px"
                                         height="60px"
                                         alt="Logo"
@@ -74,7 +73,7 @@ const TemplateEmail: React.FC<TemplateEmailProps> = async ({
                                     <Row>
                                         <Link
                                             className="text-underline text-gray-500"
-                                            href={env.APP_URL}
+                                            href={domain}
                                             target="_blank"
                                             rel="noopener noreferrer"
                                         >
@@ -83,7 +82,7 @@ const TemplateEmail: React.FC<TemplateEmailProps> = async ({
                                         &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
                                         <Link
                                             className="text-underline text-gray-500"
-                                            href={env.APP_URL + "/terms"}
+                                            href={domain + "/terms"}
                                             target="_blank"
                                             rel="noopener noreferrer"
                                         >
@@ -92,7 +91,7 @@ const TemplateEmail: React.FC<TemplateEmailProps> = async ({
                                         &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
                                         <Link
                                             className="text-underline text-gray-500"
-                                            href={env.APP_URL + "/privacy"}
+                                            href={domain + "/privacy"}
                                             target="_blank"
                                             rel="noopener noreferrer"
                                         >
@@ -101,7 +100,7 @@ const TemplateEmail: React.FC<TemplateEmailProps> = async ({
                                         &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
                                         <Link
                                             className="text-underline text-gray-500"
-                                            href={env.APP_URL + "/contact"}
+                                            href={domain + "/contact"}
                                             target="_blank"
                                             rel="noopener noreferrer"
                                         >

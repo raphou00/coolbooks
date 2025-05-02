@@ -20,7 +20,6 @@ export const findGirlsWithMedias = {
                     width: true,
                     height: true,
                     free: true,
-                    thumbnail: true,
                     time: true,
                 },
             },

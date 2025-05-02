@@ -31,11 +31,6 @@ const ResetPasswordEmail: React.FC<ResetPasswordEmailProps> = async ({
                             <Text className="text-xl font-bold">
                                 {t("emails.reset-password.hello", { name })}
                             </Text>
-                        </Row>
-                        <Row>
-                            <Text>{t("emails.reset-password.title")}</Text>
-                        </Row>
-                        <Row>
                             <Text>{t("emails.reset-password.body")}</Text>
                         </Row>
                         <Row>

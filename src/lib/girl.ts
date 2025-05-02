@@ -108,10 +108,13 @@ export const createImage = async (
     free: boolean = false
 ) => {
     const fileName = crypto.randomUUID() + "." + getExtension(file.name);
-    const blurredName = crypto.randomUUID() + "." + getExtension(file.name);
-
     await putObject(file, fileName);
-    await putObject(await blurImage(file), blurredName);
+
+    let blurredName = fileName;
+    if (!free) {
+        blurredName = crypto.randomUUID() + "." + getExtension(file.name);
+        await putObject(await blurImage(file), blurredName);
+    }
 
     const metadata = await getImageMetadata(file);
 
@@ -139,17 +142,17 @@ export const createVideo = async (
     free: boolean = false
 ) => {
     const fileName = crypto.randomUUID() + "." + getExtension(file.name);
-    const thumbnailName = crypto.randomUUID() + "." + getExtension(file.name);
-    const thumbnailBlurredName =
-        crypto.randomUUID() + "." + getExtension(file.name);
 
     await putObject(file, fileName);
 
-    const thumbnail = await getVideoThumbnail(getS3(fileName));
-    await putObject(thumbnail, thumbnailName);
-
-    const blurredThumbnail = await sharp(thumbnail).blur(30).toBuffer();
-    await putObject(blurredThumbnail, thumbnailBlurredName);
+    let thumbnailBlurredName = fileName;
+    if (!free) {
+        thumbnailBlurredName =
+            crypto.randomUUID() + "." + getExtension(file.name);
+        const thumbnail = await getVideoThumbnail(getS3(fileName));
+        const blurredThumbnail = await sharp(thumbnail).blur(30).toBuffer();
+        await putObject(blurredThumbnail, thumbnailBlurredName);
+    }
 
     const metadata = await getVideoMetadata(getS3(fileName));
 
@@ -158,7 +161,6 @@ export const createVideo = async (
             mediaId: mediaId,
             src: fileName,
             blurred: thumbnailBlurredName,
-            thumbnail: thumbnailName,
             width: metadata.width,
             height: metadata.height,
             time: metadata.time,

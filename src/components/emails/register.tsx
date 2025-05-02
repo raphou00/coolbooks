@@ -25,11 +25,6 @@ const Register: React.FC<EmailProps> = async ({ t, name }) => {
                             <Text className="text-xl font-bold">
                                 {t("emails.register.hello", { name })}
                             </Text>
-                        </Row>
-                        <Row>
-                            <Text>{t("emails.register.title")}</Text>
-                        </Row>
-                        <Row>
                             <Text>{t("emails.register.body")}</Text>
                         </Row>
                         <Row className="w-full">

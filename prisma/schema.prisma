@@ -107,7 +107,6 @@ model Video {
   id        String   @id @default(uuid())
   src       String
   blurred   String
-  thumbnail String
   width     Int
   height    Int
   time      Int

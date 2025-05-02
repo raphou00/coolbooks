@@ -235,7 +235,7 @@
         "register": {
             "title": "Welcome to Pinksea!",
             "hello": "Hello {name}!",
-            "body": "Hi, you're now at the best place to get closer to your favorite pinksea girl. Click on the link below to get started. 🙏",
+            "body": "Hi, you're now at the best place to get closer to your favorite pinksea creator. Click on the link below to get started. 😘",
             "get-started": "Get started",
             "best": "Best regards, Pinksea Team"
         },
@@ -244,19 +244,19 @@
             "hello": "Hello {name}!",
             "body": "Please click on the link below to reset your password.",
             "warning": "If you did not request a password reset, please ignore this email.",
-            "link": "You can also click or copy paste the link below."
+            "link": "You can also click or copy paste the link into your browser."
         },
         "payment": {
             "title": "Payment for {girlName}",
             "hello": "Hello {name}!",
-            "body": "You have successfully paid for {girlName}'s profile.",
+            "body": "You have successfully paid for {girlName}'s profile. You have now access to her content. She might reward you very soon 😏.",
             "amount": "This is the amount you have paid, taxes included:",
             "best": "Best regards, Pinksea Team"
         },
         "tips": {
             "title": "Tips for {girlName}",
             "hello": "Hello {name}!",
-            "body": "Thank you for your tip for {girlName}.",
+            "body": "Thank you the tip you sent to {girlName}. She will be very happy 🌹.",
             "amount": "This is the amount you have paid, taxes included:",
             "best": "Best regards, Pinksea Team"
         }

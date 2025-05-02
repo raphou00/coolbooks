@@ -32,7 +32,7 @@ const Register: React.FC = () => {
 
     const submit = async (data: RegisterSchema) => {
         const res = await handleFormPost<RegisterSchema>(
-            `/api/auth/register?redirect=${redirect}`,
+            `/api/auth/register`,
             data
         );
         setState(res);
@@ -41,12 +41,12 @@ const Register: React.FC = () => {
     };
 
     const google = async () => {
-        const res = await axios.get(`/api/auth/google?redirect=${redirect}`);
+        const res = await axios.get(`/api/auth/google`);
         window.location.href = redirect || res.data.url;
     };
 
     const discord = async () => {
-        const res = await axios.get(`/api/auth/discord?redirect=${redirect}`);
+        const res = await axios.get(`/api/auth/discord`);
         window.location.href = redirect || res.data.url;
     };
 
@@ -120,7 +120,10 @@ const Register: React.FC = () => {
 
                 <div className="label">
                     <span className="label-text-alt">
-                        <Link href="/login" className="link link-primary">
+                        <Link
+                            href={`/login?redirect=${redirect}`}
+                            className="link link-primary"
+                        >
                             {t("login")}
                         </Link>
                     </span>

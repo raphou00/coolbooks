@@ -141,8 +141,8 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                 href="/"
                                 className="flex space-x-2 items-center text-sm relative z-20"
                             >
-                                <LogoText className="h-8 w-auto ml-2 mb-2 max-sm:hidden" />
-                                <Logo className="size-12 sm:hidden" />
+                                <LogoText className="h-8 w-auto ml-2 mb-2 max-[400px]:hidden" />
+                                <Logo className="size-12 hidden max-[400px]:block" />
                             </Link>
                         </div>
                         <ul className="menu menu-horizontal space-x-2 max-[900px]:hidden">
