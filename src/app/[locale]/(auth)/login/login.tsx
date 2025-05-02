@@ -13,6 +13,7 @@ import { Link } from "@/lib/navigation";
 import { type ActionsState } from "@/lib/types";
 import { handleFormPost } from "@/lib/utils";
 import { type LoginSchema } from "@/schema/login";
+import { useSearchParams } from "next/navigation";
 
 const Login: React.FC = () => {
     const t = useTranslations("pages.login");
@@ -26,20 +27,24 @@ const Login: React.FC = () => {
         handleSubmit,
         formState: { isSubmitting: loading },
     } = useForm<LoginSchema>();
+    const searchParams = useSearchParams();
+    const redirect = searchParams.get("redirect");
 
     const submit = async (data: LoginSchema) => {
-        const res = await handleFormPost<LoginSchema>("/api/auth/login", data);
+        const res = await handleFormPost<LoginSchema>(`/api/auth/login`, data);
         setState(res);
+
+        if (res.success) window.location.replace(redirect || "/");
     };
 
     const google = async () => {
-        const res = await axios.get("/api/auth/google");
-        window.location.href = res.data.url;
+        const res = await axios.get(`/api/auth/google`);
+        window.location.href = redirect || res.data.url;
     };
 
     const discord = async () => {
-        const res = await axios.get("/api/auth/discord");
-        window.location.href = res.data.url;
+        const res = await axios.get(`/api/auth/discord`);
+        window.location.href = redirect || res.data.url;
     };
 
     return (

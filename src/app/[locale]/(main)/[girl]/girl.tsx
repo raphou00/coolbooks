@@ -108,7 +108,11 @@ const GirlEl: React.FC<GirlProps> = ({ girl, user }) => {
                 <div className="flex items-center justify-end gap-x-4 mt-2">
                     <Link
                         href={
-                            bought ? `/tips/${girl.id}` : `/payment/${girl.id}`
+                            user ?
+                                bought ?
+                                    `/tips/${girl.id}`
+                                :   `/payment/${girl.id}`
+                            :   `/login?redirect=/${girl.username}`
                         }
                         className="btn rounded-full h-10 min-h-10 btn-secondary"
                     >
@@ -127,19 +131,21 @@ const GirlEl: React.FC<GirlProps> = ({ girl, user }) => {
                     <div className="flex items-center gap-x-2">
                         <Title
                             text={girl.name}
-                            className="text-2xl md:text-3xl lg:text-4xl"
+                            className="text-xl md:text-2xl lg:text-3xl"
                         />
-                        <div className="flex items-center gap-x-1 w-fit">
-                            <MapPin className=" size-4 md:size-5" />
-                            {girl.origin}
-                        </div>
-                        <div className="flex items-center gap-x-1 w-fit">
-                            <Heart className=" size-4 md:size-5" />
-                            {girl.likes}
-                        </div>
-                        <div className="flex items-center gap-x-1 w-fit">
-                            <ImageIcon className="size-4 md:size-5" />
-                            {totalMediaCount}
+                        <div className="flex items-center gap-x-2 ml-2">
+                            <div className="flex items-center gap-x-1 w-fit">
+                                <MapPin className=" size-4 md:size-5" />
+                                {girl.origin}
+                            </div>
+                            <div className="flex items-center gap-x-1 w-fit">
+                                <Heart className=" size-4 md:size-5" />
+                                {girl.likes}
+                            </div>
+                            <div className="flex items-center gap-x-1 w-fit">
+                                <ImageIcon className="size-4 md:size-5" />
+                                {totalMediaCount}
+                            </div>
                         </div>
                     </div>
                     <p className="text-sm md:text-base text-base-content md:w-1/2">

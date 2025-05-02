@@ -13,6 +13,7 @@ import FormInput from "@/components/ui/form-input";
 import FormButton from "@/components/ui/form-button";
 import FormReponse from "@/components/ui/form-response";
 import { type RegisterSchema } from "@/schema/register";
+import { useSearchParams } from "next/navigation";
 
 const Register: React.FC = () => {
     const t = useTranslations("pages.register");
@@ -26,23 +27,27 @@ const Register: React.FC = () => {
         handleSubmit,
         formState: { isSubmitting: loading },
     } = useForm<RegisterSchema>();
+    const searchParams = useSearchParams();
+    const redirect = searchParams.get("redirect");
 
     const submit = async (data: RegisterSchema) => {
         const res = await handleFormPost<RegisterSchema>(
-            "/api/auth/register",
+            `/api/auth/register?redirect=${redirect}`,
             data
         );
         setState(res);
+
+        if (res.success) window.location.replace(redirect || "/");
     };
 
     const google = async () => {
-        const res = await axios.get("/api/auth/google");
-        window.location.href = res.data.url;
+        const res = await axios.get(`/api/auth/google?redirect=${redirect}`);
+        window.location.href = redirect || res.data.url;
     };
 
     const discord = async () => {
-        const res = await axios.get("/api/auth/discord");
-        window.location.href = res.data.url;
+        const res = await axios.get(`/api/auth/discord?redirect=${redirect}`);
+        window.location.href = redirect || res.data.url;
     };
 
     return (
