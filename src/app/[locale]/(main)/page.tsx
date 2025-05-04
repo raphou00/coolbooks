@@ -63,7 +63,7 @@ const Page = async () => {
                     </div>
 
                     <Link
-                        href="/favorites"
+                        href="/girls"
                         className="group flex items-center gap-1 link link-hover link-primary"
                     >
                         {t("more")}
