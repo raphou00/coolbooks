@@ -58,10 +58,6 @@ const CheckoutForm: React.FC<TipsProps> = ({ girl }) => {
         }
 
         const cardNumberElement = elements.getElement(CardNumberElement);
-        const cardCvcElement = elements.getElement(CardCvcElement);
-        const cardExpiryElement = elements.getElement(CardExpiryElement);
-
-        console.log(cardNumberElement, cardCvcElement, cardExpiryElement);
 
         const { paymentMethod, error } = await stripe!.createPaymentMethod({
             type: "card",

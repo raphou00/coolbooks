@@ -314,6 +314,8 @@
         "payment-failed": "Payment failed",
         "tips-success": "Tip successfully processed",
         "tips-failed": "Tip failed",
+        "gift-success": "Gift successfully processed",
+        "gift-failed": "Gift failed",
         "tips-unauthorized": "First pay for this profile",
         "girl-not-found": "Girl not found",
         "add-password": "Please add a password before, <password>click here</password>",

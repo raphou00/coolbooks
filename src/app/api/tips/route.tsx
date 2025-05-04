@@ -1,6 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { getTranslations } from "next-intl/server";
 import { PurchaseReason, PurchaseStatus } from "@prisma/client";
+import type Stripe from "stripe";
 import db from "@/lib/db";
 import { formatAmountForStripe } from "@/lib/utils";
 import { stripe } from "@/lib/stripe";
@@ -48,8 +49,9 @@ export const POST = async (req: NextRequest) => {
             });
         }
 
+        let paymentIntent: Stripe.Response<Stripe.PaymentIntent>;
         try {
-            const paymentIntent = await stripe.paymentIntents.create({
+            paymentIntent = await stripe.paymentIntents.create({
                 amount: formatAmountForStripe(body.amount),
                 currency: currency,
                 payment_method_types: ["card"],
@@ -57,13 +59,18 @@ export const POST = async (req: NextRequest) => {
                 confirm: true,
                 error_on_requires_action: true,
             });
-
-            console.log(paymentIntent);
         } catch (err) {
             console.error(err);
             return NextResponse.json({
                 success: true,
                 redirect: `/${girl.username}?tips=failed`,
+            });
+        }
+
+        if (!paymentIntent || paymentIntent.status !== "succeeded") {
+            return NextResponse.json({
+                success: true,
+                redirect: `/${girl.username}?payment=failed`,
             });
         }
 

@@ -42,6 +42,7 @@ const GirlEl: React.FC<GirlProps> = ({ girl, user }) => {
     const searchParams = useSearchParams();
     const payment = searchParams.get("payment");
     const tip = searchParams.get("tips");
+    const gift = searchParams.get("gift");
 
     useEffect(() => {
         if (payment === "success") {
@@ -52,6 +53,10 @@ const GirlEl: React.FC<GirlProps> = ({ girl, user }) => {
             toast.success(t("tips-success"));
         } else if (tip === "failed") {
             toast.error(t("tips-failed"));
+        } else if (gift === "success") {
+            toast.success(t("gift-success"));
+        } else if (gift === "failed") {
+            toast.error(t("gift-failed"));
         }
         // eslint-disable-next-line react-compiler/react-compiler
         // eslint-disable-next-line react-hooks/exhaustive-deps

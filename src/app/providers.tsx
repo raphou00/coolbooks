@@ -22,6 +22,7 @@ const ToasterEl: React.FC = () => {
         <Toaster
             position="top-right"
             toastOptions={{
+                duration: 3000,
                 style: {
                     padding: "10px",
                     border: "1px solid #555555",
