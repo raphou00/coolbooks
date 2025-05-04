@@ -159,7 +159,9 @@
             "payment-success": "Payment successfully processed",
             "payment-failed": "Payment failed",
             "tips-success": "Tip successfully processed",
-            "tips-failed": "Tip failed"
+            "tips-failed": "Tip failed",
+            "gift-success": "Gift successfully processed",
+            "gift-failed": "Gift failed"
         },
         "payment": {
             "title": "Buy {name}'s profile",
