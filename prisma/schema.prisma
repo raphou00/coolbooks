@@ -23,18 +23,17 @@ enum PurchaseReason {
 }
 
 model User {
-  id            String    @id @default(uuid())
+  id            String     @id @default(uuid())
   name          String
-  email         String    @unique
-  emailVerified Boolean   @default(false)
+  email         String     @unique
+  emailVerified Boolean    @default(false)
   password      String?
-  locale        String?
-  role          Role      @default(USER)
+  role          Role       @default(USER)
   girls         String[]
-  googleId      String?   @unique
-  discordId     String?   @unique
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  googleId      String?    @unique
+  discordId     String?    @unique
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
   sessions      Session[]
   tokens        Token[]
   purchases     Purchase[]
@@ -63,19 +62,19 @@ model Token {
 }
 
 model Girl {
-  id        String   @id @default(uuid())
+  id        String     @id @default(uuid())
   name      String
-  username  String   @unique
+  username  String     @unique
   bio       String
   avatar    String
   cover     String
   medias    Media[]
   price     Float
   origin    String
-  likes     Int      @default(0)
+  likes     Int        @default(0)
   tags      String[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
   purchases Purchase[]
 }
 

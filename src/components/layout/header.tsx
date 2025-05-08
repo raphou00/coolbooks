@@ -154,7 +154,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                             "btn btn-sm",
                                             item.path === pathname ?
                                                 "btn-secondary"
-                                            :   "btn-outline"
+                                            :   "btn-outline border-2"
                                         )}
                                     >
                                         {item.title}

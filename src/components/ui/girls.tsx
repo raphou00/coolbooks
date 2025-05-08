@@ -26,19 +26,19 @@ const MAX_WIDTH = 768;
 
 const Girls: React.FC<GirlsProps> = ({ girls }) => {
     const t = useTranslations("pages.girls");
-    const [girl, setModel] = useState<GirlWithMedia | undefined>();
+    const [girl, _setModel] = useState<GirlWithMedia | undefined>();
     const [modalOpen, setModalOpen] = useState<boolean>(false);
     const router = useRouter();
     const windowSize = useWindowSize();
 
     const openModal = (username: string) => {
-        if (windowSize.width < MAX_WIDTH) {
-            router.push(`/${username}`);
-            return;
-        }
-        const girl = girls.find((girl) => girl.username === username);
-        setModel(girl);
-        setModalOpen(true);
+        router.push(`/${username}`);
+        // if (windowSize.width < MAX_WIDTH) {
+        //     return;
+        // }
+        // const girl = girls.find((girl) => girl.username === username);
+        // setModel(girl);
+        // setModalOpen(true);
     };
 
     useEffect(() => {

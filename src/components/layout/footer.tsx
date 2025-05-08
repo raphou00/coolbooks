@@ -1,32 +1,17 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { useTheme } from "next-themes";
-import { Languages, SunMoon } from "lucide-react";
 import { Link } from "@/lib/navigation";
 import { title } from "@/config/seo";
-import {
-    useGetCardsLinks,
-    useGetFooterLinks,
-    useGetSocialLinks,
-} from "@/config/links";
+import { useGetCardsLinks, useGetFooterLinks } from "@/config/links";
 import LogoText from "@/components/ui/logo-text";
-import LocaleModal from "@/components/ui/locale-modal";
 
 const Footer: React.FC = () => {
-    const [localeOpen, setLocaleOpen] = useState<boolean>(false);
     const t = useTranslations();
-    const { setTheme } = useTheme();
 
     const footerLinks = useGetFooterLinks();
-    const socials = useGetSocialLinks();
     const cards = useGetCardsLinks();
-
-    const toggleTheme = () => {
-        setTheme((e) => (e === "dark" ? "light" : "dark"));
-    };
 
     return (
         <>
@@ -63,25 +48,8 @@ const Footer: React.FC = () => {
                         ))}
                     </div>
 
-                    <div className="flex-col md:flex-row md:navbar mt-10 p-0 max-md:py-1 border-t border-b border-neutral/20 flex justify-between items-center">
-                        <div className="navbar-start flex gap-x-2 max-md:w-full">
-                            {socials.map((social) => (
-                                <Link
-                                    key={social.path}
-                                    href={social.path}
-                                    className="flex items-center"
-                                >
-                                    <div
-                                        className="tooltip tooltip-secondary"
-                                        data-tip={social.title}
-                                    >
-                                        <social.icon className="size-6" />
-                                    </div>
-                                </Link>
-                            ))}
-                        </div>
-
-                        <div className="navbar-center flex justify-start md:justify-center items-center gap-x-2 max-md:w-full">
+                    <div className="flex-col mt-10 p-0 max-md:py-1 border-t border-b border-neutral/20 flex justify-between items-center">
+                        <div className="navbar-center flex justify-center items-center gap-x-2">
                             {cards.map((card) => (
                                 <Image
                                     key={card.icon}
@@ -93,26 +61,10 @@ const Footer: React.FC = () => {
                                 />
                             ))}
                         </div>
-
-                        <div className="navbar-end flex max-md:justify-start gap-2 max-md:w-full">
-                            <button
-                                onClick={toggleTheme}
-                                className="btn btn-circle btn-outline btn-sm"
-                            >
-                                <SunMoon className="size-5" />
-                            </button>
-
-                            <button
-                                onClick={() => setLocaleOpen((e) => !e)}
-                                className="btn btn-circle btn-outline btn-sm"
-                            >
-                                <Languages className="size-5" />
-                            </button>
-                        </div>
                     </div>
 
-                    <div className="mt-2 flex items-center justify-center">
-                        <p className="mt-4 text-muted-foreground">
+                    <div className="my-4 flex items-center justify-center">
+                        <p className="text-muted-foreground">
                             <span>
                                 &copy; {new Date().getFullYear()} {title}.{" "}
                                 {t("common.copyright")}.
@@ -121,7 +73,6 @@ const Footer: React.FC = () => {
                     </div>
                 </div>
             </footer>
-            <LocaleModal open={localeOpen} setOpen={setLocaleOpen} />
         </>
     );
 };

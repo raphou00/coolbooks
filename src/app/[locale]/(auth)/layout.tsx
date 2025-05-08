@@ -29,7 +29,7 @@ const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
                 />
                 <div
                     style={{
-                        backgroundImage: `url('/images/photo.png')`,
+                        backgroundImage: `url('/images/banner.jpeg')`,
                         backgroundSize: "cover",
                         backgroundPosition: "center",
                     }}
@@ -37,17 +37,14 @@ const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
                 />
                 <div className="relative w-full">
                     <div className="flex items-center justify-between z-50 absolute p-2 w-full">
-                        <Link
-                            href="/"
-                            className="btn btn-sm max-sm:btn-circle btn-outline"
-                        >
+                        <Link href="/" className="btn btn-sm max-sm:btn-circle">
                             <Home className="size-5" />
                             <span className="hidden sm:block">{t("home")}</span>
                         </Link>
                         <div className="space-x-2">
                             <button
                                 onClick={toggleTheme}
-                                className="btn max-sm:btn-circle btn-outline btn-sm"
+                                className="btn max-sm:btn-circle btn-sm"
                             >
                                 <SunMoon className="size-5" />
                                 <span className="hidden sm:block">
@@ -57,7 +54,7 @@ const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
 
                             <button
                                 onClick={() => setLocaleOpen((e) => !e)}
-                                className="btn max-sm:btn-circle btn-outline btn-sm"
+                                className="btn max-sm:btn-circle btn-sm"
                             >
                                 <Languages className="size-5" />
                                 <span className="hidden sm:block">

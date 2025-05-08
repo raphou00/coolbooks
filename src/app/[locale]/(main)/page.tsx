@@ -55,7 +55,7 @@ const Page = async () => {
             <div className="mb-6 mt-1">
                 <div className="flex items-center justify-start max-sm:justify-between gap-x-4 mb-6">
                     <div className="flex items-center gap-x-2">
-                        <Heart className="size-6 text-secondary fill-primary" />
+                        <Heart className="size-6 text-secondary fill-secondary" />
                         <Title
                             text={t("favorites")}
                             className="text-lg md:text-xl lg:text-2xl"
@@ -76,7 +76,7 @@ const Page = async () => {
             <div className="my-12">
                 <div className="flex items-center justify-start max-sm:justify-between gap-x-4 mb-6">
                     <div className="flex items-center gap-x-2">
-                        <Sparkles className="size-6 text-secondary fill-primary" />
+                        <Sparkles className="size-6 text-secondary fill-secondary" />
                         <Title
                             text={t("recommended")}
                             className="text-lg md:text-xl lg:text-2xl"

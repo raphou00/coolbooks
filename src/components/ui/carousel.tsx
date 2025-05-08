@@ -107,14 +107,14 @@ export const Carousel: React.FC<CarouselProps> = ({
             </div>
             <div className="flex justify-center gap-4">
                 <button
-                    className="relative z-40 btn btn-sm btn-circle btn-outline"
+                    className="relative z-40 btn btn-sm btn-circle btn-outline border-2"
                     onClick={scrollLeft}
                     disabled={!canScrollLeft}
                 >
                     <ChevronLeft className="size-6" />
                 </button>
                 <button
-                    className="relative z-40 btn btn-sm btn-circle btn-outline"
+                    className="relative z-40 btn btn-sm btn-circle btn-outline border-2"
                     onClick={scrollRight}
                     disabled={!canScrollRight}
                 >
