@@ -41,11 +41,13 @@ const Register: React.FC = () => {
     };
 
     const google = async () => {
-        await axios.get(`/api/auth/google`);
+        const res = await axios.get(`/api/auth/google`);
+        window.location.href = res.data.url;
     };
 
     const discord = async () => {
-        await axios.get(`/api/auth/discord`);
+        const res = await axios.get(`/api/auth/discord`);
+        window.location.href = res.data.url;
     };
 
     return (
