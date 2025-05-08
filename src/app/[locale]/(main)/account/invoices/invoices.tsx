@@ -6,7 +6,7 @@ import { cn, formatAmountForDisplay } from "@/lib/utils";
 import Title from "@/components/ui/title";
 import Image from "@/components/ui/image";
 import Date from "@/components/ui/date";
-import NoResults from "@/components/ui/no-results";
+import { NoInvoicesResults } from "@/components/ui/no-results";
 
 export type InvoiceWithGirl = Purchase & {
     girl: Girl;
@@ -23,7 +23,7 @@ export const Invoices: React.FC<InvoicesProps> = ({ invoices }) => {
         <>
             <div className="">
                 <ul role="list" className="divide-y divide-neutral">
-                    {invoices.length === 0 && <NoResults />}
+                    {invoices.length === 0 && <NoInvoicesResults />}
                     {invoices.map((invoice: InvoiceWithGirl) => (
                         <li
                             key={invoice.id}

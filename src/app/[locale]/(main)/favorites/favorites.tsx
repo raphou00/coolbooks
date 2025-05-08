@@ -4,7 +4,10 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Search } from "lucide-react";
 import Title from "@/components/ui/title";
-import NoResults from "@/components/ui/no-results";
+import {
+    NoFavoritesResults,
+    NoSearchResults,
+} from "@/components/ui/no-results";
 import Girls, { type GirlWithMedia } from "@/components/ui/girls";
 
 type FavoritesProps = {
@@ -53,7 +56,10 @@ const Favorites: React.FC<FavoritesProps> = ({ girls: allGirls }) => {
                 </button>
             </div>
 
-            {girls.length === 0 && <NoResults />}
+            {girls.length === 0 && search !== "" && (
+                <NoSearchResults search={search} />
+            )}
+            {girls.length === 0 && search === "" && <NoFavoritesResults />}
             <Girls girls={girls} />
         </>
     );

@@ -22,6 +22,7 @@ import {
     Heart,
     ImageIcon,
 } from "lucide-react";
+import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { Link, usePathname, useRouter } from "@/lib/navigation";
 import { cn, formatAmountForDisplay } from "@/lib/utils";
 import { useGetLinks } from "@/config/links";
@@ -34,7 +35,7 @@ import Title from "@/components/ui/title";
 import Modal from "@/components/ui/modal";
 import LocaleModal from "@/components//ui/locale-modal";
 import type { GirlWithMedia } from "@/components//ui/girls";
-import NoResults from "../ui/no-results";
+import { NoSearchResults } from "../ui/no-results";
 
 type HeaderProps = {
     user?: User | null;
@@ -89,7 +90,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                 role="button"
                                 className="flex items-center justify-center"
                             >
-                                <div className="btn btn-circle btn-ghost relative min-[900px]:hidden">
+                                <div className="btn btn-square btn-ghost relative min-[900px]:hidden">
                                     <motion.span
                                         className="absolute h-1 w-8 rounded-full bg-base-content"
                                         style={{
@@ -183,27 +184,32 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                             <Search className="size-5" />
                         </button>
 
-                        <div className="dropdown dropdown-end dropdown-bottom dropdown-hover flex items-center size-12">
-                            <div
-                                tabIndex={0}
-                                role="button"
-                                className="flex items-center"
+                        <Menu
+                            as="div"
+                            className="relative inline-block text-left"
+                        >
+                            <div>
+                                <MenuButton className="flex items-center">
+                                    {user ?
+                                        <Avatar
+                                            src={null}
+                                            alt={user.name}
+                                            className="size-11 lg:size-12"
+                                        />
+                                    :   <div className="btn btn-circle bg-neutral/10">
+                                            <UserIcon className="size-6" />
+                                        </div>
+                                    }
+                                </MenuButton>
+                            </div>
+
+                            <MenuItems
+                                transition
+                                className="absolute right-0 z-10 origin-top-right w-[calc(100vw-16px)] space-y-1 rounded-xl bg-base-100 p-2 shadow-xl md:w-72"
                             >
                                 {user ?
-                                    <Avatar
-                                        src={null}
-                                        alt={user.name}
-                                        className="size-11 lg:size-12"
-                                    />
-                                :   <button className="btn btn-circle bg-neutral/10">
-                                        <UserIcon className="size-6" />
-                                    </button>
-                                }
-                            </div>
-                            <div tabIndex={0} className="dropdown-content pt-2">
-                                <div className="w-[calc(100vw-16px)] space-y-1 rounded-xl bg-base-100 p-2 shadow-xl md:w-72">
-                                    {user ?
-                                        <>
+                                    <>
+                                        <MenuItem>
                                             <div className="my-2 flex flex-col items-center justify-center gap-y-2">
                                                 <Avatar
                                                     src={null}
@@ -215,7 +221,9 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                                     className="text-center font-bold"
                                                 />
                                             </div>
+                                        </MenuItem>
 
+                                        <MenuItem>
                                             <Link
                                                 href="/"
                                                 className="btn btn-ghost h-10 min-h-10 w-full justify-start"
@@ -225,7 +233,9 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                                     {t("home")}
                                                 </span>
                                             </Link>
+                                        </MenuItem>
 
+                                        <MenuItem>
                                             <Link
                                                 href="/account/profile"
                                                 className="btn btn-ghost h-10 min-h-10 w-full justify-start"
@@ -235,8 +245,10 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                                     {t("account")}
                                                 </span>
                                             </Link>
-                                        </>
-                                    :   <>
+                                        </MenuItem>
+                                    </>
+                                :   <>
+                                        <MenuItem>
                                             <Link
                                                 href="/"
                                                 className="btn btn-ghost h-10 min-h-10 w-full justify-start"
@@ -246,9 +258,11 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                                     {t("home")}
                                                 </span>
                                             </Link>
+                                        </MenuItem>
 
+                                        <MenuItem>
                                             <Link
-                                                href="/login"
+                                                href={`/login?redirect=${pathname}`}
                                                 className="btn btn-ghost h-10 min-h-10 w-full justify-start"
                                             >
                                                 <span className="flex items-center gap-2">
@@ -256,9 +270,11 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                                     {t("login")}
                                                 </span>
                                             </Link>
+                                        </MenuItem>
 
+                                        <MenuItem>
                                             <Link
-                                                href="/register"
+                                                href={`/register?redirect=${pathname}`}
                                                 className="btn btn-ghost h-10 min-h-10 w-full justify-start"
                                             >
                                                 <span className="flex items-center gap-2">
@@ -266,11 +282,13 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                                     {t("register")}
                                                 </span>
                                             </Link>
-                                        </>
-                                    }
+                                        </MenuItem>
+                                    </>
+                                }
 
-                                    <div className="divider mx-auto w-full px-2" />
+                                <div className="divider mx-auto w-full px-2" />
 
+                                <MenuItem>
                                     <button
                                         onClick={toggleTheme}
                                         className="btn btn-ghost h-10 min-h-10 w-full justify-start"
@@ -280,7 +298,9 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                             {t("theme")}
                                         </span>
                                     </button>
+                                </MenuItem>
 
+                                <MenuItem>
                                     <button
                                         onClick={() => setLocaleOpen((e) => !e)}
                                         className="btn btn-ghost h-10 min-h-10 w-full justify-start"
@@ -290,11 +310,13 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                             {t("language")}
                                         </span>
                                     </button>
+                                </MenuItem>
 
-                                    {user && (
-                                        <>
-                                            <div className="divider mx-auto w-full px-2" />
+                                {user && (
+                                    <>
+                                        <div className="divider mx-auto w-full px-2" />
 
+                                        <MenuItem>
                                             <button
                                                 onClick={handleLogout}
                                                 className="btn btn-ghost h-10 min-h-10 w-full justify-start"
@@ -304,11 +326,11 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                                     {t("logout")}
                                                 </span>
                                             </button>
-                                        </>
-                                    )}
-                                </div>
-                            </div>
-                        </div>
+                                        </MenuItem>
+                                    </>
+                                )}
+                            </MenuItems>
+                        </Menu>
                     </div>
                 </div>
             </header>
@@ -320,7 +342,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
             <Modal
                 isOpen={searchOpen}
                 setIsOpen={setSearchOpen}
-                className="z-100 w-full p-0 max-h-screen m-1 overflow-y-auto"
+                className="z-100 w-full p-0 max-h-screen overflow-y-auto"
             >
                 <div className="flex flex-col items-center w-full">
                     <div className="relative w-full">
@@ -345,7 +367,9 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                         </button>
                     </div>
                     <div className="flex flex-col gap-y-2 w-full h-full overflow-y-auto p-4">
-                        {girls.length === 0 && <NoResults />}
+                        {girls.length === 0 && (
+                            <NoSearchResults search={search} />
+                        )}
                         {girls.map((girl) => {
                             const totalMediaCount = girl.medias
                                 .map((e) => e.images.length + e.videos.length)

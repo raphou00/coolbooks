@@ -7,7 +7,13 @@
         "copyright": "All Rights Reserved",
         "try": "Try now",
         "description": "Get closer to your favorite pinksea girl",
-        "no-results": "No results found",
+        "no-search-results": "No results found for \"{search}\"",
+        "no-sessions-results": "No sessions found",
+        "no-invoices-results": "Pay or tip a girl to add an invoice",
+        "no-girls-results": "No girls found",
+        "no-girls-results-description": "There are no girls available",
+        "no-favorites-results": "No favorites found",
+        "no-favorites-results-description": "Pay for a girl to add her to your favorites",
         "not-found": "Page Not Found",
         "back-home": "Back to Home"
     },
@@ -146,7 +152,7 @@
             "pay": "{price} / forever",
             "search-girl": "My research...",
             "search-title": "Discover",
-            "search-description": "Explore the most beautiful girls from around the world"
+            "search-description": "Find your next favorite pinksea girl"
         },
         "girl": {
             "title": "{name}",

@@ -44,7 +44,7 @@ export const Socials: React.FC<SocialsProps> = ({ googleId, discordId }) => {
     return (
         <>
             <div className="">
-                <ul role="list" className="divide-y divide-neutral">
+                <ul role="list" className="divide-y divide-neutral/20">
                     <li className="flex justify-between gap-x-2 py-5">
                         <div className="flex min-w-0 gap-x-4">
                             <Image

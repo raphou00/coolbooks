@@ -7,7 +7,7 @@ import { type Session } from "@prisma/client";
 import { handleFormPost } from "@/lib/utils";
 import Date from "@/components/ui/date";
 import Title from "@/components/ui/title";
-import NoResults from "@/components/ui/no-results";
+import { NoSessionResults } from "@/components/ui/no-results";
 
 type SessionsProps = {
     sessions: Session[];
@@ -37,7 +37,7 @@ export const LogoutSessions: React.FC<SessionsProps> = ({
         <>
             <div className="">
                 <ul role="list" className="divide-y divide-neutral">
-                    {sessions.length === 0 && <NoResults />}
+                    {sessions.length === 0 && <NoSessionResults />}
                     {sessions.map((session: Session) => (
                         <li
                             key={session.id}

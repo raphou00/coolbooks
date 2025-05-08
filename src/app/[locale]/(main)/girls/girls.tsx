@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import { Search } from "lucide-react";
 import axios from "axios";
 import Title from "@/components/ui/title";
-import NoResults from "@/components/ui/no-results";
+import { NoGirlsResults, NoSearchResults } from "@/components/ui/no-results";
 import Girls, { type GirlWithMedia } from "@/components/ui/girls";
 
 type GirlsProps = {
@@ -56,7 +56,10 @@ const GirlsEl: React.FC<GirlsElProps> = ({ girls: allGirls }) => {
                 </button>
             </div>
 
-            {girls.length === 0 && <NoResults />}
+            {girls.length === 0 && search !== "" && (
+                <NoSearchResults search={search} />
+            )}
+            {girls.length === 0 && search === "" && <NoGirlsResults />}
             <Girls girls={girls} />
         </>
     );
