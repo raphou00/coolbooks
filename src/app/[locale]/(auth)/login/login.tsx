@@ -38,13 +38,11 @@ const Login: React.FC = () => {
     };
 
     const google = async () => {
-        const res = await axios.get(`/api/auth/google`);
-        window.location.href = redirect || res.data.url;
+        await axios.get(`/api/auth/google`);
     };
 
     const discord = async () => {
-        const res = await axios.get(`/api/auth/discord`);
-        window.location.href = redirect || res.data.url;
+        await axios.get(`/api/auth/discord`);
     };
 
     return (
