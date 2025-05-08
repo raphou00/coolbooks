@@ -42,7 +42,6 @@ const GirlEl: React.FC<GirlProps> = ({ girl, user }) => {
     const searchParams = useSearchParams();
     const payment = searchParams.get("payment");
     const tip = searchParams.get("tips");
-    const gift = searchParams.get("gift");
 
     useEffect(() => {
         if (payment === "success") {
@@ -53,10 +52,6 @@ const GirlEl: React.FC<GirlProps> = ({ girl, user }) => {
             toast.success(t("tips-success"));
         } else if (tip === "failed") {
             toast.error(t("tips-failed"));
-        } else if (gift === "success") {
-            toast.success(t("gift-success"));
-        } else if (gift === "failed") {
-            toast.error(t("gift-failed"));
         }
         // eslint-disable-next-line react-compiler/react-compiler
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -96,7 +91,7 @@ const GirlEl: React.FC<GirlProps> = ({ girl, user }) => {
         <>
             <div className="max-w-3xl mx-auto overflow-hidden">
                 <div
-                    className="w-full flex gap-x-4 justify-start items-start aspect-[7/2] bg-cover bg-center rounded-xl p-1 text-white"
+                    className="w-full flex gap-x-4 justify-start items-start aspect-[8/3] bg-cover bg-center rounded-xl p-1 text-white"
                     style={{
                         background: `url('${getImage(girl.cover)}') no-repeat center center / cover`,
                     }}
@@ -140,11 +135,11 @@ const GirlEl: React.FC<GirlProps> = ({ girl, user }) => {
                         />
                         <div className="flex items-center gap-x-2 ml-2">
                             <div className="flex items-center gap-x-1 w-fit">
-                                <MapPin className=" size-4 md:size-5" />
+                                <MapPin className="size-4 md:size-5" />
                                 {girl.origin}
                             </div>
                             <div className="flex items-center gap-x-1 w-fit">
-                                <Heart className=" size-4 md:size-5" />
+                                <Heart className="size-4 md:size-5" />
                                 {girl.likes}
                             </div>
                             <div className="flex items-center gap-x-1 w-fit">
