@@ -21,7 +21,7 @@ const Title: React.FC<TitleProps> = ({
 }: TitleProps) => {
     return (
         <h1 className={cn("text-2xl", className, font.className)}>
-            <span className="">{text}</span>
+            {text}
             {underline && (
                 <div className="-mt-1 static z-0">
                     <span className="block h-[3px] w-full bg-primary"></span>

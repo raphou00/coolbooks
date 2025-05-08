@@ -42,7 +42,7 @@ const Modal: React.FC<ModalProps> = ({
                         exit={{ scale: 0, rotate: "0deg" }}
                         onClick={(e) => e.stopPropagation()}
                         className={cn(
-                            "relative w-fit max-w-2xl max-sm:w-screen max-sm:h-screen cursor-default rounded-2xl bg-base-100 p-6 shadow-2xl",
+                            "relative w-fit max-w-2xl max-sm:w-screen max-sm:h-screen cursor-default sm:rounded-2xl bg-base-100 p-6 shadow-xl",
                             className
                         )}
                     >

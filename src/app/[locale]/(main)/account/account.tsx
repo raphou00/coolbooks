@@ -28,20 +28,20 @@ export const AccoutMenu: React.FC<AccoutProps> = ({ user, children }) => {
     return (
         <div className="mx-auto mt-12 max-w-4xl space-y-4">
             <div className="flex flex-col w-full">
-                <div className="flex gap-x-4">
+                <div className="flex items-center gap-x-4">
                     <Avatar src={null} alt={user.name} className="size-14" />
 
                     <div className="flex flex-col">
-                        <Title text={user.name} />
+                        <Title
+                            text={
+                                accountLinks.find(
+                                    (link) => link.path === pathname
+                                )?.title ?? ""
+                            }
+                            className="text-2xl w-fit"
+                        />
+                        <p className="text-sm text-neutral">{user.name}</p>
                     </div>
-                    <span className="text-lg mt-0.5 text-gray-500">/</span>
-                    <Title
-                        text={
-                            accountLinks.find((link) => link.path === pathname)
-                                ?.title ?? ""
-                        }
-                        className="text-2xl w-fit"
-                    />
                 </div>
 
                 <div className="w-full hidden max-md:block mt-2">

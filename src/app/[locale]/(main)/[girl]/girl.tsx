@@ -91,12 +91,12 @@ const GirlEl: React.FC<GirlProps> = ({ girl, user }) => {
         <>
             <div className="max-w-3xl mx-auto overflow-hidden">
                 <div
-                    className="w-full flex gap-x-4 justify-start items-start aspect-[8/3] bg-cover bg-center rounded-xl p-1 text-white"
+                    className="w-full flex gap-x-4 justify-start items-start aspect-[10/3] bg-cover bg-center rounded-xl p-1 text-white"
                     style={{
                         background: `url('${getImage(girl.cover)}') no-repeat center center / cover`,
                     }}
                 />
-                <div className="absolute size-32 md:size-40 border-2 border-base-200 bg-base-200 rounded-full overflow-hidden translate-x-1/4 -translate-y-1/2">
+                <div className="absolute size-28 sm:size-32 md:size-40 border-2 border-base-200 bg-base-200 rounded-full overflow-hidden translate-x-1/4 -translate-y-1/2">
                     <ImageEl
                         src={girl.avatar}
                         alt={girl.name}
@@ -128,12 +128,12 @@ const GirlEl: React.FC<GirlProps> = ({ girl, user }) => {
                     </Link>
                 </div>
                 <div className="flex flex-col mt-6 md:mt-8 space-y-2">
-                    <div className="flex items-center gap-x-2">
+                    <div className="flex items-center max-sm:flex-col max-sm:items-start gap-x-2">
                         <Title
                             text={girl.name}
                             className="text-xl md:text-2xl lg:text-3xl"
                         />
-                        <div className="flex items-center gap-x-2 ml-2">
+                        <div className="flex items-center gap-x-2 sm:ml-2">
                             <div className="flex items-center gap-x-1 w-fit">
                                 <MapPin className="size-4 md:size-5" />
                                 {girl.origin}

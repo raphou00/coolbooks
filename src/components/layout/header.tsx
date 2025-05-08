@@ -3,7 +3,7 @@
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import type { User } from "lucia";
 import axios from "axios";
 import {
@@ -22,7 +22,6 @@ import {
     Heart,
     ImageIcon,
 } from "lucide-react";
-import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { Link, usePathname, useRouter } from "@/lib/navigation";
 import { cn, formatAmountForDisplay } from "@/lib/utils";
 import { useGetLinks } from "@/config/links";
@@ -45,6 +44,7 @@ type HeaderProps = {
 const Header: React.FC<HeaderProps> = ({ user, children }) => {
     const [localeOpen, setLocaleOpen] = useState<boolean>(false);
     const [searchOpen, setSearchOpen] = useState<boolean>(false);
+    const [profileOpen, setProfileOpen] = useState<boolean>(false);
     const [search, setSearch] = useState("");
     const [girls, setGirls] = useState<GirlWithMedia[]>([]);
     const t = useTranslations("links");
@@ -155,7 +155,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                             "btn btn-sm",
                                             item.path === pathname ?
                                                 "btn-secondary"
-                                            :   "btn-outline border-2"
+                                            :   "btn-outline"
                                         )}
                                     >
                                         {item.title}
@@ -184,153 +184,148 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                             <Search className="size-5" />
                         </button>
 
-                        <Menu
-                            as="div"
-                            className="relative inline-block text-left"
+                        <div
+                            className="dropdown dropdown-end dropdown-bottom dropdown-hover flex items-center size-12"
+                            onMouseEnter={() => setProfileOpen(true)}
+                            onMouseLeave={() => setProfileOpen(false)}
                         >
-                            <div>
-                                <MenuButton className="flex items-center" tabIndex={0}>
-                                    {user ?
-                                        <Avatar
-                                            src={null}
-                                            alt={user.name}
-                                            className="size-11 lg:size-12"
-                                        />
-                                    :   <div className="btn btn-circle bg-neutral/10">
-                                            <UserIcon className="size-6" />
-                                        </div>
-                                    }
-                                </MenuButton>
-                            </div>
-
-                            <MenuItems
-                                transition
-                                className="absolute right-0 z-10 origin-top-right w-[calc(100vw-16px)] space-y-1 rounded-xl bg-base-100 p-2 shadow-xl md:w-72"
+                            <button
+                                className="flex items-center"
+                                onClick={() => setProfileOpen(true)}
                             >
                                 {user ?
-                                    <>
-                                        <MenuItem>
-                                            <div className="my-2 flex flex-col items-center justify-center gap-y-2">
-                                                <Avatar
-                                                    src={null}
-                                                    alt={user.name}
-                                                    className="size-16"
-                                                />
-                                                <Title
-                                                    text={user.name}
-                                                    className="text-center font-bold"
-                                                />
-                                            </div>
-                                        </MenuItem>
-
-                                        <MenuItem>
-                                            <Link
-                                                href="/"
-                                                className="btn btn-ghost h-10 min-h-10 w-full justify-start"
-                                            >
-                                                <span className="flex items-center gap-2">
-                                                    <Home className="size-6" />
-                                                    {t("home")}
-                                                </span>
-                                            </Link>
-                                        </MenuItem>
-
-                                        <MenuItem>
-                                            <Link
-                                                href="/account/profile"
-                                                className="btn btn-ghost h-10 min-h-10 w-full justify-start"
-                                            >
-                                                <span className="flex items-center gap-2">
-                                                    <Settings2 className="size-6" />
-                                                    {t("account")}
-                                                </span>
-                                            </Link>
-                                        </MenuItem>
-                                    </>
-                                :   <>
-                                        <MenuItem>
-                                            <Link
-                                                href="/"
-                                                className="btn btn-ghost h-10 min-h-10 w-full justify-start"
-                                            >
-                                                <span className="flex items-center gap-2">
-                                                    <Home className="size-6" />
-                                                    {t("home")}
-                                                </span>
-                                            </Link>
-                                        </MenuItem>
-
-                                        <MenuItem>
-                                            <Link
-                                                href={`/login?redirect=${pathname}`}
-                                                className="btn btn-ghost h-10 min-h-10 w-full justify-start"
-                                            >
-                                                <span className="flex items-center gap-2">
-                                                    <LogIn className="size-6" />
-                                                    {t("login")}
-                                                </span>
-                                            </Link>
-                                        </MenuItem>
-
-                                        <MenuItem>
-                                            <Link
-                                                href={`/register?redirect=${pathname}`}
-                                                className="btn btn-ghost h-10 min-h-10 w-full justify-start"
-                                            >
-                                                <span className="flex items-center gap-2">
-                                                    <PenBox className="size-6" />
-                                                    {t("register")}
-                                                </span>
-                                            </Link>
-                                        </MenuItem>
-                                    </>
+                                    <Avatar
+                                        src={null}
+                                        alt={user.name}
+                                        className="size-11 lg:size-12"
+                                    />
+                                :   <div className="btn btn-circle bg-neutral/10">
+                                        <UserIcon className="size-6" />
+                                    </div>
                                 }
-
-                                <div className="divider mx-auto w-full px-2" />
-
-                                <MenuItem>
-                                    <button
-                                        onClick={toggleTheme}
-                                        className="btn btn-ghost h-10 min-h-10 w-full justify-start"
+                            </button>
+                            <AnimatePresence>
+                                {profileOpen && (
+                                    <motion.div
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1 }}
+                                        exit={{ opacity: 0 }}
+                                        tabIndex={0}
+                                        className="dropdown-content pt-2"
+                                        onClick={() => setProfileOpen(false)}
                                     >
-                                        <span className="flex items-center gap-2">
-                                            <SunMoon className="size-6" />
-                                            {t("theme")}
-                                        </span>
-                                    </button>
-                                </MenuItem>
+                                        <div className="w-[calc(100vw-16px)] space-y-1 rounded-xl bg-base-100 p-2 border border-neutral/20 shadow-xl md:w-72">
+                                            {user ?
+                                                <>
+                                                    <div className="my-2 flex flex-col items-center justify-center gap-y-2">
+                                                        <Avatar
+                                                            src={null}
+                                                            alt={user.name}
+                                                            className="size-16"
+                                                        />
+                                                        <Title
+                                                            text={user.name}
+                                                            className="text-center font-bold"
+                                                        />
+                                                    </div>
 
-                                <MenuItem>
-                                    <button
-                                        onClick={() => setLocaleOpen((e) => !e)}
-                                        className="btn btn-ghost h-10 min-h-10 w-full justify-start"
-                                    >
-                                        <span className="flex items-center gap-2">
-                                            <Languages className="size-6" />
-                                            {t("language")}
-                                        </span>
-                                    </button>
-                                </MenuItem>
+                                                    <Link
+                                                        href="/"
+                                                        className="btn btn-ghost h-10 min-h-10 w-full justify-start"
+                                                    >
+                                                        <span className="flex items-center gap-2">
+                                                            <Home className="size-6" />
+                                                            {t("home")}
+                                                        </span>
+                                                    </Link>
 
-                                {user && (
-                                    <>
-                                        <div className="divider mx-auto w-full px-2" />
+                                                    <Link
+                                                        href="/account/profile"
+                                                        className="btn btn-ghost h-10 min-h-10 w-full justify-start"
+                                                    >
+                                                        <span className="flex items-center gap-2">
+                                                            <Settings2 className="size-6" />
+                                                            {t("account")}
+                                                        </span>
+                                                    </Link>
+                                                </>
+                                            :   <>
+                                                    <Link
+                                                        href="/"
+                                                        className="btn btn-ghost h-10 min-h-10 w-full justify-start"
+                                                    >
+                                                        <span className="flex items-center gap-2">
+                                                            <Home className="size-6" />
+                                                            {t("home")}
+                                                        </span>
+                                                    </Link>
 
-                                        <MenuItem>
+                                                    <Link
+                                                        href="/login"
+                                                        className="btn btn-ghost h-10 min-h-10 w-full justify-start"
+                                                    >
+                                                        <span className="flex items-center gap-2">
+                                                            <LogIn className="size-6" />
+                                                            {t("login")}
+                                                        </span>
+                                                    </Link>
+
+                                                    <Link
+                                                        href="/register"
+                                                        className="btn btn-ghost h-10 min-h-10 w-full justify-start"
+                                                    >
+                                                        <span className="flex items-center gap-2">
+                                                            <PenBox className="size-6" />
+                                                            {t("register")}
+                                                        </span>
+                                                    </Link>
+                                                </>
+                                            }
+
+                                            <div className="divider mx-auto w-full px-2" />
+
                                             <button
-                                                onClick={handleLogout}
+                                                onClick={toggleTheme}
                                                 className="btn btn-ghost h-10 min-h-10 w-full justify-start"
                                             >
                                                 <span className="flex items-center gap-2">
-                                                    <LogOut className="size-6" />
-                                                    {t("logout")}
+                                                    <SunMoon className="size-6" />
+                                                    {t("theme")}
                                                 </span>
                                             </button>
-                                        </MenuItem>
-                                    </>
+
+                                            <button
+                                                onClick={() =>
+                                                    setLocaleOpen((e) => !e)
+                                                }
+                                                className="btn btn-ghost h-10 min-h-10 w-full justify-start"
+                                            >
+                                                <span className="flex items-center gap-2">
+                                                    <Languages className="size-6" />
+                                                    {t("language")}
+                                                </span>
+                                            </button>
+
+                                            {user && (
+                                                <>
+                                                    <div className="divider mx-auto w-full px-2" />
+
+                                                    <button
+                                                        onClick={handleLogout}
+                                                        className="btn btn-ghost h-10 min-h-10 w-full justify-start"
+                                                    >
+                                                        <span className="flex items-center gap-2">
+                                                            <LogOut className="size-6" />
+                                                            {t("logout")}
+                                                        </span>
+                                                    </button>
+                                                </>
+                                            )}
+                                        </div>
+                                    </motion.div>
                                 )}
-                            </MenuItems>
-                        </Menu>
+                            </AnimatePresence>
+                        </div>
                     </div>
                 </div>
             </header>
@@ -351,7 +346,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                             placeholder={t("search-girl")}
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
-                            className="w-full h-16 rounded-tl-xl rounded-tr-xl py-4 px-14 text-lg tracking-wide border-b border-neutral/20 transition placeholder:text-neutral-400 focus:outline-none focus:bg-base-300"
+                            className="w-full h-16 max-sm:rounded-none py-4 px-14 text-lg tracking-wide border-b border-neutral/20 transition placeholder:text-neutral-400 focus:outline-none focus:bg-base-300"
                             spellCheck={false}
                             autoComplete="off"
                             autoCapitalize="off"

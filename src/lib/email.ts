@@ -8,7 +8,7 @@ const sendEmail = async (
     to: string,
     subject: string,
     text: string,
-    react: React.ReactElement,
+    react: React.ReactElement
 ) => {
     const params: CreateEmailOptions = {
         from: title + " <" + env.SENDER_EMAIL + ">",
