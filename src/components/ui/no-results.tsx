@@ -64,6 +64,9 @@ const NoInvoicesResults: React.FC = () => {
                 className="mx-auto w-max my-2"
                 underline
             />
+            <p className="my-2 text-sm text-neutral">
+                {t("no-invoices-results-description")}
+            </p>
         </div>
     );
 };

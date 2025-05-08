@@ -62,7 +62,8 @@ export const POST = async (req: NextRequest) => {
         await sendEmail(
             user.email,
             t("emails.forgot-password.title"),
-            <ResetPasswordEmail t={t} code={code} name={user.name} />
+            t("emails.forgot-password.body"),
+            <ResetPasswordEmail t={t} code={code} name={user.name} />,
         );
 
         return NextResponse.json({

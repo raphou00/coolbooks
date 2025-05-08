@@ -50,6 +50,7 @@ export const POST = async (req: NextRequest) => {
         await sendEmail(
             user.email,
             t("emails.register.title"),
+            t("emails.register.body"),
             <Register t={t} name={user.name} />
         );
 

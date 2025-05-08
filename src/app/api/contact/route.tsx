@@ -35,6 +35,7 @@ export const POST = async (req: NextRequest) => {
         await sendEmail(
             env.SENDER_EMAIL,
             body.subject,
+            body.message,
             <div>
                 <p>{body.name}</p> <p>{body.email}</p> <p>{body.message}</p>
             </div>

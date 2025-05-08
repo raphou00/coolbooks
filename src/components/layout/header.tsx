@@ -189,7 +189,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                             className="relative inline-block text-left"
                         >
                             <div>
-                                <MenuButton className="flex items-center">
+                                <MenuButton className="flex items-center" tabIndex={0}>
                                     {user ?
                                         <Avatar
                                             src={null}

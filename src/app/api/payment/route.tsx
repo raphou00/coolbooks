@@ -87,7 +87,8 @@ export const POST = async (req: NextRequest) => {
 
         await sendEmail(
             user.user.email,
-            t("messages.payment-success", { name: girl.name }),
+            t("emails.payment.title", { name: girl.name }),
+            t("emails.payment.body", { name: girl.name }),
             <Payment
                 t={t}
                 amount={girl.price}
