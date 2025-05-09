@@ -101,7 +101,7 @@ const CheckoutForm: React.FC<PaymentProps> = ({ girl }) => {
                         type="text"
                         label={t("name")}
                         placeholder={t("name-placeholder")}
-                        error={state.errors?.name![0]}
+                        error={state.errors?.name?.[0]}
                         {...register("name")}
                     />
 

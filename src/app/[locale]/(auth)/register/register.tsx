@@ -96,7 +96,7 @@ const Register: React.FC = () => {
                     type="text"
                     label={t("name")}
                     placeholder={t("name-placeholder")}
-                    error={state.errors?.name![0]}
+                    error={state.errors?.name?.[0]}
                     {...register("name")}
                 />
 
@@ -104,7 +104,7 @@ const Register: React.FC = () => {
                     type="text"
                     label={t("email")}
                     placeholder={t("email-placeholder")}
-                    error={state.errors?.email![0]}
+                    error={state.errors?.email?.[0]}
                     {...register("email")}
                 />
 
@@ -112,7 +112,7 @@ const Register: React.FC = () => {
                     type="password"
                     label={t("password")}
                     placeholder={t("password-placeholder")}
-                    error={state.errors?.password![0]}
+                    error={state.errors?.password?.[0]}
                     {...register("password")}
                 />
 

@@ -49,7 +49,7 @@ export const UpdatePassword: React.FC = () => {
                     type="password"
                     label="Current password"
                     placeholder="Enter your current password..."
-                    error={state.errors?.currentPassword![0]}
+                    error={state.errors?.currentPassword?.[0]}
                     {...register("currentPassword")}
                 />
 
@@ -57,7 +57,7 @@ export const UpdatePassword: React.FC = () => {
                     type="password"
                     label="New password"
                     placeholder="Enter your new password..."
-                    error={state.errors?.newPassword![0]}
+                    error={state.errors?.newPassword?.[0]}
                     {...register("newPassword")}
                 />
 
@@ -65,7 +65,7 @@ export const UpdatePassword: React.FC = () => {
                     type="password"
                     label="Confirm password"
                     placeholder="Confirm your new password..."
-                    error={state.errors?.confirmPassword![0]}
+                    error={state.errors?.confirmPassword?.[0]}
                     {...register("confirmPassword")}
                 />
 
@@ -119,7 +119,7 @@ export const CreatePassword: React.FC = () => {
                     type="password"
                     label="New password"
                     placeholder="Enter your new password..."
-                    error={state.errors?.newPassword![0]}
+                    error={state.errors?.newPassword?.[0]}
                     {...register("newPassword")}
                 />
 
@@ -127,7 +127,7 @@ export const CreatePassword: React.FC = () => {
                     type="password"
                     label="Confirm password"
                     placeholder="Confirm your new password..."
-                    error={state.errors?.confirmPassword![0]}
+                    error={state.errors?.confirmPassword?.[0]}
                     {...register("confirmPassword")}
                 />
 

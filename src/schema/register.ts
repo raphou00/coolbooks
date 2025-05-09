@@ -5,6 +5,7 @@ import {
     maxPasswordLength,
     maxUsernameLength,
     minPasswordLength,
+    minUsernameLength,
 } from "@/config/user";
 
 const registerSchema = (t: TranslationsFunc) =>
@@ -14,6 +15,9 @@ const registerSchema = (t: TranslationsFunc) =>
             .trim()
             .max(maxUsernameLength, {
                 message: t("messages.max", { max: maxUsernameLength }),
+            })
+            .min(minUsernameLength, {
+                message: t("messages.min", { min: minUsernameLength }),
             })
             .min(1, { message: t("messages.required") }),
 

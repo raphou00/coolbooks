@@ -7,6 +7,7 @@ import { redirect } from "@/lib/navigation";
 import Main from "@/components/layout/main";
 import type { GirlWithMedia } from "@/components/ui/girls";
 import Girl from "./girl";
+import { getImage } from "@/lib/utils";
 
 const generateMetadata = async ({
     params,
@@ -18,7 +19,7 @@ const generateMetadata = async ({
 
     const girl = await db.girl.findFirst({
         where: { username: girlName },
-        select: { name: true },
+        select: { name: true, avatar: true },
     });
 
     if (!girl) {
@@ -31,6 +32,21 @@ const generateMetadata = async ({
     return {
         title: t("girl.title", { name: girl.name }),
         description: t("girl.description", { name: girl.name }),
+        openGraph: {
+            type: "website",
+            title: t("girl.title", { name: girl.name }),
+            description: t("girl.description", { name: girl.name }),
+            siteName: "Pinksea",
+            locale: "en_US",
+            images: [
+                {
+                    url: getImage(girl.avatar),
+                    width: 800,
+                    height: 600,
+                    alt: "Pinksea",
+                },
+            ],
+        },
     };
 };
 

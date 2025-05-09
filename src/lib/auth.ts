@@ -28,6 +28,8 @@ export const lucia = new Lucia(adapter, {
             girls: user.girls,
             locale: user.locale,
             role: user.role,
+            googleId: user.googleId,
+            discordId: user.discordId,
         };
     },
 });
@@ -115,4 +117,6 @@ type DatabaseUserAttributes = {
     girls: string[];
     locale: string;
     role: Role;
+    googleId?: string;
+    discordId?: string;
 };

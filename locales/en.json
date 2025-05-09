@@ -64,12 +64,15 @@
             "submit": "Send",
             "info": "An E-Mail will be sent with a link to create a new password"
         },
-        "verify-email": {
-            "title": "Verify Email",
-            "description": "Enter the code sent to your e-mail",
-            "otp": "Code",
-            "submit": "Verify",
-            "resend": "Resend Code"
+        "social-exists": {
+            "title": "Create Account",
+            "description": "Information already in use",
+            "info": "Some of your information are already associated with an account, use different ones, or <login>login</login> to your account",
+            "name": "Name",
+            "name-placeholder": "Enter your name...",
+            "email": "E-Mail",
+            "email-placeholder": "Enter your e-mail...",
+            "submit": "Submit"
         },
         "account-profile": {
             "title": "Profile",

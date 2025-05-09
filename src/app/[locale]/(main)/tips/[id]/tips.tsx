@@ -104,7 +104,7 @@ const CheckoutForm: React.FC<TipsProps> = ({ girl }) => {
                         type="number"
                         label={t("amount")}
                         placeholder={t("amount-placeholder")}
-                        error={state.errors?.amount![0]}
+                        error={state.errors?.amount?.[0]}
                         {...register("amount")}
                     />
 
@@ -112,7 +112,7 @@ const CheckoutForm: React.FC<TipsProps> = ({ girl }) => {
                         type="text"
                         label={t("name")}
                         placeholder={t("name-placeholder")}
-                        error={state.errors?.name![0]}
+                        error={state.errors?.name?.[0]}
                         {...register("name")}
                     />
 

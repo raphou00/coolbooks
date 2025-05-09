@@ -56,7 +56,7 @@ const Page: React.FC = () => {
                                 type="text"
                                 label={t("name")}
                                 placeholder={t("name-placeholder")}
-                                error={state.errors?.name![0]}
+                                error={state.errors?.name?.[0]}
                                 {...register("name")}
                             />
 
@@ -64,7 +64,7 @@ const Page: React.FC = () => {
                                 type="text"
                                 label={t("email")}
                                 placeholder={t("email-placeholder")}
-                                error={state.errors?.email![0]}
+                                error={state.errors?.email?.[0]}
                                 {...register("email")}
                             />
 
@@ -72,7 +72,7 @@ const Page: React.FC = () => {
                                 type="text"
                                 label={t("subject")}
                                 placeholder={t("subject-placeholder")}
-                                error={state.errors?.subject![0]}
+                                error={state.errors?.subject?.[0]}
                                 {...register("subject")}
                             />
 
@@ -83,7 +83,7 @@ const Page: React.FC = () => {
                                             {t("message")}
                                         </span>
                                         <span className="label-text-alt text-error">
-                                            {state.errors?.message![0]}
+                                            {state.errors?.message?.[0]}
                                         </span>
                                     </div>
                                     <textarea

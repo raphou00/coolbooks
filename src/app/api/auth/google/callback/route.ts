@@ -42,7 +42,7 @@ export async function GET(req: NextRequest) {
         const name = claimsParser.getString("name");
         const email = claimsParser.getString("email");
 
-        if (user?.user) {
+        if (user?.user && !user.user.googleId) {
             await db.user.update({
                 where: {
                     id: user.user.id,
@@ -74,7 +74,12 @@ export async function GET(req: NextRequest) {
         });
 
         if (existingEmail) {
-            return NextResponse.redirect(new URL("/error?error=400", req.url));
+            return NextResponse.redirect(
+                new URL(
+                    `/social-exists?name=${name}&googleId=${googleId}`,
+                    req.url
+                )
+            );
         }
 
         const newUser = await db.user.create({

@@ -47,7 +47,7 @@ const ResetPassword: React.FC = () => {
                     type="password"
                     label={t("password")}
                     placeholder={t("password-placeholder")}
-                    error={state.errors?.password![0]}
+                    error={state.errors?.password?.[0]}
                     {...register("password")}
                 />
 
@@ -55,7 +55,7 @@ const ResetPassword: React.FC = () => {
                     type="password"
                     label={t("confirm-password")}
                     placeholder={t("confirm-password-placeholder")}
-                    error={state.errors?.confirmPassword![0]}
+                    error={state.errors?.confirmPassword?.[0]}
                     {...register("confirmPassword")}
                 />
 

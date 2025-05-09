@@ -61,7 +61,7 @@ export const UpdateProfile: React.FC<UpdateProfileProps> = ({
                     type="text"
                     label={t("name")}
                     placeholder={t("name-placeholder")}
-                    error={state.errors?.name![0]}
+                    error={state.errors?.name?.[0]}
                     {...register("name")}
                 />
 
@@ -69,7 +69,7 @@ export const UpdateProfile: React.FC<UpdateProfileProps> = ({
                     type="email"
                     label={t("email")}
                     placeholder={t("email-placeholder")}
-                    error={state.errors?.email![0]}
+                    error={state.errors?.email?.[0]}
                     {...register("email")}
                 />
 

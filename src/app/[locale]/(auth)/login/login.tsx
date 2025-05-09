@@ -93,7 +93,7 @@ const Login: React.FC = () => {
                     type="text"
                     label={t("email")}
                     placeholder={t("email-placeholder")}
-                    error={state.errors?.email![0]}
+                    error={state.errors?.email?.[0]}
                     {...register("email")}
                 />
 
@@ -101,7 +101,7 @@ const Login: React.FC = () => {
                     type="password"
                     label={t("password")}
                     placeholder={t("password-placeholder")}
-                    error={state.errors?.password![0]}
+                    error={state.errors?.password?.[0]}
                     {...register("password")}
                 />
 

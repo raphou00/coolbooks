@@ -54,7 +54,7 @@ export async function GET(req: NextRequest) {
         const name = discordData.global_name ?? discordData.username;
         const email = discordData.email;
 
-        if (user?.user) {
+        if (user?.user && !user.user.discordId) {
             await db.user.update({
                 where: {
                     id: user.user.id,
@@ -86,7 +86,12 @@ export async function GET(req: NextRequest) {
         });
 
         if (existingEmail) {
-            return NextResponse.redirect(new URL("/error?error=400", req.url));
+            return NextResponse.redirect(
+                new URL(
+                    `/social-exists?name=${name}&discordId=${discordId}`,
+                    req.url
+                )
+            );
         }
 
         const newUser = await db.user.create({

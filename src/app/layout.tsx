@@ -30,12 +30,13 @@ const generateMetadata = async (): Promise<Metadata> => {
         metadataBase: new URL(env.APP_URL),
         referrer: "origin",
         openGraph: {
+            type: "website",
             title: metadata.title,
             siteName: metadata.title,
             description: t("description"),
             images: [
                 {
-                    url: "/images/share-image.jpeg",
+                    url: "/images/banner.jpeg",
                 },
             ],
         },

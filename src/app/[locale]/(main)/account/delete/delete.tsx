@@ -45,7 +45,7 @@ export const DeleteAccount: React.FC = () => {
                     type="email"
                     label={t("email")}
                     placeholder={t("email-placeholder")}
-                    error={state.errors?.email![0]}
+                    error={state.errors?.email?.[0]}
                     {...register("email")}
                 />
                 <p className="mt-2">{t("confirm")}</p>

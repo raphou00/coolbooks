@@ -1,7 +1,7 @@
 import * as z from "zod";
 import db from "@/lib/db";
 import { type TranslationsFunc } from "@/lib/types";
-import { maxPasswordLength } from "@/config/user";
+import { maxPasswordLength, minUsernameLength } from "@/config/user";
 
 const updateProfileSchema = (t: TranslationsFunc, curEmail: string) =>
     z.object({
@@ -10,6 +10,9 @@ const updateProfileSchema = (t: TranslationsFunc, curEmail: string) =>
             .trim()
             .max(maxPasswordLength, {
                 message: t("max", { max: maxPasswordLength }),
+            })
+            .min(minUsernameLength, {
+                message: t("min", { min: minUsernameLength }),
             })
             .min(1, { message: t("required") }),
 
