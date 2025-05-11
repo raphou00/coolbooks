@@ -9,7 +9,6 @@ async function seed() {
             name: "admin",
             email: "admin@pinksea.me",
             password: await hash("29100710", 10),
-            emailVerified: true,
             role: "ADMIN",
         },
     });

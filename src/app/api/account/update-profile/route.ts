@@ -53,10 +53,6 @@ export const POST = async (req: NextRequest) => {
             data: {
                 name: body.name,
                 email: body.email,
-                emailVerified:
-                    body.email === user.user.email ?
-                        user.user.emailVerified
-                    :   false,
             },
         });
 
