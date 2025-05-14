@@ -11,6 +11,7 @@ import {
     MapPin,
     X,
     Coins,
+    MessageCircle,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import type { User } from "lucia";
@@ -105,7 +106,19 @@ const GirlEl: React.FC<GirlProps> = ({ girl, user }) => {
                         className="w-full h-full object-cover"
                     />
                 </div>
-                <div className="flex items-center justify-end gap-x-4 mt-2">
+                <div className="flex items-center justify-end gap-x-2 mt-2">
+                    <Link
+                        href={
+                            user ?
+                                bought ?
+                                    `/tips/${girl.id}`
+                                :   `/payment/${girl.id}`
+                            :   `/login?redirect=/${girl.username}`
+                        }
+                        className="btn btn-circle rounded-full size-10 min-h-10 btn-secondary"
+                    >
+                        <MessageCircle className="size-5" />
+                    </Link>
                     <Link
                         href={
                             user ?
