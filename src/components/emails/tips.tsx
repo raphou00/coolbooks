@@ -1,6 +1,7 @@
 import { Column, Container, Row, Section, Text } from "@react-email/components";
 import TemplateEmail from "./template";
 import type { TranslationsFunc } from "@/lib/types";
+import { name as girlName } from "@/config/girl";
 
 type EmailProps = {
     t: TranslationsFunc;
@@ -9,7 +10,7 @@ type EmailProps = {
     girlName: string;
 };
 
-const Tips: React.FC<EmailProps> = async ({ t, amount, name, girlName }) => {
+const Tips: React.FC<EmailProps> = async ({ t, amount, name }) => {
     return (
         <TemplateEmail t={t} title={t("emails.tips.title", { girlName })}>
             <Section>

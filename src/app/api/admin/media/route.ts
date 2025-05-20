@@ -1,7 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { getTranslations } from "next-intl/server";
 import { getUser } from "@/lib/auth";
-import { createMedia } from "@/lib/girl";
+import { createMedia } from "@/lib/media";
 
 export const POST = async (req: NextRequest) => {
     const t = await getTranslations({
@@ -20,7 +20,8 @@ export const POST = async (req: NextRequest) => {
             });
         }
 
-        await createMedia(body.girlId, body.description);
+        body.tags = body.tags.toString().split(",");
+        await createMedia(body.description, body.tags);
 
         return NextResponse.json({
             success: true,

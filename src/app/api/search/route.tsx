@@ -1,7 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { getTranslations } from "next-intl/server";
 import db from "@/lib/db";
-import { findGirlsWithMedias } from "@/config/girl";
+import { findAllMedias } from "@/config/girl";
 import { ratelimitSearch } from "@/lib/rate-limiter";
 
 export const GET = async (req: NextRequest) => {
@@ -23,21 +23,20 @@ export const GET = async (req: NextRequest) => {
 
         const q = req.nextUrl.searchParams.get("q")?.toLowerCase() || "";
 
-        const girls = await db.girl.findMany({
+        const medias = await db.media.findMany({
             where: {
                 OR: [
-                    { name: { contains: q, mode: "insensitive" } },
-                    { origin: { contains: q, mode: "insensitive" } },
+                    { description: { contains: q, mode: "insensitive" } },
                     { tags: { hasSome: [q] } },
                 ],
             },
-            select: findGirlsWithMedias,
+            select: findAllMedias,
         });
 
         return NextResponse.json({
             success: true,
             message: "/",
-            girls,
+            medias,
         });
     } catch (err) {
         console.error(err);

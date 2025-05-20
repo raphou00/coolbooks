@@ -18,23 +18,22 @@ import {
     SearchIcon,
     X,
     Home,
-    MapPin,
-    Heart,
     ImageIcon,
 } from "lucide-react";
 import { Link, usePathname, useRouter } from "@/lib/navigation";
-import { cn, formatAmountForDisplay } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { useGetLinks } from "@/config/links";
 import useScroll from "@/hook/use-scroll";
-import Image from "@/components/ui/image";
 import Logo from "@/components/ui/logo";
 import LogoText from "@/components/ui/logo-text";
 import Avatar from "@/components/ui/avatar";
 import Title from "@/components/ui/title";
 import Modal from "@/components/ui/modal";
 import LocaleModal from "@/components//ui/locale-modal";
-import type { GirlWithMedia } from "@/components//ui/girls";
+import type { MediaProps } from "@/components/ui/medias";
 import { NoSearchResults } from "../ui/no-results";
+import GirlImage from "../ui/girl-image";
+import GirlVideo from "../ui/girl-video";
 
 type HeaderProps = {
     user?: User | null;
@@ -46,7 +45,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
     const [searchOpen, setSearchOpen] = useState<boolean>(false);
     const [profileOpen, setProfileOpen] = useState<boolean>(false);
     const [search, setSearch] = useState("");
-    const [girls, setGirls] = useState<GirlWithMedia[]>([]);
+    const [medias, setMedias] = useState<MediaProps[]>([]);
     const t = useTranslations("links");
     const links = useGetLinks();
     const router = useRouter();
@@ -61,7 +60,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
 
     const handleSearch = async () => {
         const res = await axios.get(`/api/search?q=${search}`);
-        setGirls(res.data.girls);
+        setMedias(res.data.medias);
     };
 
     const toggleTheme = () => {
@@ -76,261 +75,272 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
 
     return (
         <>
-            <header className="sticky w-full top-0 z-50">
-                <div
-                    className={cn(
-                        "navbar mx-auto px-2 md:px-4 bg-base-100 transition backdrop-blur-3xl",
-                        scroll && ""
-                    )}
-                >
-                    <div className="navbar-start">
-                        <div className="dropdown dropdown-bottom dropdown-hover">
-                            <div
-                                tabIndex={0}
-                                role="button"
-                                className="flex items-center justify-center"
-                            >
-                                <div className="btn btn-square btn-ghost relative min-[900px]:hidden">
-                                    <motion.span
-                                        className="absolute h-1 w-8 rounded-full bg-base-content"
-                                        style={{
-                                            y: "-50%",
-                                            left: "50%",
-                                            x: "-50%",
-                                            top: "30%",
-                                        }}
-                                    />
-                                    <motion.span
-                                        className="absolute h-1 w-8 rounded-full bg-base-content"
-                                        style={{
-                                            left: "50%",
-                                            x: "-50%",
-                                            top: "50%",
-                                            y: "-50%",
-                                        }}
-                                    />
-                                    <motion.span
-                                        className="absolute h-1 w-4 rounded-full bg-base-content"
-                                        style={{
-                                            x: "-50%",
-                                            y: "50%",
-                                            bottom: "30%",
-                                            left: "calc(50% - 8px)",
-                                        }}
-                                    />
+            <div className="drawer">
+                <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
+                <div className="drawer-content flex flex-col">
+                    <header className="sticky w-full top-0 z-40">
+                        <div
+                            className={cn(
+                                "navbar mx-auto px-2 md:px-4 bg-base-100 transition backdrop-blur-3xl",
+                                scroll && ""
+                            )}
+                        >
+                            <div className="navbar-start">
+                                    <label
+                                        htmlFor="my-drawer-3"
+                                        role="button"
+                                        className="flex items-center justify-center"
+                                    >
+                                        <div className="btn btn-square btn-ghost relative min-[1200px]:hidden">
+                                            <motion.span
+                                                className="absolute h-1 w-8 rounded-full bg-base-content"
+                                                style={{
+                                                    y: "-50%",
+                                                    left: "50%",
+                                                    x: "-50%",
+                                                    top: "30%",
+                                                }}
+                                            />
+                                            <motion.span
+                                                className="absolute h-1 w-8 rounded-full bg-base-content"
+                                                style={{
+                                                    left: "50%",
+                                                    x: "-50%",
+                                                    top: "50%",
+                                                    y: "-50%",
+                                                }}
+                                            />
+                                            <motion.span
+                                                className="absolute h-1 w-4 rounded-full bg-base-content"
+                                                style={{
+                                                    x: "-50%",
+                                                    y: "50%",
+                                                    bottom: "30%",
+                                                    left: "calc(50% - 8px)",
+                                                }}
+                                            />
+                                        </div>
+                                    </label> 
+                                <div className="flex items-center mr-4">
+                                    <Link
+                                        href="/"
+                                        className="flex space-x-2 items-center text-sm relative z-20"
+                                    >
+                                        <LogoText className="h-8 w-auto ml-2 mb-2 max-[400px]:hidden" />
+                                        <Logo className="size-12 hidden max-[400px]:block" />
+                                    </Link>
                                 </div>
-                            </div>
-                            <div tabIndex={0} className="dropdown-content pt-2">
-                                <div className="w-[calc(100vw-20px)] space-y-1 rounded-xl bg-base-100 p-2 shadow-xl md:w-72">
+                                <ul className="menu menu-horizontal space-x-2 max-[1200px]:hidden">
                                     {links.map((item) => (
-                                        <Link
-                                            key={item.title}
-                                            href={item.path}
-                                            className="btn btn-ghost h-10 min-h-10 w-full justify-start"
-                                        >
-                                            <span className="flex items-center gap-2">
+                                        <li key={item.title}>
+                                            <Link
+                                                href={item.path}
+                                                className={cn(
+                                                    "btn btn-sm",
+                                                    item.path === pathname ?
+                                                        "btn-secondary"
+                                                    :   "btn-outline"
+                                                )}
+                                            >
                                                 <item.icon className="size-6" />
                                                 {item.title}
-                                            </span>
-                                        </Link>
+                                            </Link>
+                                        </li>
                                     ))}
-                                </div>
+                                </ul>
                             </div>
-                        </div>
-                        <div className="flex items-center mr-4">
-                            <Link
-                                href="/"
-                                className="flex space-x-2 items-center text-sm relative z-20"
-                            >
-                                <LogoText className="h-8 w-auto ml-2 mb-2 max-[400px]:hidden" />
-                                <Logo className="size-12 hidden max-[400px]:block" />
-                            </Link>
-                        </div>
-                        <ul className="menu menu-horizontal space-x-2 max-[900px]:hidden">
-                            {links.map((item) => (
-                                <li key={item.title}>
-                                    <Link
-                                        href={item.path}
-                                        className={cn(
-                                            "btn btn-sm",
-                                            item.path === pathname ?
-                                                "btn-secondary"
-                                            :   "btn-outline"
-                                        )}
+                            <div className="navbar-end space-x-2">
+                                <div className="relative max-w-96 w-full hidden lg:block">
+                                    <button
+                                        onClick={() => setSearchOpen(true)}
+                                        className="input text-left rounded-full w-full border-2 border-neutral/20 text-neutral bg-base-100 pr-9 tracking-wide"
                                     >
-                                        {item.title}
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                    <div className="navbar-end space-x-2">
-                        <div className="relative max-w-96 w-full hidden lg:block">
-                            <button
-                                onClick={() => setSearchOpen(true)}
-                                className="input text-left rounded-full w-full border-2 border-neutral/20 text-neutral bg-base-100 pr-9 tracking-wide"
-                            >
-                                {t("search-girl")}
-                                <div className="size-9 bg-secondary rounded-full flex items-center justify-center absolute right-0 top-1/2 mx-1.5 -translate-y-1/2">
-                                    <Search className="size-5 text-white" />
+                                        {t("search-placeholder")}
+                                        <div className="size-9 bg-secondary rounded-full flex items-center justify-center absolute right-0 top-1/2 mx-1.5 -translate-y-1/2">
+                                            <Search className="size-6 text-white" />
+                                        </div>
+                                    </button>
                                 </div>
-                            </button>
-                        </div>
 
-                        <button
-                            className="btn btn-circle bg-neutral/10 lg:hidden"
-                            onClick={() => setSearchOpen(true)}
-                        >
-                            <Search className="size-5" />
-                        </button>
+                                <button
+                                    className="btn btn-circle bg-neutral/10 lg:hidden"
+                                    onClick={() => setSearchOpen(true)}
+                                >
+                                    <Search className="size-5" />
+                                </button>
 
-                        <div
-                            className="dropdown dropdown-end dropdown-bottom dropdown-hover flex items-center size-12"
-                            onMouseEnter={() => setProfileOpen(true)}
-                            onMouseLeave={() => setProfileOpen(false)}
-                        >
-                            <button
-                                className="flex items-center"
-                                onClick={() => setProfileOpen(true)}
-                            >
-                                {user ?
-                                    <Avatar
-                                        src={null}
-                                        alt={user.name}
-                                        className="size-11 lg:size-12"
-                                    />
-                                :   <div className="btn btn-circle bg-neutral/10">
-                                        <UserIcon className="size-6" />
-                                    </div>
-                                }
-                            </button>
-                            <AnimatePresence>
-                                {profileOpen && (
-                                    <motion.div
-                                        initial={{ opacity: 0 }}
-                                        animate={{ opacity: 1 }}
-                                        exit={{ opacity: 0 }}
-                                        tabIndex={0}
-                                        className="dropdown-content pt-2"
-                                        onClick={() => setProfileOpen(false)}
+                                <div
+                                    className="dropdown dropdown-end dropdown-bottom dropdown-hover flex items-center size-12"
+                                    onMouseEnter={() => setProfileOpen(true)}
+                                    onMouseLeave={() => setProfileOpen(false)}
+                                >
+                                    <button
+                                        className="flex items-center"
+                                        onClick={() => setProfileOpen(true)}
                                     >
-                                        <div className="w-[calc(100vw-16px)] space-y-1 rounded-xl bg-base-100 p-2 border border-neutral/20 shadow-xl md:w-72">
-                                            {user ?
-                                                <>
-                                                    <div className="my-2 flex flex-col items-center justify-center gap-y-2">
-                                                        <Avatar
-                                                            src={null}
-                                                            alt={user.name}
-                                                            className="size-16"
-                                                        />
-                                                        <Title
-                                                            text={user.name}
-                                                            className="text-center font-bold"
-                                                        />
-                                                    </div>
-
-                                                    <Link
-                                                        href="/"
-                                                        className="btn btn-ghost h-10 min-h-10 w-full justify-start"
-                                                    >
-                                                        <span className="flex items-center gap-2">
-                                                            <Home className="size-6" />
-                                                            {t("home")}
-                                                        </span>
-                                                    </Link>
-
-                                                    <Link
-                                                        href="/account/profile"
-                                                        className="btn btn-ghost h-10 min-h-10 w-full justify-start"
-                                                    >
-                                                        <span className="flex items-center gap-2">
-                                                            <Settings2 className="size-6" />
-                                                            {t("account")}
-                                                        </span>
-                                                    </Link>
-                                                </>
-                                            :   <>
-                                                    <Link
-                                                        href="/"
-                                                        className="btn btn-ghost h-10 min-h-10 w-full justify-start"
-                                                    >
-                                                        <span className="flex items-center gap-2">
-                                                            <Home className="size-6" />
-                                                            {t("home")}
-                                                        </span>
-                                                    </Link>
-
-                                                    <Link
-                                                        href={`/login?redirect=${pathname}`}
-                                                        className="btn btn-ghost h-10 min-h-10 w-full justify-start"
-                                                    >
-                                                        <span className="flex items-center gap-2">
-                                                            <LogIn className="size-6" />
-                                                            {t("login")}
-                                                        </span>
-                                                    </Link>
-
-                                                    <Link
-                                                        href={`/register?redirect=${pathname}`}
-                                                        className="btn btn-ghost h-10 min-h-10 w-full justify-start"
-                                                    >
-                                                        <span className="flex items-center gap-2">
-                                                            <PenBox className="size-6" />
-                                                            {t("register")}
-                                                        </span>
-                                                    </Link>
-                                                </>
-                                            }
-
-                                            <div className="divider mx-auto w-full px-2" />
-
-                                            <button
-                                                onClick={toggleTheme}
-                                                className="btn btn-ghost h-10 min-h-10 w-full justify-start"
+                                        {user ?
+                                            <Avatar
+                                                src={null}
+                                                alt={user.name}
+                                                className="size-11 lg:size-12"
+                                            />
+                                        :   <div className="btn btn-circle bg-neutral/10">
+                                                <UserIcon className="size-6" />
+                                            </div>
+                                        }
+                                    </button>
+                                    <AnimatePresence>
+                                        {profileOpen && (
+                                            <motion.div
+                                                initial={{ opacity: 0 }}
+                                                animate={{ opacity: 1 }}
+                                                exit={{ opacity: 0 }}
+                                                tabIndex={0}
+                                                className="dropdown-content pt-2"
+                                                onClick={() => setProfileOpen(false)}
                                             >
-                                                <span className="flex items-center gap-2">
-                                                    <SunMoon className="size-6" />
-                                                    {t("theme")}
-                                                </span>
-                                            </button>
+                                                <div className="w-[calc(100vw-16px)] space-y-1 rounded-xl bg-base-100 p-2 border border-neutral/20 shadow-xl md:w-72">
+                                                    {user ?
+                                                        <>
+                                                            <div className="my-2 flex flex-col items-center justify-center gap-y-2">
+                                                                <Avatar
+                                                                    src={null}
+                                                                    alt={user.name}
+                                                                    className="size-16"
+                                                                />
+                                                                <Title
+                                                                    text={user.name}
+                                                                    className="text-center font-bold"
+                                                                />
+                                                            </div>
 
-                                            <button
-                                                onClick={() =>
-                                                    setLocaleOpen((e) => !e)
-                                                }
-                                                className="btn btn-ghost h-10 min-h-10 w-full justify-start"
-                                            >
-                                                <span className="flex items-center gap-2">
-                                                    <Languages className="size-6" />
-                                                    {t("language")}
-                                                </span>
-                                            </button>
+                                                            <Link
+                                                                href="/"
+                                                                className="btn btn-ghost h-10 min-h-10 w-full justify-start"
+                                                            >
+                                                                <span className="flex items-center gap-2">
+                                                                    <Home className="size-6" />
+                                                                    {t("home")}
+                                                                </span>
+                                                            </Link>
 
-                                            {user && (
-                                                <>
+                                                            <Link
+                                                                href="/account/profile"
+                                                                className="btn btn-ghost h-10 min-h-10 w-full justify-start"
+                                                            >
+                                                                <span className="flex items-center gap-2">
+                                                                    <Settings2 className="size-6" />
+                                                                    {t("account")}
+                                                                </span>
+                                                            </Link>
+                                                        </>
+                                                    :   <>
+                                                            <Link
+                                                                href="/"
+                                                                className="btn btn-ghost h-10 min-h-10 w-full justify-start"
+                                                            >
+                                                                <span className="flex items-center gap-2">
+                                                                    <Home className="size-6" />
+                                                                    {t("home")}
+                                                                </span>
+                                                            </Link>
+
+                                                            <Link
+                                                                href="/login"
+                                                                className="btn btn-ghost h-10 min-h-10 w-full justify-start"
+                                                            >
+                                                                <span className="flex items-center gap-2">
+                                                                    <LogIn className="size-6" />
+                                                                    {t("login")}
+                                                                </span>
+                                                            </Link>
+
+                                                            <Link
+                                                                href="/register"
+                                                                className="btn btn-ghost h-10 min-h-10 w-full justify-start"
+                                                            >
+                                                                <span className="flex items-center gap-2">
+                                                                    <PenBox className="size-6" />
+                                                                    {t("register")}
+                                                                </span>
+                                                            </Link>
+                                                        </>
+                                                    }
+
                                                     <div className="divider mx-auto w-full px-2" />
 
                                                     <button
-                                                        onClick={handleLogout}
+                                                        onClick={toggleTheme}
                                                         className="btn btn-ghost h-10 min-h-10 w-full justify-start"
                                                     >
                                                         <span className="flex items-center gap-2">
-                                                            <LogOut className="size-6" />
-                                                            {t("logout")}
+                                                            <SunMoon className="size-6" />
+                                                            {t("theme")}
                                                         </span>
                                                     </button>
-                                                </>
-                                            )}
-                                        </div>
-                                    </motion.div>
-                                )}
-                            </AnimatePresence>
-                        </div>
-                    </div>
-                </div>
-            </header>
 
-            {children}
+                                                    <button
+                                                        onClick={() =>
+                                                            setLocaleOpen((e) => !e)
+                                                        }
+                                                        className="btn btn-ghost h-10 min-h-10 w-full justify-start"
+                                                    >
+                                                        <span className="flex items-center gap-2">
+                                                            <Languages className="size-6" />
+                                                            {t("language")}
+                                                        </span>
+                                                    </button>
+
+                                                    {user && (
+                                                        <>
+                                                            <div className="divider mx-auto w-full px-2" />
+
+                                                            <button
+                                                                onClick={handleLogout}
+                                                                className="btn btn-ghost h-10 min-h-10 w-full justify-start"
+                                                            >
+                                                                <span className="flex items-center gap-2">
+                                                                    <LogOut className="size-6" />
+                                                                    {t("logout")}
+                                                                </span>
+                                                            </button>
+                                                        </>
+                                                    )}
+                                                </div>
+                                            </motion.div>
+                                        )}
+                                    </AnimatePresence>
+                                </div>
+                            </div>
+                        </div>
+                    </header>
+
+                    {children}
+                </div>
+                <div className="drawer-side z-50">
+                    <label htmlFor="my-drawer-3" aria-label="close sidebar" className="drawer-overlay"></label>
+                    <ul className="menu bg-base-200 min-h-full w-80 space-y-2 p-4">
+                        <Link
+                            href="/"
+                            className="flex space-x-2 items-center text-sm relative z-20"
+                        >
+                            <LogoText className="h-8 w-auto ml-2 mb-2" />
+                        </Link>
+                        {links.map((item) => (
+                            <Link
+                                key={item.title}
+                                href={item.path}
+                                className="btn btn-ghost h-10 min-h-10 w-full justify-start"
+                            >
+                                <span className="flex items-center gap-2">
+                                    <item.icon className="size-6" />
+                                    {item.title}
+                                </span>
+                            </Link>
+                        ))}
+                    </ul>
+                </div>
+            </div>
 
             <LocaleModal open={localeOpen} setOpen={setLocaleOpen} />
 
@@ -343,10 +353,10 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                     <div className="relative w-full">
                         <input
                             type="text"
-                            placeholder={t("search-girl")}
+                            placeholder={t("search-placeholder")}
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
-                            className="w-full h-16 max-sm:rounded-none py-4 px-14 text-lg tracking-wide border-b border-neutral/20 transition placeholder:text-neutral-400 focus:outline-none focus:bg-base-300"
+                            className="w-full h-16 max-sm:rounded-none py-4 px-14 text-lg bg-base-100 tracking-wide border-b border-neutral/20 transition placeholder:text-neutral-400 focus:outline-none"
                             spellCheck={false}
                             autoComplete="off"
                             autoCapitalize="off"
@@ -362,62 +372,49 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                         </button>
                     </div>
                     <div className="flex flex-col gap-y-2 w-full h-full overflow-y-auto p-4">
-                        {girls.length === 0 && (
+                        {medias.length === 0 && (
                             <NoSearchResults search={search} />
                         )}
-                        {girls.map((girl) => {
-                            const totalMediaCount = girl.medias
-                                .map((e) => e.images.length + e.videos.length)
-                                .reduce((a, b) => a + b, 0);
-                            return (
-                                <Link
-                                    key={girl.id}
-                                    href={`/${girl.username}`}
-                                    onClick={() => setSearchOpen(false)}
-                                    className="flex justify-between w-full rounded-lg hover:bg-base-200 p-2"
-                                >
-                                    <div className="flex items-center gap-2">
-                                        <div className="relative w-14 h-14 mask mask-squircle">
-                                            <Image
-                                                src={girl.avatar}
-                                                alt="avatar"
-                                                width={256}
-                                                height={256}
-                                                className="size-full rounded-lg"
+                        {medias.map((media) => (
+                            <Link
+                                key={media.id}
+                                href={`/`}
+                                onClick={() => setSearchOpen(false)}
+                                className="flex justify-between w-full rounded-lg hover:bg-base-200 p-2"
+                            >
+                                <div className="flex items-center gap-2">
+                                    <div className="relative w-14 h-14 mask mask-squircle">
+                                        {media.images.length > 0 ? (
+                                            <GirlImage
+                                                image={media.images[0]}
+                                                bought={true}
                                             />
+                                        ) : media.videos.length > 0 ? (
+                                            <GirlVideo
+                                                video={media.videos[0]}
+                                                bought={true}
+                                            />
+                                        ) : null}
+                                    </div>
+                                    <div className="h-full flex flex-col">
+                                        <div className="text-lg font-bold">
+                                            {media.description}
                                         </div>
-                                        <div className="h-full flex flex-col">
-                                            <div className="text-lg font-bold">
-                                                {girl.name}
-                                            </div>
-                                            <div className="text-sm opacity-50 flex gap-x-1 items-center">
-                                                <div className="flex items-center gap-x-2">
-                                                    <div className="flex items-center gap-x-1 w-fit">
-                                                        <MapPin className="size-4" />
-                                                        {girl.origin}
-                                                    </div>
-                                                    <div className="flex items-center gap-x-1 w-fit">
-                                                        <Heart className="size-4" />
-                                                        {girl.likes}
-                                                    </div>
-                                                    <div className="flex items-center gap-x-1 w-fit">
-                                                        <ImageIcon className="size-4" />
-                                                        {totalMediaCount}
-                                                    </div>
+                                        <div className="text-sm opacity-50 flex gap-x-1 items-center">
+                                            <div className="flex items-center gap-x-2">
+                                                <div className="flex items-center gap-x-1 w-fit">
+                                                    <ImageIcon className="size-4" />
+                                                    {media.images.length + media.videos.length}
+                                                </div>
+                                                <div className="flex items-center gap-x-1 w-fit text-neutral">
+                                                    {media.tags.map(tag => "#" + tag).join(" ")}
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="flex items-center gap-2 mr-2">
-                                        <div className="font-bold text-lg text-neutral">
-                                            {formatAmountForDisplay(
-                                                girl!.price
-                                            )}
-                                        </div>
-                                    </div>
-                                </Link>
-                            );
-                        })}
+                                </div>
+                            </Link>
+                        ))}
                     </div>
                 </div>
             </Modal>

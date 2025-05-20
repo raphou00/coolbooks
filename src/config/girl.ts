@@ -1,39 +1,28 @@
-export const findGirlsWithMedias = {
+export const name = "Clems 💕";
+export const description = "Hellooo 👋";
+export const avatar = "/clems.jpg";
+export const origin = "France";
+export const findAllMedias = {
     id: true,
-    name: true,
-    username: true,
-    avatar: true,
-    cover: true,
-    price: true,
-    origin: true,
+    description: true,
     tags: true,
-    likes: true,
-    bio: true,
-    medias: {
+    videos: {
         select: {
-            id: true,
-            description: true,
-            videos: {
-                select: {
-                    src: true,
-                    blurred: true,
-                    width: true,
-                    height: true,
-                    free: true,
-                    time: true,
-                },
-            },
-            images: {
-                select: {
-                    blurred: true,
-                    src: true,
-                    width: true,
-                    height: true,
-                    free: true,
-                },
-            },
+            src: true,
+            blurred: true,
+            width: true,
+            height: true,
+            free: true,
+            time: true,
         },
     },
-    createdAt: true,
-    updatedAt: true,
+    images: {
+        select: {
+            blurred: true,
+            src: true,
+            width: true,
+            height: true,
+            free: true,
+        },
+    },
 };

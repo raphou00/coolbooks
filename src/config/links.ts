@@ -2,24 +2,34 @@ import { useTranslations } from "next-intl";
 import {
     Lock,
     Settings2,
-    Sparkles,
-    Heart,
-    Instagram,
     Coins,
+    Compass,
+    Gift,
+    MessageCircleHeart,
 } from "lucide-react";
 
 export const useGetLinks = () => {
     const t = useTranslations("links");
     return [
         {
-            title: t("girls"),
-            path: "/girls",
-            icon: Sparkles,
+            title: t("explore"),
+            path: "/",
+            icon: Compass,
         },
         {
-            title: t("favorites"),
-            path: "/favorites",
-            icon: Heart,
+            title: t("gift"),
+            path: "/gift",
+            icon: Gift,
+        },
+        {
+            title: t("chat"),
+            path: "/chat",
+            icon: MessageCircleHeart,
+        },
+        {
+            title: t("pricing"),
+            path: "/pricing",
+            icon: Coins,
         },
     ];
 };
@@ -48,11 +58,6 @@ export const useGetAccountLinks = () => {
             icon: Coins,
         },
         {
-            title: t("invoices"),
-            path: "/account/invoices",
-            icon: Coins,
-        },
-        {
             title: t("delete-account"),
             path: "/account/delete",
             icon: Lock,
@@ -69,14 +74,6 @@ export const useGetFooterLinks = () => {
                 {
                     title: t("home"),
                     path: "/",
-                },
-                {
-                    title: t("girls"),
-                    path: "/girls",
-                },
-                {
-                    title: t("favorites"),
-                    path: "/favorites",
                 },
             ],
         },
@@ -105,7 +102,7 @@ export const useGetSocialLinks = () => {
         {
             title: "Instagram",
             path: "https://instagram.com/pinksea.of",
-            icon: Instagram,
+            icon: Coins,
         },
     ];
 };

@@ -3,7 +3,8 @@ import { redirect } from "next/navigation";
 import db from "@/lib/db";
 import { getUser } from "@/lib/auth";
 import Main from "@/components/layout/main";
-import { CreateGirl, CreateImage, CreateMedia, CreateVideo } from "./girls";
+import { CreateImage, CreateMedia, CreateVideo } from "./admin";
+import { findAllMedias } from "@/config/girl";
 
 const generateMetadata = async (): Promise<Metadata> => {
     return {
@@ -18,24 +19,18 @@ const Page = async () => {
         return redirect("/");
     }
 
-    const girls = await db.girl.findMany({
-        select: {
-            id: true,
-            name: true,
-            medias: true,
-        },
+    const medias = await db.media.findMany({
+        select: findAllMedias,
     });
 
     return (
         <Main>
             <div className="max-w-md mx-auto flex flex-wrap">
-                <CreateGirl />
+                <CreateMedia medias={medias} />
                 <div className="w-full h-px bg-neutral my-8" />
-                <CreateMedia girls={girls} />
+                <CreateImage medias={medias} />
                 <div className="w-full h-px bg-neutral my-8" />
-                <CreateImage girls={girls} />
-                <div className="w-full h-px bg-neutral my-8" />
-                <CreateVideo girls={girls} />
+                <CreateVideo medias={medias} />
             </div>
         </Main>
     );

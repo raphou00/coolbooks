@@ -4,11 +4,6 @@ import { maxAmount, minAmount } from "@/config/user";
 
 const tipsSchema = (t: TranslationsFunc) =>
     z.object({
-        modelId: z
-            .string()
-            .trim()
-            .min(1, { message: t("messages.required") }),
-
         amount: z
             .number()
             .max(maxAmount, {

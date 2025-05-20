@@ -16,13 +16,13 @@ const BlurImage: React.FC<GirlImageProps> = ({ image, bought, className }) => {
     const src = canSee ? image.src : image.blurred;
 
     return (
-        <div className="relative rounded-xl overflow-hidden cursor-pointer size-full">
+        <div className="relative rounded-md overflow-hidden cursor-pointer size-full">
             <ImageEl
                 src={src}
                 alt="Girl"
                 width={image.width}
                 height={image.height}
-                className={cn("rounded-xl", className)}
+                className={cn("", className)}
             />
             {!canSee && (
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center size-10 bg-secondary rounded-full">

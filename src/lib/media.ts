@@ -2,7 +2,6 @@ import Buffer from "buffer";
 import sharp from "sharp";
 import ffmpeg from "fluent-ffmpeg";
 import { PassThrough } from "stream";
-import type { Girl } from "@prisma/client";
 import { putObject } from "./file";
 import db from "./db";
 import env from "./env";
@@ -69,33 +68,11 @@ export const getVideoThumbnail = async (src: string): Promise<Buffer> => {
     });
 };
 
-export const createGirl = async (
-    girlParams: Girl,
-    avatar: File,
-    cover: File
-) => {
-    const avatarName = crypto.randomUUID() + "." + getExtension(avatar.name);
-    const coverName = crypto.randomUUID() + "." + getExtension(cover.name);
-
-    await putObject(avatar, avatarName);
-    await putObject(cover, coverName);
-
-    const girl = await db.girl.create({
-        data: {
-            ...girlParams,
-            avatar: avatarName,
-            cover: coverName,
-        },
-    });
-
-    return girl;
-};
-
-export const createMedia = async (girlId: string, description: string) => {
+export const createMedia = async (description: string, tags: string[]) => {
     const media = await db.media.create({
         data: {
-            girlId,
             description,
+            tags,
         },
     });
 

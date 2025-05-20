@@ -1,7 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { getTranslations } from "next-intl/server";
 import { getUser } from "@/lib/auth";
-import { createVideo } from "@/lib/girl";
+import { createVideo } from "@/lib/media";
 
 export const POST = async (req: NextRequest) => {
     const t = await getTranslations({
