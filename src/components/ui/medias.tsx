@@ -22,20 +22,19 @@ const Medias: React.FC<MediasProps> = ({ medias }) => {
     const [media, setMedia] = useState<MediaProps | null>(null);
     const mediaCount = media ? media.images.length + media.videos.length : 0;
 
-    
     useEffect(() => {
         const handleKeydown = (event: KeyboardEvent) => {
             if (event.key === "Escape") {
                 handleCloseModal();
             }
         };
-        
+
         document.addEventListener("keydown", handleKeydown);
         return () => {
             document.removeEventListener("keydown", handleKeydown);
         };
     }, []);
-    
+
     const openModal = (media: MediaProps) => {
         setMedia(media);
         setIsModalOpen(true);
@@ -68,21 +67,24 @@ const Medias: React.FC<MediasProps> = ({ medias }) => {
 
     return (
         <>
-            <div className="masonry sm:masonry-sm md:masonry-md">
+            <div className="masonry">
                 {medias.map((media) => (
-                    <div key={media.id} className="flex flex-col break-inside">
-                        <div className="shadow-md" onClick={() => openModal(media)}>
-                            {media.images.length > 0 ? (
+                    <div key={media.id} className="break-inside">
+                        <div
+                            className="shadow-md"
+                            onClick={() => openModal(media)}
+                        >
+                            {media.images.length > 0 ?
                                 <GirlImage
                                     image={media.images[0]}
                                     bought={true}
                                 />
-                            ) : media.videos.length > 0 ? (
+                            : media.videos.length > 0 ?
                                 <GirlVideo
                                     video={media.videos[0]}
                                     bought={true}
                                 />
-                            ) : null}
+                            :   null}
                         </div>
                     </div>
                 ))}
@@ -99,7 +101,11 @@ const Medias: React.FC<MediasProps> = ({ medias }) => {
                         <div className="absolute left-0 top-0 p-4 w-full flex items-center justify-between">
                             <div className="flex flex-col">
                                 <p className="text-lg">{media.description}</p>
-                                <p className="text-sm text-neutral">{media.tags.map((tag) => `#${tag}`).join(" ")}</p>
+                                <p className="text-sm text-neutral">
+                                    {media.tags
+                                        .map((tag) => `#${tag}`)
+                                        .join(" ")}
+                                </p>
                             </div>
                             <button
                                 className="btn btn-ghost btn-square btn-sm"

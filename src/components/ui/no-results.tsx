@@ -51,8 +51,4 @@ const NoSessionResults: React.FC = () => {
     );
 };
 
-export {
-    NoSearchResults,
-    NoInvoicesResults,
-    NoSessionResults,
-};
+export { NoSearchResults, NoInvoicesResults, NoSessionResults };

@@ -133,6 +133,31 @@
             "content": "Content of {name}",
             "lets-chat": "Let's chat"
         },
+        "pricing": {
+            "title": "Pricing",
+            "description": "Choose between only having a crush or actually being in love",
+            "month": "month",
+            "get-started": "Get started",
+            "tiers": {
+                "crush": {
+                    "title": "Crush",
+                    "description": "If you just want to goon 🙏",
+                    "features": {
+                        "1": "All photos and videos available",
+                        "2": "Daily gifts"
+                    }
+                },
+                "lover": {
+                    "title": "Lover",
+                    "description": "Perfect for having a real relationship with me, including some gooning 🌹.",
+                    "features": {
+                        "1": "All photos and videos available",
+                        "2": "Daily gifts",
+                        "3": "Monthly gifts"
+                    }
+                }
+            }
+        },
         "payment": {
             "title": "Buy {name}'s profile",
             "description": "Buy {name} profile, to get closer to {name}",

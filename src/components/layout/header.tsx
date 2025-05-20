@@ -76,7 +76,11 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
     return (
         <>
             <div className="drawer">
-                <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
+                <input
+                    id="my-drawer-3"
+                    type="checkbox"
+                    className="drawer-toggle"
+                />
                 <div className="drawer-content flex flex-col">
                     <header className="sticky w-full top-0 z-40">
                         <div
@@ -86,41 +90,41 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                             )}
                         >
                             <div className="navbar-start">
-                                    <label
-                                        htmlFor="my-drawer-3"
-                                        role="button"
-                                        className="flex items-center justify-center"
-                                    >
-                                        <div className="btn btn-square btn-ghost relative min-[1200px]:hidden">
-                                            <motion.span
-                                                className="absolute h-1 w-8 rounded-full bg-base-content"
-                                                style={{
-                                                    y: "-50%",
-                                                    left: "50%",
-                                                    x: "-50%",
-                                                    top: "30%",
-                                                }}
-                                            />
-                                            <motion.span
-                                                className="absolute h-1 w-8 rounded-full bg-base-content"
-                                                style={{
-                                                    left: "50%",
-                                                    x: "-50%",
-                                                    top: "50%",
-                                                    y: "-50%",
-                                                }}
-                                            />
-                                            <motion.span
-                                                className="absolute h-1 w-4 rounded-full bg-base-content"
-                                                style={{
-                                                    x: "-50%",
-                                                    y: "50%",
-                                                    bottom: "30%",
-                                                    left: "calc(50% - 8px)",
-                                                }}
-                                            />
-                                        </div>
-                                    </label> 
+                                <label
+                                    htmlFor="my-drawer-3"
+                                    role="button"
+                                    className="flex items-center justify-center"
+                                >
+                                    <div className="btn btn-square btn-ghost relative min-[1200px]:hidden">
+                                        <motion.span
+                                            className="absolute h-1 w-8 rounded-full bg-base-content"
+                                            style={{
+                                                y: "-50%",
+                                                left: "50%",
+                                                x: "-50%",
+                                                top: "30%",
+                                            }}
+                                        />
+                                        <motion.span
+                                            className="absolute h-1 w-8 rounded-full bg-base-content"
+                                            style={{
+                                                left: "50%",
+                                                x: "-50%",
+                                                top: "50%",
+                                                y: "-50%",
+                                            }}
+                                        />
+                                        <motion.span
+                                            className="absolute h-1 w-4 rounded-full bg-base-content"
+                                            style={{
+                                                x: "-50%",
+                                                y: "50%",
+                                                bottom: "30%",
+                                                left: "calc(50% - 8px)",
+                                            }}
+                                        />
+                                    </div>
+                                </label>
                                 <div className="flex items-center mr-4">
                                     <Link
                                         href="/"
@@ -197,19 +201,25 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                                 exit={{ opacity: 0 }}
                                                 tabIndex={0}
                                                 className="dropdown-content pt-2"
-                                                onClick={() => setProfileOpen(false)}
+                                                onClick={() =>
+                                                    setProfileOpen(false)
+                                                }
                                             >
-                                                <div className="w-[calc(100vw-16px)] space-y-1 rounded-xl bg-base-100 p-2 border border-neutral/20 shadow-xl md:w-72">
+                                                <div className="w-[calc(100vw-16px)] space-y-1 rounded-xl bg-base-200 p-2 border border-neutral/20 shadow-xl md:w-72">
                                                     {user ?
                                                         <>
                                                             <div className="my-2 flex flex-col items-center justify-center gap-y-2">
                                                                 <Avatar
                                                                     src={null}
-                                                                    alt={user.name}
+                                                                    alt={
+                                                                        user.name
+                                                                    }
                                                                     className="size-16"
                                                                 />
                                                                 <Title
-                                                                    text={user.name}
+                                                                    text={
+                                                                        user.name
+                                                                    }
                                                                     className="text-center font-bold"
                                                                 />
                                                             </div>
@@ -230,7 +240,9 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                                             >
                                                                 <span className="flex items-center gap-2">
                                                                     <Settings2 className="size-6" />
-                                                                    {t("account")}
+                                                                    {t(
+                                                                        "account"
+                                                                    )}
                                                                 </span>
                                                             </Link>
                                                         </>
@@ -261,7 +273,9 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                                             >
                                                                 <span className="flex items-center gap-2">
                                                                     <PenBox className="size-6" />
-                                                                    {t("register")}
+                                                                    {t(
+                                                                        "register"
+                                                                    )}
                                                                 </span>
                                                             </Link>
                                                         </>
@@ -281,7 +295,9 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
 
                                                     <button
                                                         onClick={() =>
-                                                            setLocaleOpen((e) => !e)
+                                                            setLocaleOpen(
+                                                                (e) => !e
+                                                            )
                                                         }
                                                         className="btn btn-ghost h-10 min-h-10 w-full justify-start"
                                                     >
@@ -296,12 +312,16 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                                             <div className="divider mx-auto w-full px-2" />
 
                                                             <button
-                                                                onClick={handleLogout}
+                                                                onClick={
+                                                                    handleLogout
+                                                                }
                                                                 className="btn btn-ghost h-10 min-h-10 w-full justify-start"
                                                             >
                                                                 <span className="flex items-center gap-2">
                                                                     <LogOut className="size-6" />
-                                                                    {t("logout")}
+                                                                    {t(
+                                                                        "logout"
+                                                                    )}
                                                                 </span>
                                                             </button>
                                                         </>
@@ -318,7 +338,11 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                     {children}
                 </div>
                 <div className="drawer-side z-50">
-                    <label htmlFor="my-drawer-3" aria-label="close sidebar" className="drawer-overlay"></label>
+                    <label
+                        htmlFor="my-drawer-3"
+                        aria-label="close sidebar"
+                        className="drawer-overlay"
+                    ></label>
                     <ul className="menu bg-base-200 min-h-full w-80 space-y-2 p-4">
                         <Link
                             href="/"
@@ -384,17 +408,17 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                             >
                                 <div className="flex items-center gap-2">
                                     <div className="relative w-14 h-14 mask mask-squircle">
-                                        {media.images.length > 0 ? (
+                                        {media.images.length > 0 ?
                                             <GirlImage
                                                 image={media.images[0]}
                                                 bought={true}
                                             />
-                                        ) : media.videos.length > 0 ? (
+                                        : media.videos.length > 0 ?
                                             <GirlVideo
                                                 video={media.videos[0]}
                                                 bought={true}
                                             />
-                                        ) : null}
+                                        :   null}
                                     </div>
                                     <div className="h-full flex flex-col">
                                         <div className="text-lg font-bold">
@@ -404,10 +428,13 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                             <div className="flex items-center gap-x-2">
                                                 <div className="flex items-center gap-x-1 w-fit">
                                                     <ImageIcon className="size-4" />
-                                                    {media.images.length + media.videos.length}
+                                                    {media.images.length +
+                                                        media.videos.length}
                                                 </div>
                                                 <div className="flex items-center gap-x-1 w-fit text-neutral">
-                                                    {media.tags.map(tag => "#" + tag).join(" ")}
+                                                    {media.tags
+                                                        .map((tag) => "#" + tag)
+                                                        .join(" ")}
                                                 </div>
                                             </div>
                                         </div>

@@ -9,4 +9,4 @@ export const subscription = {
     lover: {
         priceId: "price_1Mx7V2KZq0k8YsY2CwF5x7kX",
     },
-}
+};
