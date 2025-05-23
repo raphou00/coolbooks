@@ -1,0 +1,12 @@
+{
+  "name": "connect",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "scripts": {},
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "aws-sdk": "^2.1692.0"
+  }
+}

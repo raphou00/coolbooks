@@ -27,6 +27,11 @@ export const lucia = new Lucia(adapter, {
             role: user.role,
             googleId: user.googleId,
             discordId: user.discordId,
+            stripeCustomerId: user.stripeCustomerId,
+            stripeProductId: user.stripeProductId,
+            stripeSubscriptionId: user.stripeSubscriptionId,
+            planName: user.planName,
+            subscriptionStatus: user.subscriptionStatus
         };
     },
 });
@@ -113,4 +118,9 @@ type DatabaseUserAttributes = {
     role: Role;
     googleId?: string;
     discordId?: string;
+    stripeCustomerId: string
+    stripeSubscriptionId: string
+    stripeProductId: string
+    planName: string
+    subscriptionStatus: string
 };

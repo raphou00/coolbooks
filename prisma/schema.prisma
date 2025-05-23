@@ -13,17 +13,22 @@ enum Role {
 }
 
 model User {
-  id            String     @id @default(uuid())
-  name          String
-  email         String     @unique
-  password      String?
-  role          Role       @default(USER)
-  googleId      String?    @unique
-  discordId     String?    @unique
-  createdAt     DateTime   @default(now())
-  updatedAt     DateTime   @updatedAt
-  sessions      Session[]
-  tokens        Token[]
+  id                   String     @id @default(uuid())
+  name                 String
+  email                String     @unique
+  password             String?
+  role                 Role       @default(USER)
+  googleId             String?    @unique
+  discordId            String?    @unique
+  stripeCustomerId     String?
+  stripeSubscriptionId String?
+  stripeProductId      String?
+  planName             String?
+  subscriptionStatus   String?
+  createdAt            DateTime   @default(now())
+  updatedAt            DateTime   @updatedAt
+  sessions             Session[]
+  tokens               Token[]
 }
 
 model Session {

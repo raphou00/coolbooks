@@ -31,6 +31,14 @@ export default createEnv({
             .string()
             .min(1, { message: "Cloudfront URL is missing" }),
 
+        WEBSOCKET_URL: z
+            .string()
+            .min(1, { message: "Websocket URL is missing" }),
+
+        DYNAMO_TABLE: z
+            .string()
+            .min(1, { message: "Dynamodb Table is missing" }),
+
         UPSTASH_REDIS_REST_URL: z
             .string()
             .min(1, { message: "Upstash Redis REST URL is missing" }),
@@ -48,6 +56,10 @@ export default createEnv({
         STRIPE_SECRET_KEY: z
             .string()
             .min(1, { message: "Stripe Secret Key is missing" }),
+        
+        STRIPE_WEBHOOK_SECRET: z
+            .string()
+            .min(1, { message: "Stripe Webhook Secret is missing" }),
 
         GOOGLE_CLIENT_ID: z
             .string()
@@ -84,6 +96,8 @@ export default createEnv({
         BUCKET_NAME: process.env.BUCKET_NAME,
         CLOUDFRONT_URL: process.env.CLOUDFRONT_URL,
         NEXT_PUBLIC_CLOUDFRONT_URL: process.env.NEXT_PUBLIC_CLOUDFRONT_URL,
+        WEBSOCKET_URL: process.env.WEBSOCKET_URL,
+        DYNAMO_TABLE: process.env.DYNAMO_TABLE,
         UPSTASH_REDIS_REST_URL: process.env.UPSTASH_REDIS_REST_URL,
         UPSTASH_REDIS_REST_TOKEN: process.env.UPSTASH_REDIS_REST_TOKEN,
         RESEND_API_KEY: process.env.RESEND_API_KEY,
@@ -91,6 +105,7 @@ export default createEnv({
         NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY:
             process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
         STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
+        STRIPE_WEBHOOK_SECRET: process.env.STRIPE_WEBHOOK_SECRET,
         GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
         GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
         DISCORD_CLIENT_ID: process.env.DISCORD_CLIENT_ID,

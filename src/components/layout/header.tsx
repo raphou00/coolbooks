@@ -53,6 +53,18 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
     const scroll = useScroll(0);
     const { setTheme } = useTheme();
 
+    useEffect(() => {
+        const handleEsc = (event: KeyboardEvent) => {
+            if (event.key === "Escape") {
+                setSearchOpen(false);
+            }
+        };
+        document.addEventListener("keydown", handleEsc);
+        return () => {
+            document.removeEventListener("keydown", handleEsc);
+        };
+    }, []);
+
     const handleLogout = async () => {
         await axios.post("/api/auth/logout");
         router.refresh();
@@ -146,7 +158,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                                     :   "btn-outline"
                                                 )}
                                             >
-                                                <item.icon className="size-6" />
+                                                <item.icon className="size-5" />
                                                 {item.title}
                                             </Link>
                                         </li>

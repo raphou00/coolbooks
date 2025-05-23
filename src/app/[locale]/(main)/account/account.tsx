@@ -14,6 +14,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
+import { useTranslations } from "next-intl";
 
 type AccoutProps = {
     user: User;
@@ -21,6 +22,7 @@ type AccoutProps = {
 };
 
 export const AccoutMenu: React.FC<AccoutProps> = ({ user, children }) => {
+    const t = useTranslations("links");
     const pathname = usePathname();
     const accountLinks = useGetAccountLinks();
     const router = useRouter();
@@ -28,20 +30,29 @@ export const AccoutMenu: React.FC<AccoutProps> = ({ user, children }) => {
     return (
         <div className="mx-auto mt-12 max-w-4xl space-y-4">
             <div className="flex flex-col w-full">
-                <div className="flex items-center gap-x-4">
-                    <Avatar src={null} alt={user.name} className="size-14" />
+                <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-x-4">
+                        <Avatar src={null} alt={user.name} className="size-14" />
 
-                    <div className="flex flex-col">
-                        <Title
-                            text={
-                                accountLinks.find(
-                                    (link) => link.path === pathname
-                                )?.title ?? ""
-                            }
-                            className="text-2xl w-fit"
-                        />
-                        <p className="text-sm text-neutral">{user.name}</p>
+                        <div className="flex flex-col">
+                            <Title
+                                text={
+                                    accountLinks.find(
+                                        (link) => link.path === pathname
+                                    )?.title ?? ""
+                                }
+                                className="text-2xl w-fit"
+                            />
+                            <p className="text-sm text-neutral">{user.name}</p>
+                        </div>
                     </div>
+
+                    <button className="px-6 py-1 border-2 hover:bg-base-content hover:text-base-100 rounded-xl">
+                        <div className="flex flex-col justify-center">
+                            <span className="text-lg font-bold text-secondary">{t("plan")}</span>
+                            <span className="">{t("portal")}</span>
+                        </div>
+                    </button>
                 </div>
 
                 <div className="w-full hidden max-md:block mt-2">

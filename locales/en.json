@@ -329,6 +329,8 @@
         "chat": "Chat",
         "gift": "Gift",
         "pricing": "Pricing",
-        "explore": "Explore"
+        "explore": "Explore",
+        "plan": "Plan",
+        "portal": "Customer Portal"
     }
 }
