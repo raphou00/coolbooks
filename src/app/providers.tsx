@@ -25,7 +25,7 @@ const ToasterEl: React.FC = () => {
                 duration: 3000,
                 style: {
                     padding: "10px",
-                    border: "1px solid #555555",
+                    border: "1px solid #999999",
                     borderRadius: "100px",
                     backgroundColor: theme == "dark" ? "#111" : "white",
                     color: theme == "dark" ? "white" : "#111",

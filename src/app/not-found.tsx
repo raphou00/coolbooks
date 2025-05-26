@@ -8,7 +8,7 @@ const dynamic = "force-dynamic";
 const RootNotFound: React.FC = () => {
     const t = useTranslations("common");
     return (
-        <div className="text-center my-12">
+        <div className="text-center h-screen w-screen flex flex-col items-center justify-center">
             <HeartCrack className="text-accent mx-auto h-16 w-auto" />
             <Title
                 text={t("not-found")}

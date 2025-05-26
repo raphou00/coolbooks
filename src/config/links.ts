@@ -70,6 +70,14 @@ export const useGetFooterLinks = () => {
                     title: t("home"),
                     path: "/",
                 },
+                {
+                    title: t("gift"),
+                    path: "/gift",
+                },
+                {
+                    title: t("chat"),
+                    path: "/chat",
+                },
             ],
         },
         {

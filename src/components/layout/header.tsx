@@ -295,7 +295,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                                             </Link>
 
                                                             <Link
-                                                                href="/login"
+                                                                href={`/login?redirect=${pathname}`}
                                                                 className="btn btn-ghost h-10 min-h-10 w-full justify-start"
                                                             >
                                                                 <span className="flex items-center gap-2">
@@ -305,7 +305,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                                             </Link>
 
                                                             <Link
-                                                                href="/register"
+                                                                href={`/register?redirect=${pathname}`}
                                                                 className="btn btn-ghost h-10 min-h-10 w-full justify-start"
                                                             >
                                                                 <span className="flex items-center gap-2">
