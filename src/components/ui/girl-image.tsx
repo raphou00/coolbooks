@@ -4,15 +4,16 @@ import { Lock } from "lucide-react";
 import type { Image } from "@prisma/client";
 import { cn } from "@/lib/utils";
 import ImageEl from "./image";
+import type { User } from "lucia";
 
 type GirlImageProps = {
+    user: User | null;
     image: Image;
-    bought: boolean;
     className?: string;
 };
 
-const BlurImage: React.FC<GirlImageProps> = ({ image, bought, className }) => {
-    const canSee = image.free || bought;
+const BlurImage: React.FC<GirlImageProps> = ({ user, image, className }) => {
+    const canSee = image.free || user?.planName !== null;
     const src = canSee ? image.src : image.blurred;
 
     return (

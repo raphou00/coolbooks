@@ -56,7 +56,7 @@ export default createEnv({
         STRIPE_SECRET_KEY: z
             .string()
             .min(1, { message: "Stripe Secret Key is missing" }),
-        
+
         STRIPE_WEBHOOK_SECRET: z
             .string()
             .min(1, { message: "Stripe Webhook Secret is missing" }),

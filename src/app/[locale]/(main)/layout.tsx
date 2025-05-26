@@ -6,7 +6,7 @@ const Layout: React.FC<React.PropsWithChildren> = async ({ children }) => {
     const user = await getUser();
 
     return (
-        <Header user={user?.user}>
+        <Header user={user?.user || null}>
             {children}
             <Footer />
         </Header>

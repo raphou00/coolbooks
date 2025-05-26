@@ -4,4 +4,4 @@ exports.handler = (event: unknown, context: unknown) => {
         body: JSON.stringify({ message: "Connected" }),
     };
     return res;
-}
+};

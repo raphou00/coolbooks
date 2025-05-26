@@ -6,6 +6,7 @@ import GirlVideo from "@/components/ui/girl-video";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
+import type { User } from "lucia";
 
 export type MediaProps = Media & {
     images: Image[];
@@ -13,10 +14,11 @@ export type MediaProps = Media & {
 };
 
 export type MediasProps = {
+    user: User | null;
     medias: MediaProps[];
 };
 
-const Medias: React.FC<MediasProps> = ({ medias }) => {
+const Medias: React.FC<MediasProps> = ({ user, medias }) => {
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [currentMedia, setCurrentMedia] = useState<number>(0);
     const [media, setMedia] = useState<MediaProps | null>(null);
@@ -77,12 +79,12 @@ const Medias: React.FC<MediasProps> = ({ medias }) => {
                             {media.images.length > 0 ?
                                 <GirlImage
                                     image={media.images[0]}
-                                    bought={true}
+                                    user={user}
                                 />
                             : media.videos.length > 0 ?
                                 <GirlVideo
                                     video={media.videos[0]}
-                                    bought={true}
+                                    user={user}
                                 />
                             :   null}
                         </div>
@@ -120,12 +122,12 @@ const Medias: React.FC<MediasProps> = ({ medias }) => {
                                 {selectedMedia && "time" in selectedMedia ?
                                     <GirlVideo
                                         video={selectedMedia as Video}
-                                        bought={true}
+                                        user={user}
                                         className="rounded-xl"
                                     />
                                 :   <GirlImage
                                         image={selectedMedia as Image}
-                                        bought={true}
+                                        user={user}
                                         className="object-contain size-full rounded-xl"
                                     />
                                 }

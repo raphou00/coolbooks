@@ -15,6 +15,8 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import { useTranslations } from "next-intl";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 type AccoutProps = {
     user: User;
@@ -27,12 +29,22 @@ export const AccoutMenu: React.FC<AccoutProps> = ({ user, children }) => {
     const accountLinks = useGetAccountLinks();
     const router = useRouter();
 
+    const openPortal = async () => {
+        const res = await axios.get("/api/stripe/portal");
+        if (!res.data.success) toast.error(res.data.message);
+        else window.location.href = res.data.redirect;
+    };
+
     return (
         <div className="mx-auto mt-12 max-w-4xl space-y-4">
             <div className="flex flex-col w-full">
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-x-4">
-                        <Avatar src={null} alt={user.name} className="size-14" />
+                        <Avatar
+                            src={null}
+                            alt={user.name}
+                            className="size-14"
+                        />
 
                         <div className="flex flex-col">
                             <Title
@@ -47,9 +59,14 @@ export const AccoutMenu: React.FC<AccoutProps> = ({ user, children }) => {
                         </div>
                     </div>
 
-                    <button className="px-6 py-1 border-2 hover:bg-base-content hover:text-base-100 rounded-xl">
+                    <button
+                        onClick={openPortal}
+                        className="px-6 py-2 border-2 hover:bg-base-content hover:text-base-100 rounded-sm"
+                    >
                         <div className="flex flex-col justify-center">
-                            <span className="text-lg font-bold text-secondary">{t("plan")}</span>
+                            <span className="text-lg font-bold text-secondary">
+                                {t("plan")}
+                            </span>
                             <span className="">{t("portal")}</span>
                         </div>
                     </button>

@@ -7,10 +7,11 @@ import VideoPlayer from "react-player";
 import screenfull from "screenfull";
 import { Fullscreen, Lock, Pause, Play } from "lucide-react";
 import { cn, formatDuration, getImage } from "@/lib/utils";
+import type { User } from "lucia";
 
 type VideoProps = {
+    user: User | null;
     video: Video;
-    bought: boolean;
     className?: string;
 };
 
@@ -20,7 +21,7 @@ type LockedProps = {
     height: number;
 };
 
-const VideoEl: React.FC<VideoProps> = ({ video, bought, className }) => {
+const VideoEl: React.FC<VideoProps> = ({ user, video, className }) => {
     const videoPlayer = useRef<VideoPlayer>(null);
     const [showPanel, setShowPanel] = useState<boolean>(false);
     const [playing, setPlaying] = useState<boolean>(false);
@@ -41,7 +42,7 @@ const VideoEl: React.FC<VideoProps> = ({ video, bought, className }) => {
         setTrack(v);
     };
 
-    const canSee = video.free || bought;
+    const canSee = video.free || user?.planName !== null;
 
     return canSee ?
             <div

@@ -26,11 +26,6 @@ export const useGetLinks = () => {
             path: "/chat",
             icon: MessageCircleHeart,
         },
-        {
-            title: t("pricing"),
-            path: "/pricing",
-            icon: Coins,
-        },
     ];
 };
 

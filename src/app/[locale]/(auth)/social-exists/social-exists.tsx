@@ -47,8 +47,6 @@ const ResetPassword: React.FC = () => {
         setState(res);
     };
 
-    console.log(state);
-
     return (
         <Form title={t("title")} description={t("description")}>
             <p className="p-0.5 text-center text-sm text-neutral">

@@ -12,23 +12,32 @@ const provision = () => {
         enableDnsSupport: true,
     });
 
-    const igw = new aws.ec2.InternetGateway(`pinksea-internet-gateway-${stack}`, {
-        vpcId: vpc.id,
-    });
+    const igw = new aws.ec2.InternetGateway(
+        `pinksea-internet-gateway-${stack}`,
+        {
+            vpcId: vpc.id,
+        }
+    );
 
-    const publicSubnetA = new aws.ec2.Subnet(`pinksea-public-subnet-a-${stack}`, {
-        vpcId: vpc.id,
-        cidrBlock: "172.30.1.0/24",
-        mapPublicIpOnLaunch: true,
-        availabilityZone: "us-east-1a",
-    });
+    const publicSubnetA = new aws.ec2.Subnet(
+        `pinksea-public-subnet-a-${stack}`,
+        {
+            vpcId: vpc.id,
+            cidrBlock: "172.30.1.0/24",
+            mapPublicIpOnLaunch: true,
+            availabilityZone: "us-east-1a",
+        }
+    );
 
-    const publicSubnetB = new aws.ec2.Subnet(`pinksea-public-subnet-b-${stack}`, {
-        vpcId: vpc.id,
-        cidrBlock: "172.30.2.0/24",
-        mapPublicIpOnLaunch: true,
-        availabilityZone: "us-east-1b",
-    });
+    const publicSubnetB = new aws.ec2.Subnet(
+        `pinksea-public-subnet-b-${stack}`,
+        {
+            vpcId: vpc.id,
+            cidrBlock: "172.30.2.0/24",
+            mapPublicIpOnLaunch: true,
+            availabilityZone: "us-east-1b",
+        }
+    );
 
     const routeTable = new aws.ec2.RouteTable(`pinksea-route-table-${stack}`, {
         vpcId: vpc.id,
@@ -86,11 +95,14 @@ const provision = () => {
         }
     );
 
-    const rdsPassword = new random.RandomPassword(`pinksea-rds-password-${stack}`, {
-        length: 16,
-        special: false,
-        overrideSpecial: "_",
-    }).result;
+    const rdsPassword = new random.RandomPassword(
+        `pinksea-rds-password-${stack}`,
+        {
+            length: 16,
+            special: false,
+            overrideSpecial: "_",
+        }
+    ).result;
 
     const rds = new aws.rds.Instance(`pinksea-rds-${stack}`, {
         identifier: `pinksea-rds-${stack}`,

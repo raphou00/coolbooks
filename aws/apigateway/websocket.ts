@@ -1,15 +1,22 @@
 import * as aws from "@pulumi/aws";
 import * as pulumi from "@pulumi/pulumi";
 
-const createIntegrationAndRoute = (wsApi: aws.apigatewayv2.Api, routeKey: string, lambda: aws.lambda.Function) => {
+const createIntegrationAndRoute = (
+    wsApi: aws.apigatewayv2.Api,
+    routeKey: string,
+    lambda: aws.lambda.Function
+) => {
     const stack = pulumi.getStack();
 
-    const integration = new aws.apigatewayv2.Integration(`pinksea-api-${routeKey}-integration-${stack}`, {
-        apiId: wsApi.id,
-        integrationType: "AWS_PROXY",
-        integrationUri: lambda.arn,
-        integrationMethod: "POST",
-    });
+    const integration = new aws.apigatewayv2.Integration(
+        `pinksea-api-${routeKey}-integration-${stack}`,
+        {
+            apiId: wsApi.id,
+            integrationType: "AWS_PROXY",
+            integrationUri: lambda.arn,
+            integrationMethod: "POST",
+        }
+    );
 
     new aws.apigatewayv2.Route(`pinksea-api-${routeKey}-route-${stack}`, {
         apiId: wsApi.id,
@@ -17,13 +24,16 @@ const createIntegrationAndRoute = (wsApi: aws.apigatewayv2.Api, routeKey: string
         target: pulumi.interpolate`integrations/${integration.id}`,
     });
 
-    new aws.lambda.Permission(`pinksea-api-${routeKey.replace("$", "")}-permission-${stack}`, {
-        action: "lambda:InvokeFunction",
-        function: lambda.name,
-        principal: "apigateway.amazonaws.com",
-        sourceArn: pulumi.interpolate`${wsApi.executionArn}/*`,
-    });
-}
+    new aws.lambda.Permission(
+        `pinksea-api-${routeKey.replace("$", "")}-permission-${stack}`,
+        {
+            action: "lambda:InvokeFunction",
+            function: lambda.name,
+            principal: "apigateway.amazonaws.com",
+            sourceArn: pulumi.interpolate`${wsApi.executionArn}/*`,
+        }
+    );
+};
 
 const provision = (
     connectLambda: aws.lambda.Function,

@@ -6,9 +6,12 @@ import Main from "@/components/layout/main";
 import Title from "@/components/ui/title";
 import Medias, { type MediaProps } from "@/components/ui/medias";
 import { findAllMedias, name } from "@/config/girl";
+import { getUser } from "@/lib/auth";
 
 const Page = async () => {
     const t = await getTranslations("pages.home");
+
+    const user = await getUser();
 
     const allMedias = await db.media.findMany({
         select: findAllMedias,
@@ -34,7 +37,10 @@ const Page = async () => {
                         <ArrowRight className="size-5 transition group-hover:translate-x-1" />
                     </Link>
                 </div>
-                <Medias medias={allMedias as MediaProps[]} />
+                <Medias
+                    medias={allMedias as MediaProps[]}
+                    user={user?.user || null}
+                />
             </div>
         </Main>
     );

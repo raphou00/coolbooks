@@ -19,6 +19,7 @@ import {
     X,
     Home,
     ImageIcon,
+    DollarSign,
 } from "lucide-react";
 import { Link, usePathname, useRouter } from "@/lib/navigation";
 import { cn } from "@/lib/utils";
@@ -36,7 +37,7 @@ import GirlImage from "../ui/girl-image";
 import GirlVideo from "../ui/girl-video";
 
 type HeaderProps = {
-    user?: User | null;
+    user: User | null;
     children: React.ReactNode;
 };
 
@@ -155,7 +156,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                                     "btn btn-sm",
                                                     item.path === pathname ?
                                                         "btn-secondary"
-                                                    :   "btn-outline"
+                                                    :   "btn-ghost"
                                                 )}
                                             >
                                                 <item.icon className="size-5" />
@@ -247,6 +248,18 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                                             </Link>
 
                                                             <Link
+                                                                href="/pricing"
+                                                                className="btn btn-ghost h-10 min-h-10 w-full justify-start"
+                                                            >
+                                                                <span className="flex items-center gap-2">
+                                                                    <DollarSign className="size-6" />
+                                                                    {t(
+                                                                        "pricing"
+                                                                    )}
+                                                                </span>
+                                                            </Link>
+
+                                                            <Link
                                                                 href="/account/profile"
                                                                 className="btn btn-ghost h-10 min-h-10 w-full justify-start"
                                                             >
@@ -266,6 +279,18 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                                                 <span className="flex items-center gap-2">
                                                                     <Home className="size-6" />
                                                                     {t("home")}
+                                                                </span>
+                                                            </Link>
+
+                                                            <Link
+                                                                href="/pricing"
+                                                                className="btn btn-ghost h-10 min-h-10 w-full justify-start"
+                                                            >
+                                                                <span className="flex items-center gap-2">
+                                                                    <DollarSign className="size-6" />
+                                                                    {t(
+                                                                        "pricing"
+                                                                    )}
                                                                 </span>
                                                             </Link>
 
@@ -423,12 +448,12 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                         {media.images.length > 0 ?
                                             <GirlImage
                                                 image={media.images[0]}
-                                                bought={true}
+                                                user={user}
                                             />
                                         : media.videos.length > 0 ?
                                             <GirlVideo
                                                 video={media.videos[0]}
-                                                bought={true}
+                                                user={user}
                                             />
                                         :   null}
                                     </div>

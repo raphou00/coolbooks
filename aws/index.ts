@@ -8,7 +8,7 @@ const rds = db();
 const { files, cloudfront } = bucket();
 const dynamodb = table();
 const { connectLambda, disconnectLambda, messageLambda } = lambda(dynamodb);
-const api = websocket(connectLambda, disconnectLambda, messageLambda)
+const api = websocket(connectLambda, disconnectLambda, messageLambda);
 
 export const apiUrl = api.invokeUrl;
 export const dynamodbTable = dynamodb.name;

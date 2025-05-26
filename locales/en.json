@@ -136,12 +136,12 @@
         "pricing": {
             "title": "Pricing",
             "description": "Choose between only having a crush or actually being in love",
-            "month": "month",
+            "month": "Month",
             "get-started": "Get started",
             "tiers": {
                 "crush": {
                     "title": "Crush",
-                    "description": "If you just want to goon 🙏",
+                    "description": "You only need to see my body? really? 😽",
                     "features": {
                         "1": "All photos and videos available",
                         "2": "Daily gifts"
@@ -149,7 +149,7 @@
                 },
                 "lover": {
                     "title": "Lover",
-                    "description": "Perfect for having a real relationship with me, including some gooning 🌹.",
+                    "description": "Perfect for having a real relationship with me 🌹",
                     "features": {
                         "1": "All photos and videos available",
                         "2": "Daily gifts",
@@ -300,7 +300,8 @@
         "discord-disconnected": "Discord successfully disconnected",
         "message-sent": "Message successfully sent",
         "min-amount": "Minimum amount is {min}",
-        "max-amount": "Maximum amount is {max}"
+        "max-amount": "Maximum amount is {max}",
+        "billing": "Manage your subscriptions"
     },
     "links": {
         "login": "Login",
@@ -331,6 +332,6 @@
         "pricing": "Pricing",
         "explore": "Explore",
         "plan": "Plan",
-        "portal": "Customer Portal"
+        "portal": "Open Customer Portal"
     }
 }

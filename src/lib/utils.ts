@@ -90,7 +90,7 @@ export const getImage = (key: string) => {
 };
 
 export const calculateTrialEndUnixTimestamp = (
-  trialPeriodDays: number | null | undefined
+    trialPeriodDays: number | null | undefined
 ) => {
     if (
         trialPeriodDays === null ||

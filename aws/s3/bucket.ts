@@ -78,6 +78,6 @@ const provision = () => {
         files,
         cloudfront,
     };
-}
+};
 
 export default provision;

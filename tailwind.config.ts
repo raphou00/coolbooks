@@ -11,7 +11,7 @@ const config: Config = {
         themes: [
             {
                 light: {
-                    primary: "#FF9100",
+                    primary: "#330099",
                     "primary-content": "#000000",
                     secondary: "#FF00BD",
                     "secondary-content": "#FFFFFF",
@@ -34,7 +34,7 @@ const config: Config = {
                     "--btn-focus-scale": "0.99",
                 },
                 dark: {
-                    primary: "#FF9100",
+                    primary: "#330099",
                     "primary-content": "#000000",
                     secondary: "#FF00BD",
                     "secondary-content": "#FFFFFF",

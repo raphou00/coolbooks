@@ -25,7 +25,11 @@ export const GET = async (req: NextRequest) => {
         let event: Stripe.Event;
 
         try {
-            event = stripe.webhooks.constructEvent(payload, signature, env.STRIPE_WEBHOOK_SECRET);
+            event = stripe.webhooks.constructEvent(
+                payload,
+                signature,
+                env.STRIPE_WEBHOOK_SECRET
+            );
         } catch (err) {
             console.error("Webhook signature verification failed.", err);
             return NextResponse.json(

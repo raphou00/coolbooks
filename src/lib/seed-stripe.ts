@@ -21,7 +21,7 @@ const createStripeProduct = async () => {
         name: "Lover",
     });
 
-    await stripe.prices.create({
+    return await stripe.prices.create({
         product: loverProduct.id,
         unit_amount: 800,
         currency: "usd",
@@ -30,6 +30,6 @@ const createStripeProduct = async () => {
             trial_period_days: 7,
         },
     });
-}
+};
 
-createStripeProduct()
+export { createStripeProduct };

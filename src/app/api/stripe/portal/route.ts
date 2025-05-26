@@ -33,7 +33,16 @@ export const GET = async (req: NextRequest) => {
         if (configurations.data.length > 0) {
             configuration = configurations.data[0];
         } else {
-            const product = await stripe.products.retrieve(user.user.stripeProductId);
+            const productsAll = await stripe.products.list({
+                active: true,
+            });
+            const pricesAll = await stripe.prices.list({
+                active: true,
+            });
+
+            const product = await stripe.products.retrieve(
+                user.user.stripeProductId
+            );
             if (!product.active) {
                 return NextResponse.json({
                     success: false,
@@ -43,7 +52,7 @@ export const GET = async (req: NextRequest) => {
 
             const prices = await stripe.prices.list({
                 product: product.id,
-                active: true
+                active: true,
             });
             if (prices.data.length === 0) {
                 return NextResponse.json({
@@ -54,19 +63,35 @@ export const GET = async (req: NextRequest) => {
 
             configuration = await stripe.billingPortal.configurations.create({
                 business_profile: {
-                    headline: "Manage your subscription"
+                    headline: t("billing"),
                 },
                 features: {
                     subscription_update: {
                         enabled: true,
-                        default_allowed_updates: ["price", "quantity", "promotion_code"],
+                        default_allowed_updates: ["price"],
                         proration_behavior: "create_prorations",
                         products: [
                             {
-                                product: product.id,
-                                prices: prices.data.map((price) => price.id)
-                            }
-                        ]
+                                product: productsAll.data.find(
+                                    (product) => product.id === "crush"
+                                )!.id,
+                                prices: pricesAll.data
+                                    .filter(
+                                        (price) => price.product === "crush"
+                                    )
+                                    .map((price) => price.id),
+                            },
+                            {
+                                product: productsAll.data.find(
+                                    (product) => product.id === "lover"
+                                )!.id,
+                                prices: pricesAll.data
+                                    .filter(
+                                        (price) => price.product === "lover"
+                                    )
+                                    .map((price) => price.id),
+                            },
+                        ],
                     },
                     subscription_cancel: {
                         enabled: true,
@@ -78,21 +103,21 @@ export const GET = async (req: NextRequest) => {
                                 "missing_features",
                                 "switched_service",
                                 "unused",
-                                "other"
-                            ]
-                        }
+                                "other",
+                            ],
+                        },
                     },
                     payment_method_update: {
-                        enabled: true
-                    }
-                }
+                        enabled: true,
+                    },
+                },
             });
         }
 
         const portal = await stripe.billingPortal.sessions.create({
             customer: user.user.stripeCustomerId,
             return_url: `${env.APP_URL}`,
-            configuration: configuration.id
+            configuration: configuration.id,
         });
 
         return NextResponse.json({

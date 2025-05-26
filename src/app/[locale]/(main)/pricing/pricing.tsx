@@ -1,47 +1,46 @@
 "use client";
 
 import Title from "@/components/ui/title";
-import { Link } from "@/lib/navigation";
 import { cn, formatAmountForDisplay } from "@/lib/utils";
-import { CheckIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
-import type { TranslationsFunc } from "@/lib/types";
+import axios from "axios";
+import toast from "react-hot-toast";
+import type { getTiers } from "@/lib/stripe";
+import { motion } from "framer-motion";
+import type { User } from "lucia";
 
-const getTiers = (t: TranslationsFunc) => {
-    const tiers = [
-        {
-            name: t("tiers.crush.title"),
-            id: "tier-crush",
-            href: "#",
-            priceMonthly: 5,
-            description: t("tiers.crush.description"),
-            features: [
-                t("tiers.crush.features.1"),
-                t("tiers.crush.features.2"),
-            ],
-            featured: false,
-        },
-        {
-            name: t("tiers.lover.title"),
-            id: "tier-lover",
-            href: "#",
-            priceMonthly: 8,
-            description: t("tiers.lover.description"),
-            features: [
-                t("tiers.lover.features.1"),
-                t("tiers.lover.features.2"),
-                t("tiers.lover.features.3"),
-            ],
-            featured: true,
-        },
-    ];
+type Tiers = Awaited<ReturnType<typeof getTiers>>;
 
-    return tiers;
+type PricingProps = {
+    tiers: Tiers;
+    user: User | null;
 };
 
-const Pricing: React.FC = () => {
+const Pricing: React.FC<PricingProps> = ({ tiers, user }) => {
     const t = useTranslations("pages.pricing");
-    const tiers = getTiers(t);
+
+    const submit = async (priceId: string) => {
+        if (user?.stripeCustomerId) await createCheckout(priceId);
+        else await openPortal();
+    };
+
+    const createCheckout = async (priceId: string) => {
+        const res = await axios.get(
+            "/api/stripe/create-checkout?priceId=" + priceId,
+            {
+                method: "POST",
+            }
+        );
+        if (!res.data.success) toast.error(res.data.message);
+        else window.location.replace(res.data.redirect);
+    };
+
+    const openPortal = async () => {
+        const res = await axios.get("/api/stripe/portal");
+        if (!res.data.success) toast.error(res.data.message);
+        else window.location.replace(res.data.redirect);
+    };
+
     return (
         <>
             <div className="mx-auto max-w-4xl text-center">
@@ -52,63 +51,61 @@ const Pricing: React.FC = () => {
                 />
                 <p className="mt-4 text-lg">{t("description")}</p>
             </div>
-            <div className="mx-auto my-8 grid max-w-lg grid-cols-1 items-center gap-y-6 sm:gap-y-0 lg:max-w-4xl lg:grid-cols-2">
-                {tiers.map((tier, tierIdx) => (
-                    <div
-                        key={tier.id}
+            <div className="mx-auto my-8 flex justify-center flex-wrap gap-6">
+                {tiers.map((tier) => (
+                    <motion.div
+                        key={tier.name}
+                        whileHover="hover"
+                        transition={{
+                            duration: 1,
+                            ease: "backInOut",
+                        }}
+                        variants={{
+                            hover: {
+                                scale: 1.05,
+                            },
+                        }}
                         className={cn(
-                            tier.featured ?
-                                "relative bg-secondary/20 shadow-2xl"
-                            :   "bg-base-200 sm:mx-8 lg:mx-0",
-                            tier.featured ? ""
-                            : tierIdx === 0 ?
-                                "rounded-t-3xl sm:rounded-b-none lg:rounded-tr-none lg:rounded-bl-3xl"
-                            :   "sm:rounded-t-none lg:rounded-tr-3xl lg:rounded-bl-none",
-                            "rounded-2xl p-8 ring-1 ring-gray-900/10 sm:p-10"
+                            "relative h-96 w-80 shrink-0 overflow-hidden rounded-xl p-8 bg-pink-600 bg-indigo-600",
+                            tier.color
                         )}
                     >
-                        <h3
-                            id={tier.id}
-                            className="text-secondary text-base/7 font-semibold"
-                        >
-                            {tier.name}
-                        </h3>
-                        <p className="mt-4 flex items-baseline gap-x-2">
-                            <span className="text-5xl font-semibold tracking-tight">
-                                {formatAmountForDisplay(tier.priceMonthly)}
+                        <div className="relative z-10 text-white">
+                            <span className="mb-3 block w-fit rounded-full bg-white/30 px-3 py-0.5 text-sm font-light text-white">
+                                {tier.name}
                             </span>
-                            <span className="text-neutral text-base">
-                                /{t("month")}
-                            </span>
-                        </p>
-                        <p className="mt-6 text-base/7">{tier.description}</p>
-                        <ul
-                            role="list"
-                            className="mt-8 space-y-3 text-sm/6 sm:mt-10"
-                        >
-                            {tier.features.map((feature) => (
-                                <li key={feature} className="flex gap-x-3">
-                                    <CheckIcon
-                                        aria-hidden="true"
-                                        className="text-primary h-6 w-5 flex-none"
-                                    />
-                                    {feature}
-                                </li>
-                            ))}
-                        </ul>
-                        <Link
-                            href={tier.href}
-                            aria-describedby={tier.id}
+                            <motion.span
+                                initial={{ scale: 0.85 }}
+                                variants={{
+                                    hover: {
+                                        scale: 1,
+                                    },
+                                }}
+                                transition={{
+                                    duration: 1,
+                                    ease: "backInOut",
+                                }}
+                                className="my-2 block origin-top-left font-mono text-6xl font-black"
+                            >
+                                {formatAmountForDisplay(tier.price)}/
+                                <br />
+                                {t("month")}
+                            </motion.span>
+                            <div>
+                                <p className="mt- text-base/7">
+                                    {tier.description}
+                                </p>
+                            </div>
+                        </div>
+                        <button
+                            onClick={() => submit(tier.priceId)}
                             className={cn(
-                                tier.featured ?
-                                    "btn-secondary btn-outline"
-                                :   "btn-secondary",
-                                "mt-8 btn w-full"
+                                "absolute bottom-4 left-4 right-4 z-20 btn border-2 border-white bg-white/30"
                             )}
                         >
                             {t("get-started")}
-                        </Link>
-                    </div>
+                        </button>
+                    </motion.div>
                 ))}
             </div>
         </>

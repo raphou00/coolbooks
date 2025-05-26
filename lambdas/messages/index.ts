@@ -1,34 +1,44 @@
-const AWS = require("aws-sdk");
+import AWS from "aws-sdk";
 const ddb = new AWS.DynamoDB.DocumentClient();
-const api = new AWS.ApiGatewayManagementApi({ endpoint: process.env.WEBSOCKET_ENDPOINT });
+const api = new AWS.ApiGatewayManagementApi({
+    endpoint: process.env.WEBSOCKET_ENDPOINT,
+});
 
-const ADMIN_CONNECTION_ID = process.env.ADMIN_CONNECTION_ID;
-const TABLE_NAME = process.env.TABLE_NAME;
+const ADMIN_CONNECTION_ID = process.env.ADMIN_CONNECTION_ID!;
+const TABLE_NAME = process.env.TABLE_NAME!;
 
-exports.handler = async (event) => {
-  const body = JSON.parse(event.body);
-  const { userId, message } = body;
-  const timestamp = Date.now();
+type Event = {
+    body: string;
+};
 
-  await ddb.put({
-    TableName: TABLE_NAME,
-    Item: { userId, timestamp, message },
-  }).promise();
+exports.handler = async (event: Event) => {
+    const body = JSON.parse(event.body);
+    const { userId, message } = body;
+    const timestamp = Date.now();
 
-  if (ADMIN_CONNECTION_ID) {
-    try {
-      await api.postToConnection({
-        ConnectionId: ADMIN_CONNECTION_ID,
-        Data: JSON.stringify({ userId, message, timestamp }),
-      }).promise();
-    } catch (e) {
-      if (e.statusCode === 410) {
-        console.log("Admin connection expired");
-      } else {
-        throw e;
-      }
+    await ddb
+        .put({
+            TableName: TABLE_NAME,
+            Item: { userId, timestamp, message },
+        })
+        .promise();
+
+    if (ADMIN_CONNECTION_ID) {
+        try {
+            await api
+                .postToConnection({
+                    ConnectionId: ADMIN_CONNECTION_ID,
+                    Data: JSON.stringify({ userId, message, timestamp }),
+                })
+                .promise();
+        } catch (e) {
+            console.error(e);
+            throw e;
+        }
     }
-  }
 
-  return { statusCode: 200, body: "Message received" };
+    return {
+        statusCode: 200,
+        body: "Message received",
+    };
 };

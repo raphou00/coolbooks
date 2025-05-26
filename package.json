@@ -13,7 +13,7 @@
         "db:seed": "prisma db seed",
         "db:migrate:dev": "prisma migrate dev",
         "db:migrate:prod": "prisma migrate deploy",
-        "pulumi:login": "cd aws && pulumi login s3://pinksea-pulumi-state-21",
+        "pulumi:login": "cd aws && pulumi login s3://pinksea-pulumi-state-2921",
         "deploy:dev": "bun run pulumi:login && cd aws && pulumi up --stack dev -y",
         "deploy:prod": "bun run pulumi:login && cd aws && pulumi up --stack prod -y",
         "destroy:dev": "bun run pulumi:login && cd aws && pulumi down --stack dev -y",

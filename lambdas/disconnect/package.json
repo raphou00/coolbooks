@@ -1,10 +1,9 @@
 {
-  "name": "connect",
-  "version": "1.0.0",
-  "main": "index.ts",
-  "scripts": {
-  },
-  "author": "",
-  "license": "ISC",
-  "description": ""
+    "name": "connect",
+    "version": "1.0.0",
+    "main": "index.ts",
+    "scripts": {},
+    "author": "",
+    "license": "ISC",
+    "description": ""
 }
