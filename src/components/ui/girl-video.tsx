@@ -42,7 +42,7 @@ const VideoEl: React.FC<VideoProps> = ({ user, video, className }) => {
         setTrack(v);
     };
 
-    const canSee = video.free || user?.planName !== null;
+    const canSee = video.free || user?.subscriptionStatus === "active";
 
     return canSee ?
             <div

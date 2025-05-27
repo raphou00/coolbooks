@@ -93,7 +93,8 @@ export async function GET(req: NextRequest) {
         await createSession(newUser.id);
 
         return NextResponse.redirect(new URL("/", env.APP_URL));
-    } catch (_) {
+    } catch (e) {
+        console.error(e);
         return NextResponse.redirect(new URL("/error?error=500", req.url));
     }
 }

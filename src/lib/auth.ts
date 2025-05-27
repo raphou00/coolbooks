@@ -30,7 +30,6 @@ export const lucia = new Lucia(adapter, {
             stripeCustomerId: user.stripeCustomerId,
             stripeProductId: user.stripeProductId,
             stripeSubscriptionId: user.stripeSubscriptionId,
-            planName: user.planName,
             subscriptionStatus: user.subscriptionStatus,
         };
     },
@@ -121,6 +120,5 @@ type DatabaseUserAttributes = {
     stripeCustomerId?: string;
     stripeSubscriptionId?: string;
     stripeProductId?: string;
-    planName?: string;
     subscriptionStatus?: string;
 };

@@ -33,13 +33,6 @@ export const GET = async (req: NextRequest) => {
         if (configurations.data.length > 0) {
             configuration = configurations.data[0];
         } else {
-            const productsAll = await stripe.products.list({
-                active: true,
-            });
-            const pricesAll = await stripe.prices.list({
-                active: true,
-            });
-
             const product = await stripe.products.retrieve(
                 user.user.stripeProductId
             );
@@ -66,33 +59,6 @@ export const GET = async (req: NextRequest) => {
                     headline: t("billing"),
                 },
                 features: {
-                    subscription_update: {
-                        enabled: true,
-                        default_allowed_updates: ["price"],
-                        proration_behavior: "create_prorations",
-                        products: [
-                            {
-                                product: productsAll.data.find(
-                                    (product) => product.id === "crush"
-                                )!.id,
-                                prices: pricesAll.data
-                                    .filter(
-                                        (price) => price.product === "crush"
-                                    )
-                                    .map((price) => price.id),
-                            },
-                            {
-                                product: productsAll.data.find(
-                                    (product) => product.id === "lover"
-                                )!.id,
-                                prices: pricesAll.data
-                                    .filter(
-                                        (price) => price.product === "lover"
-                                    )
-                                    .map((price) => price.id),
-                            },
-                        ],
-                    },
                     subscription_cancel: {
                         enabled: true,
                         mode: "at_period_end",

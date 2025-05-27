@@ -135,27 +135,13 @@
         },
         "pricing": {
             "title": "Pricing",
-            "description": "Choose between only having a crush or actually being in love",
+            "description": "Hey, you should really try to subscribe to access my content!",
             "month": "Month",
-            "get-started": "Get started",
-            "tiers": {
-                "crush": {
-                    "title": "Crush",
-                    "description": "You only need to see my body? really? 😽",
-                    "features": {
-                        "1": "All photos and videos available",
-                        "2": "Daily gifts"
-                    }
-                },
-                "lover": {
-                    "title": "Lover",
-                    "description": "Perfect for having a real relationship with me 🌹",
-                    "features": {
-                        "1": "All photos and videos available",
-                        "2": "Daily gifts",
-                        "3": "Monthly gifts"
-                    }
-                }
+            "subscribe": "Subscribe",
+            "portal": "Open Portal",
+            "subscription": {
+                "title": "Lover",
+                "description": "Let's get to know each other and build a real relationship 🌹"
             }
         },
         "payment": {

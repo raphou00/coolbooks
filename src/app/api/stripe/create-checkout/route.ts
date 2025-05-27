@@ -7,18 +7,9 @@ import env from "@/lib/env";
 export const GET = async (req: NextRequest) => {
     const t = await getTranslations({
         locale: req.cookies.get("NEXT_LOCALE")!.value,
-        namespace: "messages",
+        namespace: "pages.pricing",
     });
     try {
-        const priceId = req.nextUrl.searchParams.get("priceId");
-
-        if (!priceId) {
-            return NextResponse.json({
-                success: false,
-                message: t("unauthorized"),
-            });
-        }
-
         const user = await getUser();
 
         if (!user || !user.user) {
@@ -28,11 +19,19 @@ export const GET = async (req: NextRequest) => {
             });
         }
 
+        const priceId = await stripe.prices.list({ product: "lover" });
+        if (!priceId.data[0].id) {
+            return NextResponse.json({
+                success: true,
+                redirect: "/pricing",
+            });
+        }
+
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ["card"],
             line_items: [
                 {
-                    price: priceId,
+                    price: priceId.data[0].id,
                     quantity: 1,
                 },
             ],
@@ -51,7 +50,7 @@ export const GET = async (req: NextRequest) => {
         console.error(err);
         return NextResponse.json({
             success: false,
-            message: t("server-error"),
+            message: t("messages.server-error"),
         });
     }
 };

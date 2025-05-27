@@ -3,7 +3,7 @@
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import type { User } from "lucia";
 import axios from "axios";
 import {
@@ -17,7 +17,6 @@ import {
     UserIcon,
     SearchIcon,
     X,
-    Home,
     ImageIcon,
     DollarSign,
 } from "lucide-react";
@@ -44,7 +43,6 @@ type HeaderProps = {
 const Header: React.FC<HeaderProps> = ({ user, children }) => {
     const [localeOpen, setLocaleOpen] = useState<boolean>(false);
     const [searchOpen, setSearchOpen] = useState<boolean>(false);
-    const [_profileOpen, setProfileOpen] = useState<boolean>(false);
     const [search, setSearch] = useState("");
     const [medias, setMedias] = useState<MediaProps[]>([]);
     const t = useTranslations("links");
@@ -187,9 +185,10 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                 </button>
 
                                 <div className="dropdown dropdown-end dropdown-bottom dropdown-hover flex items-center size-12">
-                                    <button
+                                    <div
+                                        role="button"
+                                        tabIndex={0}
                                         className="flex items-center group"
-                                        onClick={() => setProfileOpen(true)}
                                     >
                                         {user ?
                                             <Avatar
@@ -201,165 +200,120 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                                 <UserIcon className="size-6" />
                                             </div>
                                         }
-                                    </button>
-                                    <AnimatePresence>
-                                        {true && (
-                                            <motion.div
-                                                initial={{ opacity: 0 }}
-                                                animate={{ opacity: 1 }}
-                                                exit={{ opacity: 0 }}
-                                                tabIndex={0}
-                                                className="dropdown-content pt-2"
+                                    </div>
+                                    <div
+                                        tabIndex={0}
+                                        className="dropdown-content pt-2"
+                                    >
+                                        <div className="w-[calc(100vw-16px)] space-y-1 rounded-xl bg-base-200 p-2 border border-neutral/20 shadow-xl md:w-72">
+                                            {user ?
+                                                <>
+                                                    <div className="my-2 flex flex-col items-center justify-center gap-y-2">
+                                                        <Avatar
+                                                            src={null}
+                                                            alt={user.name}
+                                                            className="size-16"
+                                                        />
+                                                        <Title
+                                                            text={user.name}
+                                                            className="text-center font-bold"
+                                                        />
+                                                    </div>
+
+                                                    <a
+                                                        href="/pricing"
+                                                        className="btn btn-ghost h-10 min-h-10 w-full justify-start"
+                                                    >
+                                                        <span className="flex items-center gap-2">
+                                                            <DollarSign className="size-6" />
+                                                            {t("pricing")}
+                                                        </span>
+                                                    </a>
+
+                                                    <a
+                                                        href="/account/profile"
+                                                        className="btn btn-ghost h-10 min-h-10 w-full justify-start"
+                                                    >
+                                                        <span className="flex items-center gap-2">
+                                                            <Settings2 className="size-6" />
+                                                            {t("account")}
+                                                        </span>
+                                                    </a>
+                                                </>
+                                            :   <>
+                                                    <a
+                                                        href="/pricing"
+                                                        className="btn btn-ghost h-10 min-h-10 w-full justify-start"
+                                                    >
+                                                        <span className="flex items-center gap-2">
+                                                            <DollarSign className="size-6" />
+                                                            {t("pricing")}
+                                                        </span>
+                                                    </a>
+
+                                                    <a
+                                                        href={`/login?redirect=${pathname}`}
+                                                        className="btn btn-ghost h-10 min-h-10 w-full justify-start"
+                                                    >
+                                                        <span className="flex items-center gap-2">
+                                                            <LogIn className="size-6" />
+                                                            {t("login")}
+                                                        </span>
+                                                    </a>
+
+                                                    <a
+                                                        href={`/register?redirect=${pathname}`}
+                                                        className="btn btn-ghost h-10 min-h-10 w-full justify-start"
+                                                    >
+                                                        <span className="flex items-center gap-2">
+                                                            <PenBox className="size-6" />
+                                                            {t("register")}
+                                                        </span>
+                                                    </a>
+                                                </>
+                                            }
+
+                                            <div className="divider mx-auto w-full px-2" />
+
+                                            <button
+                                                onClick={toggleTheme}
+                                                className="btn btn-ghost h-10 min-h-10 w-full justify-start"
                                             >
-                                                <div className="w-[calc(100vw-16px)] space-y-1 rounded-xl bg-base-200 p-2 border border-neutral/20 shadow-xl md:w-72">
-                                                    {user ?
-                                                        <>
-                                                            <div className="my-2 flex flex-col items-center justify-center gap-y-2">
-                                                                <Avatar
-                                                                    src={null}
-                                                                    alt={
-                                                                        user.name
-                                                                    }
-                                                                    className="size-16"
-                                                                />
-                                                                <Title
-                                                                    text={
-                                                                        user.name
-                                                                    }
-                                                                    className="text-center font-bold"
-                                                                />
-                                                            </div>
+                                                <span className="flex items-center gap-2">
+                                                    <SunMoon className="size-6" />
+                                                    {t("theme")}
+                                                </span>
+                                            </button>
 
-                                                            <Link
-                                                                href="/"
-                                                                className="btn btn-ghost h-10 min-h-10 w-full justify-start"
-                                                            >
-                                                                <span className="flex items-center gap-2">
-                                                                    <Home className="size-6" />
-                                                                    {t("home")}
-                                                                </span>
-                                                            </Link>
+                                            <button
+                                                onClick={() =>
+                                                    setLocaleOpen((e) => !e)
+                                                }
+                                                className="btn btn-ghost h-10 min-h-10 w-full justify-start"
+                                            >
+                                                <span className="flex items-center gap-2">
+                                                    <Languages className="size-6" />
+                                                    {t("language")}
+                                                </span>
+                                            </button>
 
-                                                            <Link
-                                                                href="/pricing"
-                                                                className="btn btn-ghost h-10 min-h-10 w-full justify-start"
-                                                            >
-                                                                <span className="flex items-center gap-2">
-                                                                    <DollarSign className="size-6" />
-                                                                    {t(
-                                                                        "pricing"
-                                                                    )}
-                                                                </span>
-                                                            </Link>
-
-                                                            <Link
-                                                                href="/account/profile"
-                                                                className="btn btn-ghost h-10 min-h-10 w-full justify-start"
-                                                            >
-                                                                <span className="flex items-center gap-2">
-                                                                    <Settings2 className="size-6" />
-                                                                    {t(
-                                                                        "account"
-                                                                    )}
-                                                                </span>
-                                                            </Link>
-                                                        </>
-                                                    :   <>
-                                                            <Link
-                                                                href="/"
-                                                                className="btn btn-ghost h-10 min-h-10 w-full justify-start"
-                                                            >
-                                                                <span className="flex items-center gap-2">
-                                                                    <Home className="size-6" />
-                                                                    {t("home")}
-                                                                </span>
-                                                            </Link>
-
-                                                            <Link
-                                                                href="/pricing"
-                                                                className="btn btn-ghost h-10 min-h-10 w-full justify-start"
-                                                            >
-                                                                <span className="flex items-center gap-2">
-                                                                    <DollarSign className="size-6" />
-                                                                    {t(
-                                                                        "pricing"
-                                                                    )}
-                                                                </span>
-                                                            </Link>
-
-                                                            <Link
-                                                                href={`/login?redirect=${pathname}`}
-                                                                className="btn btn-ghost h-10 min-h-10 w-full justify-start"
-                                                            >
-                                                                <span className="flex items-center gap-2">
-                                                                    <LogIn className="size-6" />
-                                                                    {t("login")}
-                                                                </span>
-                                                            </Link>
-
-                                                            <Link
-                                                                href={`/register?redirect=${pathname}`}
-                                                                className="btn btn-ghost h-10 min-h-10 w-full justify-start"
-                                                            >
-                                                                <span className="flex items-center gap-2">
-                                                                    <PenBox className="size-6" />
-                                                                    {t(
-                                                                        "register"
-                                                                    )}
-                                                                </span>
-                                                            </Link>
-                                                        </>
-                                                    }
-
+                                            {user && (
+                                                <>
                                                     <div className="divider mx-auto w-full px-2" />
 
                                                     <button
-                                                        onClick={toggleTheme}
+                                                        onClick={handleLogout}
                                                         className="btn btn-ghost h-10 min-h-10 w-full justify-start"
                                                     >
                                                         <span className="flex items-center gap-2">
-                                                            <SunMoon className="size-6" />
-                                                            {t("theme")}
+                                                            <LogOut className="size-6" />
+                                                            {t("logout")}
                                                         </span>
                                                     </button>
-
-                                                    <button
-                                                        onClick={() =>
-                                                            setLocaleOpen(
-                                                                (e) => !e
-                                                            )
-                                                        }
-                                                        className="btn btn-ghost h-10 min-h-10 w-full justify-start"
-                                                    >
-                                                        <span className="flex items-center gap-2">
-                                                            <Languages className="size-6" />
-                                                            {t("language")}
-                                                        </span>
-                                                    </button>
-
-                                                    {user && (
-                                                        <>
-                                                            <div className="divider mx-auto w-full px-2" />
-
-                                                            <button
-                                                                onClick={
-                                                                    handleLogout
-                                                                }
-                                                                className="btn btn-ghost h-10 min-h-10 w-full justify-start"
-                                                            >
-                                                                <span className="flex items-center gap-2">
-                                                                    <LogOut className="size-6" />
-                                                                    {t(
-                                                                        "logout"
-                                                                    )}
-                                                                </span>
-                                                            </button>
-                                                        </>
-                                                    )}
-                                                </div>
-                                            </motion.div>
-                                        )}
-                                    </AnimatePresence>
+                                                </>
+                                            )}
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

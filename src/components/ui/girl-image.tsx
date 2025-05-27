@@ -13,7 +13,7 @@ type GirlImageProps = {
 };
 
 const BlurImage: React.FC<GirlImageProps> = ({ user, image, className }) => {
-    const canSee = image.free || user?.planName !== null;
+    const canSee = image.free || user?.subscriptionStatus === "active";
     const src = canSee ? image.src : image.blurred;
 
     return (

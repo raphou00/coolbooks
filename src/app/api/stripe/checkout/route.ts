@@ -74,7 +74,6 @@ export const GET = async (req: NextRequest) => {
                 stripeCustomerId: customerId,
                 stripeSubscriptionId: subscriptionId,
                 stripeProductId: productId,
-                planName: (plan.product as Stripe.Product).name,
                 subscriptionStatus: subscription.status,
             },
         });

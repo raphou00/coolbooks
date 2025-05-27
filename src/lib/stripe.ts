@@ -29,7 +29,6 @@ export const handleSubscriptionChange = async (
             data: {
                 stripeSubscriptionId: subscriptionId,
                 stripeProductId: plan?.product as string,
-                planName: (plan?.product as Stripe.Product).name,
                 subscriptionStatus: status,
             },
         });
@@ -41,49 +40,21 @@ export const handleSubscriptionChange = async (
             data: {
                 stripeSubscriptionId: null,
                 stripeProductId: null,
-                planName: null,
                 subscriptionStatus: status,
             },
         });
     }
 };
 
-export const getTiers = async (t: TranslationsFunc) => {
-    const prices = await stripe.prices.list({
-        active: true,
-    });
+export const getSubscription = async (t: TranslationsFunc) => {
+    const prices = await stripe.prices.list({ product: "lover" });
 
-    const tiers = [
-        {
-            name: t("tiers.crush.title"),
-            price:
-                prices.data.find((price) => price.product === "crush")!
-                    .unit_amount! / 100,
-            priceId: prices.data.find((price) => price.product === "crush")!
-                .id!,
-            description: t("tiers.crush.description"),
-            features: [
-                t("tiers.crush.features.1"),
-                t("tiers.crush.features.2"),
-            ],
-            color: "bg-indigo-600",
-        },
-        {
-            name: t("tiers.lover.title"),
-            price:
-                prices.data.find((price) => price.product === "lover")!
-                    .unit_amount! / 100,
-            priceId: prices.data.find((price) => price.product === "lover")!
-                .id!,
-            description: t("tiers.lover.description"),
-            features: [
-                t("tiers.lover.features.1"),
-                t("tiers.lover.features.2"),
-                t("tiers.lover.features.3"),
-            ],
-            color: "bg-pink-600",
-        },
-    ];
+    const tiers = {
+        name: t("subscription.title"),
+        description: t("subscription.description"),
+        price: prices.data[0].unit_amount! / 100,
+        priceId: prices.data[0].id,
+    };
 
     return tiers;
 };
