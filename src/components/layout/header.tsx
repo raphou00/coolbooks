@@ -190,6 +190,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                     className="dropdown dropdown-end dropdown-bottom dropdown-hover flex items-center size-12"
                                     onMouseEnter={() => setProfileOpen(true)}
                                     onMouseLeave={() => setProfileOpen(false)}
+                                    onClick={() => setProfileOpen(true)}
                                 >
                                     <button
                                         className="flex items-center"
