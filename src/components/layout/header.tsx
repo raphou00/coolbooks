@@ -188,16 +188,16 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
 
                                 <div className="dropdown dropdown-end dropdown-bottom dropdown-hover flex items-center size-12">
                                     <button
-                                        className="flex items-center"
+                                        className="flex items-center group"
                                         onClick={() => setProfileOpen(true)}
                                     >
                                         {user ?
                                             <Avatar
                                                 src={null}
                                                 alt={user.name}
-                                                className="size-11 lg:size-12"
+                                                className="size-11 lg:size-12 transition-all border-2 border-transparent group-hover:border-neutral"
                                             />
-                                        :   <div className="btn btn-circle bg-neutral/10">
+                                        :   <div className="btn btn-circle bg-neutral/10 transition-all border-2 border-transparent group-hover:border-neutral">
                                                 <UserIcon className="size-6" />
                                             </div>
                                         }
