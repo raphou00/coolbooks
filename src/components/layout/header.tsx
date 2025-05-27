@@ -44,7 +44,7 @@ type HeaderProps = {
 const Header: React.FC<HeaderProps> = ({ user, children }) => {
     const [localeOpen, setLocaleOpen] = useState<boolean>(false);
     const [searchOpen, setSearchOpen] = useState<boolean>(false);
-    const [profileOpen, setProfileOpen] = useState<boolean>(false);
+    const [_profileOpen, setProfileOpen] = useState<boolean>(false);
     const [search, setSearch] = useState("");
     const [medias, setMedias] = useState<MediaProps[]>([]);
     const t = useTranslations("links");
@@ -203,7 +203,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                         }
                                     </button>
                                     <AnimatePresence>
-                                        {profileOpen && (
+                                        {true && (
                                             <motion.div
                                                 initial={{ opacity: 0 }}
                                                 animate={{ opacity: 1 }}
