@@ -186,12 +186,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                     <Search className="size-5" />
                                 </button>
 
-                                <div
-                                    className="dropdown dropdown-end dropdown-bottom dropdown-hover flex items-center size-12"
-                                    onMouseEnter={() => setProfileOpen(true)}
-                                    onMouseLeave={() => setProfileOpen(false)}
-                                    onClick={() => setProfileOpen(true)}
-                                >
+                                <div className="dropdown dropdown-end dropdown-bottom dropdown-hover flex items-center size-12">
                                     <button
                                         className="flex items-center"
                                         onClick={() => setProfileOpen(true)}
@@ -215,9 +210,6 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                                 exit={{ opacity: 0 }}
                                                 tabIndex={0}
                                                 className="dropdown-content pt-2"
-                                                onClick={() =>
-                                                    setProfileOpen(false)
-                                                }
                                             >
                                                 <div className="w-[calc(100vw-16px)] space-y-1 rounded-xl bg-base-200 p-2 border border-neutral/20 shadow-xl md:w-72">
                                                     {user ?
