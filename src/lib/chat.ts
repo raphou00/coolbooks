@@ -9,8 +9,11 @@ export type ChatMessage = {
 
 export default class ChatClient {
     private ws: WebSocket | null = null;
-    private messageHandlers: Map<string, (message: ChatMessage) => void> = new Map();
-    private statusHandlers: ((status: "connected" | "disconnected" | "reconnecting") => void)[] = [];
+    private messageHandlers: Map<string, (message: ChatMessage) => void> =
+        new Map();
+    private statusHandlers: ((
+        status: "connected" | "disconnected" | "reconnecting"
+    ) => void)[] = [];
     private reconnectAttempts = 0;
     private maxReconnectAttempts = 5;
 
@@ -33,18 +36,21 @@ export default class ChatClient {
 
             this.ws.onmessage = (event) => {
                 try {
-                const message = JSON.parse(event.data);
-                this.handleMessage(message);
+                    const message = JSON.parse(event.data);
+                    this.handleMessage(message);
                 } catch (error) {
-                console.error("Failed to parse message:", error);
+                    console.error("Failed to parse message:", error);
                 }
             };
 
             this.ws.onclose = () => {
                 this.notifyStatusHandlers("disconnected");
                 if (this.reconnectAttempts < this.maxReconnectAttempts) {
-                this.notifyStatusHandlers("reconnecting");
-                setTimeout(() => this.reconnect(), 1000 * Math.pow(2, this.reconnectAttempts));
+                    this.notifyStatusHandlers("reconnecting");
+                    setTimeout(
+                        () => this.reconnect(),
+                        1000 * Math.pow(2, this.reconnectAttempts)
+                    );
                 }
             };
 
@@ -68,7 +74,7 @@ export default class ChatClient {
 
         const message = {
             action: "sendMessage",
-            content
+            content,
         };
 
         this.ws.send(JSON.stringify(message));
@@ -82,7 +88,9 @@ export default class ChatClient {
         this.messageHandlers.set("error", handler);
     }
 
-    onStatusChange(handler: (status: "connected" | "disconnected" | "reconnecting") => void): void {
+    onStatusChange(
+        handler: (status: "connected" | "disconnected" | "reconnecting") => void
+    ): void {
         this.statusHandlers.push(handler);
     }
 
@@ -93,8 +101,10 @@ export default class ChatClient {
         }
     }
 
-    private notifyStatusHandlers(status: "connected" | "disconnected" | "reconnecting"): void {
-        this.statusHandlers.forEach(handler => handler(status));
+    private notifyStatusHandlers(
+        status: "connected" | "disconnected" | "reconnecting"
+    ): void {
+        this.statusHandlers.forEach((handler) => handler(status));
     }
 
     disconnect(): void {

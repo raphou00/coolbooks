@@ -158,11 +158,12 @@ const Header: React.FC<HeaderProps> = ({ user, notifications, children }) => {
                                                     :   "btn-ghost"
                                                 )}
                                             >
-                                                {(item.path == "/chat" && notifications > 0) && (
-                                                    <div className="indicator-item badge badge-primary p-1">
-                                                        {notifications}
-                                                    </div>
-                                                )}
+                                                {item.path == "/chat" &&
+                                                    notifications > 0 && (
+                                                        <div className="indicator-item badge badge-primary p-1">
+                                                            {notifications}
+                                                        </div>
+                                                    )}
                                                 <item.icon className="size-5" />
                                                 {item.title}
                                             </Link>
@@ -340,11 +341,12 @@ const Header: React.FC<HeaderProps> = ({ user, notifications, children }) => {
                                         <item.icon className="size-6" />
                                         {item.title}
                                     </span>
-                                    {(item.path == "/chat" && notifications > 0) && (
-                                        <div className="badge badge-primary p-1">
-                                            {notifications}
-                                        </div>
-                                    )}
+                                    {item.path == "/chat" &&
+                                        notifications > 0 && (
+                                            <div className="badge badge-primary p-1">
+                                                {notifications}
+                                            </div>
+                                        )}
                                 </Link>
                             </li>
                         ))}

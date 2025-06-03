@@ -7,8 +7,8 @@ const Layout = async ({ children }: React.PropsWithChildren) => {
     if (user?.user?.role !== "ADMIN") {
         return redirect("/");
     }
-    
+
     return children;
-}
+};
 
 export default Layout;

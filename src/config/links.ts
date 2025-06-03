@@ -1,11 +1,5 @@
 import { useTranslations } from "next-intl";
-import {
-    Lock,
-    Settings2,
-    Coins,
-    Compass,
-    DollarSign,
-} from "lucide-react";
+import { Lock, Settings2, Coins, Compass, DollarSign } from "lucide-react";
 
 export const useGetLinks = () => {
     const t = useTranslations("links");

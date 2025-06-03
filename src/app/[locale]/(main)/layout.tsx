@@ -10,9 +10,9 @@ const Layout: React.FC<React.PropsWithChildren> = async ({ children }) => {
     if (user?.user) {
         notifications = await db.notification.count({
             where: {
-                userId: user.user.id
-            }
-        })
+                userId: user.user.id,
+            },
+        });
     }
 
     return (

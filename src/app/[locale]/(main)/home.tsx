@@ -22,7 +22,11 @@ export const WelcomeModal: React.FC = () => {
 
     return (
         <>
-            <Modal isOpen={isOpen} setIsOpen={setIsOpen} className="z-100 w-full h-96">
+            <Modal
+                isOpen={isOpen}
+                setIsOpen={setIsOpen}
+                className="z-100 w-full h-96"
+            >
                 <div className="p-5">
                     <Title
                         text={t("welcome-title", { name })}
@@ -32,7 +36,10 @@ export const WelcomeModal: React.FC = () => {
                     <p>
                         {t.rich("welcome-body", {
                             pricing: (chunk) => (
-                                <Link href="/pricing" className="link link-primary">
+                                <Link
+                                    href="/pricing"
+                                    className="link link-primary"
+                                >
                                     {chunk}
                                 </Link>
                             ),
@@ -48,4 +55,4 @@ export const WelcomeModal: React.FC = () => {
             </Modal>
         </>
     );
-}
+};
