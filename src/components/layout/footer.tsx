@@ -16,7 +16,7 @@ const Footer: React.FC = () => {
     return (
         <>
             <footer className="mt-10">
-                <div className="mx-auto w-full text-sm max-w-8xl px-4 md:px-6 lg:py-8 xl:px-12">
+                <div className="mx-auto w-full text-sm max-w-8xl px-4 md:px-6 lg:px-8 xl:px-12">
                     <div className="grid grid-cols-[repeat(auto-fill,minmax(160px,1fr))] items-stretch justify-between gap-y-10 sm:gap-x-6 md:flex md:flex-wrap">
                         <div className="col-span-full flex items-center justify-between gap-4 md:flex-col">
                             <Link href="/" className="flex items-center gap-2">

@@ -7,6 +7,7 @@ import Title from "@/components/ui/title";
 import Medias, { type MediaProps } from "@/components/ui/medias";
 import { findAllMedias, name } from "@/config/girl";
 import { getUser } from "@/lib/auth";
+import { WelcomeModal } from "./home";
 
 const Page = async () => {
     const t = await getTranslations("pages.home");
@@ -42,6 +43,7 @@ const Page = async () => {
                     user={user?.user || null}
                 />
             </div>
+            <WelcomeModal />
         </Main>
     );
 };

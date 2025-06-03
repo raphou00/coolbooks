@@ -85,6 +85,10 @@ export default createEnv({
         NEXT_PUBLIC_CLOUDFRONT_URL: z
             .string()
             .min(1, { message: "Cloudinary URL is missing" }),
+        
+        NEXT_PUBLIC_WEBSOCKET_URL: z
+            .string()
+            .min(1, { message: "Websocket URL is missing" }),
     },
     runtimeEnv: {
         NODE_ENV: process.env.VERCEL_ENV,
@@ -96,7 +100,8 @@ export default createEnv({
         BUCKET_NAME: process.env.BUCKET_NAME,
         CLOUDFRONT_URL: process.env.CLOUDFRONT_URL,
         NEXT_PUBLIC_CLOUDFRONT_URL: process.env.NEXT_PUBLIC_CLOUDFRONT_URL,
-        WEBSOCKET_URL: process.env.WEBSOCKET_URL,
+        WEBSOCKET_URL: process.env.WEBSOCKET_URL + "$default",
+        NEXT_PUBLIC_WEBSOCKET_URL: process.env.NEXT_PUBLIC_WEBSOCKET_URL + "$default",
         DYNAMO_TABLE: process.env.DYNAMO_TABLE,
         UPSTASH_REDIS_REST_URL: process.env.UPSTASH_REDIS_REST_URL,
         UPSTASH_REDIS_REST_TOKEN: process.env.UPSTASH_REDIS_REST_TOKEN,

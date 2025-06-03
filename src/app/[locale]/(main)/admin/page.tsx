@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
-import { redirect } from "next/navigation";
 import db from "@/lib/db";
-import { getUser } from "@/lib/auth";
 import Main from "@/components/layout/main";
 import { CreateImage, CreateMedia, CreateVideo } from "./admin";
 import { findAllMedias } from "@/config/girl";
@@ -13,12 +11,6 @@ const generateMetadata = async (): Promise<Metadata> => {
 };
 
 const Page = async () => {
-    const user = await getUser();
-
-    if (user?.user?.role !== "ADMIN") {
-        return redirect("/");
-    }
-
     const medias = await db.media.findMany({
         select: findAllMedias,
     });

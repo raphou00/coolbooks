@@ -25,13 +25,13 @@ const provision = (table: aws.dynamodb.Table) => {
         {
             runtime: aws.lambda.Runtime.NodeJS18dX,
             code: new pulumi.asset.AssetArchive({
-                ".": new pulumi.asset.FileArchive("../lambdas/messages"),
+                ".": new pulumi.asset.FileArchive("../lambda"),
             }),
-            handler: "index.handler",
+            handler: "index.messageHandler",
             role: lambdaRole.arn,
             environment: {
                 variables: {
-                    TABLE_NAME: table.name,
+                    CONNECTIONS_TABLE: table.name,
                 },
             },
         }
@@ -42,10 +42,15 @@ const provision = (table: aws.dynamodb.Table) => {
         {
             runtime: aws.lambda.Runtime.NodeJS18dX,
             code: new pulumi.asset.AssetArchive({
-                ".": new pulumi.asset.FileArchive("../lambdas/connect"),
+                ".": new pulumi.asset.FileArchive("../lambda"),
             }),
-            handler: "index.handler",
+            handler: "index.connectHandler",
             role: lambdaRole.arn,
+            environment: {
+                variables: {
+                    CONNECTIONS_TABLE: table.name,
+                },
+            },
         }
     );
 
@@ -54,10 +59,15 @@ const provision = (table: aws.dynamodb.Table) => {
         {
             runtime: aws.lambda.Runtime.NodeJS18dX,
             code: new pulumi.asset.AssetArchive({
-                ".": new pulumi.asset.FileArchive("../lambdas/disconnect"),
+                ".": new pulumi.asset.FileArchive("../lambda"),
             }),
-            handler: "index.handler",
+            handler: "index.disconnectHandler",
             role: lambdaRole.arn,
+            environment: {
+                variables: {
+                    CONNECTIONS_TABLE: table.name,
+                },
+            },
         }
     );
 

@@ -4,8 +4,7 @@ import {
     Settings2,
     Coins,
     Compass,
-    Gift,
-    MessageCircleHeart,
+    DollarSign,
 } from "lucide-react";
 
 export const useGetLinks = () => {
@@ -17,14 +16,9 @@ export const useGetLinks = () => {
             icon: Compass,
         },
         {
-            title: t("gift"),
-            path: "/gift",
-            icon: Gift,
-        },
-        {
-            title: t("chat"),
-            path: "/chat",
-            icon: MessageCircleHeart,
+            title: t("pricing"),
+            path: "/pricing",
+            icon: DollarSign,
         },
     ];
 };

@@ -37,10 +37,11 @@ import GirlVideo from "../ui/girl-video";
 
 type HeaderProps = {
     user: User | null;
+    notifications: number;
     children: React.ReactNode;
 };
 
-const Header: React.FC<HeaderProps> = ({ user, children }) => {
+const Header: React.FC<HeaderProps> = ({ user, notifications, children }) => {
     const [localeOpen, setLocaleOpen] = useState<boolean>(false);
     const [searchOpen, setSearchOpen] = useState<boolean>(false);
     const [search, setSearch] = useState("");
@@ -96,8 +97,8 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                     <header className="sticky w-full top-0 z-40">
                         <div
                             className={cn(
-                                "navbar mx-auto px-2 md:px-4 bg-base-100 transition backdrop-blur-3xl",
-                                scroll && ""
+                                "navbar mx-auto bg-base-100 transition backdrop-blur-3xl px-4 md:px-6 lg:px-8 xl:px-12",
+                                scroll && "yo"
                             )}
                         >
                             <div className="navbar-start">
@@ -151,12 +152,17 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                             <Link
                                                 href={item.path}
                                                 className={cn(
-                                                    "btn btn-sm",
+                                                    "btn btn-sm indicator",
                                                     item.path === pathname ?
                                                         "btn-secondary"
                                                     :   "btn-ghost"
                                                 )}
                                             >
+                                                {(item.path == "/chat" && notifications > 0) && (
+                                                    <div className="indicator-item badge badge-primary p-1">
+                                                        {notifications}
+                                                    </div>
+                                                )}
                                                 <item.icon className="size-5" />
                                                 {item.title}
                                             </Link>
@@ -172,7 +178,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                     >
                                         {t("search-placeholder")}
                                         <div className="size-9 bg-secondary rounded-full flex items-center justify-center absolute right-0 top-1/2 mx-1.5 -translate-y-1/2">
-                                            <Search className="size-6 text-white" />
+                                            <Search className="size-5 text-white" />
                                         </div>
                                     </button>
                                 </div>
@@ -219,16 +225,6 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                                             className="text-center font-bold"
                                                         />
                                                     </div>
-
-                                                    <a
-                                                        href="/pricing"
-                                                        className="btn btn-ghost h-10 min-h-10 w-full justify-start"
-                                                    >
-                                                        <span className="flex items-center gap-2">
-                                                            <DollarSign className="size-6" />
-                                                            {t("pricing")}
-                                                        </span>
-                                                    </a>
 
                                                     <a
                                                         href="/account/profile"
@@ -335,16 +331,22 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                             <LogoText className="h-8 w-auto ml-2 mb-2" />
                         </Link>
                         {links.map((item) => (
-                            <Link
-                                key={item.title}
-                                href={item.path}
-                                className="btn btn-ghost h-10 min-h-10 w-full justify-start"
-                            >
-                                <span className="flex items-center gap-2">
-                                    <item.icon className="size-6" />
-                                    {item.title}
-                                </span>
-                            </Link>
+                            <li key={item.title}>
+                                <Link
+                                    href={item.path}
+                                    className="btn btn-ghost h-10 min-h-10 w-full justify-between"
+                                >
+                                    <span className="flex items-center gap-2">
+                                        <item.icon className="size-6" />
+                                        {item.title}
+                                    </span>
+                                    {(item.path == "/chat" && notifications > 0) && (
+                                        <div className="badge badge-primary p-1">
+                                            {notifications}
+                                        </div>
+                                    )}
+                                </Link>
+                            </li>
                         ))}
                     </ul>
                 </div>
