@@ -22,7 +22,7 @@ const Page = async () => {
                 underline
             />
             <p className="mt-2 text-center">
-                {t("date")} <DateEl date={new Date("2025-04-29")} />
+                {t("date")} <DateEl date={new Date("2025-06-03")} />
             </p>
 
             <div className="mt-6">
