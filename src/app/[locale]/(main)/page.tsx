@@ -1,7 +1,6 @@
 import { getTranslations } from "next-intl/server";
-import { ArrowRight, Heart } from "lucide-react";
+import { Heart } from "lucide-react";
 import db from "@/lib/db";
-import { Link } from "@/lib/navigation";
 import Main from "@/components/layout/main";
 import Title from "@/components/ui/title";
 import Medias, { type MediaProps } from "@/components/ui/medias";
@@ -30,13 +29,13 @@ const Page = async () => {
                         />
                     </div>
 
-                    <Link
+                    {/* <Link
                         href="/chat"
                         className="group flex items-center gap-1 link link-hover link-primary"
                     >
                         {t("lets-chat")}
                         <ArrowRight className="size-5 transition group-hover:translate-x-1" />
-                    </Link>
+                    </Link> */}
                 </div>
                 <Medias
                     medias={allMedias as MediaProps[]}
