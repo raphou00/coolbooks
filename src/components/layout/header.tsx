@@ -18,7 +18,6 @@ import {
     SearchIcon,
     X,
     ImageIcon,
-    DollarSign,
 } from "lucide-react";
 import { Link, usePathname, useRouter } from "@/lib/navigation";
 import { cn } from "@/lib/utils";
@@ -238,16 +237,6 @@ const Header: React.FC<HeaderProps> = ({ user, notifications, children }) => {
                                                     </a>
                                                 </>
                                             :   <>
-                                                    <a
-                                                        href="/pricing"
-                                                        className="btn btn-ghost h-10 min-h-10 w-full justify-start"
-                                                    >
-                                                        <span className="flex items-center gap-2">
-                                                            <DollarSign className="size-6" />
-                                                            {t("pricing")}
-                                                        </span>
-                                                    </a>
-
                                                     <a
                                                         href={`/login?redirect=${pathname}`}
                                                         className="btn btn-ghost h-10 min-h-10 w-full justify-start"
