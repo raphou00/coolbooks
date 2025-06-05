@@ -69,9 +69,9 @@ const Medias: React.FC<MediasProps> = ({ user, medias }) => {
 
     return (
         <>
-            <div className="masonry">
+            <div className="masonry-full max-[600px]:masonry-md max-[800px]:masonry">
                 {medias.map((media) => (
-                    <div key={media.id} className="break-inside">
+                    <div key={media.id} className="break-inside mb-4">
                         <div
                             className="shadow-md"
                             onClick={() => openModal(media)}

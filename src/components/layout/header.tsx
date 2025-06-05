@@ -96,7 +96,7 @@ const Header: React.FC<HeaderProps> = ({ user, notifications, children }) => {
                     <header className="sticky w-full top-0 z-40">
                         <div
                             className={cn(
-                                "navbar mx-auto bg-base-100 transition backdrop-blur-3xl px-4 md:px-6 lg:px-8 xl:px-12",
+                                "navbar mx-auto bg-base-100 transition backdrop-blur-3xl max-w-6xl w-full px-4 md:px-6 lg:px-8 xl:px-12",
                                 scroll && "yo"
                             )}
                         >
@@ -106,7 +106,7 @@ const Header: React.FC<HeaderProps> = ({ user, notifications, children }) => {
                                     role="button"
                                     className="flex items-center justify-center"
                                 >
-                                    <div className="btn btn-square btn-ghost relative min-[1200px]:hidden">
+                                    <div className="size-10 relative min-[1001px]:hidden">
                                         <motion.span
                                             className="absolute h-1 w-8 rounded-full bg-base-content"
                                             style={{
@@ -136,16 +136,16 @@ const Header: React.FC<HeaderProps> = ({ user, notifications, children }) => {
                                         />
                                     </div>
                                 </label>
-                                <div className="flex items-center mr-4">
+                                <div className="flex items-center ml-2 mr-4">
                                     <Link
                                         href="/"
                                         className="flex space-x-2 items-center text-sm relative z-20"
                                     >
-                                        <LogoText className="h-8 w-auto ml-2 mb-2 max-[400px]:hidden" />
+                                        <LogoText className="h-8 w-auto mb-2 max-[400px]:hidden" />
                                         <Logo className="size-12 hidden max-[400px]:block" />
                                     </Link>
                                 </div>
-                                <ul className="menu menu-horizontal space-x-2 max-[1200px]:hidden">
+                                <ul className="menu menu-horizontal space-x-2 max-[1000px]:hidden">
                                     {links.map((item) => (
                                         <li key={item.title}>
                                             <Link
@@ -200,9 +200,9 @@ const Header: React.FC<HeaderProps> = ({ user, notifications, children }) => {
                                             <Avatar
                                                 src={null}
                                                 alt={user.name}
-                                                className="size-11 lg:size-12 transition-all border-2 border-transparent group-hover:border-neutral"
+                                                className="size-11 lg:size-12"
                                             />
-                                        :   <div className="btn btn-circle bg-neutral/10 transition-all border-2 border-transparent group-hover:border-neutral">
+                                        :   <div className="btn btn-circle bg-neutral/10">
                                                 <UserIcon className="size-6" />
                                             </div>
                                         }

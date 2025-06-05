@@ -18,7 +18,7 @@ export const getExtension = (filename: string) => {
 export const blurImage = async (file: File) => {
     return await sharp(await file.arrayBuffer())
         .rotate()
-        .blur(30)
+        .blur(50)
         .toBuffer();
 };
 
@@ -127,7 +127,7 @@ export const createVideo = async (
         thumbnailBlurredName =
             crypto.randomUUID() + "." + getExtension(file.name);
         const thumbnail = await getVideoThumbnail(getS3(fileName));
-        const blurredThumbnail = await sharp(thumbnail).blur(30).toBuffer();
+        const blurredThumbnail = await sharp(thumbnail).blur(50).toBuffer();
         await putObject(blurredThumbnail, thumbnailBlurredName);
     }
 

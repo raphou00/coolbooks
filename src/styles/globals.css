@@ -35,6 +35,17 @@
             column-gap: 1em;
             column-count: 3;
         }
+
+        .masonry-md {
+            column-gap: 1em;
+            column-count: 2;
+        }
+
+        .masonry-full {
+            column-gap: 1em;
+            column-count: 4;
+        }
+
         .break-inside {
             break-inside: avoid;
         }
