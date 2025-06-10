@@ -8,6 +8,11 @@ export default createEnv({
             .enum(["development", "preview", "production"])
             .default("development"),
 
+        CRON_SECRET: z
+            .string()
+            .url({ message: "Cron Secret is invalid" })
+            .min(1, { message: "Cron Secret is missing" }),
+
         APP_URL: z
             .string()
             .url({ message: "App URL is invalid" })
@@ -92,6 +97,7 @@ export default createEnv({
     },
     runtimeEnv: {
         NODE_ENV: process.env.VERCEL_ENV,
+        CRON_SECRET: process.env.CRON_SECRET,
         APP_URL: process.env.APP_URL,
         AWS_REGION: process.env.AWS_REGION,
         AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID,
