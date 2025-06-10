@@ -8,9 +8,7 @@ export default createEnv({
             .enum(["development", "preview", "production"])
             .default("development"),
 
-        CRON_SECRET: z
-            .string()
-            .min(1, { message: "Cron Secret is missing" }),
+        CRON_SECRET: z.string().min(1, { message: "Cron Secret is missing" }),
 
         APP_URL: z
             .string()
