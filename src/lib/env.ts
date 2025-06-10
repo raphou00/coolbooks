@@ -10,7 +10,6 @@ export default createEnv({
 
         CRON_SECRET: z
             .string()
-            .url({ message: "Cron Secret is invalid" })
             .min(1, { message: "Cron Secret is missing" }),
 
         APP_URL: z
