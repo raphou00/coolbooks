@@ -132,8 +132,8 @@
         "home": {
             "content": "Content of {name}",
             "lets-chat": "Let's chat",
-            "welcome-title": "Welcome to {name}'plateform",
-            "welcome-body": "Welcome to my exclusive world - just you and me. For full access to all my content, head over to the <pricing>pricing</pricing> page and choose your pass.",
+            "welcome-title": "Welcome to the {name} plateform",
+            "welcome-body": "Welcome to this exclusive world - just you and all this content. For full access to all content, head over to the <pricing>pricing</pricing> page and choose your pass.",
             "welcome-close": "Got it!"
         },
         "chat": {
@@ -142,7 +142,7 @@
         },
         "pricing": {
             "title": "Pricing",
-            "description": "Hey, you should really try to subscribe to access my content!",
+            "description": "Hey, you should really try to subscribe to access all content!",
             "month": "Month",
             "subscribe": "Subscribe",
             "portal": "Open Portal",

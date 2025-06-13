@@ -1,7 +1,4 @@
-export const name = "Clems 💕";
-export const description = "Hellooo 👋";
-export const avatar = "/clems.jpg";
-export const origin = "France";
+export const name = "Pinksea";
 export const findAllMedias = {
     id: true,
     description: true,

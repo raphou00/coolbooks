@@ -17,7 +17,7 @@ const BlurImage: React.FC<GirlImageProps> = ({ user, image, className }) => {
     const src = canSee ? image.src : image.blurred;
 
     return (
-        <div className="relative rounded-md overflow-hidden cursor-pointer size-full">
+        <div className="relative rounded-sm overflow-hidden cursor-pointer size-full">
             <ImageEl
                 src={src}
                 alt="Girl"

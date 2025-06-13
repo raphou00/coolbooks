@@ -46,7 +46,7 @@ const VideoEl: React.FC<VideoProps> = ({ user, video, className }) => {
 
     return canSee ?
             <div
-                className="video-player relative aspect-video flex items-center justify-center rounded-xl overflow-hidden cursor-pointer"
+                className="video-player relative aspect-video flex items-center justify-center rounded-sm overflow-hidden cursor-pointer"
                 onMouseEnter={() => setShowPanel(true)}
                 onMouseLeave={() => setShowPanel(false)}
             >
