@@ -1,12 +1,13 @@
 "use client";
 
 import type { Media, Image, Video } from "@prisma/client";
-import GirlImage from "@/components/ui/girl-image";
-import GirlVideo from "@/components/ui/girl-video";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import type { User } from "lucia";
+import InfiniteScroll from "react-infinite-scroller";
+import GirlImage from "@/components/ui/girl-image";
+import GirlVideo from "@/components/ui/girl-video";
 
 export type MediaProps = Media & {
     images: Image[];
@@ -18,10 +19,16 @@ export type MediasProps = {
     medias: MediaProps[];
 };
 
+const BASE_ELEMENTS = 20;
+
 const Medias: React.FC<MediasProps> = ({ user, medias }) => {
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [currentMedia, setCurrentMedia] = useState<number>(0);
+    const [hasMore, setHasMore] = useState<boolean>(true);
     const [media, setMedia] = useState<MediaProps | null>(null);
+    const [visibleMedias, setVisibleMedias] = useState<MediaProps[]>(
+        medias.slice(0, BASE_ELEMENTS)
+    );
     const mediaCount = media ? media.images.length + media.videos.length : 0;
 
     useEffect(() => {
@@ -67,30 +74,53 @@ const Medias: React.FC<MediasProps> = ({ user, medias }) => {
     const girlMedias = media ? [...media.images, ...media.videos] : [];
     const selectedMedia = girlMedias[currentMedia];
 
+    const loadFunc = (e: number) => {
+        if (!hasMore) {
+            return;
+        }
+
+        const val = e * 10 + BASE_ELEMENTS;
+
+        const newMedias = medias.slice(0, val);
+        setVisibleMedias(newMedias);
+
+        if (val >= medias.length) {
+            setHasMore(false);
+        }
+    };
+
     return (
         <>
-            <div className="masonry-full max-[600px]:masonry-md max-[800px]:masonry">
-                {medias.map((media) => (
-                    <div key={media.id} className="break-inside mb-4">
-                        <div
-                            className="shadow-md"
-                            onClick={() => openModal(media)}
-                        >
-                            {media.images.length > 0 ?
-                                <GirlImage
-                                    image={media.images[0]}
-                                    user={user}
-                                />
-                            : media.videos.length > 0 ?
-                                <GirlVideo
-                                    video={media.videos[0]}
-                                    user={user}
-                                />
-                            :   null}
+            <InfiniteScroll
+                pageStart={0}
+                loadMore={loadFunc}
+                hasMore={hasMore}
+                loader={<Loading />}
+                // useWindow={false}
+            >
+                <div className="masonry-full max-[600px]:masonry-md max-[800px]:masonry">
+                    {visibleMedias.map((media) => (
+                        <div key={media.id} className="break-inside mb-[0.1em]">
+                            <div
+                                className="shadow-md"
+                                onClick={() => openModal(media)}
+                            >
+                                {media.images.length > 0 ?
+                                    <GirlImage
+                                        image={media.images[0]}
+                                        user={user}
+                                    />
+                                : media.videos.length > 0 ?
+                                    <GirlVideo
+                                        video={media.videos[0]}
+                                        user={user}
+                                    />
+                                :   null}
+                            </div>
                         </div>
-                    </div>
-                ))}
-            </div>
+                    ))}
+                </div>
+            </InfiniteScroll>
 
             <AnimatePresence>
                 {isModalOpen && media && (
@@ -157,6 +187,14 @@ const Medias: React.FC<MediasProps> = ({ user, medias }) => {
                 )}
             </AnimatePresence>
         </>
+    );
+};
+
+const Loading: React.FC = () => {
+    return (
+        <div className="w-full flex flex-col items-center justify-center gap-2 my-4">
+            <span className="loading loading-spinner bg-neutral"></span>
+        </div>
     );
 };
 

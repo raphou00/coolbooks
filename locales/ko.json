@@ -132,8 +132,8 @@
         "home": {
             "content": "{name}의 콘텐츠",
             "lets-chat": "채팅해요",
-            "welcome-title": "{name} 플랫폼에 오신 것을 환영합니다",
-            "welcome-body": "이 독점적인 세계에 오신 것을 환영합니다 - 여러분과 모든 콘텐츠만이 있는 곳입니다. 모든 콘텐츠에 완전히 액세스하려면 <pricing>가격</pricing> 페이지로 이동하여 패스를 선택하세요.",
+            "welcome-title": "{name}에 오신 것을 환영합니다",
+            "welcome-body": "이 독점적인 세계에 오신 것을 환영합니다 - 당신과 모든 콘텐츠만을 위한 공간입니다. 전체 액세스를 위해 <pricing>요금제</pricing> 페이지로 이동하여 구독하세요. 즐기세요!",
             "welcome-close": "알겠습니다!"
         },
         "chat": {

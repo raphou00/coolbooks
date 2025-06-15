@@ -55,16 +55,16 @@ export const useGetFooterLinks = () => {
             title: "pinksea",
             links: [
                 {
-                    title: t("home"),
+                    title: t("explore"),
                     path: "/",
                 },
                 {
-                    title: t("gift"),
-                    path: "/gift",
+                    title: t("pricing"),
+                    path: "/pricing",
                 },
                 {
-                    title: t("chat"),
-                    path: "/chat",
+                    title: t("account"),
+                    path: "/account/profile",
                 },
             ],
         },

@@ -132,8 +132,8 @@
         "home": {
             "content": "Contenu de {name}",
             "lets-chat": "Discutons",
-            "welcome-title": "Bienvenue sur la plateforme {name}",
-            "welcome-body": "Bienvenue dans ce monde exclusif - juste vous et tout ce contenu. Pour un accès complet à tout le contenu, rendez-vous sur la page <pricing>tarifs</pricing> et choisissez votre pass.",
+            "welcome-title": "Bienvenue dans {name}",
+            "welcome-body": "Bienvenue dans ce monde exclusif - juste vous et tout ce contenu. Pour un accès complet, rendez-vous sur la page <pricing>tarifs</pricing> et abonnez-vous. Profitez-en !",
             "welcome-close": "Compris !"
         },
         "chat": {

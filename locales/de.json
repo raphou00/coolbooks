@@ -132,8 +132,8 @@
         "home": {
             "content": "Inhalt von {name}",
             "lets-chat": "Lass uns chatten",
-            "welcome-title": "Willkommen auf der {name} Plattform",
-            "welcome-body": "Willkommen in dieser exklusiven Welt - nur du und all dieser Inhalt. Für vollständigen Zugang zu allen Inhalten, gehe zur <pricing>Preise</pricing> Seite und wähle deinen Pass.",
+            "welcome-title": "Willkommen bei {name}",
+            "welcome-body": "Willkommen in dieser exklusiven Welt - nur Sie und all diese Inhalte. Für vollständigen Zugang besuchen Sie die <pricing>Preise</pricing>-Seite und abonnieren Sie. Viel Spaß!",
             "welcome-close": "Verstanden!"
         },
         "chat": {

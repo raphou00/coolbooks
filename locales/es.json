@@ -132,8 +132,8 @@
         "home": {
             "content": "Contenido de {name}",
             "lets-chat": "Charlemos",
-            "welcome-title": "Bienvenido a la plataforma de {name}",
-            "welcome-body": "Bienvenido a este mundo exclusivo - solo tú y todo este contenido. Para acceso completo a todo el contenido, dirígete a la página de <pricing>precios</pricing> y elige tu pase.",
+            "welcome-title": "Bienvenido a {name}",
+            "welcome-body": "Bienvenido a este mundo exclusivo - solo tú y todo este contenido. Para acceso completo, dirígete a la página de <pricing>precios</pricing> y suscríbete. ¡Disfruta!",
             "welcome-close": "¡Entendido!"
         },
         "chat": {
