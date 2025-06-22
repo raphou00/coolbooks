@@ -4,6 +4,7 @@ import { title } from "@/config/seo";
 import type { User } from "lucia";
 import db from "./db";
 import type { TranslationsFunc } from "./types";
+import { productId } from "@/config/stripe";
 
 export const stripe = new Stripe(env.STRIPE_SECRET_KEY, {
     apiVersion: "2025-02-24.acacia",
@@ -47,7 +48,7 @@ export const handleSubscriptionChange = async (
 };
 
 export const getSubscription = async (t: TranslationsFunc) => {
-    const prices = await stripe.prices.list({ product: "lover" });
+    const prices = await stripe.prices.list({ product: productId });
 
     const tiers = {
         name: t("subscription.title"),

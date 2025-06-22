@@ -3,6 +3,7 @@ import { getTranslations } from "next-intl/server";
 import { stripe } from "@/lib/stripe";
 import { getUser } from "@/lib/auth";
 import env from "@/lib/env";
+import { productId } from "@/config/stripe";
 
 export const GET = async (req: NextRequest) => {
     const t = await getTranslations({
@@ -19,7 +20,7 @@ export const GET = async (req: NextRequest) => {
             });
         }
 
-        const priceId = await stripe.prices.list({ product: "lover" });
+        const priceId = await stripe.prices.list({ product: productId });
         if (!priceId.data[0].id) {
             return NextResponse.json({
                 success: true,
