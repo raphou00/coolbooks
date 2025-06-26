@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 export const WelcomeModal: React.FC = () => {
     const t = useTranslations("pages.home");
     const [isOpen, setIsOpen] = useState<boolean>(false);
-    
+
     const [hasVisited, _setHasVisited] = useState<boolean>(() => {
         if (typeof localStorage === "undefined") return false;
         const hasVisited = localStorage.getItem("hasVisited");
@@ -24,7 +24,7 @@ export const WelcomeModal: React.FC = () => {
     useEffect(() => {
         if (!hasVisited) setIsOpen(true);
     }, [hasVisited]);
-    
+
     return (
         <>
             <Modal
@@ -71,9 +71,7 @@ export const WelcomeModal: React.FC = () => {
                                     {chunk}
                                 </Link>
                             ),
-                            n: () => (
-                                <br />
-                            ),
+                            n: () => <br />,
                         })}
                     </p>
                     <button
