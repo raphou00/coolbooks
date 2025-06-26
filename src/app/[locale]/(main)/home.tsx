@@ -6,21 +6,25 @@ import { name } from "@/config/girl";
 import { Link } from "@/lib/navigation";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
-import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export const WelcomeModal: React.FC = () => {
     const t = useTranslations("pages.home");
     const [isOpen, setIsOpen] = useState<boolean>(false);
-    const searchParams = useSearchParams();
-    const newUser = searchParams.get("newUser");
-
-    useEffect(() => {
-        if (newUser === "true") {
-            setIsOpen(true);
+    
+    const [hasVisited, _setHasVisited] = useState<boolean>(() => {
+        if (typeof localStorage === "undefined") return false;
+        const hasVisited = localStorage.getItem("hasVisited");
+        if (hasVisited === null) {
+            localStorage.setItem("hasVisited", "true");
+            return false;
         }
-    }, [newUser]);
-
+        return true;
+    });
+    useEffect(() => {
+        if (!hasVisited) setIsOpen(true);
+    }, [hasVisited]);
+    
     return (
         <>
             <Modal
@@ -43,6 +47,22 @@ export const WelcomeModal: React.FC = () => {
                     />
                     <p>
                         {t.rich("welcome-body", {
+                            login: (chunk) => (
+                                <Link
+                                    href="/login"
+                                    className="link link-primary"
+                                >
+                                    {chunk}
+                                </Link>
+                            ),
+                            register: (chunk) => (
+                                <Link
+                                    href="/register"
+                                    className="link link-primary"
+                                >
+                                    {chunk}
+                                </Link>
+                            ),
                             pricing: (chunk) => (
                                 <Link
                                     href="/pricing"
@@ -50,6 +70,9 @@ export const WelcomeModal: React.FC = () => {
                                 >
                                     {chunk}
                                 </Link>
+                            ),
+                            n: () => (
+                                <br />
                             ),
                         })}
                     </p>

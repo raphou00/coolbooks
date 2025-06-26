@@ -56,7 +56,7 @@ export const POST = async (req: NextRequest) => {
 
         return NextResponse.json({
             success: true,
-            redirect: "/?newUser=true",
+            redirect: "/",
         });
     } catch (_) {
         return NextResponse.json({

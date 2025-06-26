@@ -6,11 +6,9 @@
         "or": "ou",
         "copyright": "Tous droits réservés",
         "try": "Essayer maintenant",
-        "description": "Se rapprocher de {name}",
+        "description": "Rapprochez-vous de {name}",
         "no-search-results": "Aucun résultat trouvé pour \"{search}\"",
         "no-sessions-results": "Aucune session trouvée",
-        "no-invoices-results": "Aucune facture trouvée",
-        "no-invoices-results-description": "Payez un abonnement ou donnez un pourboire à {name} pour ajouter une facture",
         "not-found": "Page non trouvée",
         "back-home": "Retour à l'accueil"
     },
@@ -95,10 +93,10 @@
         },
         "account-sessions": {
             "title": "Sessions",
-            "description": "Voir vos sessions",
+            "description": "Consultez vos sessions",
             "current": "Actuelle",
             "last-seen": "Dernière connexion :",
-            "expires": "Expire le :",
+            "expires": "Expire :",
             "delete": "Supprimer"
         },
         "account-socials": {
@@ -111,7 +109,7 @@
         },
         "account-invoices": {
             "title": "Factures",
-            "description": "Voir vos factures",
+            "description": "Consultez vos factures",
             "date": "Date",
             "price": "Prix",
             "status": "Statut",
@@ -123,7 +121,7 @@
         },
         "account-delete": {
             "title": "Supprimer le compte",
-            "description": "Supprimer votre compte",
+            "description": "Supprimez votre compte",
             "email": "E-mail",
             "email-placeholder": "Entrez votre e-mail...",
             "confirm": "Confirmez votre e-mail pour supprimer votre compte",
@@ -132,68 +130,20 @@
         "home": {
             "content": "Contenu de {name}",
             "lets-chat": "Discutons",
-            "welcome-title": "Bienvenue dans {name}",
-            "welcome-body": "Bienvenue dans ce monde exclusif - juste vous et tout ce contenu. Pour un accès complet, rendez-vous sur la page <pricing>tarifs</pricing> et abonnez-vous. Profitez-en !",
+            "welcome-title": "Bienvenue sur {name}",
+            "welcome-body": "Bienvenue dans ce monde exclusif !<n></n> Vous pouvez commencer par <register>créer un compte</register> ou vous <login>connecter</login>.<n></n> Pour un accès complet, rendez-vous sur la page <pricing>tarifs</pricing> et abonnez-vous.<n></n> Amusez-vous bien !",
             "welcome-close": "Compris !"
-        },
-        "chat": {
-            "title": "Discuter avec moi",
-            "description": "Parlez-moi coquinement, envoyez-moi un pourboire et je vous enverrai des photos"
         },
         "pricing": {
             "title": "Tarifs",
-            "description": "Hey, vous devriez vraiment essayer de vous abonner pour accéder à tout le contenu !",
+            "description": "Hé, vous devriez vraiment essayer de vous abonner pour accéder à tout le contenu !",
             "month": "Mois",
             "subscribe": "S'abonner",
             "portal": "Ouvrir le portail",
             "subscription": {
                 "title": "Amoureux",
-                "description": "Apprenons à nous connaître et construisons une vraie relation 🌹"
+                "description": "Achetez un accès complet pour voir ces beautés"
             }
-        },
-        "payment": {
-            "title": "Acheter le profil de {name}",
-            "description": "Achetez le profil de {name}, pour vous rapprocher de {name}",
-            "price": "Prix",
-            "buy-now": "Acheter maintenant",
-            "success": "Paiement traité avec succès",
-            "failed": "Échec du paiement",
-            "email": "E-mail",
-            "email-placeholder": "Entrez votre e-mail...",
-            "name": "Nom",
-            "name-placeholder": "Entrez le nom complet de votre carte...",
-            "number": "Numéro de carte",
-            "expiry": "Expiration",
-            "cvc": "CVC",
-            "payment": "Paiement pour {name}",
-            "subtotal": "Sous-total",
-            "taxes": "Taxes",
-            "total": "Total",
-            "powered-by": "Propulsé par",
-            "note": "Si les achats sont définitifs — aucun remboursement ne sera accordé. Une fois le paiement terminé, vous aurez un accès à vie au contenu. Si votre compte est supprimé, l'accès sera perdu et un nouveau paiement sera requis."
-        },
-        "tips": {
-            "title": "Pourboire pour {name}",
-            "description": "Envoyer un pourboire à {name}",
-            "price": "Prix",
-            "tip-now": "Envoyer un pourboire",
-            "success": "Paiement traité avec succès",
-            "failed": "Échec du paiement",
-            "email": "E-mail",
-            "email-placeholder": "Entrez votre e-mail...",
-            "name": "Nom",
-            "name-placeholder": "Entrez le nom complet de votre carte...",
-            "amount": "Montant",
-            "amount-placeholder": "5,00",
-            "number": "Numéro de carte",
-            "expiry": "Expiration",
-            "cvc": "CVC",
-            "tip": "Pourboire pour {name}",
-            "subtotal": "Sous-total",
-            "taxes": "Taxes",
-            "total": "Total",
-            "powered-by": "Propulsé par",
-            "note": "Si les achats sont définitifs — aucun remboursement ne sera accordé. Une fois le paiement terminé, vous aurez un accès à vie au contenu. Si votre compte est supprimé, l'accès sera perdu et un nouveau paiement sera requis."
         },
         "contact": {
             "title": "Contact",
@@ -210,15 +160,15 @@
         },
         "terms": {
             "title": "Conditions d'utilisation",
-            "description": "Voir nos conditions d'utilisation",
+            "description": "Consultez nos conditions d'utilisation",
             "date": "Date d'entrée en vigueur : ",
-            "content": "Bienvenue sur Pinksea. En accédant ou en utilisant notre plateforme, vous acceptez les conditions suivantes :<title>1. Éligibilité</title>Vous devez avoir au moins 18 ans pour utiliser ce service. En utilisant la plateforme, vous confirmez être majeur dans votre juridiction.<title>2. Contenu</title>Tout le contenu est fictif et généré par l'intelligence artificielle créée et maintenue par Pinksea. Toute ressemblance avec de vraies personnes est purement fortuite.<title>3. Abonnement et paiements</title>- L'accès au contenu nécessite un abonnement mensuel actif.- Toutes les ventes sont définitives. Aucun remboursement ne sera accordé en aucune circonstance.- Des pourboires optionnels peuvent être envoyés au créateur IA. Ceux-ci sont également non remboursables.<title>4. Propriété</title>Tout le contenu et les revenus restent la propriété exclusive de Pinksea. Les utilisateurs ne reçoivent aucun droit de propriété ou de licence en s'abonnant.<title>5. Conduite des utilisateurs</title>Les utilisateurs ne peuvent pas :- Partager, reproduire ou distribuer le contenu de la plateforme.- Tenter d'usurper l'identité ou de contacter le créateur IA.- Violer les lois applicables lors de l'utilisation de la plateforme.<title>6. Limitation de responsabilité</title>Le service est fourni \"tel quel\" sans garanties. Pinksea n'est pas responsable des dommages résultant de l'utilisation de la plateforme.<title>7. Modifications</title>Les conditions peuvent être mises à jour à tout moment. L'utilisation continue de la plateforme après les modifications constitue une acceptation.<title>8. Contact</title>Pour toute question, contactez : admin@pinksea.me"
+            "content": "Bienvenue sur Pinksea. En accédant ou en utilisant notre plateforme, vous acceptez les conditions suivantes :<title>1. Éligibilité</title>Vous devez avoir au moins 18 ans pour utiliser ce service. En utilisant la plateforme, vous confirmez être majeur dans votre juridiction.<title>2. Contenu</title>Tout le contenu est fictif et généré par intelligence artificielle créée et maintenue par Pinksea. Toute ressemblance avec de vraies personnes est purement fortuite.<title>3. Abonnement et paiements</title>- L'accès au contenu nécessite un abonnement mensuel actif.- Toutes les ventes sont définitives. Aucun remboursement ne sera accordé en aucune circonstance.- Des pourboires optionnels peuvent être envoyés au créateur IA. Ceux-ci sont également non remboursables.<title>4. Propriété</title>Tout le contenu et les revenus restent la propriété exclusive de Pinksea. Les utilisateurs ne reçoivent aucun droit de propriété ou de licence en s'abonnant.<title>5. Conduite de l'utilisateur</title>Les utilisateurs ne peuvent pas :- Partager, reproduire ou distribuer le contenu de la plateforme.- Tenter d'usurper l'identité ou de contacter le créateur IA.- Violer les lois applicables lors de l'utilisation de la plateforme.<title>6. Limitation de responsabilité</title>Le service est fourni « tel quel » sans garanties. Pinksea n'est pas responsable des dommages résultant de l'utilisation de la plateforme.<title>7. Modifications</title>Les conditions peuvent être mises à jour à tout moment. L'utilisation continue de la plateforme après les modifications constitue une acceptation.<title>8. Contact</title>Pour toute question, contactez : admin@pinksea.me"
         },
         "privacy": {
             "title": "Politique de confidentialité",
-            "description": "Voir notre politique de confidentialité",
+            "description": "Consultez notre politique de confidentialité",
             "date": "Date d'entrée en vigueur : ",
-            "content": "Pinksea s'engage à protéger votre vie privée. Cette politique explique comment nous collectons, utilisons et protégeons vos données.<title>1. Informations que nous collectons</title>Nous pouvons collecter :- Adresse e-mail (si fournie)- Informations de paiement (traitées par des fournisseurs tiers)- Données d'utilisation (pages vues, temps passé, etc.) Nous ne collectons pas les conversations ou messages personnels, car aucune messagerie n'existe sur la plateforme.<title>2. Comment nous utilisons les informations</title>- Pour livrer le contenu acheté- Pour traiter les paiements- Pour améliorer nos services- Pour se conformer aux obligations légales<title>3. Partage des informations</title>Nous ne vendons pas vos données. Nous pouvons les partager avec :- Les processeurs de paiement- Les fournisseurs d'analyse- Les autorités légales si requis<title>4. Sécurité des données</title>Nous utilisons des mesures raisonnables pour protéger vos données. Cependant, aucun système n'est sécurisé à 100%.<title>5. Vos droits</title>Selon votre localisation, vous pourriez avoir le droit de :- Accéder à vos données- Supprimer vos données- Corriger des données inexactes Contactez-nous pour faire une demande : admin@pinksea.me<title>6. Cookies</title>Nous pouvons utiliser des cookies pour améliorer la fonctionnalité et analyser l'utilisation.<title>7. Modifications de cette politique</title>Nous pouvons mettre à jour cette politique à tout moment. L'utilisation continue du service signifie que vous acceptez les modifications.<title>8. Contact</title>Pour les préoccupations de confidentialité, e-mail : admin@pinksea.me"
+            "content": "Pinksea s'engage à protéger votre vie privée. Cette politique explique comment nous collectons, utilisons et protégeons vos données.<title>1. Informations que nous collectons</title>Nous pouvons collecter :- Adresse e-mail (si fournie)- Informations de paiement (traitées par des fournisseurs tiers)- Données d'utilisation (pages vues, temps passé, etc.) Nous ne collectons pas les discussions ou messages personnels, car aucune messagerie n'existe sur la plateforme.<title>2. Comment nous utilisons les informations</title>- Pour livrer le contenu acheté- Pour traiter les paiements- Pour améliorer nos services- Pour nous conformer aux obligations légales<title>3. Partage des informations</title>Nous ne vendons pas vos données. Nous pouvons les partager avec :- Les processeurs de paiement- Les fournisseurs d'analyses- Les autorités légales si requis<title>4. Sécurité des données</title>Nous utilisons des mesures raisonnables pour protéger vos données. Cependant, aucun système n'est sûr à 100%.<title>5. Vos droits</title>Selon votre localisation, vous pourriez avoir le droit de :- Accéder à vos données- Supprimer vos données- Corriger des données inexactes Contactez-nous pour faire une demande : admin@pinksea.me<title>6. Cookies</title>Nous pouvons utiliser des cookies pour améliorer la fonctionnalité et analyser l'utilisation.<title>7. Modifications de cette politique</title>Nous pouvons mettre à jour cette politique à tout moment. L'utilisation continue du service signifie que vous acceptez les modifications.<title>8. Contact</title>Pour les préoccupations concernant la confidentialité, envoyez un e-mail à : admin@pinksea.me"
         }
     },
     "emails": {
@@ -227,7 +177,7 @@
             "hello": "Bonjour {name} !",
             "body": "Salut, vous êtes maintenant au meilleur endroit pour vous rapprocher de {name}. Cliquez sur le lien ci-dessous pour commencer. 😘",
             "get-started": "Commencer",
-            "best": "Meilleures salutations, L'équipe Pinksea"
+            "best": "Cordialement, l'équipe Pinksea"
         },
         "reset-password": {
             "title": "Réinitialisez votre mot de passe Pinksea",
@@ -240,15 +190,15 @@
             "title": "Paiement pour {girl}",
             "hello": "Bonjour {name} !",
             "body": "Vous avez payé avec succès pour le profil de {girl}. Vous avez maintenant accès à son contenu. Elle pourrait vous récompenser très bientôt 😏.",
-            "amount": "Voici le montant que vous avez payé, taxes incluses :",
-            "best": "Meilleures salutations, L'équipe Pinksea"
+            "amount": "Voici le montant que vous avez payé, taxes comprises :",
+            "best": "Cordialement, l'équipe Pinksea"
         },
         "tips": {
             "title": "Pourboires pour {girl}",
             "hello": "Bonjour {name} !",
             "body": "Merci pour le pourboire que vous avez envoyé à {girl}. Elle sera très heureuse 🌹.",
-            "amount": "Voici le montant que vous avez payé, taxes incluses :",
-            "best": "Meilleures salutations, L'équipe Pinksea"
+            "amount": "Voici le montant que vous avez payé, taxes comprises :",
+            "best": "Cordialement, l'équipe Pinksea"
         }
     },
     "messages": {
@@ -257,8 +207,8 @@
         "taken-email": "E-mail déjà pris",
         "invalid-password": "Mot de passe invalide",
         "passwords-dont-match": "Les mots de passe ne correspondent pas",
-        "min": "Min {min} caractères requis",
-        "max": "Max {max} caractères autorisés",
+        "min": "Minimum {min} caractères requis",
+        "max": "Maximum {max} caractères autorisés",
         "unauthorized": "Non autorisé",
         "server-error": "Quelque chose s'est mal passé",
         "profile-updated": "Profil mis à jour avec succès",
@@ -285,9 +235,9 @@
         "gift-failed": "Échec du cadeau",
         "tips-unauthorized": "Achetez d'abord un abonnement",
         "add-password": "Veuillez d'abord ajouter un mot de passe, <password>cliquez ici</password>",
-        "too-many-requests": "Trop de demandes, veuillez réessayer plus tard",
+        "too-many-requests": "Trop de requêtes, veuillez réessayer plus tard",
         "forbidden": "Interdit",
-        "bad-request": "Mauvaise demande",
+        "bad-request": "Mauvaise requête",
         "home": "Accueil",
         "google-disconnected": "Google déconnecté avec succès",
         "discord-disconnected": "Discord déconnecté avec succès",
@@ -309,18 +259,18 @@
         "contact": "Nous contacter",
         "faq": "FAQ",
         "support": "Support",
-        "legal": "Légal",
+        "legal": "Juridique",
         "privacy": "Politique de confidentialité",
         "terms": "Conditions d'utilisation",
-        "cookies": "Politique de cookies",
+        "cookies": "Politique des cookies",
         "home": "Accueil",
         "theme": "Thème",
         "language": "Langue",
-        "search": "Recherche",
+        "search": "Rechercher",
         "search-placeholder": "Ma recherche...",
         "images": "Images",
         "videos": "Vidéos",
-        "chat": "Discussion",
+        "chat": "Chat",
         "gift": "Cadeau",
         "pricing": "Tarifs",
         "explore": "Explorer",

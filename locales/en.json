@@ -9,8 +9,6 @@
         "description": "Get closer to {name}",
         "no-search-results": "No results found for \"{search}\"",
         "no-sessions-results": "No sessions found",
-        "no-invoices-results": "No invoice found",
-        "no-invoices-results-description": "Pay a subscription or tip to {name} to add an invoice",
         "not-found": "Page Not Found",
         "back-home": "Back to Home"
     },
@@ -133,12 +131,8 @@
             "content": "Content of {name}",
             "lets-chat": "Let's chat",
             "welcome-title": "Welcome to {name}",
-            "welcome-body": "Welcome to this exclusive world - just you and all this content. For full access, head over to the <pricing>pricing</pricing> page and subscribe. Enjoy!",
+            "welcome-body": "Welcome to this exclusive world!<n></n> You can start by <register>creating an account</register> or <login>logging in</login>.<n></n> For full access, head over to the <pricing>pricing</pricing> page and subscribe.<n></n> Enjoy!",
             "welcome-close": "Got it!"
-        },
-        "chat": {
-            "title": "Chat with me",
-            "description": "Talk dirty to me, send me a tip and I will send you pics"
         },
         "pricing": {
             "title": "Pricing",
@@ -148,52 +142,8 @@
             "portal": "Open Portal",
             "subscription": {
                 "title": "Lover",
-                "description": "Let's get to know each other and build a real relationship 🌹"
+                "description": "Buy full access to see these beauties"
             }
-        },
-        "payment": {
-            "title": "Buy {name}'s profile",
-            "description": "Buy {name} profile, to get closer to {name}",
-            "price": "Price",
-            "buy-now": "Buy now",
-            "success": "Payment successfully processed",
-            "failed": "Payment failed",
-            "email": "E-Mail",
-            "email-placeholder": "Enter your e-mail...",
-            "name": "Name",
-            "name-placeholder": "Enter your full card name...",
-            "number": "Card Number",
-            "expiry": "Expiry",
-            "cvc": "CVC",
-            "payment": "Payment for {name}",
-            "subtotal": "Subtotal",
-            "taxes": "Taxes",
-            "total": "Total",
-            "powered-by": "Powered by",
-            "note": "If purchases are final — no refunds will be issued. Once payment is complete, you’ll have lifetime access to the content. If your account is deleted, access will be lost and a new payment will be required."
-        },
-        "tips": {
-            "title": "Tip for {name}",
-            "description": "Send a tip to {name}",
-            "price": "Price",
-            "tip-now": "Send tip",
-            "success": "Payment successfully processed",
-            "failed": "Payment failed",
-            "email": "E-Mail",
-            "email-placeholder": "Enter your e-mail...",
-            "name": "Name",
-            "name-placeholder": "Enter your full card name...",
-            "amount": "Amount",
-            "amount-placeholder": "5.00",
-            "number": "Card Number",
-            "expiry": "Expiry",
-            "cvc": "CVC",
-            "tip": "Tip for {name}",
-            "subtotal": "Subtotal",
-            "taxes": "Taxes",
-            "total": "Total",
-            "powered-by": "Powered by",
-            "note": "If purchases are final — no refunds will be issued. Once payment is complete, you’ll have lifetime access to the content. If your account is deleted, access will be lost and a new payment will be required."
         },
         "contact": {
             "title": "Contact",

@@ -28,14 +28,6 @@ const Page = async () => {
                             className="text-lg md:text-xl lg:text-2xl"
                         />
                     </div>
-
-                    {/* <Link
-                        href="/chat"
-                        className="group flex items-center gap-1 link link-hover link-primary"
-                    >
-                        {t("lets-chat")}
-                        <ArrowRight className="size-5 transition group-hover:translate-x-1" />
-                    </Link> */}
                 </div>
                 <Medias
                     medias={allMedias as MediaProps[]}

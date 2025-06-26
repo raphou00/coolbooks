@@ -211,7 +211,7 @@ const Header: React.FC<HeaderProps> = ({ user, notifications, children }) => {
                                         tabIndex={0}
                                         className="dropdown-content pt-2"
                                     >
-                                        <div className="w-[calc(100vw-16px)] space-y-1 rounded-xl bg-base-200 p-2 border border-neutral/20 shadow-xl md:w-72">
+                                        <div className="space-y-1 rounded-xl bg-base-200 p-2 border border-neutral/20 shadow-xl w-72">
                                             {user ?
                                                 <>
                                                     <div className="my-2 flex flex-col items-center justify-center gap-y-2">

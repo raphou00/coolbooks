@@ -96,7 +96,6 @@ const Medias: React.FC<MediasProps> = ({ user, medias }) => {
                 loadMore={loadFunc}
                 hasMore={hasMore}
                 loader={<Loading />}
-                // useWindow={false}
             >
                 <div className="masonry-full max-[600px]:masonry-md max-[800px]:masonry">
                     {visibleMedias.map((media) => (
