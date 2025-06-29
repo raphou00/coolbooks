@@ -30,7 +30,7 @@ export const WelcomeModal: React.FC = () => {
             <Modal
                 isOpen={isOpen}
                 setIsOpen={setIsOpen}
-                className="z-100 w-full h-96"
+                className="z-100 w-full h-fit p-6"
             >
                 <div className="p-5 flex flex-col items-center">
                     <Image
