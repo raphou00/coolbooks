@@ -14,10 +14,10 @@ import {
     Text,
 } from "@react-email/components";
 import { domain, title as siteTitle } from "@/config/seo";
-import type { TranslationsFunc } from "@/lib/types";
+import type { T } from "@/lib/types";
 
 type TemplateEmailProps = {
-    t: TranslationsFunc;
+    t: T;
     title: string;
     children: React.ReactNode;
 };
@@ -28,17 +28,7 @@ const TemplateEmail: React.FC<TemplateEmailProps> = async ({
     children,
 }) => {
     return (
-        <Tailwind
-            config={{
-                theme: {
-                    extend: {
-                        colors: {
-                            brand: "#FF00BD",
-                        },
-                    },
-                },
-            }}
-        >
+        <Tailwind>
             <Html>
                 <Head />
                 <Preview>{title}</Preview>
@@ -46,7 +36,7 @@ const TemplateEmail: React.FC<TemplateEmailProps> = async ({
                     <Container className="mx-auto my-0 max-w-2xl">
                         <Section className="mt-8">
                             <Img
-                                src={`${domain}/pinksea.svg`}
+                                src={`${domain}/favicon.svg`}
                                 width="70px"
                                 height="20px"
                                 alt="Logo"

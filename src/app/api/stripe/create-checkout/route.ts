@@ -8,7 +8,6 @@ import { productId } from "@/config/stripe";
 export const GET = async (req: NextRequest) => {
     const t = await getTranslations({
         locale: req.cookies.get("NEXT_LOCALE")!.value,
-        namespace: "pages.pricing",
     });
     try {
         const user = await getUser();

@@ -13,7 +13,7 @@ export const POST = async (req: NextRequest) => {
         locale: req.cookies.get("NEXT_LOCALE")!.value,
     });
     try {
-        const identifier = req.ip || req.headers.get("x-forwarded-for");
+        const identifier = req.headers.get("x-forwarded-for");
 
         if (!identifier) {
             return NextResponse.redirect(new URL("/error?error=403", req.url));
@@ -26,7 +26,7 @@ export const POST = async (req: NextRequest) => {
 
         const body = (await req.json()) as RegisterSchema;
 
-        const { error } = await registerSchema(t).safeParseAsync(body);
+        const { error } = await (await registerSchema(t)).safeParseAsync(body);
 
         if (error) {
             return NextResponse.json({

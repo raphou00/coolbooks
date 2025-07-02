@@ -1,4 +1,4 @@
-import { type useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 
 export type ActionsState<T> = {
     success: boolean;
@@ -7,4 +7,6 @@ export type ActionsState<T> = {
     redirect?: string;
 };
 
-export type TranslationsFunc = ReturnType<typeof useTranslations>;
+const _getT = async () => await getTranslations({ locale: "en" });
+
+export type T = Awaited<ReturnType<typeof _getT>>;

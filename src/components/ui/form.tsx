@@ -2,7 +2,7 @@
 
 import Title from "@/components/ui/title";
 import { cn } from "@/lib/utils";
-import LogoText from "./logo-text";
+import Logo from "./logo";
 
 type FormProps = {
     title?: string;
@@ -20,10 +20,10 @@ const Form: React.FC<FormProps> = ({
     logo = true,
 }) => {
     return (
-        <div className="form-control size-full items-center justify-center">
+        <div className="size-full flex items-center justify-center">
             <div className={cn("relative w-full max-w-md", className)}>
                 <div className="mb-2 flex flex-col items-center gap-y-2">
-                    {logo && <LogoText className="w-auto h-8" />}
+                    {logo && <Logo className="w-auto h-8" />}
                     <div className="flex">
                         {title && (
                             <Title
@@ -36,7 +36,7 @@ const Form: React.FC<FormProps> = ({
                     <p className="p-0.5">{description}</p>
                 </div>
                 <div className="flex w-full items-center justify-center">
-                    <div className="form-control w-full">{children}</div>
+                    <div className="flex flex-col w-full">{children}</div>
                 </div>
             </div>
         </div>

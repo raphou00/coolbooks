@@ -3,13 +3,13 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { verifyRequestOrigin } from "lucia";
 import createMiddleware from "next-intl/middleware";
-import { defaultLocale, localePrefix, locales } from "@/lib/navigation";
+import { routing } from "@/lib/navigation";
 import env from "./lib/env";
 
 const intlMiddleware = createMiddleware({
-    defaultLocale,
-    locales,
-    localePrefix,
+    defaultLocale: routing.defaultLocale,
+    locales: routing.locales,
+    localePrefix: routing.localePrefix,
 });
 
 export const middleware = async (req: NextRequest) => {

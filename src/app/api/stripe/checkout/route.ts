@@ -8,7 +8,6 @@ import db from "@/lib/db";
 export const GET = async (req: NextRequest) => {
     const t = await getTranslations({
         locale: req.cookies.get("NEXT_LOCALE")!.value,
-        namespace: "messages",
     });
     try {
         const searchParams = req.nextUrl.searchParams;
@@ -85,7 +84,7 @@ export const GET = async (req: NextRequest) => {
         console.error(err);
         return NextResponse.json({
             success: false,
-            message: t("server-error"),
+            message: t("messages.server-error"),
         });
     }
 };

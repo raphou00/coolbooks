@@ -1,36 +1,36 @@
 import * as z from "zod";
-import { type TranslationsFunc } from "@/lib/types";
+import { type T } from "@/lib/types";
 import { maxPasswordLength, minPasswordLength } from "@/config/user";
 
-const resetPasswordSchema = (t: TranslationsFunc) =>
+const resetPasswordSchema = (t: T) =>
     z
         .object({
             code: z
                 .string()
                 .trim()
-                .min(1, { message: t("required") }),
+                .min(1, { message: t("messages.required") }),
 
             password: z
                 .string()
                 .trim()
                 .max(maxPasswordLength, {
-                    message: t("max", { max: maxPasswordLength }),
+                    message: t("messages.max", { max: maxPasswordLength }),
                 })
                 .min(minPasswordLength, {
-                    message: t("min", { min: minPasswordLength }),
+                    message: t("messages.min", { min: minPasswordLength }),
                 })
-                .min(1, { message: t("required") }),
+                .min(1, { message: t("messages.required") }),
 
             confirmPassword: z
                 .string()
                 .trim()
-                .min(1, { message: t("required") }),
+                .min(1, { message: t("messages.required") }),
         })
         .superRefine(({ confirmPassword, password }, ctx) => {
             if (confirmPassword !== password) {
                 ctx.addIssue({
                     code: "custom",
-                    message: t("passwords-dont-match"),
+                    message: t("messages.passwords-dont-match"),
                     path: ["confirmPassword"],
                 });
             }

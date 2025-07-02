@@ -11,10 +11,9 @@ import { ratelimitBasePost } from "@/lib/rate-limiter";
 export const POST = async (req: NextRequest) => {
     const t = await getTranslations({
         locale: req.cookies.get("NEXT_LOCALE")!.value,
-        namespace: "messages",
     });
     try {
-        const identifier = req.ip || req.headers.get("x-forwarded-for");
+        const identifier = req.headers.get("x-forwarded-for");
 
         if (!identifier) {
             return NextResponse.redirect(new URL("/error?error=403", req.url));
@@ -31,7 +30,7 @@ export const POST = async (req: NextRequest) => {
         if (!user?.user) {
             return NextResponse.json({
                 success: false,
-                message: t("unauthorized"),
+                message: t("messages.unauthorized"),
             });
         }
 
@@ -53,7 +52,7 @@ export const POST = async (req: NextRequest) => {
         if (userdb?.password) {
             return NextResponse.json({
                 success: false,
-                message: t("already-have-password"),
+                message: t("messages.already-have-password"),
             });
         }
 
@@ -68,12 +67,12 @@ export const POST = async (req: NextRequest) => {
 
         return NextResponse.json({
             success: true,
-            message: t("password-created"),
+            message: t("messages.password-created"),
         });
     } catch (_) {
         return NextResponse.json({
             success: false,
-            message: t("server-error"),
+            message: t("messages.server-error"),
         });
     }
 };

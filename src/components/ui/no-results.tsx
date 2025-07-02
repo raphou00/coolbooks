@@ -11,7 +11,7 @@ const NoSearchResults: React.FC<NoSearchResultsProps> = ({ search }) => {
     search = search.length > 12 ? search.slice(0, 12) + "..." : search;
     return (
         <div className="text-center my-12">
-            <HeartCrack className="text-accent mx-auto h-16 w-auto" />
+            <HeartCrack className="text-primary mx-auto h-16 w-auto" />
             <Title
                 text={t("no-search-results", { search })}
                 className="mx-auto w-max my-2"
@@ -21,30 +21,13 @@ const NoSearchResults: React.FC<NoSearchResultsProps> = ({ search }) => {
     );
 };
 
-const NoInvoicesResults: React.FC = () => {
-    const t = useTranslations("common");
-    return (
-        <div className="text-center my-12">
-            <HeartCrack className="text-accent mx-auto h-16 w-auto" />
-            <Title
-                text={t("no-invoices-results")}
-                className="mx-auto w-max my-2"
-                underline
-            />
-            <p className="my-2 text-sm text-neutral">
-                {t("no-invoices-results-description")}
-            </p>
-        </div>
-    );
-};
-
 const NoSessionResults: React.FC = () => {
     const t = useTranslations("common");
     return (
         <div className="text-center my-12">
-            <HeartCrack className="text-accent mx-auto h-16 w-auto" />
+            <HeartCrack className="text-primary mx-auto h-16 w-auto" />
             <Title
-                text={t("no-session-results")}
+                text={t("no-sessions-results")}
                 className="mx-auto w-max my-2"
                 underline
             />
@@ -52,4 +35,4 @@ const NoSessionResults: React.FC = () => {
     );
 };
 
-export { NoSearchResults, NoInvoicesResults, NoSessionResults };
+export { NoSearchResults, NoSessionResults };

@@ -6,7 +6,7 @@
         "or": "or",
         "copyright": "All Rights Reserved",
         "try": "Try now",
-        "description": "Get closer to {name}",
+        "description": "{name} is the best to goon, take that subscription now!",
         "no-search-results": "No results found for \"{search}\"",
         "no-sessions-results": "No sessions found",
         "not-found": "Page Not Found",
@@ -104,8 +104,8 @@
             "description": "Link your socials providers to your account",
             "connect": "Connect",
             "disconnect": "Disconnect",
-            "google": "Use google to login to your Pinksea account",
-            "discord": "Use discord to login to your Pinksea account"
+            "google": "Use google to login to your account",
+            "discord": "Use discord to login to your account"
         },
         "account-invoices": {
             "title": "Invoices",
@@ -128,11 +128,21 @@
             "submit": "Delete"
         },
         "home": {
-            "content": "Content of {name}",
-            "lets-chat": "Let's chat",
+            "content": "Content on {name}",
+            "sort": "more",
             "welcome-title": "Welcome to {name}",
             "welcome-body": "Welcome to this exclusive world!<n></n> You can start by <register>creating an account</register> or <login>logging in</login>.<n></n> For full access, head over to the <pricing>pricing</pricing> page and subscribe.<n></n> Enjoy!",
             "welcome-close": "Got it!"
+        },
+        "explore": {
+            "title": "Explore",
+            "description": "Browse medias",
+            "search": "Search",
+            "search-placeholder": "Search for content...",
+            "filter": "Filter",
+            "sort": "Sort",
+            "latest": "Latest",
+            "oldest": "Oldest"
         },
         "pricing": {
             "title": "Pricing",
@@ -179,26 +189,12 @@
             "get-started": "Get started",
             "best": "Best regards, Pinksea Team"
         },
-        "reset-password": {
+        "forgot-password": {
             "title": "Reset your Pinksea password",
             "hello": "Hello {name}!",
             "body": "Please click on the link below to reset your password.",
             "warning": "If you did not request a password reset, please ignore this email.",
             "link": "You can also click or copy paste the link into your browser."
-        },
-        "payment": {
-            "title": "Payment for {girl}",
-            "hello": "Hello {name}!",
-            "body": "You have successfully paid for {girl}'s profile. You have now access to her content. She might reward you very soon 😏.",
-            "amount": "This is the amount you have paid, taxes included:",
-            "best": "Best regards, Pinksea Team"
-        },
-        "tips": {
-            "title": "Tips for {girl}",
-            "hello": "Hello {name}!",
-            "body": "Thank you the tip you sent for {girl}. She will be very happy 🌹.",
-            "amount": "This is the amount you have paid, taxes included:",
-            "best": "Best regards, Pinksea Team"
         }
     },
     "messages": {
@@ -275,6 +271,9 @@
         "pricing": "Pricing",
         "explore": "Explore",
         "plan": "Plan",
-        "portal": "Open Customer Portal"
+        "portal": "Open Customer Portal",
+        "latest": "Latest",
+        "oldest": "Oldest",
+        "popular": "Popular"
     }
 }

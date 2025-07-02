@@ -11,7 +11,7 @@ export const POST = async (req: NextRequest) => {
         locale: req.cookies.get("NEXT_LOCALE")!.value,
     });
     try {
-        const identifier = req.ip || req.headers.get("x-forwarded-for");
+        const identifier = req.headers.get("x-forwarded-for");
 
         if (!identifier) {
             return NextResponse.redirect(new URL("/error?error=403", req.url));

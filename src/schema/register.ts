@@ -1,6 +1,6 @@
 import * as z from "zod";
 import db from "@/lib/db";
-import { type TranslationsFunc } from "@/lib/types";
+import { type T } from "@/lib/types";
 import {
     maxPasswordLength,
     maxUsernameLength,
@@ -8,7 +8,7 @@ import {
     minUsernameLength,
 } from "@/config/user";
 
-const registerSchema = (t: TranslationsFunc) =>
+const registerSchema = async (t: T) =>
     z.object({
         name: z
             .string()
@@ -48,5 +48,7 @@ const registerSchema = (t: TranslationsFunc) =>
             .min(1, { message: t("messages.required") }),
     });
 
-export type RegisterSchema = z.infer<ReturnType<typeof registerSchema>>;
+export type RegisterSchema = z.infer<
+    Awaited<ReturnType<typeof registerSchema>>
+>;
 export default registerSchema;

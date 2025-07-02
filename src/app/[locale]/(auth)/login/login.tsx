@@ -9,7 +9,7 @@ import Form from "@/components/ui/form";
 import FormInput from "@/components/ui/form-input";
 import FormButton from "@/components/ui/form-button";
 import FormReponse from "@/components/ui/form-response";
-import { Link } from "@/lib/navigation";
+import Link from "next/link";
 import { type ActionsState } from "@/lib/types";
 import { handleFormPost } from "@/lib/utils";
 import { type LoginSchema } from "@/schema/login";
@@ -107,8 +107,8 @@ const Login: React.FC = () => {
 
                 <FormButton title={t("submit")} loading={loading} />
 
-                <div className="label">
-                    <span className="label-text-alt">
+                <div className="label justify-between text-sm">
+                    <span className="floating-label">
                         <Link
                             href="/forgot-password"
                             className="link link-primary"
@@ -116,7 +116,7 @@ const Login: React.FC = () => {
                             {t("forgot")}
                         </Link>
                     </span>
-                    <span className="label-text-alt">
+                    <span className="floating-label">
                         <Link
                             href={`/register?redirect=${redirect}`}
                             className="link link-primary"

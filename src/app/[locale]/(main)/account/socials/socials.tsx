@@ -68,7 +68,7 @@ export const Socials: React.FC<SocialsProps> = ({ googleId, discordId }) => {
                                 <button
                                     className={cn(
                                         "btn",
-                                        google ? "btn-error" : "btn-secondary"
+                                        google ? "btn-error" : "btn-primary"
                                     )}
                                     onClick={connectGoogle}
                                 >
@@ -100,7 +100,7 @@ export const Socials: React.FC<SocialsProps> = ({ googleId, discordId }) => {
                                 <button
                                     className={cn(
                                         "btn",
-                                        discord ? "btn-error" : "btn-secondary"
+                                        discord ? "btn-error" : "btn-primary"
                                     )}
                                     onClick={connectDiscord}
                                 >

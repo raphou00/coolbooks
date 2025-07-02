@@ -7,7 +7,7 @@
     "prettier",
     "plugin:@typescript-eslint/recommended"
   ],
-  "plugins": ["tailwindcss", "eslint-plugin-react-compiler"],
+  "plugins": ["eslint-plugin-react-compiler"],
   "rules": {
     "@next/next/no-html-link-for-pages": "off",
     "react/jsx-key": "warn",

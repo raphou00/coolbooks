@@ -2,13 +2,13 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages, getTranslations } from "next-intl/server";
-import { locales } from "@/lib/navigation";
+import { routing } from "@/lib/navigation";
 import { cn } from "@/lib/utils";
 import env from "@/lib/env";
 import * as metadata from "@/config/seo";
 import RootProviders from "./providers";
 import "@/styles/globals.css";
-import { name } from "@/config/girl";
+import { name } from "@/config/seo";
 
 const inter = Inter({
     subsets: ["latin"],
@@ -43,7 +43,9 @@ const generateMetadata = async (): Promise<Metadata> => {
         },
         alternates: {
             canonical: "/",
-            languages: Object.fromEntries(locales.map((l) => [l, `/${l}`])),
+            languages: Object.fromEntries(
+                routing.locales.map((l) => [l, `/${l}`])
+            ),
         },
     };
 };

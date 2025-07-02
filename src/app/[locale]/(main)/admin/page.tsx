@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import db from "@/lib/db";
 import Main from "@/components/layout/main";
 import { CreateImage, CreateMedia, CreateVideo } from "./admin";
-import { findAllMedias } from "@/config/girl";
+import { findAllMedias } from "@/config/media";
 
 const generateMetadata = async (): Promise<Metadata> => {
     return {

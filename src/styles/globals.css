@@ -1,54 +1,79 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@plugin "daisyui";
 
-@layer base {
-    * {
-        @apply scroll-smooth;
-    }
+@plugin "daisyui/theme" {
+    name: "light";
+    prefersdark: false;
+    color-scheme: light;
 
-    html {
-        @apply scroll-smooth;
-    }
+    --color-primary: #ff00bdff;
+    --color-primary-content: #ffffff;
+    --color-secondary: #635bff;
+    --color-secondary-content: #000000;
+    --color-neutral: #555555;
+    --color-neutral-content: #000000;
+    --color-accent: #000000;
+    --color-accent-content: #ffffff;
+    --color-base-100: #ffffff;
+    --color-base-200: #fffdff;
+    --color-base-300: #f0f0f0;
+    --color-base-content: #111111;
+    --color-info: #b22222;
+    --color-success: #008000;
+    --color-warning: #ffd700;
+    --color-error: #dc143c;
 
-    body {
-        @apply scroll-smooth;
-    }
+    --radius-box: 1rem;
+    --radius-field: 10rem;
 
-    ::selection {
-        @apply bg-secondary;
-    }
-
-    .no-scrollbar::-webkit-scrollbar {
-        display: none;
-    }
-    
-    .no-scrollbar {
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-    }
+    --animation-btn: 0;
+    --animation-input: 0;
+    --btn-focus-scale: 0.99;
 }
 
-@layer utilities {
-    @variants responsive {
-        .masonry {
-            column-gap: 0.1em;
-            column-count: 3;
-        }
+/* @plugin "daisyui/theme" {
+    name: "dark";
+    prefersdark: true;
+    color-scheme: dark;
 
-        .masonry-md {
-            column-gap: 0.1em;
-            column-count: 2;
-        }
+    --color-primary: #635bff;
+    --color-primary-content: #000000;
+    --color-secondary: #ff30d1;
+    --color-secondary-content: #000000;
+    --color-neutral: #555555;
+    --color-neutral-content: #000000;
+    --color-accent: #ffffff;
+    --color-accent-content: #000000;
+    --color-base-100: #050505;
+    --color-base-200: #1A1A1A;
+    --color-base-300: #222222;
+    --color-base-content: #ffffff;
+    --color-info: #b22222;
+    --color-success: #008000;
+    --color-warning: #ffd700;
+    --color-error: #dc143c;
 
-        .masonry-full {
-            column-gap: 0.1em;
-            column-count: 4;
-        }
+    --radius-box: 1rem;
+    --radius-field: 10rem;
 
-        .break-inside {
-            break-inside: avoid;
-        }
+    --animation-btn: 0;
+    --animation-input: 0;
+    --btn-focus-scale: 0.99;
+} */
 
-    }
+* {
+    @apply scroll-smooth;
+}
+
+::selection {
+    @apply bg-primary text-primary-content;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }

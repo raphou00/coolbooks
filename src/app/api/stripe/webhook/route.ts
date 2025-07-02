@@ -8,7 +8,6 @@ import { getUser } from "@/lib/auth";
 export const GET = async (req: NextRequest) => {
     const t = await getTranslations({
         locale: req.cookies.get("NEXT_LOCALE")!.value,
-        namespace: "messages",
     });
     try {
         const user = await getUser();
@@ -16,7 +15,7 @@ export const GET = async (req: NextRequest) => {
         if (!user?.user) {
             return NextResponse.json({
                 success: false,
-                message: t("unauthorized"),
+                message: t("messages.unauthorized"),
             });
         }
 
@@ -53,7 +52,7 @@ export const GET = async (req: NextRequest) => {
         console.error(err);
         return NextResponse.json({
             success: false,
-            message: t("server-error"),
+            message: t("messages.server-error"),
         });
     }
 };

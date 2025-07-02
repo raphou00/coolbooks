@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
 import useSwitchLocale from "@/hook/use-switch-locale";
-import { locales, localesTitle } from "@/lib/navigation";
+import { routing, localesTitle } from "@/lib/navigation";
 import Modal from "@/components/ui/modal";
 import Title from "@/components/ui/title";
 import {
@@ -44,7 +44,7 @@ const LocaleModal: React.FC<LocaleModalProps> = ({ open, setOpen }) => {
                         </SelectTrigger>
                         <SelectContent>
                             <SelectGroup>
-                                {locales.map((l) => (
+                                {routing.locales.map((l) => (
                                     <SelectItem key={l} value={l}>
                                         <div className="flex items-center gap-2">
                                             <Image

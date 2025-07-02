@@ -1,31 +1,31 @@
 import * as z from "zod";
-import { type TranslationsFunc } from "@/lib/types";
+import { type T } from "@/lib/types";
 
-const updatePasswordSchema = (t: TranslationsFunc) =>
+const updatePasswordSchema = (t: T) =>
     z
         .object({
             currentPassword: z
                 .string()
                 .trim()
-                .min(1, { message: t("required") }),
+                .min(1, { message: t("messages.required") }),
 
             confirmPassword: z
                 .string()
                 .trim()
-                .min(1, { message: t("required") }),
+                .min(1, { message: t("messages.required") }),
 
             newPassword: z
                 .string()
                 .trim()
-                .max(255, { message: t("max", { max: 255 }) })
-                .min(8, { message: t("min", { min: 8 }) })
-                .min(1, { message: t("required") }),
+                .max(255, { message: t("messages.max", { max: 255 }) })
+                .min(8, { message: t("messages.min", { min: 8 }) })
+                .min(1, { message: t("messages.required") }),
         })
         .superRefine(({ newPassword, confirmPassword }, ctx) => {
             if (newPassword !== confirmPassword) {
                 ctx.addIssue({
                     code: "custom",
-                    message: t("passwords-dont-match"),
+                    message: t("messages.passwords-dont-match"),
                     path: ["confirmPassword"],
                 });
             }

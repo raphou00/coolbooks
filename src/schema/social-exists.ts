@@ -1,8 +1,8 @@
 import * as z from "zod";
 import db from "@/lib/db";
-import { type TranslationsFunc } from "@/lib/types";
+import { type T } from "@/lib/types";
 
-const socialExistsSchema = (t: TranslationsFunc) =>
+const socialExistsSchema = (t: T) =>
     z.object({
         email: z
             .string()

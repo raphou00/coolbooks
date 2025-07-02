@@ -12,7 +12,7 @@ import { type SocialExistsSchema } from "@/schema/social-exists";
 import { useTranslations } from "next-intl";
 import { handleFormPost } from "@/lib/utils";
 import { useSearchParams } from "next/navigation";
-import { redirect } from "@/lib/navigation";
+import { redirect } from "next/navigation";
 
 const ResetPassword: React.FC = () => {
     const t = useTranslations("pages.social-exists");

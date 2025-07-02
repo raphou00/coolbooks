@@ -77,7 +77,7 @@ const Page: React.FC = () => {
                             />
 
                             <div className="w-full">
-                                <label className="form-control w-full">
+                                <label className="flex w-full">
                                     <div className="label pb-1">
                                         <span className="label-text font-bold">
                                             {t("message")}
@@ -88,7 +88,7 @@ const Page: React.FC = () => {
                                     </div>
                                     <textarea
                                         placeholder={t("message-placeholder")}
-                                        className="textarea textarea-bordered border-2 bg-base-100 transition placeholder:text-neutral-400 focus:border-secondary/50 focus:outline-none focus:bg-base-300"
+                                        className="textarea textarea-bordered border-2 bg-base-100 transition placeholder:text-neutral-400 focus:border-primary/50 focus:outline-none focus:bg-base-300"
                                         rows={3}
                                         {...register("message")}
                                     />

@@ -1,13 +1,13 @@
 import * as z from "zod";
-import { type TranslationsFunc } from "@/lib/types";
+import { type T } from "@/lib/types";
 
-const forgotPasswordSchema = (t: TranslationsFunc) =>
+const forgotPasswordSchema = (t: T) =>
     z.object({
         email: z
             .string()
             .trim()
-            .min(1, { message: t("required") })
-            .email({ message: t("invalid-email") }),
+            .min(1, { message: t("messages.required") })
+            .email({ message: t("messages.invalid-email") }),
     });
 
 export type ForgotPasswordSchema = z.infer<

@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { type ActionsState } from "@/lib/types";
 import { handleFormPost } from "@/lib/utils";
-import { Link } from "@/lib/navigation";
+import Link from "next/link";
 import Form from "@/components/ui/form";
 import FormInput from "@/components/ui/form-input";
 import FormButton from "@/components/ui/form-button";

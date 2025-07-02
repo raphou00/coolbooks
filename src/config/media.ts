@@ -1,8 +1,8 @@
-export const name = "Pinksea";
 export const findAllMedias = {
     id: true,
     description: true,
     tags: true,
+    createdAt: true,
     videos: {
         select: {
             src: true,

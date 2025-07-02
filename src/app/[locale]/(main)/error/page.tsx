@@ -2,7 +2,7 @@
 
 import Main from "@/components/layout/main";
 import Title from "@/components/ui/title";
-import { Link } from "@/lib/navigation";
+import Link from "next/link";
 import { HeartCrack } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
@@ -38,7 +38,7 @@ const Page = () => {
             <p className="text-center text-lg">{message}</p>
             <Link
                 href="/"
-                className="btn btn-sm btn-secondary rounded-full mx-auto"
+                className="btn btn-sm btn-primary rounded-full mx-auto"
             >
                 {t("home")}
             </Link>

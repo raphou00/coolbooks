@@ -1,5 +1,5 @@
 import { getUser } from "@/lib/auth";
-import { redirect } from "@/lib/navigation";
+import { redirect } from "next/navigation";
 
 const Layout = async ({ children }: React.PropsWithChildren) => {
     const user = await getUser();

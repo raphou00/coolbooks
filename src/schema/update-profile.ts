@@ -1,26 +1,26 @@
 import * as z from "zod";
 import db from "@/lib/db";
-import { type TranslationsFunc } from "@/lib/types";
+import { type T } from "@/lib/types";
 import { maxPasswordLength, minUsernameLength } from "@/config/user";
 
-const updateProfileSchema = (t: TranslationsFunc, curEmail: string) =>
+const updateProfileSchema = (t: T, curEmail: string) =>
     z.object({
         name: z
             .string()
             .trim()
             .max(maxPasswordLength, {
-                message: t("max", { max: maxPasswordLength }),
+                message: t("messages.max", { max: maxPasswordLength }),
             })
             .min(minUsernameLength, {
-                message: t("min", { min: minUsernameLength }),
+                message: t("messages.min", { min: minUsernameLength }),
             })
-            .min(1, { message: t("required") }),
+            .min(1, { message: t("messages.required") }),
 
         email: z
             .string()
             .trim()
-            .email({ message: t("invalid-email") })
-            .min(1, { message: t("required") })
+            .email({ message: t("messages.invalid-email") })
+            .min(1, { message: t("messages.required") })
             .refine(
                 async (email) => {
                     if (email === curEmail) {
@@ -31,7 +31,7 @@ const updateProfileSchema = (t: TranslationsFunc, curEmail: string) =>
                     });
                     return !user;
                 },
-                { message: t("taken-email") }
+                { message: t("messages.taken-email") }
             ),
     });
 

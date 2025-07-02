@@ -18,10 +18,7 @@ const SelectTrigger = React.forwardRef<
 >(({ className, children, ...props }, ref) => (
     <SelectPrimitive.Trigger
         ref={ref}
-        className={cn(
-            "btn border outline-none border-neutral/10 justify-between",
-            className
-        )}
+        className={cn("btn border outline-none justify-between", className)}
         {...props}
     >
         {children}
@@ -118,7 +115,7 @@ const SelectItem = React.forwardRef<
     <SelectPrimitive.Item
         ref={ref}
         className={cn(
-            "relative btn btn-ghost bg-base-100 h-10 min-h-10 flex justify-start my-1 rounded-xl outline-none focus:bg-secondary focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+            "relative btn btn-ghost bg-base-100 flex justify-start my-1 rounded-btn outline-none focus:bg-accent focus:text-accent-content data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
             className
         )}
         {...props}

@@ -51,7 +51,7 @@ const VideoEl: React.FC<VideoProps> = ({ user, video, className }) => {
                 onMouseLeave={() => setShowPanel(false)}
             >
                 {(showPanel || !playing) && (
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center size-10 bg-secondary/50 rounded-full">
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center size-10 bg-primary/50 rounded-full">
                         {playing ?
                             <Pause className="fill-white size-5" />
                         :   <Play className="fill-white size-5" />}
@@ -93,7 +93,7 @@ const VideoEl: React.FC<VideoProps> = ({ user, video, className }) => {
                             step={0.01}
                             value={track}
                             onChange={handleSeek}
-                            className="px-2 h-4 range range-xs range-secondary rounded-full"
+                            className="px-2 h-4 range range-xs range-primary rounded-full"
                         />
                         <span className="flex items-center gap-x-1 font-mono">
                             {formatDuration(track)}
@@ -126,7 +126,7 @@ const Locked: React.FC<LockedProps> = ({ src, width, height }) => {
                 height={height}
                 className="w-full h-full object-cover"
             />
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center size-10 bg-secondary/50 rounded-full">
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center size-10 bg-primary/50 rounded-full">
                 <Lock className="text-white size-5" />
             </div>
         </div>

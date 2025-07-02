@@ -14,7 +14,7 @@ const generateMetadata = async (): Promise<Metadata> => {
 };
 
 const Page = async () => {
-    const t = await getTranslations("pages.pricing");
+    const t = await getTranslations();
     const subscription = await getSubscription(t);
     const user = await getUser();
 

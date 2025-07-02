@@ -36,7 +36,8 @@ export const lucia = new Lucia(adapter, {
 });
 
 export const getUser = cache(async () => {
-    const sessionId = cookies().get(lucia.sessionCookieName)?.value ?? null;
+    const sessionId =
+        (await cookies()).get(lucia.sessionCookieName)?.value ?? null;
     if (!sessionId) return null;
 
     const { user, session } = await lucia.validateSession(sessionId);
@@ -44,7 +45,7 @@ export const getUser = cache(async () => {
     try {
         if (session && session.fresh) {
             const sessionCookie = lucia.createSessionCookie(session.id);
-            cookies().set(
+            (await cookies()).set(
                 sessionCookie.name,
                 sessionCookie.value,
                 sessionCookie.attributes
@@ -52,7 +53,7 @@ export const getUser = cache(async () => {
         }
         if (!session) {
             const sessionCookie = lucia.createBlankSessionCookie();
-            cookies().set(
+            (await cookies()).set(
                 sessionCookie.name,
                 sessionCookie.value,
                 sessionCookie.attributes
@@ -66,7 +67,7 @@ export const getUser = cache(async () => {
 });
 
 export const createSession = async (userId: string) => {
-    const h = headers();
+    const h = await headers();
     const { browser, os } = userAgent({ headers: h });
 
     const visitorInfo = {
@@ -77,7 +78,7 @@ export const createSession = async (userId: string) => {
 
     const session = await lucia.createSession(userId, visitorInfo);
     const sessionCookie = lucia.createSessionCookie(session.id);
-    cookies().set(
+    (await cookies()).set(
         sessionCookie.name,
         sessionCookie.value,
         sessionCookie.attributes

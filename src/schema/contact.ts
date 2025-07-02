@@ -1,7 +1,7 @@
 import * as z from "zod";
-import { type TranslationsFunc } from "@/lib/types";
+import { type T } from "@/lib/types";
 
-const contactSchema = (t: TranslationsFunc) =>
+const contactSchema = (t: T) =>
     z.object({
         name: z
             .string()

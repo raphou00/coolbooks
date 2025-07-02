@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useTheme } from "next-themes";
 import { Home, Languages, SunMoon } from "lucide-react";
-import { Link } from "@/lib/navigation";
+import Link from "next/link";
 import LocaleModal from "@/components/ui/locale-modal";
 
 const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
@@ -21,8 +21,8 @@ const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
         <>
             <div className="flex">
                 <Image
-                    src="/pinksea.svg"
-                    alt="pinksea"
+                    src="/favicon.svg"
+                    alt="favicon"
                     className="absolute z-50 w-auto h-10 m-0.5 max-lg:hidden"
                     width={100}
                     height={100}

@@ -1,15 +1,18 @@
-import { redirect } from "next/navigation";
+import { hasLocale } from "next-intl";
 import { getRequestConfig } from "next-intl/server";
-import { defaultLocale, locales } from "@/lib/navigation";
-import type { IntlMessages } from "../../globals";
+import { routing } from "./navigation";
 
-const config = getRequestConfig(async ({ locale }) => {
-    if (!locales.includes(locale)) redirect(`/${defaultLocale}`);
+const config = getRequestConfig(async ({ requestLocale }) => {
+    const requested = await requestLocale;
+    const locale =
+        hasLocale(routing.locales, requested) ? requested : (
+            routing.defaultLocale
+        );
 
-    const messages: IntlMessages = (await import(`/locales/${locale}.json`))
-        .default;
-
-    return { messages };
+    return {
+        locale,
+        messages: (await import(`/locales/${locale}.json`)).default,
+    };
 });
 
 export default config;

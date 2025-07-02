@@ -7,11 +7,10 @@ import { ratelimitBasePost } from "@/lib/rate-limiter";
 export async function GET(req: NextRequest) {
     const t = await getTranslations({
         locale: req.cookies.get("NEXT_LOCALE")!.value,
-        namespace: "messages",
     });
     try {
         const user = await getUser();
-        const identifier = req.ip || req.headers.get("x-forwarded-for");
+        const identifier = req.headers.get("x-forwarded-for");
 
         if (!identifier) {
             return NextResponse.redirect(new URL("/error?error=403", req.url));
@@ -25,7 +24,7 @@ export async function GET(req: NextRequest) {
         if (!user?.user) {
             return NextResponse.json({
                 success: false,
-                message: t("unauthorized"),
+                message: t("messages.unauthorized"),
             });
         }
 
@@ -40,12 +39,12 @@ export async function GET(req: NextRequest) {
 
         return NextResponse.json({
             success: true,
-            message: t("discord-disconnected"),
+            message: t("messages.discord-disconnected"),
         });
     } catch (_) {
         return NextResponse.json({
             success: false,
-            message: t("server-error"),
+            message: t("messages.server-error"),
         });
     }
 }

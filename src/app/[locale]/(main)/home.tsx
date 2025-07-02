@@ -2,8 +2,8 @@
 
 import Modal from "@/components/ui/modal";
 import Title from "@/components/ui/title";
-import { name } from "@/config/girl";
-import { Link } from "@/lib/navigation";
+import { name } from "@/config/seo";
+import Link from "next/link";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -34,9 +34,9 @@ export const WelcomeModal: React.FC = () => {
             >
                 <div className="p-5 flex flex-col items-center">
                     <Image
-                        src="/pinksea-dark.svg"
-                        alt="pinksea"
-                        className="z-50 w-80 h-auto mb-6"
+                        src="/favicon-dark.svg"
+                        alt="favicon"
+                        className="z-50 w-60 h-auto mb-6"
                         width={100}
                         height={100}
                     />
@@ -45,7 +45,7 @@ export const WelcomeModal: React.FC = () => {
                         className="text-3xl mb-6 text-center w-fit mx-auto"
                         underline
                     />
-                    <p>
+                    <p className="text-center">
                         {t.rich("welcome-body", {
                             login: (chunk) => (
                                 <Link
@@ -76,7 +76,7 @@ export const WelcomeModal: React.FC = () => {
                     </p>
                     <button
                         onClick={() => setIsOpen(false)}
-                        className="btn btn-primary w-full mt-6"
+                        className="btn btn-primary text-white btn-wide mt-6 right-0"
                     >
                         {t("welcome-close")}
                     </button>

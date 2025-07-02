@@ -1,5 +1,5 @@
 import { type Metadata } from "next";
-import { redirect } from "@/lib/navigation";
+import { redirect } from "next/navigation";
 import Main from "@/components/layout/main";
 import { getUser } from "@/lib/auth";
 import ResetPassword from "./reset-password";

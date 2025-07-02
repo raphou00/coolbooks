@@ -1,12 +1,13 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useTheme } from "next-themes";
 import { motion } from "framer-motion";
 import type { User } from "lucia";
 import axios from "axios";
 import {
+    DollarSign,
     Languages,
     LogIn,
     LogOut,
@@ -15,36 +16,25 @@ import {
     Settings2,
     SunMoon,
     UserIcon,
-    SearchIcon,
-    X,
-    ImageIcon,
 } from "lucide-react";
-import { Link, usePathname, useRouter } from "@/lib/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { useGetLinks } from "@/config/links";
 import useScroll from "@/hook/use-scroll";
 import Logo from "@/components/ui/logo";
-import LogoText from "@/components/ui/logo-text";
 import Avatar from "@/components/ui/avatar";
 import Title from "@/components/ui/title";
-import Modal from "@/components/ui/modal";
-import LocaleModal from "@/components//ui/locale-modal";
-import type { MediaProps } from "@/components/ui/medias";
-import { NoSearchResults } from "../ui/no-results";
-import GirlImage from "../ui/girl-image";
-import GirlVideo from "../ui/girl-video";
+import LocaleModal from "@/components/ui/locale-modal";
 
 type HeaderProps = {
     user: User | null;
-    notifications: number;
     children: React.ReactNode;
 };
 
-const Header: React.FC<HeaderProps> = ({ user, notifications, children }) => {
+const Header: React.FC<HeaderProps> = ({ user, children }) => {
     const [localeOpen, setLocaleOpen] = useState<boolean>(false);
-    const [searchOpen, setSearchOpen] = useState<boolean>(false);
-    const [search, setSearch] = useState("");
-    const [medias, setMedias] = useState<MediaProps[]>([]);
+    const [search, setSearch] = useState<string>("");
     const t = useTranslations("links");
     const links = useGetLinks();
     const router = useRouter();
@@ -52,37 +42,14 @@ const Header: React.FC<HeaderProps> = ({ user, notifications, children }) => {
     const scroll = useScroll(0);
     const { setTheme } = useTheme();
 
-    useEffect(() => {
-        const handleEsc = (event: KeyboardEvent) => {
-            if (event.key === "Escape") {
-                setSearchOpen(false);
-            }
-        };
-        document.addEventListener("keydown", handleEsc);
-        return () => {
-            document.removeEventListener("keydown", handleEsc);
-        };
-    }, []);
-
     const handleLogout = async () => {
         await axios.post("/api/auth/logout");
         router.refresh();
     };
 
-    const handleSearch = async () => {
-        const res = await axios.get(`/api/search?q=${search}`);
-        setMedias(res.data.medias);
-    };
-
     const toggleTheme = () => {
         setTheme((e) => (e === "dark" ? "light" : "dark"));
     };
-
-    useEffect(() => {
-        handleSearch();
-        // eslint-disable-next-line react-compiler/react-compiler
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
 
     return (
         <>
@@ -96,7 +63,7 @@ const Header: React.FC<HeaderProps> = ({ user, notifications, children }) => {
                     <header className="sticky w-full top-0 z-40">
                         <div
                             className={cn(
-                                "navbar mx-auto bg-base-100 transition backdrop-blur-3xl max-w-6xl w-full px-4 md:px-6 lg:px-8 xl:px-12",
+                                "navbar mx-auto bg-base-100 transition backdrop-blur-3xl max-w-7xl w-full px-4 md:px-6 lg:px-8 xl:px-12",
                                 scroll && "yo"
                             )}
                         >
@@ -104,9 +71,9 @@ const Header: React.FC<HeaderProps> = ({ user, notifications, children }) => {
                                 <label
                                     htmlFor="my-drawer-3"
                                     role="button"
-                                    className="flex items-center justify-center"
+                                    className="flex items-center justify-center cursor-pointer"
                                 >
-                                    <div className="size-10 relative min-[1001px]:hidden">
+                                    <div className="size-10 relative min-sm:hidden">
                                         <motion.span
                                             className="absolute h-1 w-8 rounded-full bg-base-content"
                                             style={{
@@ -141,11 +108,10 @@ const Header: React.FC<HeaderProps> = ({ user, notifications, children }) => {
                                         href="/"
                                         className="flex space-x-2 items-center text-sm relative z-20"
                                     >
-                                        <LogoText className="h-8 w-auto mb-2 max-[400px]:hidden" />
-                                        <Logo className="size-12 hidden max-[400px]:block" />
+                                        <Logo className="size-10" />
                                     </Link>
                                 </div>
-                                <ul className="menu menu-horizontal space-x-2 max-[1000px]:hidden">
+                                <ul className="menu menu-horizontal space-x-2 max-sm:hidden">
                                     {links.map((item) => (
                                         <li key={item.title}>
                                             <Link
@@ -153,16 +119,10 @@ const Header: React.FC<HeaderProps> = ({ user, notifications, children }) => {
                                                 className={cn(
                                                     "btn btn-sm indicator",
                                                     item.path === pathname ?
-                                                        "btn-secondary"
-                                                    :   "btn-ghost"
+                                                        "btn-accent"
+                                                    :   "btn-ghost btn-outline"
                                                 )}
                                             >
-                                                {item.path == "/chat" &&
-                                                    notifications > 0 && (
-                                                        <div className="indicator-item badge badge-primary p-1">
-                                                            {notifications}
-                                                        </div>
-                                                    )}
                                                 <item.icon className="size-5" />
                                                 {item.title}
                                             </Link>
@@ -172,29 +132,46 @@ const Header: React.FC<HeaderProps> = ({ user, notifications, children }) => {
                             </div>
                             <div className="navbar-end space-x-2">
                                 <div className="relative max-w-96 w-full hidden lg:block">
-                                    <button
-                                        onClick={() => setSearchOpen(true)}
+                                    <input
+                                        type="text"
+                                        placeholder={t("search-placeholder")}
+                                        value={search}
+                                        onChange={(e) =>
+                                            setSearch(e.target.value)
+                                        }
+                                        onKeyDown={(e) => {
+                                            if (e.key === "Enter") {
+                                                router.push(
+                                                    `/explore?q=${search}`
+                                                );
+                                            }
+                                        }}
                                         className="input text-left rounded-full w-full border-2 border-neutral/20 text-neutral bg-base-100 pr-9 tracking-wide"
+                                    />
+                                    <button
+                                        className="size-8 z-20 bg-secondary rounded-full flex items-center justify-center absolute right-0 top-1/2 mx-1.5 -translate-y-1/2"
+                                        onClick={() =>
+                                            router.push(`/explore?q=${search}`)
+                                        }
                                     >
-                                        {t("search-placeholder")}
-                                        <div className="size-9 bg-secondary rounded-full flex items-center justify-center absolute right-0 top-1/2 mx-1.5 -translate-y-1/2">
-                                            <Search className="size-5 text-white" />
-                                        </div>
+                                        <Search className="size-5 text-white" />
                                     </button>
                                 </div>
-
-                                <button
-                                    className="btn btn-circle bg-neutral/10 lg:hidden"
-                                    onClick={() => setSearchOpen(true)}
+                                <Link
+                                    href="/pricing"
+                                    className="btn max-md:btn-circle bg-neutral/10"
                                 >
-                                    <Search className="size-5" />
-                                </button>
+                                    <DollarSign className="size-5" />
+                                    <span className="hidden md:inline bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                                        {t("pricing")}
+                                    </span>
+                                </Link>
 
-                                <div className="dropdown dropdown-end dropdown-bottom dropdown-hover flex items-center size-12">
+                                <div className="dropdown dropdown-end dropdown-bottom dropdown-hover flex items-center size-12  z-[100]">
                                     <div
                                         role="button"
                                         tabIndex={0}
-                                        className="flex items-center group"
+                                        className="flex items-center group cursor-pointer"
                                     >
                                         {user ?
                                             <Avatar
@@ -209,7 +186,7 @@ const Header: React.FC<HeaderProps> = ({ user, notifications, children }) => {
                                     </div>
                                     <div
                                         tabIndex={0}
-                                        className="dropdown-content pt-2"
+                                        className="dropdown-content pt-2 !z-[100]"
                                     >
                                         <div className="space-y-1 rounded-xl bg-base-200 p-2 border border-neutral/20 shadow-xl w-72">
                                             {user ?
@@ -228,7 +205,7 @@ const Header: React.FC<HeaderProps> = ({ user, notifications, children }) => {
 
                                                     <a
                                                         href="/account/profile"
-                                                        className="btn btn-ghost h-10 min-h-10 w-full justify-start"
+                                                        className="btn btn-ghost m-0 w-full justify-start"
                                                     >
                                                         <span className="flex items-center gap-2">
                                                             <Settings2 className="size-6" />
@@ -239,7 +216,7 @@ const Header: React.FC<HeaderProps> = ({ user, notifications, children }) => {
                                             :   <>
                                                     <a
                                                         href={`/login?redirect=${pathname}`}
-                                                        className="btn btn-ghost h-10 min-h-10 w-full justify-start"
+                                                        className="btn btn-ghost m-0 w-full justify-start"
                                                     >
                                                         <span className="flex items-center gap-2">
                                                             <LogIn className="size-6" />
@@ -249,7 +226,7 @@ const Header: React.FC<HeaderProps> = ({ user, notifications, children }) => {
 
                                                     <a
                                                         href={`/register?redirect=${pathname}`}
-                                                        className="btn btn-ghost h-10 min-h-10 w-full justify-start"
+                                                        className="btn btn-ghost m-0 w-full justify-start"
                                                     >
                                                         <span className="flex items-center gap-2">
                                                             <PenBox className="size-6" />
@@ -259,11 +236,11 @@ const Header: React.FC<HeaderProps> = ({ user, notifications, children }) => {
                                                 </>
                                             }
 
-                                            <div className="divider mx-auto w-full px-2" />
+                                            <div className="divider mx-auto my-1 w-full px-2" />
 
                                             <button
                                                 onClick={toggleTheme}
-                                                className="btn btn-ghost h-10 min-h-10 w-full justify-start"
+                                                className="btn btn-ghost m-0 w-full justify-start"
                                             >
                                                 <span className="flex items-center gap-2">
                                                     <SunMoon className="size-6" />
@@ -275,7 +252,7 @@ const Header: React.FC<HeaderProps> = ({ user, notifications, children }) => {
                                                 onClick={() =>
                                                     setLocaleOpen((e) => !e)
                                                 }
-                                                className="btn btn-ghost h-10 min-h-10 w-full justify-start"
+                                                className="btn btn-ghost m-0 w-full justify-start"
                                             >
                                                 <span className="flex items-center gap-2">
                                                     <Languages className="size-6" />
@@ -285,11 +262,11 @@ const Header: React.FC<HeaderProps> = ({ user, notifications, children }) => {
 
                                             {user && (
                                                 <>
-                                                    <div className="divider mx-auto w-full px-2" />
+                                                    <div className="divider my-1 mx-auto w-full px-2" />
 
                                                     <button
                                                         onClick={handleLogout}
-                                                        className="btn btn-ghost h-10 min-h-10 w-full justify-start"
+                                                        className="btn btn-ghost m-0 w-full justify-start"
                                                     >
                                                         <span className="flex items-center gap-2">
                                                             <LogOut className="size-6" />
@@ -318,24 +295,18 @@ const Header: React.FC<HeaderProps> = ({ user, notifications, children }) => {
                             href="/"
                             className="flex space-x-2 items-center text-sm relative z-20"
                         >
-                            <LogoText className="h-8 w-auto ml-2 mb-2" />
+                            <Logo className="h-8 w-auto ml-2 mb-2" />
                         </Link>
                         {links.map((item) => (
                             <li key={item.title}>
                                 <Link
                                     href={item.path}
-                                    className="btn btn-ghost h-10 min-h-10 w-full justify-between"
+                                    className="btn btn-ghost w-full justify-between"
                                 >
                                     <span className="flex items-center gap-2">
                                         <item.icon className="size-6" />
                                         {item.title}
                                     </span>
-                                    {item.path == "/chat" &&
-                                        notifications > 0 && (
-                                            <div className="badge badge-primary p-1">
-                                                {notifications}
-                                            </div>
-                                        )}
                                 </Link>
                             </li>
                         ))}
@@ -344,84 +315,6 @@ const Header: React.FC<HeaderProps> = ({ user, notifications, children }) => {
             </div>
 
             <LocaleModal open={localeOpen} setOpen={setLocaleOpen} />
-
-            <Modal
-                isOpen={searchOpen}
-                setIsOpen={setSearchOpen}
-                className="z-100 w-full p-0 max-h-screen overflow-y-auto"
-            >
-                <div className="flex flex-col items-center w-full">
-                    <div className="relative w-full">
-                        <input
-                            type="text"
-                            placeholder={t("search-placeholder")}
-                            value={search}
-                            onChange={(e) => setSearch(e.target.value)}
-                            className="w-full h-16 max-sm:rounded-none py-4 px-14 text-lg bg-base-100 tracking-wide border-b border-neutral/20 transition placeholder:text-neutral-400 focus:outline-none"
-                            spellCheck={false}
-                            autoComplete="off"
-                            autoCapitalize="off"
-                            autoCorrect="off"
-                            onKeyUp={handleSearch}
-                        />
-                        <SearchIcon className="absolute top-5 left-5 text-neutral" />
-                        <button
-                            className="absolute top-4 right-5 btn btn-square btn-sm btn-ghost rounded-md transition"
-                            onClick={() => setSearchOpen(false)}
-                        >
-                            <X className="size-6" />
-                        </button>
-                    </div>
-                    <div className="flex flex-col gap-y-2 w-full h-full overflow-y-auto p-4">
-                        {medias.length === 0 && (
-                            <NoSearchResults search={search} />
-                        )}
-                        {medias.map((media) => (
-                            <Link
-                                key={media.id}
-                                href={`/`}
-                                onClick={() => setSearchOpen(false)}
-                                className="flex justify-between w-full rounded-lg hover:bg-base-200 p-2"
-                            >
-                                <div className="flex items-center gap-2">
-                                    <div className="relative w-14 h-14 mask mask-squircle">
-                                        {media.images.length > 0 ?
-                                            <GirlImage
-                                                image={media.images[0]}
-                                                user={user}
-                                            />
-                                        : media.videos.length > 0 ?
-                                            <GirlVideo
-                                                video={media.videos[0]}
-                                                user={user}
-                                            />
-                                        :   null}
-                                    </div>
-                                    <div className="h-full flex flex-col">
-                                        <div className="text-lg font-bold">
-                                            {media.description}
-                                        </div>
-                                        <div className="text-sm opacity-50 flex gap-x-1 items-center">
-                                            <div className="flex items-center gap-x-2">
-                                                <div className="flex items-center gap-x-1 w-fit">
-                                                    <ImageIcon className="size-4" />
-                                                    {media.images.length +
-                                                        media.videos.length}
-                                                </div>
-                                                <div className="flex items-center gap-x-1 w-fit text-neutral">
-                                                    {media.tags
-                                                        .map((tag) => "#" + tag)
-                                                        .join(" ")}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </Link>
-                        ))}
-                    </div>
-                </div>
-            </Modal>
         </>
     );
 };

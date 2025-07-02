@@ -1,7 +1,8 @@
 "use client";
 
 import { type User } from "lucia";
-import { Link, usePathname, useRouter } from "@/lib/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import Link from "next/link";
 import { useGetAccountLinks } from "@/config/links";
 import { cn } from "@/lib/utils";
 import Avatar from "@/components/ui/avatar";
@@ -55,16 +56,18 @@ export const AccoutMenu: React.FC<AccoutProps> = ({ user, children }) => {
                                 }
                                 className="text-2xl w-fit"
                             />
-                            <p className="text-sm text-neutral">{user.name}</p>
+                            <p className="text-sm text-base-content/80">
+                                {user.name}
+                            </p>
                         </div>
                     </div>
 
                     <button
                         onClick={openPortal}
-                        className="px-6 py-2 border-2 hover:bg-base-content hover:text-base-100 rounded-sm"
+                        className="px-6 py-2 border-2 hover:bg-base-content hover:text-base-100 rounded-sm cursor-pointer"
                     >
                         <div className="flex flex-col justify-center">
-                            <span className="text-lg font-bold text-secondary">
+                            <span className="text-lg font-bold text-primary">
                                 {t("plan")}
                             </span>
                             <span className="">{t("portal")}</span>

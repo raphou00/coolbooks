@@ -16,7 +16,7 @@ export const POST = async (req: NextRequest) => {
         if (!user?.user || user.user.role !== "ADMIN") {
             return NextResponse.json({
                 success: false,
-                message: t("unauthorized"),
+                message: t("messages.unauthorized"),
             });
         }
 

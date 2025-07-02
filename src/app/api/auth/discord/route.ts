@@ -6,7 +6,7 @@ import { ratelimitBasePost } from "@/lib/rate-limiter";
 
 export async function GET(req: NextRequest) {
     try {
-        const identifier = req.ip || req.headers.get("x-forwarded-for");
+        const identifier = req.headers.get("x-forwarded-for");
 
         if (!identifier) {
             return NextResponse.redirect(new URL("/error?error=403", req.url));
@@ -25,7 +25,7 @@ export async function GET(req: NextRequest) {
             "identify",
         ]);
 
-        cookies().set("discord_oauth_state", state, {
+        (await cookies()).set("discord_oauth_state", state, {
             path: "/",
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
@@ -33,7 +33,7 @@ export async function GET(req: NextRequest) {
             sameSite: "lax",
         });
 
-        cookies().set("discord_code_verifier", codeVerifier, {
+        (await cookies()).set("discord_code_verifier", codeVerifier, {
             path: "/",
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",

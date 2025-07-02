@@ -34,10 +34,12 @@ const FormInput: React.FC<FormInputProps> = forwardRef<
         const [passwordVisible, setPasswordVisible] = useState(false);
 
         return (
-            <div className="w-full">
-                <label className="form-control w-full">
-                    <div className="label pb-1">
-                        <span className="label-text font-bold">{label}</span>
+            <div className="w-full mt-1">
+                <label className="w-full text-sm">
+                    <div className="w-full flex justify-between pb-1">
+                        <span className="label-text px-1 font-bold">
+                            {label}
+                        </span>
                         <span className="label-text-alt text-error">
                             {error}
                         </span>
@@ -51,7 +53,7 @@ const FormInput: React.FC<FormInputProps> = forwardRef<
                             defaultValue={defaultValue}
                             value={value}
                             onChange={onChange}
-                            className="input input-bordered w-full border-2 bg-base-100 tracking-wide transition placeholder:text-neutral-400 focus:border-secondary/50 focus:outline-none focus:bg-base-300"
+                            className="input input-bordered w-full border-2 bg-base-100 tracking-wide transition placeholder:text-neutral-400 focus:border-neutral focus:outline-none focus:bg-base-300"
                             spellCheck={false}
                             autoComplete="off"
                             autoCapitalize="off"
@@ -60,7 +62,7 @@ const FormInput: React.FC<FormInputProps> = forwardRef<
                         {type === "password" && (
                             <button
                                 type="button"
-                                className="absolute right-2 top-1/2 mx-1.5 -translate-y-1/2"
+                                className="absolute right-2 top-1/2 mx-1.5 -translate-y-1/2 z-50 cursor-pointer"
                                 onClick={() =>
                                     setPasswordVisible((prev) => !prev)
                                 }

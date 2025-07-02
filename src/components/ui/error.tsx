@@ -8,7 +8,7 @@ const Error: React.FC = () => {
 
     return (
         <div className="flex flex-col items-center justify-center gap-2">
-            <AlertCircle className="size-20 text-secondary animate-pulse" />
+            <AlertCircle className="size-20 text-primary animate-pulse" />
             <span className="font-bold">{t("server-error")}</span>
         </div>
     );

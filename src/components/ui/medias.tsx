@@ -44,6 +44,10 @@ const Medias: React.FC<MediasProps> = ({ user, medias }) => {
         };
     }, []);
 
+    useEffect(() => {
+        setVisibleMedias(medias.slice(0, BASE_ELEMENTS));
+    }, [medias]);
+
     const openModal = (media: MediaProps) => {
         setMedia(media);
         setIsModalOpen(true);
@@ -95,11 +99,14 @@ const Medias: React.FC<MediasProps> = ({ user, medias }) => {
                 pageStart={0}
                 loadMore={loadFunc}
                 hasMore={hasMore}
-                loader={<Loading />}
+                loader={<Loading key="loading" />}
             >
-                <div className="masonry-full max-[600px]:masonry-md max-[800px]:masonry">
+                <div className="columns-2 md:columns-3 lg:columns-4 gap-0">
                     {visibleMedias.map((media) => (
-                        <div key={media.id} className="break-inside mb-[0.1em]">
+                        <div
+                            key={media.id}
+                            className="m-[0.5px] py-[0.5px] overflow-hidden rounded-sm"
+                        >
                             <div
                                 className="shadow-md"
                                 onClick={() => openModal(media)}

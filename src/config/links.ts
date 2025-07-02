@@ -1,18 +1,32 @@
 import { useTranslations } from "next-intl";
-import { Lock, Settings2, Coins, Compass, DollarSign } from "lucide-react";
+import { Lock, Settings2, Coins, Compass, Home } from "lucide-react";
 
 export const useGetLinks = () => {
     const t = useTranslations("links");
     return [
         {
-            title: t("explore"),
+            title: t("home"),
             path: "/",
-            icon: Compass,
+            icon: Home,
         },
         {
-            title: t("pricing"),
-            path: "/pricing",
-            icon: DollarSign,
+            title: t("explore"),
+            path: "/explore",
+            icon: Compass,
+        },
+    ];
+};
+
+export const useGetSorts = () => {
+    const t = useTranslations("links");
+    return [
+        {
+            title: t("latest"),
+            path: "latest",
+        },
+        {
+            title: t("oldest"),
+            path: "oldest",
         },
     ];
 };
@@ -52,7 +66,7 @@ export const useGetFooterLinks = () => {
     const t = useTranslations("links");
     return [
         {
-            title: "pinksea",
+            title: "Pinksea",
             links: [
                 {
                     title: t("explore"),
@@ -92,7 +106,7 @@ export const useGetSocialLinks = () => {
     return [
         {
             title: "Instagram",
-            path: "https://instagram.com/pinksea.of",
+            path: "https://instagram.com/",
             icon: Coins,
         },
     ];

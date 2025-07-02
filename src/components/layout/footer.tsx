@@ -2,10 +2,10 @@
 
 import Image from "next/image";
 import { useTranslations } from "next-intl";
-import { Link } from "@/lib/navigation";
+import Link from "next/link";
 import { title } from "@/config/seo";
 import { useGetCardsLinks, useGetFooterLinks } from "@/config/links";
-import LogoText from "@/components/ui/logo-text";
+import Logo from "@/components/ui/logo";
 
 const Footer: React.FC = () => {
     const t = useTranslations();
@@ -16,11 +16,11 @@ const Footer: React.FC = () => {
     return (
         <>
             <footer className="mt-10">
-                <div className="mx-auto w-full text-sm max-w-6xl px-4 md:px-6 lg:px-8 xl:px-12">
+                <div className="mx-auto w-full text-sm max-w-7xl px-4 md:px-6 lg:px-8 xl:px-12">
                     <div className="grid grid-cols-[repeat(auto-fill,minmax(160px,1fr))] items-stretch justify-between gap-y-10 sm:gap-x-6 md:flex md:flex-wrap">
                         <div className="flex items-start justify-start flex-col gap-4">
                             <Link href="/" className="flex items-center gap-2">
-                                <LogoText className="w-auto h-8" />
+                                <Logo className="w-auto h-8" />
                             </Link>
                             <div className="flex items-center gap-3">
                                 <Link href="/">

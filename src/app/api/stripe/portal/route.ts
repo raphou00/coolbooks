@@ -8,7 +8,6 @@ import env from "@/lib/env";
 export const GET = async (req: NextRequest) => {
     const t = await getTranslations({
         locale: req.cookies.get("NEXT_LOCALE")!.value,
-        namespace: "messages",
     });
     try {
         const user = await getUser();
@@ -39,7 +38,7 @@ export const GET = async (req: NextRequest) => {
             if (!product.active) {
                 return NextResponse.json({
                     success: false,
-                    message: t("server-error"),
+                    message: t("messages.server-error"),
                 });
             }
 
@@ -50,13 +49,13 @@ export const GET = async (req: NextRequest) => {
             if (prices.data.length === 0) {
                 return NextResponse.json({
                     success: false,
-                    message: t("server-error"),
+                    message: t("messages.server-error"),
                 });
             }
 
             configuration = await stripe.billingPortal.configurations.create({
                 business_profile: {
-                    headline: t("billing"),
+                    headline: t("messages.billing"),
                 },
                 features: {
                     subscription_cancel: {
@@ -94,7 +93,7 @@ export const GET = async (req: NextRequest) => {
         console.error(err);
         return NextResponse.json({
             success: false,
-            message: t("server-error"),
+            message: t("messages.server-error"),
         });
     }
 };

@@ -40,7 +40,7 @@ const getGradient = (name?: string) => {
 
 const Avatar: React.FC<AvatarProps> = ({ src, alt, className }) => {
     return (
-        <div className="avatar avatar-online">
+        <div className="avatar">
             <div className={cn("rounded-full", className)}>
                 {src ?
                     <Image

@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { motion } from "motion/react";
-import { Link } from "@/lib/navigation";
+import Link from "next/link";
 import { cn } from "@/lib/utils";
 import Image from "@/components/ui/image";
 import Title from "./title";

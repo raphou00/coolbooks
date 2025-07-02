@@ -19,9 +19,9 @@ const Slot: React.FC<SlotProps> = ({ isActive, char, hasFakeCaret }) => {
                 "flex items-center justify-center",
                 "transition-all",
                 "border-y-2 border-r-2 border-neutral/50 first:rounded-l-xl first:border-l last:rounded-r-xl",
-                "group-focus-within:border-secondary group-hover:border-secondary",
-                "outline outline-0 outline-secondary",
-                { "outline-4 outline-secondary": isActive }
+                "group-focus-within:border-primary group-hover:border-primary",
+                "outline outline-primary",
+                { "outline-4 outline-primary": isActive }
             )}
         >
             {char !== null && <div>{char}</div>}
@@ -47,7 +47,7 @@ const FormOTP: React.FC<FormOTPProps> = ({
 }) => {
     return (
         <div className="mt-5 w-full">
-            <label className="form-control w-full">
+            <label className="flex w-full">
                 <div className="label pt-0">
                     <span className="label-text">{label}</span>
                     <span className="label-text-alt text-error">{error}</span>
