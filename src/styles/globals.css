@@ -1,9 +1,7 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
-@plugin "daisyui/theme" {
-    name: "light";
-    prefersdark: false;
+html[data-theme="light"] {
     color-scheme: light;
 
     --color-primary: #ff00bdff;
@@ -31,14 +29,12 @@
     --btn-focus-scale: 0.99;
 }
 
-/* @plugin "daisyui/theme" {
-    name: "dark";
-    prefersdark: true;
+html[data-theme="dark"] {
     color-scheme: dark;
 
-    --color-primary: #635bff;
+    --color-primary: #ff00bdff;
     --color-primary-content: #000000;
-    --color-secondary: #ff30d1;
+    --color-secondary: #635bff;
     --color-secondary-content: #000000;
     --color-neutral: #555555;
     --color-neutral-content: #000000;
@@ -59,7 +55,7 @@
     --animation-btn: 0;
     --animation-input: 0;
     --btn-focus-scale: 0.99;
-} */
+}
 
 * {
     @apply scroll-smooth;
