@@ -3,6 +3,7 @@ export const findAllMedias = {
     description: true,
     tags: true,
     createdAt: true,
+    likes: true,
     videos: {
         select: {
             src: true,

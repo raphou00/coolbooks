@@ -21,7 +21,7 @@ const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
         <>
             <div className="flex">
                 <Image
-                    src="/favicon.svg"
+                    src="/logotext.svg"
                     alt="favicon"
                     className="absolute z-50 w-auto h-10 m-0.5 max-lg:hidden"
                     width={100}

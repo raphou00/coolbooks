@@ -6,6 +6,8 @@ import { putObject } from "./file";
 import db from "./db";
 import env from "./env";
 
+const blur = 100;
+
 export const getS3 = (key: string) => {
     return `https://${env.BUCKET_NAME}.s3.${env.AWS_REGION}.amazonaws.com/${key}`;
 };
@@ -18,7 +20,7 @@ export const getExtension = (filename: string) => {
 export const blurImage = async (file: File) => {
     return await sharp(await file.arrayBuffer())
         .rotate()
-        .blur(50)
+        .blur(blur)
         .toBuffer();
 };
 
@@ -127,7 +129,7 @@ export const createVideo = async (
         thumbnailBlurredName =
             crypto.randomUUID() + "." + getExtension(file.name);
         const thumbnail = await getVideoThumbnail(getS3(fileName));
-        const blurredThumbnail = await sharp(thumbnail).blur(50).toBuffer();
+        const blurredThumbnail = await sharp(thumbnail).blur(blur).toBuffer();
         await putObject(blurredThumbnail, thumbnailBlurredName);
     }
 

@@ -31,6 +31,7 @@ export const lucia = new Lucia(adapter, {
             stripeProductId: user.stripeProductId,
             stripeSubscriptionId: user.stripeSubscriptionId,
             subscriptionStatus: user.subscriptionStatus,
+            likedMedias: user.likedMedias,
         };
     },
 });
@@ -116,6 +117,7 @@ type DatabaseUserAttributes = {
     name: string;
     email: string;
     role: Role;
+    likedMedias: string[];
     googleId?: string;
     discordId?: string;
     stripeCustomerId?: string;

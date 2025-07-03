@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { title } from "@/config/seo";
 import { useGetCardsLinks, useGetFooterLinks } from "@/config/links";
-import Logo from "@/components/ui/logo";
+import LogoText from "../ui/logo-text";
 
 const Footer: React.FC = () => {
     const t = useTranslations();
@@ -20,7 +20,7 @@ const Footer: React.FC = () => {
                     <div className="grid grid-cols-[repeat(auto-fill,minmax(160px,1fr))] items-stretch justify-between gap-y-10 sm:gap-x-6 md:flex md:flex-wrap">
                         <div className="flex items-start justify-start flex-col gap-4">
                             <Link href="/" className="flex items-center gap-2">
-                                <Logo className="w-auto h-8" />
+                                <LogoText className="w-auto h-8" />
                             </Link>
                             <div className="flex items-center gap-3">
                                 <Link href="/">

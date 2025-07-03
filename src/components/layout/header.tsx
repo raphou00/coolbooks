@@ -26,6 +26,7 @@ import Logo from "@/components/ui/logo";
 import Avatar from "@/components/ui/avatar";
 import Title from "@/components/ui/title";
 import LocaleModal from "@/components/ui/locale-modal";
+import LogoText from "../ui/logo-text";
 
 type HeaderProps = {
     user: User | null;
@@ -103,12 +104,13 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                         />
                                     </div>
                                 </label>
-                                <div className="flex items-center ml-2 mr-4">
+                                <div className="flex items-center ml-2 mr-3">
                                     <Link
                                         href="/"
-                                        className="flex space-x-2 items-center text-sm relative z-20"
+                                        className="flex items-center text-sm relative z-20"
                                     >
-                                        <Logo className="size-10" />
+                                        <LogoText className="h-8 w-auto mb-2 max-md:hidden" />
+                                        <Logo className="size-10 hidden max-md:block" />
                                     </Link>
                                 </div>
                                 <ul className="menu menu-horizontal space-x-2 max-sm:hidden">
@@ -131,31 +133,41 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                 </ul>
                             </div>
                             <div className="navbar-end space-x-2">
-                                <div className="relative max-w-96 w-full hidden lg:block">
-                                    <input
-                                        type="text"
-                                        placeholder={t("search-placeholder")}
-                                        value={search}
-                                        onChange={(e) =>
-                                            setSearch(e.target.value)
-                                        }
-                                        onKeyDown={(e) => {
-                                            if (e.key === "Enter") {
+                                <div className="w-full max-w-80 hidden lg:block">
+                                    <div className="relative w-full">
+                                        <input
+                                            type="text"
+                                            className="input input-bordered w-full border-2 bg-base-100 tracking-wide transition placeholder:text-neutral-400 focus:border-neutral focus:outline-none focus:bg-base-300 pl-4 pr-9"
+                                            placeholder={t(
+                                                "search-placeholder"
+                                            )}
+                                            spellCheck={false}
+                                            autoComplete="off"
+                                            autoCapitalize="off"
+                                            autoCorrect="off"
+                                            value={search}
+                                            onChange={(e) =>
+                                                setSearch(e.target.value)
+                                            }
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    router.push(
+                                                        `/explore?q=${search}`
+                                                    );
+                                                }
+                                            }}
+                                        />
+                                        <button
+                                            className="cursor-pointer z-20 size-7 bg-secondary rounded-full flex items-center justify-center absolute right-0 top-1/2 mx-1.5 -translate-y-1/2"
+                                            onClick={() =>
                                                 router.push(
                                                     `/explore?q=${search}`
-                                                );
+                                                )
                                             }
-                                        }}
-                                        className="input text-left rounded-full w-full border-2 border-neutral/20 text-neutral bg-base-100 pr-9 tracking-wide"
-                                    />
-                                    <button
-                                        className="size-8 z-20 bg-secondary rounded-full flex items-center justify-center absolute right-0 top-1/2 mx-1.5 -translate-y-1/2"
-                                        onClick={() =>
-                                            router.push(`/explore?q=${search}`)
-                                        }
-                                    >
-                                        <Search className="size-5 text-white" />
-                                    </button>
+                                        >
+                                            <Search className="size-4 text-white" />
+                                        </button>
+                                    </div>
                                 </div>
                                 <Link
                                     href="/pricing"
