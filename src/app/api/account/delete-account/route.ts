@@ -6,6 +6,7 @@ import deleteAccountSchema, {
     type DeleteAccountSchema,
 } from "@/schema/delete-account";
 import { ratelimitBasePost } from "@/lib/rate-limiter";
+import { stripe } from "@/lib/stripe";
 
 export const POST = async (req: NextRequest) => {
     const t = await getTranslations({
@@ -54,6 +55,10 @@ export const POST = async (req: NextRequest) => {
                 id: user.user.id,
             },
         });
+
+        if (user.user.stripeSubscriptionId) {
+            await stripe.subscriptions.cancel(user.user.stripeSubscriptionId);
+        }
 
         return NextResponse.json({
             success: true,
