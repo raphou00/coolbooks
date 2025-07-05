@@ -1,0 +1,267 @@
+{
+    "common": {
+        "yes": "Ja",
+        "no": "Nein",
+        "back": "Zurück",
+        "or": "oder",
+        "copyright": "Alle Rechte vorbehalten",
+        "try": "Jetzt ausprobieren",
+        "description": "{name} ist das Beste zum Entspannen, hol dir jetzt das Abonnement!",
+        "no-search-results": "Keine Ergebnisse gefunden für \"{search}\"",
+        "no-sessions-results": "Keine Sessions gefunden",
+        "not-found": "Seite nicht gefunden",
+        "back-home": "Zurück zur Startseite"
+    },
+    "pages": {
+        "login": {
+            "title": "Anmelden",
+            "description": "Bei Ihrem Konto anmelden",
+            "email": "E-Mail",
+            "email-placeholder": "Geben Sie Ihre E-Mail ein...",
+            "password": "Passwort",
+            "password-placeholder": "Geben Sie Ihr Passwort ein...",
+            "forgot": "Passwort vergessen?",
+            "submit": "Anmelden",
+            "register": "Haben Sie noch kein Konto?"
+        },
+        "register": {
+            "title": "Registrieren",
+            "description": "Konto erstellen",
+            "name": "Name",
+            "name-placeholder": "Geben Sie Ihren Namen ein...",
+            "email": "E-Mail",
+            "email-placeholder": "Geben Sie Ihre E-Mail ein...",
+            "password": "Passwort",
+            "password-placeholder": "Geben Sie Ihr Passwort ein...",
+            "submit": "Registrieren",
+            "login": "Haben Sie bereits ein Konto?",
+            "legal": "Durch das Erstellen eines Kontos stimmen Sie den <terms>Nutzungsbedingungen</terms> und der <privacy>Datenschutzerklärung</privacy> zu"
+        },
+        "logout": {
+            "title": "Abmelden",
+            "description": "Abgemeldet"
+        },
+        "reset-password": {
+            "title": "Passwort zurücksetzen",
+            "description": "Neues Passwort erstellen",
+            "password": "Passwort",
+            "password-placeholder": "Geben Sie Ihr Passwort ein...",
+            "confirm-password": "Passwort bestätigen",
+            "confirm-password-placeholder": "Bestätigen Sie Ihr Passwort...",
+            "submit": "Passwort zurücksetzen"
+        },
+        "forgot-password": {
+            "title": "Passwort vergessen",
+            "description": "Ihr vergessenes Passwort zurücksetzen",
+            "email": "E-Mail",
+            "email-placeholder": "Geben Sie Ihre E-Mail ein...",
+            "submit": "Senden",
+            "info": "Eine E-Mail wird mit einem Link zum Erstellen eines neuen Passworts gesendet"
+        },
+        "social-exists": {
+            "title": "Konto erstellen",
+            "description": "Informationen bereits verwendet",
+            "info": "Einige Ihrer Informationen sind bereits mit einem Konto verknüpft, verwenden Sie andere, oder <login>melden Sie sich an</login>",
+            "name": "Name",
+            "name-placeholder": "Geben Sie Ihren Namen ein...",
+            "email": "E-Mail",
+            "email-placeholder": "Geben Sie Ihre E-Mail ein...",
+            "submit": "Absenden"
+        },
+        "account-profile": {
+            "title": "Profil",
+            "description": "Ihr Profil bearbeiten",
+            "name": "Name",
+            "name-placeholder": "Geben Sie Ihren Namen ein...",
+            "email": "E-Mail",
+            "email-placeholder": "Geben Sie Ihre E-Mail ein...",
+            "password": "Passwort",
+            "password-placeholder": "Geben Sie Ihr Passwort ein...",
+            "submit": "Aktualisieren"
+        },
+        "account-password": {
+            "title": "Passwort",
+            "description": "Ihr Passwort ändern",
+            "current": "Aktuelles Passwort",
+            "current-placeholder": "Geben Sie Ihr aktuelles Passwort ein...",
+            "new": "Neues Passwort",
+            "new-placeholder": "Geben Sie Ihr neues Passwort ein...",
+            "confirm": "Passwort bestätigen",
+            "confirm-placeholder": "Bestätigen Sie Ihr neues Passwort...",
+            "change": "Ändern",
+            "create": "Erstellen"
+        },
+        "account-sessions": {
+            "title": "Sessions",
+            "description": "Ihre Sessions anzeigen",
+            "current": "Aktuell",
+            "last-seen": "Zuletzt gesehen:",
+            "expires": "Läuft ab:",
+            "delete": "Löschen"
+        },
+        "account-socials": {
+            "title": "Soziale Netzwerke",
+            "description": "Ihre Social-Media-Anbieter mit Ihrem Konto verknüpfen",
+            "connect": "Verbinden",
+            "disconnect": "Trennen",
+            "google": "Google verwenden, um sich bei Ihrem Konto anzumelden",
+            "discord": "Discord verwenden, um sich bei Ihrem Konto anzumelden"
+        },
+        "account-delete": {
+            "title": "Konto löschen",
+            "description": "Ihr Konto löschen",
+            "email": "E-Mail",
+            "email-placeholder": "Geben Sie Ihre E-Mail ein...",
+            "confirm": "Bestätigen Sie Ihre E-Mail, um Ihr Konto zu löschen",
+            "submit": "Löschen"
+        },
+        "home": {
+            "content": "Inhalte auf {name}",
+            "sort": "mehr",
+            "welcome-title": "Willkommen bei {name}",
+            "welcome-body": "Willkommen in dieser exklusiven Welt!<n></n> Sie können beginnen, indem Sie <register>ein Konto erstellen</register> oder sich <login>anmelden</login>.<n></n> Für den vollständigen Zugang gehen Sie zur <pricing>Preisseite</pricing> und abonnieren Sie.<n></n> Viel Spaß!",
+            "welcome-close": "Verstanden!"
+        },
+        "explore": {
+            "title": "Entdecken",
+            "description": "Medien durchsuchen",
+            "search": "Suchen",
+            "search-placeholder": "Nach Inhalten suchen...",
+            "filter": "Filtern",
+            "sort": "Sortieren",
+            "latest": "Neueste",
+            "oldest": "Älteste"
+        },
+        "pricing": {
+            "title": "Preise",
+            "description": "Hey, Sie sollten wirklich ein Abonnement abschließen, um auf alle Inhalte zuzugreifen!",
+            "month": "Monat",
+            "subscribe": "Abonnieren",
+            "portal": "Portal öffnen",
+            "subscription": {
+                "title": "Liebhaber",
+                "description": "Kaufen Sie vollen Zugang, um diese Schönheiten zu sehen"
+            }
+        },
+        "contact": {
+            "title": "Kontakt",
+            "description": "Kontaktieren Sie uns",
+            "name": "Name",
+            "name-placeholder": "Geben Sie Ihren Namen ein...",
+            "email": "E-Mail",
+            "email-placeholder": "Geben Sie Ihre E-Mail ein...",
+            "subject": "Betreff",
+            "subject-placeholder": "Geben Sie einen Betreff ein...",
+            "message": "Nachricht",
+            "message-placeholder": "Geben Sie Ihre Nachricht ein...",
+            "submit": "Senden"
+        },
+        "terms": {
+            "title": "Nutzungsbedingungen",
+            "description": "Unsere Nutzungsbedingungen anzeigen",
+            "date": "Gültigkeitsdatum: ",
+            "content": "Willkommen bei Pinksea. Durch den Zugriff auf oder die Nutzung unserer Plattform stimmen Sie den folgenden Bedingungen zu:<title>1. Berechtigung</title>Sie müssen mindestens 18 Jahre alt sein, um diesen Service zu nutzen. Durch die Nutzung der Plattform bestätigen Sie, dass Sie in Ihrer Rechtsordnung volljährig sind.<title>2. Inhalte</title>Alle Inhalte sind fiktiv und von künstlicher Intelligenz generiert, die von Pinksea erstellt und gepflegt wird. Jede Ähnlichkeit mit realen Personen ist rein zufällig.<title>3. Abonnement und Zahlungen</title>- Der Zugang zu Inhalten erfordert ein aktives monatliches Abonnement.- Alle Verkäufe sind endgültig. Unter keinen Umständen werden Rückerstattungen gewährt.- Optionale Trinkgelder können an den KI-Ersteller gesendet werden. Diese sind ebenfalls nicht erstattungsfähig.<title>4. Eigentum</title>Alle Inhalte und Einnahmen bleiben alleiniges Eigentum von Pinksea. Benutzer erhalten durch das Abonnieren keine Eigentums- oder Lizenzrechte.<title>5. Benutzerverhalten</title>Benutzer dürfen nicht:- Inhalte von der Plattform teilen, reproduzieren oder verbreiten.- Versuchen, sich als KI-Ersteller auszugeben oder ihn zu kontaktieren.- Geltende Gesetze bei der Nutzung der Plattform verletzen.<title>6. Haftungsbeschränkung</title>Der Service wird \"wie besehen\" ohne Gewährleistungen bereitgestellt. Pinksea haftet nicht für Schäden, die durch die Nutzung der Plattform entstehen.<title>7. Änderungen</title>Die Bedingungen können jederzeit aktualisiert werden. Die fortgesetzte Nutzung der Plattform nach Änderungen stellt eine Zustimmung dar.<title>8. Kontakt</title>Für Fragen kontaktieren Sie: admin@pinksea.me"
+        },
+        "privacy": {
+            "title": "Datenschutzerklärung",
+            "description": "Unsere Datenschutzerklärung anzeigen",
+            "date": "Gültigkeitsdatum: ",
+            "content": "Pinksea verpflichtet sich, Ihre Privatsphäre zu schützen. Diese Richtlinie erklärt, wie wir Ihre Daten sammeln, verwenden und schützen.<title>1. Informationen, die wir sammeln</title>Wir können sammeln:- E-Mail-Adresse (falls angegeben)- Zahlungsinformationen (von Drittanbietern verarbeitet)- Nutzungsdaten (besuchte Seiten, verbrachte Zeit usw.) Wir sammeln keine privaten Chats oder Nachrichten, da auf der Plattform keine Messaging-Funktion existiert.<title>2. Wie wir Informationen verwenden</title>- Zur Bereitstellung gekaufter Inhalte- Zur Verarbeitung von Zahlungen- Zur Verbesserung unserer Services- Zur Erfüllung rechtlicher Verpflichtungen<title>3. Weitergabe von Informationen</title>Wir verkaufen Ihre Daten nicht. Wir können sie teilen mit:- Zahlungsanbietern- Analyse-Anbietern- Rechtsbehörden, falls erforderlich<title>4. Datensicherheit</title>Wir verwenden angemessene Maßnahmen zum Schutz Ihrer Daten. Jedoch ist kein System zu 100% sicher.<title>5. Ihre Rechte</title>Je nach Ihrem Standort haben Sie möglicherweise das Recht:- Auf Ihre Daten zuzugreifen- Ihre Daten zu löschen- Ungenaue Daten zu korrigieren Kontaktieren Sie uns für eine Anfrage: admin@pinksea.me<title>6. Cookies</title>Wir können Cookies verwenden, um die Funktionalität zu verbessern und die Nutzung zu analysieren.<title>7. Änderungen an dieser Richtlinie</title>Wir können diese Richtlinie jederzeit aktualisieren. Die fortgesetzte Nutzung des Services bedeutet, dass Sie die Änderungen akzeptieren.<title>8. Kontakt</title>Für Datenschutzbedenken, E-Mail: admin@pinksea.me"
+        }
+    },
+    "emails": {
+        "register": {
+            "title": "Willkommen bei Pinksea!",
+            "hello": "Hallo {name}!",
+            "body": "Hi, Sie sind jetzt am besten Ort, um {name} näher zu kommen. Klicken Sie auf den Link unten, um zu beginnen. 😘",
+            "get-started": "Loslegen",
+            "best": "Mit freundlichen Grüßen, Das Pinksea-Team"
+        },
+        "forgot-password": {
+            "title": "Setzen Sie Ihr Pinksea-Passwort zurück",
+            "hello": "Hallo {name}!",
+            "body": "Bitte klicken Sie auf den Link unten, um Ihr Passwort zurückzusetzen.",
+            "warning": "Wenn Sie keine Passwort-Zurücksetzung angefordert haben, ignorieren Sie diese E-Mail bitte.",
+            "link": "Sie können auch auf den Link klicken oder ihn in Ihren Browser kopieren und einfügen."
+        }
+    },
+    "messages": {
+        "required": "Erforderlich",
+        "invalid-email": "Ungültige E-Mail",
+        "taken-email": "E-Mail bereits vergeben",
+        "invalid-password": "Ungültiges Passwort",
+        "passwords-dont-match": "Passwörter stimmen nicht überein",
+        "min": "Min. {min} Zeichen erforderlich",
+        "max": "Max. {max} Zeichen erlaubt",
+        "unauthorized": "Nicht autorisiert",
+        "server-error": "Etwas ist schief gelaufen",
+        "profile-updated": "Profil erfolgreich aktualisiert",
+        "already-have-password": "Sie haben bereits ein Passwort",
+        "password-created": "Passwort erfolgreich erstellt",
+        "wrong-email": "Falsche E-Mail",
+        "account-deleted": "Konto erfolgreich gelöscht",
+        "session-deleted": "Session erfolgreich gelöscht",
+        "set-password-first": "Sie müssen zuerst ein Passwort festlegen",
+        "current-password-wrong": "Aktuelles Passwort ist falsch",
+        "password-updated": "Passwort erfolgreich aktualisiert",
+        "email-sent": "E-Mail erfolgreich gesendet",
+        "invalid-credentials": "Ungültige Anmeldedaten",
+        "logged-in": "Angemeldet",
+        "logged-out": "Abgemeldet",
+        "code-invalid": "Code ungültig oder abgelaufen",
+        "code-not-found": "Code nicht gefunden",
+        "email-verified": "E-Mail erfolgreich verifiziert",
+        "payment-success": "Zahlung erfolgreich verarbeitet",
+        "payment-failed": "Zahlung fehlgeschlagen",
+        "tips-success": "Trinkgeld erfolgreich verarbeitet",
+        "tips-failed": "Trinkgeld fehlgeschlagen",
+        "gift-success": "Geschenk erfolgreich verarbeitet",
+        "gift-failed": "Geschenk fehlgeschlagen",
+        "tips-unauthorized": "Kaufen Sie zuerst ein Abonnement",
+        "add-password": "Bitte fügen Sie zuerst ein Passwort hinzu, <password>klicken Sie hier</password>",
+        "too-many-requests": "Zu viele Anfragen, bitte versuchen Sie es später erneut",
+        "forbidden": "Verboten",
+        "bad-request": "Ungültige Anfrage",
+        "home": "Startseite",
+        "google-disconnected": "Google erfolgreich getrennt",
+        "discord-disconnected": "Discord erfolgreich getrennt",
+        "message-sent": "Nachricht erfolgreich gesendet",
+        "min-amount": "Mindestbetrag ist {min}",
+        "max-amount": "Höchstbetrag ist {max}",
+        "billing": "Ihre Abonnements verwalten"
+    },
+    "links": {
+        "login": "Anmelden",
+        "register": "Registrieren",
+        "logout": "Abmelden",
+        "account": "Konto",
+        "profile": "Profil",
+        "password": "Passwort",
+        "sessions": "Sessions",
+        "socials": "Soziale Netzwerke",
+        "delete-account": "Konto löschen",
+        "contact": "Kontakt",
+        "faq": "FAQ",
+        "support": "Support",
+        "legal": "Rechtliches",
+        "privacy": "Datenschutzerklärung",
+        "terms": "Nutzungsbedingungen",
+        "cookies": "Cookie-Richtlinie",
+        "home": "Startseite",
+        "theme": "Theme",
+        "language": "Sprache",
+        "search": "Suchen",
+        "search-placeholder": "Meine Suche...",
+        "images": "Bilder",
+        "videos": "Videos",
+        "chat": "Chat",
+        "gift": "Geschenk",
+        "pricing": "Preise",
+        "explore": "Entdecken",
+        "plan": "Plan",
+        "portal": "Kundenportal öffnen",
+        "latest": "Neueste",
+        "oldest": "Älteste",
+        "popular": "Beliebt"
+    }
+}

@@ -107,18 +107,6 @@
             "google": "Use google to login to your account",
             "discord": "Use discord to login to your account"
         },
-        "account-invoices": {
-            "title": "Invoices",
-            "description": "View your invoices",
-            "date": "Date",
-            "price": "Price",
-            "status": "Status",
-            "paid": "Paid",
-            "unpaid": "Unpaid",
-            "reason": "Reason",
-            "payment": "Payment",
-            "tip": "Tip"
-        },
         "account-delete": {
             "title": "Delete Account",
             "description": "Delete your account",

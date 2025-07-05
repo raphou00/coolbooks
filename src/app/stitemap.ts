@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { domain } from "@/config/seo";
- 
+
 const sitemap = (): MetadataRoute.Sitemap => {
     return [
         {
@@ -9,7 +9,7 @@ const sitemap = (): MetadataRoute.Sitemap => {
             changeFrequency: "yearly",
             priority: 1,
         },
-    ]
-}
+    ];
+};
 
 export default sitemap;

@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { domain } from "@/config/seo";
- 
+
 const robots = (): MetadataRoute.Robots => {
     return {
         rules: [
@@ -11,7 +11,7 @@ const robots = (): MetadataRoute.Robots => {
             },
         ],
         sitemap: `${domain}/sitemap.xml`,
-    }
-}
+    };
+};
 
 export default robots;
