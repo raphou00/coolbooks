@@ -4,8 +4,9 @@ import type Stripe from "stripe";
 import env from "@/lib/env";
 import db from "@/lib/db";
 import { headers } from "next/headers";
+import { Readable } from "stream";
 
-export const runtime = "edge";
+export const runtime = "nodejs";
 
 export const config = {
     api: {
@@ -13,16 +14,28 @@ export const config = {
     },
 };
 
+function toBuffer(readable: Readable): Promise<Buffer> {
+    return new Promise((resolve, reject) => {
+        const chunks: Buffer[] = [];
+        readable.on("data", (chunk) => chunks.push(Buffer.from(chunk)));
+        readable.on("end", () => resolve(Buffer.concat(chunks)));
+        readable.on("error", reject);
+    });
+}
+
 export const POST = async (req: NextRequest) => {
     try {
-        const payload = await req.text();
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const readable = Readable.fromWeb(req.body as any);
+        const body = await toBuffer(readable);
+        const payload = body.toString();
         const header = await headers();
         const signature = header.get("stripe-signature") as string;
-        
+
         console.log("Signature:", signature);
         console.log("Payload:", payload);
         console.log("Webhook secret:", env.STRIPE_WEBHOOK_SECRET);
-        
+
         let event: Stripe.Event;
         try {
             event = await stripe.webhooks.constructEventAsync(
