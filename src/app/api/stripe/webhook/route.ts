@@ -1,21 +1,17 @@
 import { type NextRequest, NextResponse } from "next/server";
-import { getTranslations } from "next-intl/server";
 import { handleSubscriptionChange, stripe } from "@/lib/stripe";
 import type Stripe from "stripe";
 import env from "@/lib/env";
 import { getUser } from "@/lib/auth";
 
 export const POST = async (req: NextRequest) => {
-    const t = await getTranslations({
-        locale: req.cookies.get("NEXT_LOCALE")!.value,
-    });
     try {
         const user = await getUser();
 
         if (!user?.user) {
             return NextResponse.json({
                 success: false,
-                message: t("messages.unauthorized"),
+                message: "Unauthorized",
             });
         }
 
@@ -51,8 +47,7 @@ export const POST = async (req: NextRequest) => {
     } catch (err) {
         console.error(err);
         return NextResponse.json({
-            success: false,
-            message: t("messages.server-error"),
+            error: "Something went wrong",
         });
     }
 };
