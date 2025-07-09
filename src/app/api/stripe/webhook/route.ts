@@ -1,31 +1,18 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { handleSubscriptionChange, stripe } from "@/lib/stripe";
 import type Stripe from "stripe";
-import { Readable } from "stream";
 import env from "@/lib/env";
 import db from "@/lib/db";
 
-export const runtime = "nodejs";
-
-function buffer(readable: Readable): Promise<Buffer> {
-    return new Promise((resolve, reject) => {
-        const chunks: Uint8Array[] = [];
-        readable.on("data", (chunk) => chunks.push(chunk));
-        readable.on("end", () => resolve(Buffer.concat(chunks)));
-        readable.on("error", reject);
-    });
-}
+export const config = {
+    api: {
+        bodyParser: false,
+    },
+};
 
 export const POST = async (req: NextRequest) => {
     try {
-        if (!req.body) {
-            return NextResponse.json({
-                error: "Missing body",
-            });
-        }
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const buf = await buffer(Readable.fromWeb(req.body as unknown as any));
-        const payload = buf.toString("utf8");
+        const payload = await req.text();
         const signature = req.headers.get("stripe-signature") as string;
         let event: Stripe.Event;
 
@@ -96,9 +83,3 @@ export const POST = async (req: NextRequest) => {
         });
     }
 };
-
-// export const config = {
-//   api: {
-//     bodyParser: false,
-//   },
-// };
