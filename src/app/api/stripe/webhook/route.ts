@@ -4,6 +4,8 @@ import type Stripe from "stripe";
 import env from "@/lib/env";
 import db from "@/lib/db";
 
+export const runtime = "nodejs";
+
 export const POST = async (req: NextRequest) => {
     try {
         const payload = await req.text();
@@ -73,8 +75,8 @@ export const POST = async (req: NextRequest) => {
     }
 };
 
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
+// export const config = {
+//   api: {
+//     bodyParser: false,
+//   },
+// };
