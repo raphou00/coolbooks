@@ -12,6 +12,11 @@ export const POST = async (req: NextRequest) => {
         const signature = req.headers.get("stripe-signature") as string;
         let event: Stripe.Event;
 
+        console.log("Signature:", signature);
+        console.log("Payload:", payload);
+
+        console.log("Webhook secret:", env.STRIPE_WEBHOOK_SECRET);
+
         try {
             event = stripe.webhooks.constructEvent(
                 payload,
