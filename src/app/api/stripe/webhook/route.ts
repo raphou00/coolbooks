@@ -72,3 +72,9 @@ export const POST = async (req: NextRequest) => {
         });
     }
 };
+
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};
