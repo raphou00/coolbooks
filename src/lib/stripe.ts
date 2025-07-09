@@ -1,7 +1,7 @@
 import Stripe from "stripe";
 import env from "./env";
 import { title } from "@/config/seo";
-import type { User } from "lucia";
+import type { User } from "@prisma/client";
 import db from "./db";
 import type { T } from "./types";
 import { productId } from "@/config/stripe";
