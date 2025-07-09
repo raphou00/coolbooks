@@ -15,7 +15,11 @@ const intlMiddleware = createMiddleware({
 export const middleware = async (req: NextRequest) => {
     const { pathname } = req.nextUrl;
 
-    if (pathname.startsWith("/api") && req.method !== "GET") {
+    if (
+        pathname.startsWith("/api") &&
+        req.method !== "GET" &&
+        pathname !== "/api/stripe/webhook"
+    ) {
         const originHeader = req.headers.get("Origin");
         const hostHeader =
             req.headers.get("Host") || req.headers.get("X-Forwarded-Host");
@@ -25,7 +29,9 @@ export const middleware = async (req: NextRequest) => {
             !hostHeader ||
             !verifyRequestOrigin(originHeader, [hostHeader])
         ) {
-            return NextResponse.redirect(new URL("/error?error=403", req.url));
+            return NextResponse.json({
+                details: "unauthorized",
+            });
         }
 
         return NextResponse.next();
