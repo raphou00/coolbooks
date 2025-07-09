@@ -35,7 +35,12 @@ const Explore: React.FC<ExploreProps> = ({ allMedias, user }) => {
     const searchParams = useSearchParams();
     const q = searchParams.get("q") || "";
 
-    const applyFilters = (searchTerm: string, selectedTag: string, selectedSort: (typeof sorts)[number], favoritesOnly: boolean) => {
+    const applyFilters = (
+        searchTerm: string,
+        selectedTag: string,
+        selectedSort: (typeof sorts)[number],
+        favoritesOnly: boolean
+    ) => {
         let filteredMedias = [...allMedias];
 
         // Apply favorites filter first
@@ -50,7 +55,9 @@ const Explore: React.FC<ExploreProps> = ({ allMedias, user }) => {
             filteredMedias = filteredMedias.filter(
                 (media) =>
                     searchRegex.test(media.description.toLowerCase()) ||
-                    media.tags.some((tag) => searchRegex.test(tag.toLowerCase()))
+                    media.tags.some((tag) =>
+                        searchRegex.test(tag.toLowerCase())
+                    )
             );
         }
 
@@ -67,16 +74,29 @@ const Explore: React.FC<ExploreProps> = ({ allMedias, user }) => {
         return filteredMedias;
     };
 
-    const applySortToMedias = (mediasToSort: MediaProps[], sortOption: (typeof sorts)[number]) => {
+    const applySortToMedias = (
+        mediasToSort: MediaProps[],
+        sortOption: (typeof sorts)[number]
+    ) => {
         const sortedMedias = [...mediasToSort];
 
         switch (sortOption.path) {
             case "newest":
-                return sortedMedias.sort((a, b) => new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime());
+                return sortedMedias.sort(
+                    (a, b) =>
+                        new Date(b.createdAt || 0).getTime() -
+                        new Date(a.createdAt || 0).getTime()
+                );
             case "oldest":
-                return sortedMedias.sort((a, b) => new Date(a.createdAt || 0).getTime() - new Date(b.createdAt || 0).getTime());
+                return sortedMedias.sort(
+                    (a, b) =>
+                        new Date(a.createdAt || 0).getTime() -
+                        new Date(b.createdAt || 0).getTime()
+                );
             case "popular":
-                return sortedMedias.sort((a, b) => (b.likes || 0) - (a.likes || 0));
+                return sortedMedias.sort(
+                    (a, b) => (b.likes || 0) - (a.likes || 0)
+                );
             default:
                 return sortedMedias;
         }
@@ -84,27 +104,47 @@ const Explore: React.FC<ExploreProps> = ({ allMedias, user }) => {
 
     const handleSearch = (searchTerm: string) => {
         setSearch(searchTerm);
-        const filteredMedias = applyFilters(searchTerm, tag, sort, showFavorites);
+        const filteredMedias = applyFilters(
+            searchTerm,
+            tag,
+            sort,
+            showFavorites
+        );
         setMedias(filteredMedias);
     };
 
     const handleSort = (sortPath: string) => {
         const selectedSort = sorts.find((s) => s.path === sortPath);
         if (!selectedSort) return;
-        
+
         setSort(selectedSort);
-        const filteredMedias = applyFilters(search, tag, selectedSort, showFavorites);
+        const filteredMedias = applyFilters(
+            search,
+            tag,
+            selectedSort,
+            showFavorites
+        );
         setMedias(filteredMedias);
     };
 
     const handleTag = (selectedTag: string) => {
         if (tag === selectedTag) {
             setTag("");
-            const filteredMedias = applyFilters(search, "", sort, showFavorites);
+            const filteredMedias = applyFilters(
+                search,
+                "",
+                sort,
+                showFavorites
+            );
             setMedias(filteredMedias);
         } else {
             setTag(selectedTag);
-            const filteredMedias = applyFilters(search, selectedTag, sort, showFavorites);
+            const filteredMedias = applyFilters(
+                search,
+                selectedTag,
+                sort,
+                showFavorites
+            );
             setMedias(filteredMedias);
         }
     };
@@ -112,7 +152,12 @@ const Explore: React.FC<ExploreProps> = ({ allMedias, user }) => {
     const handleFavorites = () => {
         const newShowFavorites = !showFavorites;
         setShowFavorites(newShowFavorites);
-        const filteredMedias = applyFilters(search, tag, sort, newShowFavorites);
+        const filteredMedias = applyFilters(
+            search,
+            tag,
+            sort,
+            newShowFavorites
+        );
         setMedias(filteredMedias);
     };
 
@@ -176,8 +221,20 @@ const Explore: React.FC<ExploreProps> = ({ allMedias, user }) => {
                                 )}
                                 onClick={handleFavorites}
                             >
-                                <Heart className={cn("size-4", showFavorites && "text-white fill-white")} />
-                                <span className={cn("font-bold", showFavorites && "text-white")}>{t("favorites")}</span>
+                                <Heart
+                                    className={cn(
+                                        "size-4",
+                                        showFavorites && "text-white fill-white"
+                                    )}
+                                />
+                                <span
+                                    className={cn(
+                                        "font-bold",
+                                        showFavorites && "text-white"
+                                    )}
+                                >
+                                    {t("favorites")}
+                                </span>
                             </button>
                         </div>
                     </div>
@@ -212,7 +269,10 @@ const Explore: React.FC<ExploreProps> = ({ allMedias, user }) => {
                                 <SelectContent>
                                     <SelectGroup>
                                         {sorts.map((l) => (
-                                            <SelectItem key={l.path} value={l.path}>
+                                            <SelectItem
+                                                key={l.path}
+                                                value={l.path}
+                                            >
                                                 <div className="flex items-center gap-2">
                                                     {l.title}
                                                 </div>

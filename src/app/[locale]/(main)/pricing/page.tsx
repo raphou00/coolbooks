@@ -11,7 +11,9 @@ const generateMetadata = async (): Promise<Metadata> => {
     const subscription = await getSubscription(t);
     return {
         title: t("pages.pricing.title"),
-        description: t("pages.pricing.description", { price: formatAmountForDisplay(subscription.price) }),
+        description: t("pages.pricing.description", {
+            price: formatAmountForDisplay(subscription.price),
+        }),
     };
 };
 

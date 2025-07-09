@@ -34,40 +34,42 @@ export async function POST(req: NextRequest) {
                 db.user.update({
                     where: { id: user.user.id },
                     data: {
-                        likedMedias: user.user.likedMedias.filter(id => id !== mediaId)
-                    }
+                        likedMedias: user.user.likedMedias.filter(
+                            (id) => id !== mediaId
+                        ),
+                    },
                 }),
                 db.media.update({
                     where: { id: mediaId },
                     data: {
-                        likes: { decrement: 1 }
-                    }
-                })
+                        likes: { decrement: 1 },
+                    },
+                }),
             ]);
 
-            return NextResponse.json({ 
-                liked: false, 
-                message: "Media unliked successfully"
+            return NextResponse.json({
+                liked: false,
+                message: "Media unliked successfully",
             });
         } else {
             await db.$transaction([
                 db.user.update({
                     where: { id: user.user.id },
                     data: {
-                        likedMedias: [...user.user.likedMedias, mediaId]
-                    }
+                        likedMedias: [...user.user.likedMedias, mediaId],
+                    },
                 }),
                 db.media.update({
                     where: { id: mediaId },
                     data: {
-                        likes: { increment: 1 }
-                    }
-                })
+                        likes: { increment: 1 },
+                    },
+                }),
             ]);
 
-            return NextResponse.json({ 
-                liked: true, 
-                message: "Media liked successfully" 
+            return NextResponse.json({
+                liked: true,
+                message: "Media liked successfully",
             });
         }
     } catch (err) {

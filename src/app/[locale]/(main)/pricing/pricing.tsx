@@ -46,7 +46,11 @@ const Pricing: React.FC<PricingProps> = ({ sub, user }) => {
                     className="text-5xl mx-auto w-fit text-center"
                     underline
                 />
-                <p className="mt-4 text-lg max-w-md mx-auto">{t("description", { price: formatAmountForDisplay(sub.price) })}</p>
+                <p className="mt-4 text-lg max-w-md mx-auto">
+                    {t("description", {
+                        price: formatAmountForDisplay(sub.price),
+                    })}
+                </p>
             </div>
             <div className="mx-auto my-8 flex justify-center flex-wrap gap-6">
                 <motion.div
@@ -86,7 +90,9 @@ const Pricing: React.FC<PricingProps> = ({ sub, user }) => {
                             {t("month")}
                         </motion.span>
                         <div>
-                            <p className="mt-4 text-base/7">{sub.description}</p>
+                            <p className="mt-4 text-base/7">
+                                {sub.description}
+                            </p>
                         </div>
                     </div>
                     <button
