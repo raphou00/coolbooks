@@ -28,6 +28,10 @@ export const useGetSorts = () => {
             title: t("oldest"),
             path: "oldest",
         },
+        {
+            title: t("popular"),
+            path: "popular",
+        },
     ];
 };
 

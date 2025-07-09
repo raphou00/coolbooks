@@ -6,12 +6,13 @@ import { getUser } from "@/lib/auth";
 import db from "@/lib/db";
 import { findAllMedias } from "@/config/media";
 import type { MediaProps } from "@/components/ui/medias";
+import { name } from "@/config/seo";
 
 const generateMetadata = async (): Promise<Metadata> => {
     const t = await getTranslations("pages");
     return {
         title: t("explore.title"),
-        description: t("explore.description"),
+        description: t("explore.description", { name }),
     };
 };
 

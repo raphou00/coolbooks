@@ -198,9 +198,9 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                     </div>
                                     <div
                                         tabIndex={0}
-                                        className="dropdown-content pt-2 !z-[100]"
+                                        className="dropdown-content pt-2 !z-[1]"
                                     >
-                                        <div className="space-y-1 rounded-xl bg-base-200 p-2 border border-neutral/20 shadow-xl w-72">
+                                        <div className="space-y-1 rounded-xl bg-base-200 p-2 border border-neutral/20 shadow-xl w-72 z-[2]">
                                             {user ?
                                                 <>
                                                     <div className="my-2 flex flex-col items-center justify-center gap-y-2">
@@ -217,7 +217,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
 
                                                     <a
                                                         href="/account/profile"
-                                                        className="btn btn-ghost m-0 w-full justify-start"
+                                                        className="btn btn-ghost rounded-lg m-0 w-full justify-start"
                                                     >
                                                         <span className="flex items-center gap-2">
                                                             <Settings2 className="size-6" />
@@ -228,7 +228,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                             :   <>
                                                     <a
                                                         href={`/login?redirect=${pathname}`}
-                                                        className="btn btn-ghost m-0 w-full justify-start"
+                                                        className="btn btn-ghost rounded-lg m-0 w-full justify-start"
                                                     >
                                                         <span className="flex items-center gap-2">
                                                             <LogIn className="size-6" />
@@ -238,7 +238,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
 
                                                     <a
                                                         href={`/register?redirect=${pathname}`}
-                                                        className="btn btn-ghost m-0 w-full justify-start"
+                                                        className="btn btn-ghost rounded-lg m-0 w-full justify-start"
                                                     >
                                                         <span className="flex items-center gap-2">
                                                             <PenBox className="size-6" />
@@ -252,7 +252,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
 
                                             <button
                                                 onClick={toggleTheme}
-                                                className="btn btn-ghost m-0 w-full justify-start"
+                                                className="btn btn-ghost rounded-lg m-0 w-full justify-start"
                                             >
                                                 <span className="flex items-center gap-2">
                                                     <SunMoon className="size-6" />
@@ -264,7 +264,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                                 onClick={() =>
                                                     setLocaleOpen((e) => !e)
                                                 }
-                                                className="btn btn-ghost m-0 w-full justify-start"
+                                                className="btn btn-ghost rounded-lg m-0 w-full justify-start"
                                             >
                                                 <span className="flex items-center gap-2">
                                                     <Languages className="size-6" />
@@ -278,7 +278,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
 
                                                     <button
                                                         onClick={handleLogout}
-                                                        className="btn btn-ghost m-0 w-full justify-start"
+                                                        className="btn btn-ghost rounded-lg m-0 w-full justify-start"
                                                     >
                                                         <span className="flex items-center gap-2">
                                                             <LogOut className="size-6" />
@@ -305,9 +305,9 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                     <ul className="menu bg-base-200 min-h-full w-80 space-y-2 p-4">
                         <Link
                             href="/"
-                            className="flex space-x-2 items-center text-sm relative z-20"
+                            className="ml-2 flex items-center text-sm relative z-20"
                         >
-                            <Logo className="h-8 w-auto ml-2 mb-2" />
+                            <LogoText className="h-8 w-auto ml-2 mb-2" />
                         </Link>
                         {links.map((item) => (
                             <li key={item.title}>

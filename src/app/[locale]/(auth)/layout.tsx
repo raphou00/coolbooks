@@ -29,7 +29,7 @@ const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
                 />
                 <div
                     style={{
-                        backgroundImage: `url('/images/banner.jpeg')`,
+                        backgroundImage: `url('/images/banner.png')`,
                         backgroundSize: "cover",
                         backgroundPosition: "center",
                     }}

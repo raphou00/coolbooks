@@ -34,7 +34,7 @@ const Page: React.FC = () => {
             <div className="flex w-full">
                 <div
                     style={{
-                        backgroundImage: `url('/images/banner.jpeg')`,
+                        backgroundImage: `url('/images/banner.png')`,
                         backgroundSize: "cover",
                         backgroundPosition: "center",
                     }}

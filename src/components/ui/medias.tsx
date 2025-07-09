@@ -3,14 +3,14 @@
 import type { Media, Image, Video } from "@prisma/client";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ChevronLeft, ChevronRight, X } from "lucide-react";
+import { ChevronLeft, ChevronRight, Heart, X } from "lucide-react";
 import type { User } from "lucia";
 import InfiniteScroll from "react-infinite-scroller";
 import GirlImage from "@/components/ui/girl-image";
 import GirlVideo from "@/components/ui/girl-video";
-// import { cn, formatNumber } from "@/lib/utils";
-// import useLike from "@/hook/use-like";
-// import { redirect } from "next/navigation";
+import { cn, formatNumber } from "@/lib/utils";
+import useLike from "@/hook/use-like";
+import { redirect } from "next/navigation";
 
 export type MediaProps = Media & {
     images: Image[];
@@ -29,7 +29,7 @@ const Medias: React.FC<MediasProps> = ({ user, medias }) => {
     const [currentMedia, setCurrentMedia] = useState<number>(0);
     const [hasMore, setHasMore] = useState<boolean>(true);
     const [media, setMedia] = useState<MediaProps | null>(null);
-    // const { liked, toggleLike } = useLike(user?.likedMedias || []);
+    const { liked, toggleLike } = useLike(user?.likedMedias || []);
     const [visibleMedias, setVisibleMedias] = useState<MediaProps[]>(
         medias.slice(0, BASE_ELEMENTS)
     );
@@ -63,10 +63,10 @@ const Medias: React.FC<MediasProps> = ({ user, medias }) => {
         setCurrentMedia(0);
     };
 
-    // const handleLike = (id: string) => {
-    //     if (!user) return redirect("/login");
-    //     toggleLike(id);
-    // };
+    const handleLike = (id: string) => {
+        if (!user) return redirect("/login");
+        toggleLike(id);
+    };
 
     const nextMedia = () => {
         if (currentMedia === mediaCount - 1) {
@@ -116,8 +116,8 @@ const Medias: React.FC<MediasProps> = ({ user, medias }) => {
                             key={media.id}
                             className="m-[0.5px] py-[0.5px] overflow-hidden rounded-sm relative"
                         >
-                            {/* <div className="pointer-events-none absolute right-0 left-0 top-0 h-12 w-full bg-gradient-to-b from-neutral-950/50 to-neutral-950/0 z-50" />
-                            <div className="absolute top-0 left-0 z-50 w-full m-1">
+                            <div className="pointer-events-none absolute right-0 left-0 top-0 h-12 w-full bg-gradient-to-b from-neutral-950/50 to-neutral-950/0 z-30" />
+                            <div className="absolute top-0 left-0 z-50 w-full m-2">
                                 <button
                                     onClick={() => handleLike(media.id)}
                                     className="flex items-center gap-1 cursor-pointer"
@@ -133,7 +133,7 @@ const Medias: React.FC<MediasProps> = ({ user, medias }) => {
                                         {formatNumber(media.likes)}
                                     </span>
                                 </button>
-                            </div> */}
+                            </div>
                             <div
                                 className="shadow-md"
                                 onClick={() => openModal(media)}
@@ -163,15 +163,15 @@ const Medias: React.FC<MediasProps> = ({ user, medias }) => {
                         exit={{ opacity: 0 }}
                         className="fixed inset-0 h-screen w-full flex items-center justify-center z-[10000000000] bg-base-300/50 backdrop-blur-lg sm:p-2"
                     >
-                        <div className="absolute left-0 top-0 p-4 w-full flex items-center justify-between">
-                            <div className="flex flex-col">
+                        <div className="absolute left-0 top-0 p-4 w-full flex justify-between">
+                            <div className="">
                                 <p className="text-lg">{media.description}</p>
                                 <p className="text-sm text-neutral">
                                     {media.tags
                                         .map((tag) => `#${tag}`)
                                         .join(" ")}
                                 </p>
-                                {/* <button
+                                <button
                                     onClick={() => handleLike(media.id)}
                                     className="mt-2 flex items-center gap-1 cursor-pointer"
                                 >
@@ -183,7 +183,7 @@ const Medias: React.FC<MediasProps> = ({ user, medias }) => {
                                         )}
                                     />
                                     {formatNumber(media.likes)}
-                                </button> */}
+                                </button>
                             </div>
                             <button
                                 className="btn btn-ghost btn-square btn-sm"

@@ -124,23 +124,24 @@
         },
         "explore": {
             "title": "Explore",
-            "description": "Browse medias",
+            "description": "Browse {name}",
             "search": "Search",
             "search-placeholder": "Search for content...",
             "filter": "Filter",
             "sort": "Sort",
             "latest": "Latest",
-            "oldest": "Oldest"
+            "oldest": "Oldest",
+            "favorites": "Favorites"
         },
         "pricing": {
             "title": "Pricing",
-            "description": "Hey, you should really try to subscribe to access all content!",
+            "description": "Hey, do you want to see the locked images ? Get the only subscription at only {price} per month!",
             "month": "Month",
             "subscribe": "Subscribe",
             "portal": "Open Portal",
             "subscription": {
-                "title": "Lover",
-                "description": "Buy full access to see these beauties"
+                "title": "Subscription",
+                "description": "Get full access to the content on Pinksea, you will not regret it!"
             }
         },
         "contact": {

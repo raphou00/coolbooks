@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 import type { User } from "lucia";
 import Medias, { type MediaProps } from "@/components/ui/medias";
 import Title from "@/components/ui/title";
-import { Search } from "lucide-react";
+import { Search, Heart } from "lucide-react";
 import { useEffect, useState } from "react";
 import {
     Select,
@@ -17,6 +17,7 @@ import {
 import { useGetSorts } from "@/config/links";
 import { cn } from "@/lib/utils";
 import { useSearchParams } from "next/navigation";
+import { name } from "@/config/seo";
 
 type ExploreProps = {
     user: User | null;
@@ -28,59 +29,91 @@ const Explore: React.FC<ExploreProps> = ({ allMedias, user }) => {
     const [search, setSearch] = useState("");
     const [medias, setMedias] = useState<MediaProps[]>(allMedias);
     const [tag, setTag] = useState<string>("");
+    const [showFavorites, setShowFavorites] = useState<boolean>(false);
     const sorts = useGetSorts();
     const [sort, setSort] = useState<(typeof sorts)[number]>(sorts[0]);
     const searchParams = useSearchParams();
     const q = searchParams.get("q") || "";
 
-    const handleSearch = (search: string) => {
-        if (search === "") {
-            setMedias(allMedias);
-            setSearch("");
-            return;
+    const applyFilters = (searchTerm: string, selectedTag: string, selectedSort: (typeof sorts)[number], favoritesOnly: boolean) => {
+        let filteredMedias = [...allMedias];
+
+        // Apply favorites filter first
+        if (favoritesOnly && user?.likedMedias) {
+            filteredMedias = filteredMedias.filter((media) =>
+                user.likedMedias.includes(media.id)
+            );
         }
-        setSearch(search);
-        const searchRegex = new RegExp(search.toLowerCase(), "i");
-        const filteredMedias = allMedias.filter(
-            (media) =>
-                searchRegex.test(media.description.toLowerCase()) ||
-                media.tags.some((tag) => searchRegex.test(tag.toLowerCase()))
-        );
+
+        if (searchTerm) {
+            const searchRegex = new RegExp(searchTerm.toLowerCase(), "i");
+            filteredMedias = filteredMedias.filter(
+                (media) =>
+                    searchRegex.test(media.description.toLowerCase()) ||
+                    media.tags.some((tag) => searchRegex.test(tag.toLowerCase()))
+            );
+        }
+
+        if (selectedTag) {
+            filteredMedias = filteredMedias.filter((media) =>
+                media.tags.includes(selectedTag)
+            );
+        }
+
+        if (selectedSort) {
+            filteredMedias = applySortToMedias(filteredMedias, selectedSort);
+        }
+
+        return filteredMedias;
+    };
+
+    const applySortToMedias = (mediasToSort: MediaProps[], sortOption: (typeof sorts)[number]) => {
+        const sortedMedias = [...mediasToSort];
+
+        switch (sortOption.path) {
+            case "newest":
+                return sortedMedias.sort((a, b) => new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime());
+            case "oldest":
+                return sortedMedias.sort((a, b) => new Date(a.createdAt || 0).getTime() - new Date(b.createdAt || 0).getTime());
+            case "popular":
+                return sortedMedias.sort((a, b) => (b.likes || 0) - (a.likes || 0));
+            default:
+                return sortedMedias;
+        }
+    };
+
+    const handleSearch = (searchTerm: string) => {
+        setSearch(searchTerm);
+        const filteredMedias = applyFilters(searchTerm, tag, sort, showFavorites);
         setMedias(filteredMedias);
     };
 
-    const handleSort = (sort: string) => {
-        const v = sorts.find((s) => s.path === sort);
-        if (!v) return;
-        setSort(v);
-
-        const sortedMedias = [...medias];
-        if (v.path === "latest") {
-            sortedMedias.sort(
-                (a, b) => b.createdAt.getTime() - a.createdAt.getTime()
-            );
-        } else if (v.path === "oldest") {
-            sortedMedias.sort(
-                (a, b) => a.createdAt.getTime() - b.createdAt.getTime()
-            );
-        } else if (v.path === "popular") {
-            // sortedMedias.sort((a, b) => b.likes.length - a.likes.length);
-        }
-
-        setMedias(sortedMedias);
+    const handleSort = (sortPath: string) => {
+        const selectedSort = sorts.find((s) => s.path === sortPath);
+        if (!selectedSort) return;
+        
+        setSort(selectedSort);
+        const filteredMedias = applyFilters(search, tag, selectedSort, showFavorites);
+        setMedias(filteredMedias);
     };
 
-    const handleTag = (t: string) => {
-        if (tag === t) {
+    const handleTag = (selectedTag: string) => {
+        if (tag === selectedTag) {
             setTag("");
-            setMedias(allMedias);
+            const filteredMedias = applyFilters(search, "", sort, showFavorites);
+            setMedias(filteredMedias);
         } else {
-            setTag(t);
-            const filteredMedias = medias.filter((media) =>
-                media.tags.includes(t)
-            );
+            setTag(selectedTag);
+            const filteredMedias = applyFilters(search, selectedTag, sort, showFavorites);
             setMedias(filteredMedias);
         }
+    };
+
+    const handleFavorites = () => {
+        const newShowFavorites = !showFavorites;
+        setShowFavorites(newShowFavorites);
+        const filteredMedias = applyFilters(search, tag, sort, newShowFavorites);
+        setMedias(filteredMedias);
     };
 
     useEffect(() => {
@@ -110,7 +143,7 @@ const Explore: React.FC<ExploreProps> = ({ allMedias, user }) => {
             <div className="flex flex-col items-center justify-center gap-y-6 mb-6">
                 <div className="flex items-center gap-x-2">
                     <Title
-                        text={t("description")}
+                        text={t("description", { name })}
                         className="text-xl md:text-2xl lg:text-3xl"
                         underline
                     />
@@ -133,44 +166,62 @@ const Explore: React.FC<ExploreProps> = ({ allMedias, user }) => {
                         </button>
                     </div>
                 </div>
-                <div className="flex items-center justify-between w-full">
-                    <div className="flex flex-wrap gap-x-1 gap-y-1">
-                        {topTags.map((t) => (
+                <div className="navbar w-full">
+                    <div className="navbar-start">
+                        <div>
                             <button
-                                key={t}
                                 className={cn(
-                                    "btn btn-sm btn-outline",
-                                    tag == t && "btn-primary btn-active"
+                                    "btn btn-sm btn-outline flex items-center gap-2",
+                                    showFavorites && "btn-primary btn-active"
                                 )}
-                                onClick={() => {
-                                    handleTag(t);
-                                }}
+                                onClick={handleFavorites}
                             >
-                                {t}
+                                <Heart className={cn("size-4", showFavorites && "text-white fill-white")} />
+                                <span className={cn("font-bold", showFavorites && "text-white")}>{t("favorites")}</span>
                             </button>
-                        ))}
+                        </div>
                     </div>
-                    <div className="w-fit">
-                        <Select
-                            defaultValue={sorts[0].path}
-                            value={sort.path}
-                            onValueChange={(l) => handleSort(l)}
-                        >
-                            <SelectTrigger className="w-full border">
-                                <SelectValue placeholder={sort.title} />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectGroup>
-                                    {sorts.map((l) => (
-                                        <SelectItem key={l.path} value={l.path}>
-                                            <div className="flex items-center gap-2">
-                                                {l.title}
-                                            </div>
-                                        </SelectItem>
-                                    ))}
-                                </SelectGroup>
-                            </SelectContent>
-                        </Select>
+                    <div className="navbar-center">
+                        <div className="flex flex-wrap gap-x-1 gap-y-1">
+                            {topTags.map((t) => (
+                                <button
+                                    key={t}
+                                    className={cn(
+                                        "btn btn-sm btn-outline",
+                                        tag == t && "btn-primary btn-active"
+                                    )}
+                                    onClick={() => {
+                                        handleTag(t);
+                                    }}
+                                >
+                                    {t}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+                    <div className="navbar-end">
+                        <div className="w-fit">
+                            <Select
+                                defaultValue={sorts[0].path}
+                                value={sort.path}
+                                onValueChange={(l) => handleSort(l)}
+                            >
+                                <SelectTrigger className="w-full border">
+                                    <SelectValue placeholder={sort.title} />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectGroup>
+                                        {sorts.map((l) => (
+                                            <SelectItem key={l.path} value={l.path}>
+                                                <div className="flex items-center gap-2">
+                                                    {l.title}
+                                                </div>
+                                            </SelectItem>
+                                        ))}
+                                    </SelectGroup>
+                                </SelectContent>
+                            </Select>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -8,7 +8,8 @@ export async function POST(req: NextRequest) {
         locale: req.cookies.get("NEXT_LOCALE")!.value,
     });
     try {
-        const mediaId = req.nextUrl.searchParams.get("mediaId");
+        const body = await req.json();
+        const mediaId = body.mediaId;
 
         if (!mediaId) {
             return NextResponse.json({
@@ -26,90 +27,49 @@ export async function POST(req: NextRequest) {
             });
         }
 
-        await db.media.update({
-            where: {
-                id: mediaId,
-            },
-            data: {
-                likes: {
-                    increment: 1,
-                },
-            },
-        });
+        const isLiked = user.user.likedMedias.includes(mediaId);
 
-        await db.user.update({
-            where: {
-                id: user.user.id,
-            },
-            data: {
-                likedMedias: {
-                    push: mediaId,
-                },
-            },
-        });
+        if (isLiked) {
+            await db.$transaction([
+                db.user.update({
+                    where: { id: user.user.id },
+                    data: {
+                        likedMedias: user.user.likedMedias.filter(id => id !== mediaId)
+                    }
+                }),
+                db.media.update({
+                    where: { id: mediaId },
+                    data: {
+                        likes: { decrement: 1 }
+                    }
+                })
+            ]);
 
-        return NextResponse.json({
-            success: true,
-            message: "done",
-        });
-    } catch (err) {
-        console.error(err);
-        return NextResponse.json({
-            success: false,
-            message: t("messages.server-error"),
-        });
-    }
-}
+            return NextResponse.json({ 
+                liked: false, 
+                message: "Media unliked successfully"
+            });
+        } else {
+            await db.$transaction([
+                db.user.update({
+                    where: { id: user.user.id },
+                    data: {
+                        likedMedias: [...user.user.likedMedias, mediaId]
+                    }
+                }),
+                db.media.update({
+                    where: { id: mediaId },
+                    data: {
+                        likes: { increment: 1 }
+                    }
+                })
+            ]);
 
-export async function DELETE(req: NextRequest) {
-    const t = await getTranslations({
-        locale: req.cookies.get("NEXT_LOCALE")!.value,
-    });
-    try {
-        const mediaId = req.nextUrl.searchParams.get("mediaId");
-
-        if (!mediaId) {
-            return NextResponse.json({
-                success: false,
-                message: t("messages.bad-request"),
+            return NextResponse.json({ 
+                liked: true, 
+                message: "Media liked successfully" 
             });
         }
-
-        const user = await getUser();
-
-        if (!user?.user) {
-            return NextResponse.json({
-                success: false,
-                message: t("messages.unauthorized"),
-            });
-        }
-
-        await db.media.update({
-            where: {
-                id: mediaId,
-            },
-            data: {
-                likes: {
-                    decrement: 1,
-                },
-            },
-        });
-
-        await db.user.update({
-            where: {
-                id: user.user.id,
-            },
-            data: {
-                likedMedias: {
-                    set: user.user.likedMedias.filter((id) => id !== mediaId),
-                },
-            },
-        });
-
-        return NextResponse.json({
-            success: true,
-            message: "",
-        });
     } catch (err) {
         console.error(err);
         return NextResponse.json({

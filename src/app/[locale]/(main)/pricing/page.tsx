@@ -4,12 +4,14 @@ import { getTranslations } from "next-intl/server";
 import Pricing from "./pricing";
 import { getSubscription } from "@/lib/stripe";
 import { getUser } from "@/lib/auth";
+import { formatAmountForDisplay } from "@/lib/utils";
 
 const generateMetadata = async (): Promise<Metadata> => {
-    const t = await getTranslations("pages");
+    const t = await getTranslations();
+    const subscription = await getSubscription(t);
     return {
-        title: t("pricing.title"),
-        description: t("pricing.description"),
+        title: t("pages.pricing.title"),
+        description: t("pages.pricing.description", { price: formatAmountForDisplay(subscription.price) }),
     };
 };
 
