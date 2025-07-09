@@ -15,11 +15,11 @@ const intlMiddleware = createMiddleware({
 export const middleware = async (req: NextRequest) => {
     const { pathname } = req.nextUrl;
 
-    if (
-        pathname.startsWith("/api") &&
-        req.method !== "GET" &&
-        pathname !== "/api/stripe/webhook"
-    ) {
+    if (pathname === "/api/stripe/webhook") {
+        return;
+    }
+
+    if (pathname.startsWith("/api") && req.method !== "GET") {
         const originHeader = req.headers.get("Origin");
         const hostHeader =
             req.headers.get("Host") || req.headers.get("X-Forwarded-Host");
