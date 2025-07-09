@@ -3,6 +3,7 @@ import { handleSubscriptionChange, stripe } from "@/lib/stripe";
 import type Stripe from "stripe";
 import env from "@/lib/env";
 import db from "@/lib/db";
+import { headers } from "next/headers";
 
 export const runtime = "edge";
 
@@ -15,16 +16,16 @@ export const config = {
 export const POST = async (req: NextRequest) => {
     try {
         const payload = await req.text();
-        const signature = req.headers.get("stripe-signature") as string;
-        let event: Stripe.Event;
-
+        const header = await headers();
+        const signature = header.get("stripe-signature") as string;
+        
         console.log("Signature:", signature);
         console.log("Payload:", payload);
-
         console.log("Webhook secret:", env.STRIPE_WEBHOOK_SECRET);
-
+        
+        let event: Stripe.Event;
         try {
-            event = stripe.webhooks.constructEvent(
+            event = await stripe.webhooks.constructEvent(
                 payload,
                 signature,
                 env.STRIPE_WEBHOOK_SECRET

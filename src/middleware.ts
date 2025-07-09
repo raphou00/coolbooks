@@ -16,6 +16,7 @@ export const middleware = async (req: NextRequest) => {
     const { pathname } = req.nextUrl;
 
     if (pathname === "/api/stripe/webhook") {
+        console.log("Webhook called");
         return;
     }
 
