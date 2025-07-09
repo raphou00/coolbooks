@@ -4,6 +4,8 @@ import type Stripe from "stripe";
 import env from "@/lib/env";
 import db from "@/lib/db";
 
+export const runtime = "edge";
+
 export const config = {
     api: {
         bodyParser: false,
