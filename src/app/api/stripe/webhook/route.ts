@@ -1,14 +1,30 @@
-import { type NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { handleSubscriptionChange, stripe } from "@/lib/stripe";
 import type Stripe from "stripe";
+import type { Readable } from "stream";
 import env from "@/lib/env";
 import db from "@/lib/db";
 
 export const runtime = "nodejs";
 
-export const POST = async (req: NextRequest) => {
+function buffer(readable: Readable): Promise<Buffer> {
+    return new Promise((resolve, reject) => {
+        const chunks: Uint8Array[] = [];
+        readable.on("data", (chunk) => chunks.push(chunk));
+        readable.on("end", () => resolve(Buffer.concat(chunks)));
+        readable.on("error", reject);
+    });
+}
+
+export const POST = async (req: Request) => {
     try {
-        const payload = await req.text();
+        if (!req.body) {
+            return NextResponse.json({
+                error: "Missing body",
+            });
+        }
+        const buf = await buffer(req.body as unknown as Readable);
+        const payload = buf.toString("utf8");
         const signature = req.headers.get("stripe-signature") as string;
         let event: Stripe.Event;
 
