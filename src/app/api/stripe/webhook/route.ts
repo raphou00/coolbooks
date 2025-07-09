@@ -5,7 +5,7 @@ import type Stripe from "stripe";
 import env from "@/lib/env";
 import { getUser } from "@/lib/auth";
 
-export const GET = async (req: NextRequest) => {
+export const POST = async (req: NextRequest) => {
     const t = await getTranslations({
         locale: req.cookies.get("NEXT_LOCALE")!.value,
     });
