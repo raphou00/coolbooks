@@ -24,10 +24,7 @@
         "wip": "bun run fmt:write && git add . && git commit -m \"WIP\" && git push"
     },
     "dependencies": {
-        "@aws-sdk/client-apigatewaymanagementapi": "^3.821.0",
-        "@aws-sdk/client-dynamodb": "^3.821.0",
         "@aws-sdk/client-s3": "^3.744.0",
-        "@aws-sdk/lib-dynamodb": "^3.821.0",
         "@lucia-auth/adapter-prisma": "^4.0.1",
         "@pilcrowjs/object-parser": "^0.0.4",
         "@prisma/client": "5.22.0",
