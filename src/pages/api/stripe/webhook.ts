@@ -26,7 +26,7 @@ export default async function handler(
         event = await stripe.webhooks.constructEventAsync(
             buf,
             sig,
-            env.STRIPE_WEBHOOK_SECRET
+            "we_1RQzKaEKzrq4BNS54beKRjF4"
         );
     } catch (err) {
         console.error("❌ Signature verification failed:", err);
