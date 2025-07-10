@@ -18,6 +18,7 @@ function toBuffer(readable: Readable): Promise<Buffer> {
 }
 
 export async function POST(req: Request) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const readable = Readable.fromWeb(req.body! as any);
     const body = await toBuffer(readable);
     const sig = req.headers.get("stripe-signature")!;
