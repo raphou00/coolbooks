@@ -5,11 +5,7 @@ import env from "@/lib/env";
 import db from "@/lib/db";
 import { headers } from "next/headers";
 
-export const config = {
-    api: {
-        bodyParser: false,
-    },
-};
+export const runtime = "nodejs";
 
 export const POST = async (req: NextRequest) => {
     try {

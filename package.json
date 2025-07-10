@@ -20,7 +20,8 @@
         "destroy:prod": "bun run pulumi:login && cd aws && pulumi down --stack prod -y",
         "type-check": "tsc --noEmit",
         "fmt:write": "prettier --write \"**/*.{ts,tsx,mdx,json}\" --cache --experimental-ternaries",
-        "fmt:check": "prettier --check \"**/*.{ts,tsx,mdx,json}\" --cache"
+        "fmt:check": "prettier --check \"**/*.{ts,tsx,mdx,json}\" --cache",
+        "wip": "bun run fmt:write && git add . && git commit -m \"WIP\" && git push"
     },
     "dependencies": {
         "@aws-sdk/client-apigatewaymanagementapi": "^3.821.0",
@@ -93,7 +94,7 @@
         "eslint": "^8",
         "eslint-config-next": "14.2.14",
         "eslint-config-prettier": "^9.1.0",
-        "eslint-plugin-react-compiler": "^0.0.0-experimental-7c1344f-20241009",
+        "eslint-plugin-react-compiler": "^19.1.0-rc.2",
         "eslint-plugin-tailwindcss": "^3.17.5",
         "mime": "^4.0.4",
         "postcss": "^8.5.6",

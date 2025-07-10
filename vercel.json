@@ -4,5 +4,10 @@
             "path": "/api/cleanup-sessions",
             "schedule": "0 2 * * 0"
         }
-    ]
+    ],
+    "functions": {
+        "api/stripe/webhook/route.ts": {
+            "runtime": "nodejs18.x"
+        }
+    }
 }

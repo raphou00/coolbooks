@@ -91,7 +91,7 @@ export default createEnv({
         NEXT_PUBLIC_WEBSOCKET_URL: z
             .string()
             .min(1, { message: "Websocket URL is missing" }),
-        
+
         NEXT_PUBLIC_STRIPE_PRODUCT_ID: z
             .string()
             .min(1, { message: "Stripe Product ID is missing" }),
@@ -119,7 +119,8 @@ export default createEnv({
             process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
         STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
         STRIPE_WEBHOOK_SECRET: process.env.STRIPE_WEBHOOK_SECRET,
-        NEXT_PUBLIC_STRIPE_PRODUCT_ID: process.env.NEXT_PUBLIC_STRIPE_PRODUCT_ID,
+        NEXT_PUBLIC_STRIPE_PRODUCT_ID:
+            process.env.NEXT_PUBLIC_STRIPE_PRODUCT_ID,
         GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
         GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
         DISCORD_CLIENT_ID: process.env.DISCORD_CLIENT_ID,
