@@ -1,2 +1,4 @@
+import env from "@/lib/env";
+
 export const currency = "USD" as const;
-export const productId = "prod_SXzHsKKF1RGk4r" as const;
+export const productId = env.STRIPE_PRODUCT_ID;

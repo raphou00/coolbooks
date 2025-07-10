@@ -4,9 +4,6 @@ import type Stripe from "stripe";
 import env from "@/lib/env";
 import db from "@/lib/db";
 import { headers } from "next/headers";
-import { Readable } from "stream";
-
-export const runtime = "nodejs";
 
 export const config = {
     api: {
@@ -14,27 +11,11 @@ export const config = {
     },
 };
 
-function toBuffer(readable: Readable): Promise<Buffer> {
-    return new Promise((resolve, reject) => {
-        const chunks: Buffer[] = [];
-        readable.on("data", (chunk) => chunks.push(Buffer.from(chunk)));
-        readable.on("end", () => resolve(Buffer.concat(chunks)));
-        readable.on("error", reject);
-    });
-}
-
 export const POST = async (req: NextRequest) => {
     try {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const readable = Readable.fromWeb(req.body as any);
-        const body = await toBuffer(readable);
-        const payload = body.toString();
+        const payload = await req.text();
         const header = await headers();
         const signature = header.get("stripe-signature") as string;
-
-        console.log("Signature:", signature);
-        console.log("Payload:", payload);
-        console.log("Webhook secret:", env.STRIPE_WEBHOOK_SECRET);
 
         let event: Stripe.Event;
         try {
@@ -54,20 +35,26 @@ export const POST = async (req: NextRequest) => {
         const customerId = subscription.customer;
 
         if (!customerId) {
-            return NextResponse.json({
-                error: "Missing customer ID",
-            });
+            console.error("Missing customer ID");
+            return NextResponse.json(
+                { error: "Missing customer ID" },
+                { status: 400 }
+            );
         }
 
         const stripeUser = await stripe.customers.retrieve(
             customerId as string
         );
         const stripeUserEmail = (stripeUser as Stripe.Customer).email;
+        console.log("stripeUserEmail", stripeUserEmail);
+        
 
         if (!stripeUserEmail) {
-            return NextResponse.json({
-                error: "Missing user",
-            });
+            console.error("Missing user");
+            return NextResponse.json(
+                { error: "Missing user" },
+                { status: 400 }
+            );
         }
 
         const user = await db.user.findUnique({
@@ -77,9 +64,11 @@ export const POST = async (req: NextRequest) => {
         });
 
         if (!user) {
-            return NextResponse.json({
-                error: "Missing user",
-            });
+            console.error("Missing user");
+            return NextResponse.json(
+                { error: "Missing user" },
+                { status: 400 }
+            );
         }
 
         switch (event.type) {
@@ -94,8 +83,9 @@ export const POST = async (req: NextRequest) => {
         return NextResponse.json({ received: true });
     } catch (err) {
         console.error(err);
-        return NextResponse.json({
-            error: "Something went wrong",
-        });
+        return NextResponse.json(
+            { error: "Something went wrong" },
+            { status: 500 }
+        );
     }
 };
