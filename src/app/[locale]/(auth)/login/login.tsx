@@ -28,7 +28,7 @@ const Login: React.FC = () => {
         formState: { isSubmitting: loading },
     } = useForm<LoginSchema>();
     const searchParams = useSearchParams();
-    const redirect = searchParams.get("redirect");
+    const redirect = searchParams?.get("redirect");
 
     const submit = async (data: LoginSchema) => {
         const res = await handleFormPost<LoginSchema>(`/api/auth/login`, data);

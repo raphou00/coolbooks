@@ -28,7 +28,7 @@ const Register: React.FC = () => {
         formState: { isSubmitting: loading },
     } = useForm<RegisterSchema>();
     const searchParams = useSearchParams();
-    const redirect = searchParams.get("redirect");
+    const redirect = searchParams?.get("redirect");
 
     const submit = async (data: RegisterSchema) => {
         const res = await handleFormPost<RegisterSchema>(

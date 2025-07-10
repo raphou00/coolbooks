@@ -33,7 +33,7 @@ const Explore: React.FC<ExploreProps> = ({ allMedias, user }) => {
     const sorts = useGetSorts();
     const [sort, setSort] = useState<(typeof sorts)[number]>(sorts[0]);
     const searchParams = useSearchParams();
-    const q = searchParams.get("q") || "";
+    const q = searchParams?.get("q") || "";
 
     const applyFilters = (
         searchTerm: string,

@@ -14,13 +14,13 @@ const Page = () => {
     const [message, setMessage] = useState<string>("");
 
     useEffect(() => {
-        if (searchParams.get("error") === "403") {
+        if (searchParams?.get("error") === "403") {
             setMessage(t("forbidden"));
-        } else if (searchParams.get("error") === "429") {
+        } else if (searchParams?.get("error") === "429") {
             setMessage(t("too-many-requests"));
-        } else if (searchParams.get("error") === "400") {
+        } else if (searchParams?.get("error") === "400") {
             setMessage(t("bad-request"));
-        } else if (searchParams.get("error") === "500") {
+        } else if (searchParams?.get("error") === "500") {
             setMessage(t("server-error"));
         } else {
             setMessage(t("server-error"));

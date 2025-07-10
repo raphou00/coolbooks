@@ -17,9 +17,9 @@ import { redirect } from "next/navigation";
 const ResetPassword: React.FC = () => {
     const t = useTranslations("pages.social-exists");
     const searchParams = useSearchParams();
-    const name = searchParams.get("name");
-    const googleId = searchParams.get("googleId");
-    const discordId = searchParams.get("discordId");
+    const name = searchParams?.get("name");
+    const googleId = searchParams?.get("googleId");
+    const discordId = searchParams?.get("discordId");
     const [state, setState] = useState<ActionsState<SocialExistsSchema>>({
         success: false,
         message: undefined,

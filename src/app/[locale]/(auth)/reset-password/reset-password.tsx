@@ -25,7 +25,7 @@ const ResetPassword: React.FC = () => {
         formState: { isSubmitting: loading },
     } = useForm<ResetPasswordSchema>();
     const searchParams = useSearchParams();
-    const code = searchParams.get("code");
+    const code = searchParams?.get("code");
 
     const submit = async (data: ResetPasswordSchema) => {
         const res = await handleFormPost<ResetPasswordSchema>(

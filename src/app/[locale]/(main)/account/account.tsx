@@ -77,8 +77,8 @@ export const AccoutMenu: React.FC<AccoutProps> = ({ user, children }) => {
 
                 <div className="w-full hidden max-md:block mt-2">
                     <Select
-                        defaultValue={pathname}
-                        value={pathname}
+                        defaultValue={pathname ?? ""}
+                        value={pathname ?? ""}
                         onValueChange={(l) => router.push(l)}
                     >
                         <SelectTrigger className="w-full">
