@@ -138,7 +138,7 @@ const Medias: React.FC<MediasProps> = ({ user, medias }) => {
                                 className="shadow-md"
                                 onClick={() => openModal(media)}
                             >
-                                {media.images.length > 0 ?
+                                {/* {media.images.length > 0 ?
                                     <GirlImage
                                         image={media.images[0]}
                                         user={user}
@@ -148,7 +148,7 @@ const Medias: React.FC<MediasProps> = ({ user, medias }) => {
                                         video={media.videos[0]}
                                         user={user}
                                     />
-                                :   null}
+                                :   null} */}
                             </div>
                         </div>
                     ))}
