@@ -47,7 +47,6 @@ export const POST = async (req: NextRequest) => {
         );
         const stripeUserEmail = (stripeUser as Stripe.Customer).email;
         console.log("stripeUserEmail", stripeUserEmail);
-        
 
         if (!stripeUserEmail) {
             console.error("Missing user");
