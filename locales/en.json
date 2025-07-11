@@ -229,7 +229,8 @@
         "message-sent": "Message successfully sent",
         "min-amount": "Minimum amount is {min}",
         "max-amount": "Maximum amount is {max}",
-        "billing": "Manage your subscriptions"
+        "billing": "Manage your subscriptions",
+        "loginLike": "You need to login first"
     },
     "links": {
         "login": "Login",

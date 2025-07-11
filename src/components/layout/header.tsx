@@ -61,7 +61,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                     className="drawer-toggle"
                 />
                 <div className="drawer-content flex flex-col">
-                    <header className="sticky w-full top-0 z-40">
+                    <header className="sticky w-full top-0 z-[999]">
                         <div
                             className={cn(
                                 "navbar mx-auto bg-base-100 transition backdrop-blur-3xl max-w-7xl w-full px-4 md:px-6 lg:px-8 xl:px-12",

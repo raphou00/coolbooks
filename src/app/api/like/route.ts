@@ -1,21 +1,23 @@
-import { NextResponse, type NextRequest } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 import { getTranslations } from "next-intl/server";
 import db from "@/lib/db";
 import { getUser } from "@/lib/auth";
+import { ratelimitBase } from "@/lib/rate-limiter";
 
 export async function POST(req: NextRequest) {
     const t = await getTranslations({
         locale: req.cookies.get("NEXT_LOCALE")!.value,
     });
     try {
-        const body = await req.json();
-        const mediaId = body.mediaId;
+        const identifier = req.headers.get("x-forwarded-for");
 
-        if (!mediaId) {
-            return NextResponse.json({
-                success: false,
-                message: t("messages.bad-request"),
-            });
+        if (!identifier) {
+            return NextResponse.redirect(new URL("/error?error=403", req.url));
+        }
+
+        const { success } = await ratelimitBase.limit(identifier);
+        if (!success) {
+            return NextResponse.redirect(new URL("/error?error=429", req.url));
         }
 
         const user = await getUser();
@@ -27,53 +29,93 @@ export async function POST(req: NextRequest) {
             });
         }
 
-        const isLiked = user.user.likedMedias.includes(mediaId);
+        const { mediaId, action } = await req.json();
 
-        if (isLiked) {
-            await db.$transaction([
-                db.user.update({
-                    where: { id: user.user.id },
-                    data: {
-                        likedMedias: user.user.likedMedias.filter(
-                            (id) => id !== mediaId
-                        ),
-                    },
-                }),
-                db.media.update({
-                    where: { id: mediaId },
-                    data: {
-                        likes: { decrement: 1 },
-                    },
-                }),
-            ]);
-
+        if (!mediaId || !action) {
             return NextResponse.json({
-                liked: false,
-                message: "Media unliked successfully",
-            });
-        } else {
-            await db.$transaction([
-                db.user.update({
-                    where: { id: user.user.id },
-                    data: {
-                        likedMedias: [...user.user.likedMedias, mediaId],
-                    },
-                }),
-                db.media.update({
-                    where: { id: mediaId },
-                    data: {
-                        likes: { increment: 1 },
-                    },
-                }),
-            ]);
-
-            return NextResponse.json({
-                liked: true,
-                message: "Media liked successfully",
+                success: false,
+                message: t("messages.unauthorized"),
             });
         }
-    } catch (err) {
-        console.error(err);
+
+        if (action !== "like" && action !== "unlike") {
+            return NextResponse.json({
+                success: false,
+                message: t("messages.unauthorized"),
+            });
+        }
+
+        const media = await db.media.findUnique({
+            where: { id: mediaId },
+        });
+
+        if (!media) {
+            return NextResponse.json({
+                success: false,
+                message: t("messages.unauthorized"),
+            });
+        }
+
+        const currentUser = await db.user.findUnique({
+            where: { id: user.user.id },
+            select: { likedMedias: true },
+        });
+
+        if (!currentUser) {
+            return NextResponse.json({
+                success: false,
+                message: t("messages.unauthorized"),
+            });
+        }
+
+        const isCurrentlyLiked = currentUser.likedMedias.includes(mediaId);
+
+        if (action === "like" && !isCurrentlyLiked) {
+            await db.$transaction([
+                db.media.update({
+                    where: { id: mediaId },
+                    data: { likes: { increment: 1 } },
+                }),
+                db.user.update({
+                    where: { id: user.user.id },
+                    data: {
+                        likedMedias: {
+                            push: mediaId,
+                        },
+                    },
+                }),
+            ]);
+        } else if (action === "unlike" && isCurrentlyLiked) {
+            const updatedLikedMedias = currentUser.likedMedias.filter(
+                (id) => id !== mediaId
+            );
+
+            await db.$transaction([
+                db.media.update({
+                    where: { id: mediaId },
+                    data: { likes: { decrement: 1 } },
+                }),
+                db.user.update({
+                    where: { id: user.user.id },
+                    data: {
+                        likedMedias: updatedLikedMedias,
+                    },
+                }),
+            ]);
+        }
+
+        const updatedMedia = await db.media.findUnique({
+            where: { id: mediaId },
+            select: { likes: true },
+        });
+
+        return NextResponse.json({
+            success: true,
+            likes: updatedMedia?.likes || 0,
+            action: action,
+        });
+    } catch (error) {
+        console.error(error);
         return NextResponse.json({
             success: false,
             message: t("messages.server-error"),

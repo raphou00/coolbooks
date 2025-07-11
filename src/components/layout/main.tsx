@@ -1,6 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
+import Gradient from "./gradient";
 
 type MainProps = {
     children?: React.ReactNode;
@@ -15,7 +16,9 @@ const Main: React.FC<MainProps> = ({ children, className }) => {
                 className
             )}
         >
+            {/* // <Gradient gradientVariant="heroGradient"> */}
             {children}
+            {/* // </Gradient> */}
         </main>
     );
 };

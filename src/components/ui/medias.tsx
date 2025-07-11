@@ -3,14 +3,14 @@
 import type { Media, Image, Video } from "@prisma/client";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ChevronLeft, ChevronRight, Heart, X } from "lucide-react";
+import { ChevronLeft, ChevronRight, Heart, Info, X } from "lucide-react";
 import type { User } from "lucia";
 import InfiniteScroll from "react-infinite-scroller";
 import GirlImage from "@/components/ui/girl-image";
 import GirlVideo from "@/components/ui/girl-video";
 import { cn, formatNumber } from "@/lib/utils";
-import useLike from "@/hook/use-like";
-import { redirect } from "next/navigation";
+import toast from "react-hot-toast";
+import { useTranslations } from "next-intl";
 
 export type MediaProps = Media & {
     images: Image[];
@@ -25,14 +25,28 @@ export type MediasProps = {
 const BASE_ELEMENTS = 20;
 
 const Medias: React.FC<MediasProps> = ({ user, medias }) => {
+    const t = useTranslations();
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [currentMedia, setCurrentMedia] = useState<number>(0);
     const [hasMore, setHasMore] = useState<boolean>(true);
     const [media, setMedia] = useState<MediaProps | null>(null);
-    const { liked, toggleLike } = useLike(user?.likedMedias || []);
     const [visibleMedias, setVisibleMedias] = useState<MediaProps[]>(
         medias.slice(0, BASE_ELEMENTS)
     );
+    const [likedMedias, setLikedMedias] = useState<Set<string>>(
+        new Set(user?.likedMedias || [])
+    );
+    const [likeCounts, setLikeCounts] = useState<Record<string, number>>(
+        medias.reduce(
+            (acc, media) => {
+                acc[media.id] = media.likes;
+                return acc;
+            },
+            {} as Record<string, number>
+        )
+    );
+    const [isLiking, setIsLiking] = useState<Record<string, boolean>>({});
+
     const mediaCount = media ? media.images.length + media.videos.length : 0;
 
     useEffect(() => {
@@ -50,7 +64,87 @@ const Medias: React.FC<MediasProps> = ({ user, medias }) => {
 
     useEffect(() => {
         setVisibleMedias(medias.slice(0, BASE_ELEMENTS));
+        setLikeCounts(
+            medias.reduce(
+                (acc, media) => {
+                    acc[media.id] = media.likes;
+                    return acc;
+                },
+                {} as Record<string, number>
+            )
+        );
     }, [medias]);
+
+    const handleLike = async (mediaId: string) => {
+        if (!user || isLiking[mediaId]) {
+            toast(t("messages.loginLike"), {
+                icon: <Info className="text-blue-400" />,
+            });
+            return;
+        }
+
+        setIsLiking((prev) => ({ ...prev, [mediaId]: true }));
+
+        const isCurrentlyLiked = likedMedias.has(mediaId);
+        const newLikedMedias = new Set(likedMedias);
+
+        if (isCurrentlyLiked) {
+            newLikedMedias.delete(mediaId);
+            setLikeCounts((prev) => ({
+                ...prev,
+                [mediaId]: prev[mediaId] - 1,
+            }));
+        } else {
+            newLikedMedias.add(mediaId);
+            setLikeCounts((prev) => ({
+                ...prev,
+                [mediaId]: prev[mediaId] + 1,
+            }));
+        }
+
+        setLikedMedias(newLikedMedias);
+
+        try {
+            const response = await fetch("/api/like", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    mediaId,
+                    action: isCurrentlyLiked ? "unlike" : "like",
+                }),
+            });
+
+            if (!response.ok) {
+                throw new Error("Failed to update like");
+            }
+
+            const data = await response.json();
+
+            setLikeCounts((prev) => ({ ...prev, [mediaId]: data.likes }));
+        } catch (error) {
+            console.error("Error updating like:", error);
+
+            // Revert optimistic update on error
+            if (isCurrentlyLiked) {
+                newLikedMedias.add(mediaId);
+                setLikeCounts((prev) => ({
+                    ...prev,
+                    [mediaId]: prev[mediaId] + 1,
+                }));
+            } else {
+                newLikedMedias.delete(mediaId);
+                setLikeCounts((prev) => ({
+                    ...prev,
+                    [mediaId]: prev[mediaId] - 1,
+                }));
+            }
+            setLikedMedias(newLikedMedias);
+        } finally {
+            setIsLiking((prev) => ({ ...prev, [mediaId]: false }));
+        }
+    };
 
     const openModal = (media: MediaProps) => {
         setMedia(media);
@@ -61,11 +155,6 @@ const Medias: React.FC<MediasProps> = ({ user, medias }) => {
         setIsModalOpen(false);
         setMedia(null);
         setCurrentMedia(0);
-    };
-
-    const handleLike = (id: string) => {
-        if (!user) return redirect("/login");
-        toggleLike(id);
     };
 
     const nextMedia = () => {
@@ -111,44 +200,53 @@ const Medias: React.FC<MediasProps> = ({ user, medias }) => {
                 loader={<Loading key="loading" />}
             >
                 <div className="columns-2 md:columns-3 lg:columns-4 gap-0">
-                    {visibleMedias.map((media) => (
+                    {visibleMedias.map((mediaItem) => (
                         <div
-                            key={media.id}
+                            key={mediaItem.id}
                             className="m-[0.5px] py-[0.5px] overflow-hidden rounded-sm relative"
                         >
                             <div className="pointer-events-none absolute right-0 left-0 top-0 h-12 w-full bg-gradient-to-b from-neutral-950/50 to-neutral-950/0 z-30" />
                             <div className="absolute top-0 left-0 z-50 w-full m-2">
                                 <button
-                                    onClick={() => handleLike(media.id)}
-                                    className="flex items-center gap-1 cursor-pointer"
+                                    className="flex items-center gap-1 cursor-pointer hover:scale-105 transition-transform"
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleLike(mediaItem.id);
+                                    }}
                                 >
                                     <Heart
                                         className={cn(
-                                            "size-6 text-primary",
-                                            liked.includes(media.id) &&
-                                                "fill-primary"
+                                            "size-6 transition-colors",
+                                            likedMedias.has(mediaItem.id) ?
+                                                "text-red-500 fill-red-500"
+                                            :   "text-primary",
+                                            isLiking[mediaItem.id] &&
+                                                "animate-pulse"
                                         )}
                                     />
                                     <span className="text-white">
-                                        {formatNumber(media.likes)}
+                                        {formatNumber(
+                                            likeCounts[mediaItem.id] ||
+                                                mediaItem.likes
+                                        )}
                                     </span>
                                 </button>
                             </div>
                             <div
-                                className="shadow-md"
-                                onClick={() => openModal(media)}
+                                className="shadow-md cursor-pointer"
+                                onClick={() => openModal(mediaItem)}
                             >
-                                {/* {media.images.length > 0 ?
+                                {mediaItem.images.length > 0 ?
                                     <GirlImage
-                                        image={media.images[0]}
+                                        image={mediaItem.images[0]}
                                         user={user}
                                     />
-                                : media.videos.length > 0 ?
+                                : mediaItem.videos.length > 0 ?
                                     <GirlVideo
-                                        video={media.videos[0]}
+                                        video={mediaItem.videos[0]}
                                         user={user}
                                     />
-                                :   null} */}
+                                :   null}
                             </div>
                         </div>
                     ))}
@@ -172,17 +270,34 @@ const Medias: React.FC<MediasProps> = ({ user, medias }) => {
                                         .join(" ")}
                                 </p>
                                 <button
-                                    onClick={() => handleLike(media.id)}
-                                    className="mt-2 flex items-center gap-1 cursor-pointer"
+                                    className="mt-2 flex items-center gap-1 cursor-pointer hover:scale-105 transition-transform"
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleLike(media.id);
+                                    }}
                                 >
                                     <Heart
                                         className={cn(
-                                            "size-6 text-primary",
-                                            liked.includes(media.id) &&
-                                                "fill-primary"
+                                            "size-6 transition-colors",
+                                            likedMedias.has(media.id) ?
+                                                "text-red-500 fill-red-500"
+                                            :   "text-primary",
+                                            isLiking[media.id] &&
+                                                "animate-pulse"
                                         )}
                                     />
-                                    {formatNumber(media.likes)}
+                                    <span
+                                        className={cn(
+                                            "transition-colors",
+                                            likedMedias.has(media.id) ?
+                                                "text-red-500"
+                                            :   ""
+                                        )}
+                                    >
+                                        {formatNumber(
+                                            likeCounts[media.id] || media.likes
+                                        )}
+                                    </span>
                                 </button>
                             </div>
                             <button
