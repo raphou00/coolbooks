@@ -6,7 +6,7 @@ import { ratelimitBase } from "@/lib/rate-limiter";
 
 export async function POST(req: NextRequest) {
     const t = await getTranslations({
-        locale: req.cookies.get("NEXT_LOCALE")!.value,
+        locale: req.cookies.get("NEXT_LOCALE")?.value || "en",
     });
     try {
         const identifier = req.headers.get("x-forwarded-for");

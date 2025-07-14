@@ -7,7 +7,7 @@ import db from "@/lib/db";
 
 export const GET = async (req: NextRequest) => {
     const t = await getTranslations({
-        locale: req.cookies.get("NEXT_LOCALE")!.value,
+        locale: req.cookies.get("NEXT_LOCALE")?.value || "en",
     });
     try {
         const searchParams = req.nextUrl.searchParams;

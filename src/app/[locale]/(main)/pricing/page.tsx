@@ -23,7 +23,7 @@ const Page = async () => {
     const user = await getUser();
 
     return (
-        <Main className="mt-8">
+        <Main className="mt-8" gradientVariant="floatingGradient">
             <Pricing user={user?.user || null} sub={subscription} />
         </Main>
     );

@@ -77,9 +77,11 @@ const Medias: React.FC<MediasProps> = ({ user, medias }) => {
 
     const handleLike = async (mediaId: string) => {
         if (!user || isLiking[mediaId]) {
-            toast(t("messages.loginLike"), {
-                icon: <Info className="text-blue-400" />,
-            });
+            if (!user) {
+                toast(t("messages.loginLike"), {
+                    icon: <Info className="text-blue-400" />,
+                });
+            }
             return;
         }
 
@@ -126,7 +128,6 @@ const Medias: React.FC<MediasProps> = ({ user, medias }) => {
         } catch (error) {
             console.error("Error updating like:", error);
 
-            // Revert optimistic update on error
             if (isCurrentlyLiked) {
                 newLikedMedias.add(mediaId);
                 setLikeCounts((prev) => ({
@@ -218,7 +219,7 @@ const Medias: React.FC<MediasProps> = ({ user, medias }) => {
                                         className={cn(
                                             "size-6 transition-colors",
                                             likedMedias.has(mediaItem.id) ?
-                                                "text-red-500 fill-red-500"
+                                                "text-primary fill-primary"
                                             :   "text-primary",
                                             isLiking[mediaItem.id] &&
                                                 "animate-pulse"
@@ -280,7 +281,7 @@ const Medias: React.FC<MediasProps> = ({ user, medias }) => {
                                         className={cn(
                                             "size-6 transition-colors",
                                             likedMedias.has(media.id) ?
-                                                "text-red-500 fill-red-500"
+                                                "text-primary fill-primary"
                                             :   "text-primary",
                                             isLiking[media.id] &&
                                                 "animate-pulse"
@@ -290,7 +291,7 @@ const Medias: React.FC<MediasProps> = ({ user, medias }) => {
                                         className={cn(
                                             "transition-colors",
                                             likedMedias.has(media.id) ?
-                                                "text-red-500"
+                                                "text-primary"
                                             :   ""
                                         )}
                                     >

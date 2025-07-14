@@ -6,7 +6,7 @@ import { ratelimitBasePost } from "@/lib/rate-limiter";
 
 export async function GET(req: NextRequest) {
     const t = await getTranslations({
-        locale: req.cookies.get("NEXT_LOCALE")!.value,
+        locale: req.cookies.get("NEXT_LOCALE")?.value || "en",
     });
     try {
         const user = await getUser();

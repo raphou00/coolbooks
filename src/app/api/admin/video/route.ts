@@ -5,7 +5,7 @@ import { createVideo } from "@/lib/media";
 
 export const POST = async (req: NextRequest) => {
     const t = await getTranslations({
-        locale: req.cookies.get("NEXT_LOCALE")!.value,
+        locale: req.cookies.get("NEXT_LOCALE")?.value || "en",
     });
     try {
         const formData = await req.formData();

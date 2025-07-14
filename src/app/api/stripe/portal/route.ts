@@ -7,7 +7,7 @@ import env from "@/lib/env";
 
 export const GET = async (req: NextRequest) => {
     const t = await getTranslations({
-        locale: req.cookies.get("NEXT_LOCALE")!.value,
+        locale: req.cookies.get("NEXT_LOCALE")?.value || "en",
     });
     try {
         const user = await getUser();
