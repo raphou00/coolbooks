@@ -11,7 +11,6 @@ import { useEffect, useState } from "react";
 export const WelcomeModal: React.FC = () => {
     const t = useTranslations("pages.home");
     const [isOpen, setIsOpen] = useState<boolean>(false);
-
     const [hasVisited, _setHasVisited] = useState<boolean>(() => {
         if (typeof localStorage === "undefined") return false;
         const hasVisited = localStorage.getItem("hasVisited");
@@ -21,6 +20,7 @@ export const WelcomeModal: React.FC = () => {
         }
         return true;
     });
+
     useEffect(() => {
         if (!hasVisited) setIsOpen(true);
     }, [hasVisited]);
@@ -34,11 +34,11 @@ export const WelcomeModal: React.FC = () => {
             >
                 <div className="p-5 flex flex-col items-center">
                     <Image
-                        src="/favicon-dark.svg"
+                        src="/images/welcome.png"
                         alt="favicon"
-                        className="z-50 w-60 h-auto mb-6"
-                        width={100}
-                        height={100}
+                        className="rounded-sm z-50 w-64 h-auto mb-6"
+                        width={900}
+                        height={650}
                     />
                     <Title
                         text={t("welcome-title", { name })}

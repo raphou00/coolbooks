@@ -73,3 +73,12 @@ html[data-theme="dark"] {
     -ms-overflow-style: none;
     scrollbar-width: none;
 }
+
+.mask-image-fade {
+  -webkit-mask-image: radial-gradient(circle, black 60%, transparent 100%);
+  mask-image: radial-gradient(circle, black 60%, transparent 100%);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+}
