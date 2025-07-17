@@ -19,26 +19,28 @@ import type { T } from "@/lib/types";
 type TemplateEmailProps = {
     t: T;
     title: string;
+    body: string;
     children: React.ReactNode;
 };
 
 const TemplateEmail: React.FC<TemplateEmailProps> = async ({
     t,
     title,
+    body,
     children,
 }) => {
     return (
         <Tailwind>
             <Html>
                 <Head />
-                <Preview>{title}</Preview>
+                <Preview>{body}</Preview>
                 <Body className="mx-auto my-0 bg-white">
                     <Container className="mx-auto my-0 max-w-2xl">
                         <Section className="mt-8">
                             <Img
-                                src={`${domain}/favicon.svg`}
-                                width="70px"
-                                height="20px"
+                                src={`${domain}/logotext.png`}
+                                width="70"
+                                height="20"
                                 alt="Logo"
                             />
                         </Section>
@@ -53,9 +55,9 @@ const TemplateEmail: React.FC<TemplateEmailProps> = async ({
                             <Row className="mb-8 w-full px-2">
                                 <Column className="w-">
                                     <Img
-                                        src={`${domain}/favicon.svg`}
-                                        width="70px"
-                                        height="20px"
+                                        src={`${domain}/favicon-96x96.png`}
+                                        width="50"
+                                        height="50"
                                         alt="Logo"
                                     />
                                 </Column>

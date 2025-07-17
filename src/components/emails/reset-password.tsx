@@ -8,7 +8,7 @@ import {
 } from "@react-email/components";
 import TemplateEmail from "./template";
 import type { T } from "@/lib/types";
-import env from "@/lib/env";
+import { domain } from "@/config/seo";
 
 type ResetPasswordEmailProps = {
     t: T;
@@ -21,9 +21,13 @@ const ResetPasswordEmail: React.FC<ResetPasswordEmailProps> = async ({
     code,
     name,
 }) => {
-    const link = new URL(`/reset-password?code=${code}`, env.APP_URL!);
+    const link = new URL(`/reset-password?code=${code}`, domain);
     return (
-        <TemplateEmail t={t} title={t("emails.forgot-password.title")}>
+        <TemplateEmail
+            t={t}
+            title={t("emails.forgot-password.title")}
+            body={t("emails.forgot-password.body")}
+        >
             <Section>
                 <Container>
                     <Column>

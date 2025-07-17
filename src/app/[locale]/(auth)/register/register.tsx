@@ -51,10 +51,14 @@ const Register: React.FC = () => {
     };
 
     return (
-        <Form title={t("title")} description={t("description")}>
+        <Form
+            title={t("title")}
+            description={t("description")}
+            className="w-full"
+        >
             <form
                 onSubmit={handleSubmit(submit)}
-                className="w-full flex flex-col gap-y-2"
+                className="w-full min-w-sm flex flex-col gap-y-2"
             >
                 <div className="flex justify-between gap-x-2">
                     <button

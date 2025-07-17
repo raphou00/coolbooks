@@ -6,7 +6,7 @@ import { putObject } from "./file";
 import db from "./db";
 import env from "./env";
 
-const blur = 100;
+const blur = 70;
 
 export const getS3 = (key: string) => {
     return `https://${env.BUCKET_NAME}.s3.${env.AWS_REGION}.amazonaws.com/${key}`;

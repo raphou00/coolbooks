@@ -17,6 +17,9 @@ const Page = async () => {
 
     const allMedias = await db.media.findMany({
         select: findAllMedias,
+        orderBy: {
+            createdAt: "desc",
+        },
     });
 
     return (

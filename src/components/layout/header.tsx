@@ -68,7 +68,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                 scroll && "bg-base-100/80 backdrop-blur-3xl"
                             )}
                         >
-                            <div className="navbar mx-auto transition max-w-7xl w-full px-4 md:px-6 lg:px-8 xl:px-12">
+                            <div className="navbar min-h-14 py-0 mx-auto transition max-w-7xl w-full px-4 md:px-6 lg:px-8 xl:px-12">
                                 <div className="navbar-start">
                                     <label
                                         htmlFor="my-drawer-3"
