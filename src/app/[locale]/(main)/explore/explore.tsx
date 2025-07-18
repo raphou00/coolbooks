@@ -43,7 +43,6 @@ const Explore: React.FC<ExploreProps> = ({ allMedias, user }) => {
     ) => {
         let filteredMedias = [...allMedias];
 
-        // Apply favorites filter first
         if (favoritesOnly && user?.likedMedias) {
             filteredMedias = filteredMedias.filter((media) =>
                 user.likedMedias.includes(media.id)

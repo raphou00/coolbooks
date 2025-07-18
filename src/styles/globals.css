@@ -65,6 +65,10 @@ html[data-theme="dark"] {
     @apply bg-primary text-primary-content;
 }
 
+.button:focus {
+    @apply border-none
+}
+
 .no-scrollbar::-webkit-scrollbar {
     display: none;
 }

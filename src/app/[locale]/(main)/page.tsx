@@ -23,7 +23,7 @@ const Page = async () => {
     });
 
     return (
-        <Main className="flex">
+        <Main className="block">
             <div className="mb-6 mt-1">
                 <div className="flex items-center justify-start max-sm:justify-between gap-x-4 mb-6">
                     <div className="flex items-center gap-x-2">
@@ -41,11 +41,11 @@ const Page = async () => {
                         <ArrowRight className="size-5 transition group-hover:translate-x-1" />
                     </Link>
                 </div>
-                <Medias
-                    medias={allMedias as MediaProps[]}
-                    user={user?.user || null}
-                />
             </div>
+            <Medias
+                medias={allMedias as MediaProps[]}
+                user={user?.user || null}
+            />
             <WelcomeModal />
         </Main>
     );

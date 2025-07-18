@@ -61,7 +61,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                     className="drawer-toggle"
                 />
                 <div className="drawer-content flex flex-col">
-                    <header className="sticky w-full top-0 z-[999]">
+                    <header className="fixed w-full top-0 z-60">
                         <div
                             className={cn(
                                 "w-full",
@@ -180,7 +180,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                         </span>
                                     </Link>
 
-                                    <div className="dropdown dropdown-end dropdown-bottom dropdown-hover flex items-center size-12  z-[100]">
+                                    <div className="dropdown dropdown-end dropdown-bottom dropdown-hover flex items-center size-12 z-100">
                                         <div
                                             role="button"
                                             tabIndex={0}
@@ -201,7 +201,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                             tabIndex={0}
                                             className="dropdown-content pt-2 !z-[1]"
                                         >
-                                            <div className="space-y-1 rounded-xl bg-base-200 p-2 border border-neutral/20 shadow-xl w-72 z-[2]">
+                                            <div className="space-y-1 rounded-xl bg-base-200 p-2 border border-neutral/20 shadow-xl w-72 z-100">
                                                 {user ?
                                                     <>
                                                         <div className="my-2 flex flex-col items-center justify-center gap-y-2">

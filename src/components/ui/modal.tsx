@@ -18,6 +18,19 @@ const Modal: React.FC<ModalProps> = ({
     children,
     className,
 }) => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+        if (event.key === "Escape") {
+            setIsOpen(false);
+        }
+    };
+
+    useEffect(() => {
+        window.addEventListener("keydown", handleKeyDown);
+        return () => {
+            window.removeEventListener("keydown", handleKeyDown);
+        };
+    });
+
     useEffect(() => {
         if (isOpen) {
             document.body.style.overflow = "hidden";
@@ -34,7 +47,7 @@ const Modal: React.FC<ModalProps> = ({
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     onClick={() => setIsOpen(false)}
-                    className="fixed inset-0 h-screen w-full flex items-center justify-center z-[10000000] cursor-pointer bg-base-300/20 backdrop-blur sm:p-2"
+                    className="fixed inset-0 h-screen w-full flex items-center justify-center z-[999] cursor-pointer bg-base-300/20 backdrop-blur sm:p-2"
                 >
                     <motion.div
                         initial={{ scale: 0, rotate: "12.5deg" }}
@@ -42,17 +55,17 @@ const Modal: React.FC<ModalProps> = ({
                         exit={{ scale: 0, rotate: "0deg" }}
                         onClick={(e) => e.stopPropagation()}
                         className={cn(
-                            "relative w-fit max-w-2xl max-sm:w-screen max-sm:h-screen cursor-default sm:rounded-2xl bg-base-100 p-6 shadow-xl",
+                            "relative z-[999] w-fit max-w-2xl max-sm:w-screen max-sm:h-screen cursor-default sm:rounded-2xl bg-base-100 p-6 shadow-xl",
                             className
                         )}
                     >
                         <button
-                            className="absolute right-0 top-0 m-2 btn btn-ghost btn-square btn-sm"
+                            className="absolute right-0 top-0 m-2 btn btn-ghost btn-square btn-sm z-50"
                             onClick={() => setIsOpen(false)}
                         >
                             <X />
                         </button>
-                        <div className="relative z-10">{children}</div>
+                        <div className="relative z-[999]">{children}</div>
                     </motion.div>
                 </motion.div>
             )}

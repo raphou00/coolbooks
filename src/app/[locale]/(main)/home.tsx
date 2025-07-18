@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 
 export const WelcomeModal: React.FC = () => {
     const t = useTranslations("pages.home");
-    const [isOpen, setIsOpen] = useState<boolean>(false);
+    const [_isOpen, setIsOpen] = useState<boolean>(false);
     const [hasVisited, _setHasVisited] = useState<boolean>(() => {
         if (typeof localStorage === "undefined") return false;
         const hasVisited = localStorage.getItem("hasVisited");
@@ -28,9 +28,9 @@ export const WelcomeModal: React.FC = () => {
     return (
         <>
             <Modal
-                isOpen={isOpen}
+                isOpen={false}
                 setIsOpen={setIsOpen}
-                className="z-100 w-full h-fit p-6"
+                className="z-100 w-full"
             >
                 <div className="p-5 flex flex-col items-center">
                     <Image

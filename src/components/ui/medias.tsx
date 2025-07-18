@@ -260,10 +260,10 @@ const Medias: React.FC<MediasProps> = ({ user, medias }) => {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="fixed inset-0 h-screen w-full flex items-center justify-center z-[10000000000] bg-base-300/50 backdrop-blur-lg sm:p-2"
+                        className="fixed inset-0 h-screen w-full flex items-center justify-center z-[9999] bg-base-300/50 backdrop-blur-lg sm:p-2"
                     >
-                        <div className="absolute left-0 top-0 p-4 w-full flex justify-between">
-                            <div className="">
+                        <div className="absolute left-0 top-0 p-4 w-full flex justify-between z-[9999]">
+                            <div>
                                 <p className="text-lg">{media.description}</p>
                                 <p className="text-sm text-neutral">
                                     {media.tags
