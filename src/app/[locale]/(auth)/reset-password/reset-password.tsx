@@ -37,10 +37,7 @@ const ResetPassword: React.FC = () => {
 
     return (
         <Form title={t("title")} description={t("description")}>
-            <form
-                onSubmit={handleSubmit(submit)}
-                className="w-full min-w-md flex flex-col gap-y-2"
-            >
+            <form onSubmit={handleSubmit(submit)} className="w-full max-w-md">
                 <FormReponse success={state.success} message={state.message} />
 
                 <FormInput

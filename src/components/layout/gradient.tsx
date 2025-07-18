@@ -250,7 +250,7 @@ const Gradient: React.FC<ComponentLayoutProps> = ({
 
     return (
         <>
-            <div className="z-50">{children}</div>
+            <div className="z-50 size-full">{children}</div>
             {gradient && (
                 <div className={cn("absolute z-30 inset-0")}>{gradient}</div>
             )}

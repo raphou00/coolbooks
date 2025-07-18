@@ -34,13 +34,13 @@ const TemplateEmail: React.FC<TemplateEmailProps> = async ({
             <Html>
                 <Head />
                 <Preview>{body}</Preview>
-                <Body className="mx-auto my-0 bg-white">
+                <Body className="mx-auto my-0 bg-stone-50">
                     <Container className="mx-auto my-0 max-w-2xl">
                         <Section className="mt-8">
                             <Img
                                 src={`${domain}/logotext.png`}
-                                width="70"
-                                height="20"
+                                width="140"
+                                height="40"
                                 alt="Logo"
                             />
                         </Section>
@@ -53,11 +53,11 @@ const TemplateEmail: React.FC<TemplateEmailProps> = async ({
 
                         <Section>
                             <Row className="mb-8 w-full px-2">
-                                <Column className="w-">
+                                <Column className="h-full flex justify-start">
                                     <Img
                                         src={`${domain}/favicon-96x96.png`}
-                                        width="50"
-                                        height="50"
+                                        width="40"
+                                        height="40"
                                         alt="Logo"
                                     />
                                 </Column>
@@ -98,7 +98,7 @@ const TemplateEmail: React.FC<TemplateEmailProps> = async ({
                                         >
                                             {t("links.contact")}
                                         </Link>
-                                        <Text className="mb-12 text-left text-xs text-gray-500">
+                                        <Text className="m-0 mt-2 text-left text-xs text-gray-500">
                                             &copy; {new Date().getFullYear()}{" "}
                                             {siteTitle}. {t("common.copyright")}
                                         </Text>

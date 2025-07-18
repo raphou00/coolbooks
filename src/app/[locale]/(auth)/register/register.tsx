@@ -56,10 +56,7 @@ const Register: React.FC = () => {
             description={t("description")}
             className="w-full"
         >
-            <form
-                onSubmit={handleSubmit(submit)}
-                className="w-full min-w-md flex flex-col gap-y-2"
-            >
+            <form onSubmit={handleSubmit(submit)} className="w-full max-w-md">
                 <div className="flex justify-between gap-x-2">
                     <button
                         type="button"
@@ -122,8 +119,8 @@ const Register: React.FC = () => {
 
                 <FormButton title={t("submit")} loading={loading} />
 
-                <div className="label">
-                    <span className="label-text-alt">
+                <div className="label w-full justify-between text-sm">
+                    <span className="floating-label">
                         <Link
                             href={`/login?redirect=${redirect}`}
                             className="link link-primary"
