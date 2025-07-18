@@ -58,7 +58,7 @@ const Register: React.FC = () => {
         >
             <form
                 onSubmit={handleSubmit(submit)}
-                className="w-full min-w-sm flex flex-col gap-y-2"
+                className="w-full min-w-md flex flex-col gap-y-2"
             >
                 <div className="flex justify-between gap-x-2">
                     <button

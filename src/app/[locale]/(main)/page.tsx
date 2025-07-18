@@ -23,7 +23,7 @@ const Page = async () => {
     });
 
     return (
-        <Main>
+        <Main className="flex">
             <div className="mb-6 mt-1">
                 <div className="flex items-center justify-start max-sm:justify-between gap-x-4 mb-6">
                     <div className="flex items-center gap-x-2">
