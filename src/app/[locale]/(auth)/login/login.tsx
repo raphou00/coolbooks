@@ -53,7 +53,10 @@ const Login: React.FC = () => {
             description={t("description")}
             className="w-full"
         >
-            <form onSubmit={handleSubmit(submit)} className="w-full max-w-md">
+            <form
+                onSubmit={handleSubmit(submit)}
+                className="w-full max-w-md space-y-2"
+            >
                 <div className="flex justify-between gap-x-2">
                     <button
                         type="button"

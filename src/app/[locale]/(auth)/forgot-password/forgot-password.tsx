@@ -34,7 +34,10 @@ const ForgotPassword: React.FC = () => {
 
     return (
         <Form title={t("title")} description={t("description")}>
-            <form onSubmit={handleSubmit(submit)} className="w-full max-w-md">
+            <form
+                onSubmit={handleSubmit(submit)}
+                className="w-full max-w-md space-y-2"
+            >
                 <FormReponse success={state.success} message={state.message} />
 
                 <FormInput

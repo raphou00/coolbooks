@@ -1,4 +1,5 @@
 import { getTranslations } from "next-intl/server";
+import type { routing } from "./navigation";
 
 export type ActionsState<T> = {
     success: boolean;
@@ -10,3 +11,5 @@ export type ActionsState<T> = {
 const _getT = async () => await getTranslations({ locale: "en" });
 
 export type T = Awaited<ReturnType<typeof _getT>>;
+
+export type Locale = (typeof routing.locales)[number];

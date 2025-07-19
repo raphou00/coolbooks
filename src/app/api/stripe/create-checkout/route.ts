@@ -4,10 +4,12 @@ import { stripe } from "@/lib/stripe";
 import { getUser } from "@/lib/auth";
 import env from "@/lib/env";
 import { productId } from "@/config/stripe";
+import type { Locale } from "@/lib/types";
 
 export const GET = async (req: NextRequest) => {
+    const locale = req.cookies.get("NEXT_LOCALE")?.value || ("en" as Locale);
     const t = await getTranslations({
-        locale: req.cookies.get("NEXT_LOCALE")?.value || "en",
+        locale,
     });
     try {
         const user = await getUser();
@@ -40,6 +42,7 @@ export const GET = async (req: NextRequest) => {
             cancel_url: `${env.APP_URL}/pricing`,
             customer: user.user.stripeCustomerId || undefined,
             client_reference_id: user.user.id,
+            locale: locale as Locale,
         });
 
         return NextResponse.json({
