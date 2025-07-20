@@ -23,12 +23,12 @@ const Footer: React.FC = () => {
                                 <LogoText className="w-auto h-8" />
                             </Link>
                             <div className="flex items-center gap-3">
-                                <Link href="/">
+                                <Link href="https://instagram.com/pinksea.love">
                                     <Instagram />
                                 </Link>
-                                <Link href="/">
+                                {/* <Link href="/">
                                     <Tiktok />
-                                </Link>
+                                </Link> */}
                             </div>
                         </div>
 
@@ -100,7 +100,7 @@ const Instagram: React.FC = () => {
     );
 };
 
-const Tiktok: React.FC = () => {
+const _Tiktok: React.FC = () => {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"

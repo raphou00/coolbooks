@@ -9,6 +9,7 @@ import { name } from "@/config/seo";
 import { getUser } from "@/lib/auth";
 import { WelcomeModal } from "./home";
 import Link from "next/link";
+import Image from "next/image";
 
 const Page = async () => {
     const t = await getTranslations("pages.home");
@@ -24,6 +25,55 @@ const Page = async () => {
 
     return (
         <Main className="block">
+            <div className="py-8">
+                <div className="hero-content justify-between p-0 flex-col lg:flex-row">
+                    <Image
+                        src="/images/welcome.png"
+                        className="max-w-sm rounded-lg shadow-2xl"
+                        alt="Welcome"
+                        width={900}
+                        height={900}
+                    />
+                    <div>
+                        <Title
+                            text={t("welcome-title", { name })}
+                            underline
+                            className="md:text-4xl text-3xl w-fit "
+                        />
+                        <p className="py-6">
+                            {t.rich("welcome-body", {
+                                name,
+                                n: () => <br />,
+                                register: (chunk) => (
+                                    <Link
+                                        href="/register"
+                                        className="link link-primary"
+                                    >
+                                        {chunk}
+                                    </Link>
+                                ),
+                                login: (chunk) => (
+                                    <Link
+                                        href="/login"
+                                        className="link link-primary"
+                                    >
+                                        {chunk}
+                                    </Link>
+                                ),
+                                pricing: (chunk) => (
+                                    <Link
+                                        href="/pricing"
+                                        className="link link-primary"
+                                    >
+                                        {chunk}
+                                    </Link>
+                                ),
+                            })}
+                        </p>
+                    </div>
+                    <div></div>
+                </div>
+            </div>
             <div className="mb-6 mt-1">
                 <div className="flex items-center justify-start max-sm:justify-between gap-x-4 mb-6">
                     <div className="flex items-center gap-x-2">
