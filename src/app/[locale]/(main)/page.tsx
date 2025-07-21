@@ -9,10 +9,10 @@ import { name } from "@/config/seo";
 import { getUser } from "@/lib/auth";
 import { WelcomeModal } from "./home";
 import Link from "next/link";
-import Image from "next/image";
 
 const Page = async () => {
     const t = await getTranslations("pages.home");
+    const t2 = await getTranslations("common");
 
     const user = await getUser();
 
@@ -24,52 +24,16 @@ const Page = async () => {
     });
 
     return (
-        <Main className="block">
+        <Main className="flex" gradientVariant="heroGradient">
             <div className="py-8">
-                <div className="hero-content justify-between p-0 flex-col lg:flex-row">
-                    <Image
-                        src="/images/welcome.png"
-                        className="max-w-sm rounded-lg shadow-2xl"
-                        alt="Welcome"
-                        width={900}
-                        height={900}
-                    />
+                <div className="hero-content justify-center text-center p-0 flex-col lg:flex-row">
                     <div>
                         <Title
-                            text={t("welcome-title", { name })}
+                            text={name}
                             underline
                             className="md:text-4xl text-3xl w-fit "
                         />
-                        <p className="py-6">
-                            {t.rich("welcome-body", {
-                                name,
-                                n: () => <br />,
-                                register: (chunk) => (
-                                    <Link
-                                        href="/register"
-                                        className="link link-primary"
-                                    >
-                                        {chunk}
-                                    </Link>
-                                ),
-                                login: (chunk) => (
-                                    <Link
-                                        href="/login"
-                                        className="link link-primary"
-                                    >
-                                        {chunk}
-                                    </Link>
-                                ),
-                                pricing: (chunk) => (
-                                    <Link
-                                        href="/pricing"
-                                        className="link link-primary"
-                                    >
-                                        {chunk}
-                                    </Link>
-                                ),
-                            })}
-                        </p>
+                        <p className="py-6">{t2("description")}</p>
                     </div>
                     <div></div>
                 </div>

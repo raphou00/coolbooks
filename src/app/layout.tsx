@@ -8,7 +8,6 @@ import env from "@/lib/env";
 import * as metadata from "@/config/seo";
 import RootProviders from "./providers";
 import "@/styles/globals.css";
-import { name } from "@/config/seo";
 
 const inter = Inter({
     subsets: ["latin"],
@@ -22,8 +21,8 @@ const generateMetadata = async (): Promise<Metadata> => {
             default: metadata.title,
             template: `%s ${String.fromCharCode(183)} ${metadata.title}`,
         },
-        description: t("description", { name }),
-        abstract: t("description", { name }),
+        description: t("description"),
+        abstract: t("description"),
         keywords: metadata.keywords,
         applicationName: metadata.title,
         category: metadata.category,
@@ -34,7 +33,7 @@ const generateMetadata = async (): Promise<Metadata> => {
             type: "website",
             title: metadata.title,
             siteName: metadata.title,
-            description: t("description", { name }),
+            description: t("description"),
             images: [
                 {
                     url: "/images/banner.png",
