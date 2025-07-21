@@ -152,7 +152,8 @@ const Medias: React.FC<MediasProps> = ({ user, medias }) => {
         setIsModalOpen(true);
     };
 
-    const handleCloseModal = () => {
+    const handleCloseModal = (e?: React.MouseEvent) => {
+        e?.stopPropagation();
         setIsModalOpen(false);
         setMedia(null);
         setCurrentMedia(0);
@@ -303,7 +304,7 @@ const Medias: React.FC<MediasProps> = ({ user, medias }) => {
                             </div>
                             <button
                                 className="btn btn-ghost btn-square btn-sm"
-                                onClick={() => handleCloseModal()}
+                                onClick={handleCloseModal}
                             >
                                 <X className="size-6" />
                             </button>

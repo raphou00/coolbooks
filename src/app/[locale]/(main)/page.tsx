@@ -24,7 +24,7 @@ const Page = async () => {
     });
 
     return (
-        <Main className="flex">
+        <Main>
             <div className="py-8">
                 <div className="hero-content justify-center text-center p-0 flex-col lg:flex-row">
                     <Title
