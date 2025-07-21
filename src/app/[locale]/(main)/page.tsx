@@ -1,5 +1,4 @@
 import { getTranslations } from "next-intl/server";
-import { ArrowRight, Heart } from "lucide-react";
 import db from "@/lib/db";
 import Main from "@/components/layout/main";
 import Title from "@/components/ui/title";
@@ -8,11 +7,9 @@ import { findAllMedias } from "@/config/media";
 import { name } from "@/config/seo";
 import { getUser } from "@/lib/auth";
 import { WelcomeModal } from "./home";
-import Link from "next/link";
 
 const Page = async () => {
-    const t = await getTranslations("pages.home");
-    const t2 = await getTranslations("common");
+    const t = await getTranslations("common");
 
     const user = await getUser();
 
@@ -27,15 +24,17 @@ const Page = async () => {
         <Main>
             <div className="py-8">
                 <div className="hero-content justify-center text-center p-0 flex-col lg:flex-row">
-                    <Title
-                        text={name}
-                        underline
-                        className="md:text-4xl text-3xl w-fit mx-auto"
-                    />
-                    <p className="pb-2">{t2("description")}</p>
+                    <div>
+                        <Title
+                            text={name}
+                            underline
+                            className="md:text-4xl text-3xl w-fit mx-auto"
+                        />
+                        <p className="pb-2 max-w-xl mt-2">{t("description")}</p>
+                    </div>
                 </div>
             </div>
-            <div className="mb-6 mt-1">
+            {/* <div className="mb-6 mt-1">
                 <div className="flex items-center justify-start max-sm:justify-between gap-x-4 mb-6">
                     <div className="flex items-center gap-x-2">
                         <Heart className="size-6 text-primary fill-primary" />
@@ -52,7 +51,7 @@ const Page = async () => {
                         <ArrowRight className="size-5 transition group-hover:translate-x-1" />
                     </Link>
                 </div>
-            </div>
+            </div> */}
             <Medias
                 medias={allMedias as MediaProps[]}
                 user={user?.user || null}
