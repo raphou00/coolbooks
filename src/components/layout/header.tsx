@@ -26,7 +26,7 @@ import Logo from "@/components/ui/logo";
 import Avatar from "@/components/ui/avatar";
 import Title from "@/components/ui/title";
 import LocaleModal from "@/components/ui/locale-modal";
-import LogoText from "../ui/logo-text";
+import LogoText from "@/components/ui/logo-text";
 
 type HeaderProps = {
     user: User | null;
@@ -315,7 +315,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                         </Link>
                         {links.map((item) => (
                             <li key={item.title}>
-                                <Link
+                                <a
                                     href={item.path}
                                     className="btn btn-ghost w-full justify-between"
                                 >
@@ -323,7 +323,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                         <item.icon className="size-6" />
                                         {item.title}
                                     </span>
-                                </Link>
+                                </a>
                             </li>
                         ))}
                     </ul>
