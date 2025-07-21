@@ -24,7 +24,7 @@ const Page = async () => {
     });
 
     return (
-        <Main className="flex" gradientVariant="heroGradient">
+        <Main className="flex">
             <div className="py-8">
                 <div className="hero-content justify-center text-center p-0 flex-col lg:flex-row">
                     <Title

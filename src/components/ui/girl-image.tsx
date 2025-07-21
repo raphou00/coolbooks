@@ -3,7 +3,7 @@
 import { Lock } from "lucide-react";
 import type { Image } from "@prisma/client";
 import { cn } from "@/lib/utils";
-import ImageEl from "next/image";
+import ImageEl from "./image";
 import type { User } from "lucia";
 
 type GirlImageProps = {
