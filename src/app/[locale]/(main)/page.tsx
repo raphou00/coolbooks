@@ -27,15 +27,12 @@ const Page = async () => {
         <Main className="flex" gradientVariant="heroGradient">
             <div className="py-8">
                 <div className="hero-content justify-center text-center p-0 flex-col lg:flex-row">
-                    <div>
-                        <Title
-                            text={name}
-                            underline
-                            className="md:text-4xl text-3xl w-fit "
-                        />
-                        <p className="py-6">{t2("description")}</p>
-                    </div>
-                    <div></div>
+                    <Title
+                        text={name}
+                        underline
+                        className="md:text-4xl text-3xl w-fit mx-auto"
+                    />
+                    <p className="py-6">{t2("description")}</p>
                 </div>
             </div>
             <div className="mb-6 mt-1">
