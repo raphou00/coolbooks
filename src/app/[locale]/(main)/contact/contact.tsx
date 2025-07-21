@@ -77,9 +77,9 @@ const Page: React.FC = () => {
                             />
 
                             <div className="w-full">
-                                <label className="flex w-full">
-                                    <div className="label pb-1">
-                                        <span className="label-text font-bold">
+                                <label className="w-full text-sm">
+                                    <div className="w-full flex justify-between pb-1">
+                                        <span className="label-text px-1 font-bold">
                                             {t("message")}
                                         </span>
                                         <span className="label-text-alt text-error">
@@ -88,8 +88,8 @@ const Page: React.FC = () => {
                                     </div>
                                     <textarea
                                         placeholder={t("message-placeholder")}
-                                        className="textarea textarea-bordered border-2 bg-base-100 transition placeholder:text-neutral-400 focus:border-primary/50 focus:outline-none focus:bg-base-300"
-                                        rows={3}
+                                        className="textarea w-full rounded-box resize-none border-2 bg-base-100 transition placeholder:text-neutral-400 focus:border-primary/50 focus:outline-none focus:bg-base-300"
+                                        rows={5}
                                         {...register("message")}
                                     />
                                 </label>

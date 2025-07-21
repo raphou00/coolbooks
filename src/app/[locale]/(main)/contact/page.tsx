@@ -13,7 +13,7 @@ const generateMetadata = async (): Promise<Metadata> => {
 
 const Page = async () => {
     return (
-        <Main className="mt-8">
+        <Main className="mt-8 flex" gradientVariant="floatingGradient">
             <Contact />
         </Main>
     );
