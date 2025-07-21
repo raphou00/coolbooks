@@ -3,7 +3,7 @@
 import { Lock } from "lucide-react";
 import type { Image } from "@prisma/client";
 import { cn } from "@/lib/utils";
-import ImageEl from "./image";
+import ImageEl from "next/image";
 import type { User } from "lucia";
 
 type GirlImageProps = {
@@ -20,7 +20,7 @@ const BlurImage: React.FC<GirlImageProps> = ({ user, image, className }) => {
         <div className="relative rounded-sm overflow-hidden cursor-pointer size-full">
             <ImageEl
                 src={src}
-                alt="Girl"
+                alt=""
                 width={image.width}
                 height={image.height}
                 className={cn("", className)}

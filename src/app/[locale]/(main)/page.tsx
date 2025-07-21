@@ -32,7 +32,7 @@ const Page = async () => {
                         underline
                         className="md:text-4xl text-3xl w-fit mx-auto"
                     />
-                    <p className="py-6">{t2("description")}</p>
+                    <p className="pb-2">{t2("description")}</p>
                 </div>
             </div>
             <div className="mb-6 mt-1">

@@ -121,7 +121,7 @@ const Locked: React.FC<LockedProps> = ({ src, width, height }) => {
         <div className="relative size-full overflow-hidden rounded-xl">
             <Image
                 src={getImage(src)}
-                alt="Locked"
+                alt=""
                 width={width}
                 height={height}
                 className="w-full h-full object-cover"

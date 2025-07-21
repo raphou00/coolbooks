@@ -41,7 +41,7 @@ const TemplateEmail: React.FC<TemplateEmailProps> = async ({
                                 src={`${domain}/logotext.png`}
                                 width="140"
                                 height="40"
-                                alt="Logo"
+                                alt=""
                             />
                         </Section>
 
@@ -58,7 +58,7 @@ const TemplateEmail: React.FC<TemplateEmailProps> = async ({
                                         src={`${domain}/favicon-96x96.png`}
                                         width="40"
                                         height="40"
-                                        alt="Logo"
+                                        alt=""
                                     />
                                 </Column>
                                 <Column>
