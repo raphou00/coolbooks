@@ -201,16 +201,11 @@ const Medias: React.FC<MediasProps> = ({ user, medias }) => {
                 hasMore={hasMore}
                 loader={<Loading key="loading" />}
             >
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 auto-rows-[10px]">
+                <div className="columns-2 md:columns-3 lg:columns-4 gap-0">
                     {visibleMedias.map((mediaItem) => (
                         <div
                             key={mediaItem.id}
-                            className="m-[0.5px] py-[0.5px] overflow-hidden rounded-sm relative [grid-row-end:span_var(--rows)]"
-                            style={
-                                {
-                                    "--rows": Math.ceil(Math.random() * 10),
-                                } as React.CSSProperties
-                            }
+                            className="m-[0.5px] py-[0.5px] overflow-hidden rounded-sm relative"
                         >
                             <div className="pointer-events-none absolute right-0 left-0 top-0 h-12 w-full bg-gradient-to-b from-neutral-950/50 to-neutral-950/0 z-30" />
                             <div className="absolute top-0 left-0 z-50 w-full m-2">
