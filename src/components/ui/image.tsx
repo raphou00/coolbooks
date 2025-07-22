@@ -28,7 +28,7 @@ const BlurImage: React.FC<ImageProps> = ({
             height={height}
             loading="lazy"
             decoding="async"
-            // blurDataURL={typeof src === "string" ? src : undefined}
+            blurDataURL={typeof src === "string" ? src : undefined}
             alt={alt ? alt : ""}
             {...rest}
         />
