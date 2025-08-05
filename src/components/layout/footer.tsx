@@ -15,7 +15,7 @@ const Footer: React.FC = () => {
 
     return (
         <>
-            <footer className="mt-10">
+            <footer className="mt-10 z-50">
                 <div className="mx-auto w-full text-sm max-w-7xl px-4 md:px-6 lg:px-8 xl:px-12">
                     <div className="grid grid-cols-[repeat(auto-fill,minmax(160px,1fr))] items-stretch justify-between gap-y-10 sm:gap-x-6 md:flex md:flex-wrap">
                         <div className="flex items-start justify-start flex-col gap-4">
@@ -23,10 +23,10 @@ const Footer: React.FC = () => {
                                 <LogoText className="w-auto h-8" />
                             </Link>
                             <div className="flex items-center gap-3">
-                                <Link href="https://instagram.com/pinksea.love">
+                                <Link href="https://instagram.com/pinksea.me">
                                     <Instagram />
                                 </Link>
-                                {/* <Link href="/">
+                                {/* <Link href="https://www.tiktok.com/@pinksea.love">
                                     <Tiktok />
                                 </Link> */}
                             </div>
