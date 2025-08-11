@@ -20,7 +20,7 @@ export const POST = async (req: NextRequest) => {
             });
         }
 
-        await createVideo(body.mediaId, body.video, body.free === "true");
+        await createVideo(body.video, body.free === "true");
 
         return NextResponse.json({
             success: true,

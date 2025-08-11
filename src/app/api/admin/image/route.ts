@@ -20,7 +20,7 @@ export const POST = async (req: NextRequest) => {
             });
         }
 
-        await createImage(body.mediaId, body.image, body.free === "true");
+        await createImage(body.image, body.description, body.free === "true");
 
         return NextResponse.json({
             success: true,

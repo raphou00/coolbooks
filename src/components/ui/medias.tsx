@@ -1,21 +1,17 @@
 "use client";
 
-import type { Media, Image, Video } from "@prisma/client";
+import type { Image } from "@prisma/client";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ChevronLeft, ChevronRight, Heart, Info, X } from "lucide-react";
+import { Heart, Info, X } from "lucide-react";
 import type { User } from "lucia";
 import InfiniteScroll from "react-infinite-scroller";
 import GirlImage from "@/components/ui/girl-image";
-import GirlVideo from "@/components/ui/girl-video";
 import { cn, formatNumber } from "@/lib/utils";
 import toast from "react-hot-toast";
 import { useTranslations } from "next-intl";
 
-export type MediaProps = Media & {
-    images: Image[];
-    videos: Video[];
-};
+export type MediaProps = Image;
 
 export type MediasProps = {
     user: User | null;
@@ -27,7 +23,6 @@ const BASE_ELEMENTS = 20;
 const Medias: React.FC<MediasProps> = ({ user, medias }) => {
     const t = useTranslations();
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-    const [currentMedia, setCurrentMedia] = useState<number>(0);
     const [hasMore, setHasMore] = useState<boolean>(true);
     const [media, setMedia] = useState<MediaProps | null>(null);
     const [visibleMedias, setVisibleMedias] = useState<MediaProps[]>(
@@ -46,8 +41,6 @@ const Medias: React.FC<MediasProps> = ({ user, medias }) => {
         )
     );
     const [isLiking, setIsLiking] = useState<Record<string, boolean>>({});
-
-    const mediaCount = media ? media.images.length + media.videos.length : 0;
 
     useEffect(() => {
         const handleKeydown = (event: KeyboardEvent) => {
@@ -156,27 +149,7 @@ const Medias: React.FC<MediasProps> = ({ user, medias }) => {
         e?.stopPropagation();
         setIsModalOpen(false);
         setMedia(null);
-        setCurrentMedia(0);
     };
-
-    const nextMedia = () => {
-        if (currentMedia === mediaCount - 1) {
-            setCurrentMedia(0);
-        } else {
-            setCurrentMedia(currentMedia + 1);
-        }
-    };
-
-    const prevMedia = () => {
-        if (currentMedia === 0) {
-            setCurrentMedia(mediaCount - 1);
-        } else {
-            setCurrentMedia(currentMedia - 1);
-        }
-    };
-
-    const girlMedias = media ? [...media.images, ...media.videos] : [];
-    const selectedMedia = girlMedias[currentMedia];
 
     const loadFunc = (e: number) => {
         if (!hasMore) {
@@ -201,13 +174,13 @@ const Medias: React.FC<MediasProps> = ({ user, medias }) => {
                 hasMore={hasMore}
                 loader={<Loading key="loading" />}
             >
-                <div className="columns-2 md:columns-3 lg:columns-4 gap-0">
+                <div className="columns-3 gap-1">
                     {visibleMedias.map((mediaItem) => (
                         <div
                             key={mediaItem.id}
-                            className="m-[0.5px] py-[0.5px] overflow-hidden rounded-sm relative"
+                            className="m-[0.5px] py-[2px] overflow-hidden rounded-sm relative"
                         >
-                            <div className="pointer-events-none absolute right-0 left-0 top-0 h-12 w-full bg-gradient-to-b from-neutral-950/50 to-neutral-950/0 z-30" />
+                            <div className="pointer-events-none absolute right-0 left-0 top-0 h-12 w-full bg-gradient-to-b from-neutral-950/70 to-neutral-950/0 z-30" />
                             <div className="absolute top-0 left-0 z-50 w-full m-2">
                                 <button
                                     className="flex items-center gap-1 cursor-pointer hover:scale-105 transition-transform"
@@ -238,17 +211,7 @@ const Medias: React.FC<MediasProps> = ({ user, medias }) => {
                                 className="shadow-md cursor-pointer"
                                 onClick={() => openModal(mediaItem)}
                             >
-                                {mediaItem.images.length > 0 ?
-                                    <GirlImage
-                                        image={mediaItem.images[0]}
-                                        user={user}
-                                    />
-                                : mediaItem.videos.length > 0 ?
-                                    <GirlVideo
-                                        video={mediaItem.videos[0]}
-                                        user={user}
-                                    />
-                                :   null}
+                                <GirlImage image={mediaItem} user={user} />
                             </div>
                         </div>
                     ))}
@@ -312,39 +275,12 @@ const Medias: React.FC<MediasProps> = ({ user, medias }) => {
 
                         <div className="">
                             <div className="w-[80vw] h-[80vh] w flex items-center justify-center">
-                                {selectedMedia && "time" in selectedMedia ?
-                                    <GirlVideo
-                                        video={selectedMedia as Video}
-                                        user={user}
-                                        className="rounded-xl"
-                                    />
-                                :   <GirlImage
-                                        image={selectedMedia as Image}
-                                        user={user}
-                                        className="object-contain size-full rounded-xl"
-                                    />
-                                }
+                                <GirlImage
+                                    image={media}
+                                    user={user}
+                                    className="object-contain size-full rounded-xl"
+                                />
                             </div>
-                        </div>
-
-                        <div className="absolute bottom-0 p-4 w-full flex items-center justify-center gap-4">
-                            <button
-                                className="btn btn-square btn-sm"
-                                onClick={prevMedia}
-                            >
-                                <ChevronLeft className="size-6" />
-                            </button>
-                            <div>
-                                <p className="text-sm space-x-1">
-                                    {currentMedia + 1}/{mediaCount}
-                                </p>
-                            </div>
-                            <button
-                                className="btn btn-square btn-sm"
-                                onClick={nextMedia}
-                            >
-                                <ChevronRight className="size-6" />
-                            </button>
                         </div>
                     </motion.div>
                 )}

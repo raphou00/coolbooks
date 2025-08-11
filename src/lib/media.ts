@@ -70,20 +70,9 @@ export const getVideoThumbnail = async (src: string): Promise<Buffer> => {
     });
 };
 
-export const createMedia = async (description: string, tags: string[]) => {
-    const media = await db.media.create({
-        data: {
-            description,
-            tags,
-        },
-    });
-
-    return media;
-};
-
 export const createImage = async (
-    mediaId: string,
     file: File,
+    description: string,
     free: boolean = false
 ) => {
     const fileName = crypto.randomUUID() + "." + getExtension(file.name);
@@ -103,11 +92,11 @@ export const createImage = async (
 
     const media = await db.image.create({
         data: {
-            mediaId: mediaId,
             src: fileName,
             blurred: blurredName,
             width: metadata.width,
             height: metadata.height,
+            description,
             free,
         },
     });
@@ -115,11 +104,7 @@ export const createImage = async (
     return media;
 };
 
-export const createVideo = async (
-    mediaId: string,
-    file: File,
-    free: boolean = false
-) => {
+export const createVideo = async (file: File, free: boolean = false) => {
     const fileName = crypto.randomUUID() + "." + getExtension(file.name);
 
     await putObject(file, fileName);
@@ -137,7 +122,6 @@ export const createVideo = async (
 
     const media = await db.video.create({
         data: {
-            mediaId: mediaId,
             src: fileName,
             blurred: thumbnailBlurredName,
             width: metadata.width,

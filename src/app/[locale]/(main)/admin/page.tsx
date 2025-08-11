@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
-import db from "@/lib/db";
 import Main from "@/components/layout/main";
-import { CreateImage, CreateMedia, CreateVideo } from "./admin";
-import { findAllMedias } from "@/config/media";
+import { CreateImage, CreateVideo } from "./admin";
 
 const generateMetadata = async (): Promise<Metadata> => {
     return {
@@ -11,18 +9,12 @@ const generateMetadata = async (): Promise<Metadata> => {
 };
 
 const Page = async () => {
-    const medias = await db.media.findMany({
-        select: findAllMedias,
-    });
-
     return (
         <Main>
             <div className="max-w-md mx-auto flex flex-wrap">
-                <CreateMedia medias={medias} />
+                <CreateImage />
                 <div className="w-full h-px bg-neutral my-8" />
-                <CreateImage medias={medias} />
-                <div className="w-full h-px bg-neutral my-8" />
-                <CreateVideo medias={medias} />
+                <CreateVideo />
             </div>
         </Main>
     );

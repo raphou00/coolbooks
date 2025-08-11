@@ -225,7 +225,7 @@ const Explore: React.FC<ExploreProps> = ({ allMedias, user }) => {
                             ))}
                         </div>
                     </div>
-                    <div className="navbar w-full">
+                    <div className="navbar p-0 w-full">
                         <div className="navbar-start">
                             <div>
                                 <button

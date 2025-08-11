@@ -45,7 +45,7 @@ export async function POST(req: NextRequest) {
             });
         }
 
-        const media = await db.media.findUnique({
+        const media = await db.image.findUnique({
             where: { id: mediaId },
         });
 
@@ -72,7 +72,7 @@ export async function POST(req: NextRequest) {
 
         if (action === "like" && !isCurrentlyLiked) {
             await db.$transaction([
-                db.media.update({
+                db.image.update({
                     where: { id: mediaId },
                     data: { likes: { increment: 1 } },
                 }),
@@ -91,7 +91,7 @@ export async function POST(req: NextRequest) {
             );
 
             await db.$transaction([
-                db.media.update({
+                db.image.update({
                     where: { id: mediaId },
                     data: { likes: { decrement: 1 } },
                 }),
@@ -104,7 +104,7 @@ export async function POST(req: NextRequest) {
             ]);
         }
 
-        const updatedMedia = await db.media.findUnique({
+        const updatedMedia = await db.image.findUnique({
             where: { id: mediaId },
             select: { likes: true },
         });

@@ -1,6 +1,6 @@
 "use client";
 
-import { Lock } from "lucide-react";
+import { EyeOff } from "lucide-react";
 import type { Image } from "@prisma/client";
 import { cn } from "@/lib/utils";
 import ImageEl from "./image";
@@ -26,8 +26,8 @@ const BlurImage: React.FC<GirlImageProps> = ({ user, image, className }) => {
                 className={cn("", className)}
             />
             {!canSee && (
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center size-10 bg-primary rounded-full">
-                    <Lock className="text-white size-5" />
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center size-14 backdrop-blur rounded-full">
+                    <EyeOff className="text-white size-8" />
                 </div>
             )}
         </div>

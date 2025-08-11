@@ -19,7 +19,7 @@ const generateMetadata = async (): Promise<Metadata> => {
 const Page = async () => {
     const user = await getUser();
 
-    const allMedias = await db.media.findMany({
+    const allMedias = await db.image.findMany({
         select: findAllMedias,
         orderBy: {
             createdAt: "desc",
