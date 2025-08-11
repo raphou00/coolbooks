@@ -26,8 +26,8 @@ const BlurImage: React.FC<GirlImageProps> = ({ user, image, className }) => {
                 className={cn("", className)}
             />
             {!canSee && (
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center size-14 backdrop-blur rounded-full">
-                    <EyeOff className="text-white size-8" />
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center size-12 backdrop-blur-3xl bg-black/50 rounded-full">
+                    <EyeOff className="text-white size-6" />
                 </div>
             )}
         </div>

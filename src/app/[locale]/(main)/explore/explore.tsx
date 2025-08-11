@@ -184,7 +184,7 @@ const Explore: React.FC<ExploreProps> = ({ allMedias, user }) => {
 
     return (
         <>
-            <div className="flex flex-col items-center justify-center gap-y-6 mb-6">
+            <div className="flex flex-col items-center justify-center gap-y-6 mb-2">
                 <div className="flex items-center gap-x-2">
                     <Title
                         text={t("description", { name })}
@@ -209,7 +209,7 @@ const Explore: React.FC<ExploreProps> = ({ allMedias, user }) => {
                             <Search className="size-5 text-white" />
                         </button>
                     </div>
-                    <div className="mt-4 max-w-full flex justify-center">
+                    <div className="mt-4 max-w-full justify-center hidden max-md:flex">
                         <div className="flex flex-wrap justify-center gap-2 px-2">
                             {topTags.map((t) => (
                                 <button
@@ -225,62 +225,72 @@ const Explore: React.FC<ExploreProps> = ({ allMedias, user }) => {
                             ))}
                         </div>
                     </div>
-                    <div className="navbar p-0 w-full">
-                        <div className="navbar-start">
-                            <div>
-                                <button
-                                    className={cn(
-                                        "btn flex items-center gap-2",
-                                        showFavorites &&
-                                            "btn-primary btn-active"
-                                    )}
-                                    onClick={handleFavorites}
-                                >
-                                    <Heart
-                                        className={cn(
-                                            "size-5 opacity-50",
-                                            showFavorites &&
-                                                "text-white fill-white opacity-100"
-                                        )}
-                                    />
-                                    <span
-                                        className={cn(
-                                            "font-bold",
-                                            showFavorites && "text-white"
-                                        )}
-                                    >
-                                        {t("favorites")}
-                                    </span>
-                                </button>
-                            </div>
-                        </div>
-                        <div className="navbar-end">
-                            <div className="w-fit">
-                                <Select
-                                    defaultValue={sorts[0].path}
-                                    value={sort.path}
-                                    onValueChange={(l) => handleSort(l)}
-                                >
-                                    <SelectTrigger className="w-full border">
-                                        <SelectValue placeholder={sort.title} />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        <SelectGroup>
-                                            {sorts.map((l) => (
-                                                <SelectItem
-                                                    key={l.path}
-                                                    value={l.path}
-                                                >
-                                                    <div className="flex items-center gap-2">
-                                                        {l.title}
-                                                    </div>
-                                                </SelectItem>
-                                            ))}
-                                        </SelectGroup>
-                                    </SelectContent>
-                                </Select>
-                            </div>
-                        </div>
+                </div>
+            </div>
+            <div className="navbar p-0 w-full">
+                <div className="navbar-start">
+                    <div>
+                        <button
+                            className={cn(
+                                "btn flex items-center gap-2",
+                                showFavorites && "btn-primary btn-active"
+                            )}
+                            onClick={handleFavorites}
+                        >
+                            <Heart
+                                className={cn(
+                                    "size-5 opacity-50",
+                                    showFavorites &&
+                                        "text-white fill-white opacity-100"
+                                )}
+                            />
+                            <span
+                                className={cn(
+                                    "font-bold",
+                                    showFavorites && "text-white"
+                                )}
+                            >
+                                {t("favorites")}
+                            </span>
+                        </button>
+                    </div>
+                </div>
+                <div className="flex justify-center gap-2 px-2 max-md:hidden">
+                    {topTags.map((t) => (
+                        <button
+                            key={t}
+                            className={cn(
+                                "btn btn-sm btn-outline",
+                                tag == t && "btn-primary btn-active"
+                            )}
+                            onClick={() => handleTag(t)}
+                        >
+                            {t}
+                        </button>
+                    ))}
+                </div>
+                <div className="navbar-end">
+                    <div className="w-fit">
+                        <Select
+                            defaultValue={sorts[0].path}
+                            value={sort.path}
+                            onValueChange={(l) => handleSort(l)}
+                        >
+                            <SelectTrigger className="w-full border">
+                                <SelectValue placeholder={sort.title} />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectGroup>
+                                    {sorts.map((l) => (
+                                        <SelectItem key={l.path} value={l.path}>
+                                            <div className="flex items-center gap-2">
+                                                {l.title}
+                                            </div>
+                                        </SelectItem>
+                                    ))}
+                                </SelectGroup>
+                            </SelectContent>
+                        </Select>
                     </div>
                 </div>
             </div>

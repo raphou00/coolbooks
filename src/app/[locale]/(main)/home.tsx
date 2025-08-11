@@ -10,12 +10,12 @@ import { useEffect, useState } from "react";
 
 export const WelcomeModal: React.FC = () => {
     const t = useTranslations("pages.home");
-    const [_isOpen, setIsOpen] = useState<boolean>(false);
+    const [isOpen, setIsOpen] = useState<boolean>(false);
     const [hasVisited, _setHasVisited] = useState<boolean>(() => {
         if (typeof localStorage === "undefined") return false;
-        const hasVisited = localStorage.getItem("hasVisited");
+        const hasVisited = localStorage.getItem("visited");
         if (hasVisited === null) {
-            localStorage.setItem("hasVisited", "true");
+            localStorage.setItem("visited", "true");
             return false;
         }
         return true;
@@ -28,7 +28,7 @@ export const WelcomeModal: React.FC = () => {
     return (
         <>
             <Modal
-                isOpen={false}
+                isOpen={isOpen}
                 setIsOpen={setIsOpen}
                 className="z-100 w-full"
             >
