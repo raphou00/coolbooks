@@ -10,7 +10,7 @@ export default function CheckoutPage() {
     const [amount] = useState(10);
 
     useEffect(() => {
-        fetch("/api/create-payment-intent", {
+        fetch("/api/stripe/checkout/one-time", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ amount, currency: "chf" }),
