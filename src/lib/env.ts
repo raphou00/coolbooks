@@ -33,14 +33,6 @@ export default createEnv({
             .string()
             .min(1, { message: "Cloudfront URL is missing" }),
 
-        WEBSOCKET_URL: z
-            .string()
-            .min(1, { message: "Websocket URL is missing" }),
-
-        DYNAMO_TABLE: z
-            .string()
-            .min(1, { message: "Dynamodb Table is missing" }),
-
         UPSTASH_REDIS_REST_URL: z
             .string()
             .min(1, { message: "Upstash Redis REST URL is missing" }),
@@ -71,13 +63,9 @@ export default createEnv({
             .string()
             .min(1, { message: "Google Client Secret is missing" }),
 
-        DISCORD_CLIENT_ID: z
+        OPENROUTER_KEY: z
             .string()
-            .min(1, { message: "Discord Client ID is missing" }),
-
-        DISCORD_CLIENT_SECRET: z
-            .string()
-            .min(1, { message: "Discord Client Secret is missing" }),
+            .min(1, { message: "OpenRouter Key is missing" }),
     },
     client: {
         NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: z
@@ -87,14 +75,6 @@ export default createEnv({
         NEXT_PUBLIC_CLOUDFRONT_URL: z
             .string()
             .min(1, { message: "Cloudinary URL is missing" }),
-
-        NEXT_PUBLIC_WEBSOCKET_URL: z
-            .string()
-            .min(1, { message: "Websocket URL is missing" }),
-
-        NEXT_PUBLIC_STRIPE_PRODUCT_ID: z
-            .string()
-            .min(1, { message: "Stripe Product ID is missing" }),
     },
     runtimeEnv: {
         NODE_ENV: process.env.VERCEL_ENV,
@@ -107,10 +87,6 @@ export default createEnv({
         BUCKET_NAME: process.env.BUCKET_NAME,
         CLOUDFRONT_URL: process.env.CLOUDFRONT_URL,
         NEXT_PUBLIC_CLOUDFRONT_URL: process.env.NEXT_PUBLIC_CLOUDFRONT_URL,
-        WEBSOCKET_URL: process.env.WEBSOCKET_URL + "$default",
-        NEXT_PUBLIC_WEBSOCKET_URL:
-            process.env.NEXT_PUBLIC_WEBSOCKET_URL + "$default",
-        DYNAMO_TABLE: process.env.DYNAMO_TABLE,
         UPSTASH_REDIS_REST_URL: process.env.UPSTASH_REDIS_REST_URL,
         UPSTASH_REDIS_REST_TOKEN: process.env.UPSTASH_REDIS_REST_TOKEN,
         RESEND_API_KEY: process.env.RESEND_API_KEY,
@@ -119,11 +95,8 @@ export default createEnv({
             process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
         STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
         STRIPE_WEBHOOK_SECRET: process.env.STRIPE_WEBHOOK_SECRET,
-        NEXT_PUBLIC_STRIPE_PRODUCT_ID:
-            process.env.NEXT_PUBLIC_STRIPE_PRODUCT_ID,
         GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
         GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
-        DISCORD_CLIENT_ID: process.env.DISCORD_CLIENT_ID,
-        DISCORD_CLIENT_SECRET: process.env.DISCORD_CLIENT_SECRET,
+        OPENROUTER_KEY: process.env.OPENROUTER_KEY,
     },
 });

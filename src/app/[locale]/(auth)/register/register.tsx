@@ -45,11 +45,6 @@ const Register: React.FC = () => {
         window.location.href = res.data.url;
     };
 
-    const discord = async () => {
-        const res = await axios.get(`/api/auth/discord`);
-        window.location.href = res.data.url;
-    };
-
     return (
         <Form
             title={t("title")}
@@ -64,7 +59,7 @@ const Register: React.FC = () => {
                     <button
                         type="button"
                         onClick={google}
-                        className="btn text-lg w-[49%]"
+                        className="btn text-lg w-full"
                     >
                         <Image
                             src="/images/icons/google.svg"
@@ -74,21 +69,6 @@ const Register: React.FC = () => {
                             height={100}
                         />
                         Google
-                    </button>
-
-                    <button
-                        type="button"
-                        onClick={discord}
-                        className="btn text-lg w-[49%]"
-                    >
-                        <Image
-                            src="/images/icons/discord.svg"
-                            alt="Discord"
-                            className="size-6"
-                            width={100}
-                            height={100}
-                        />
-                        Discord
                     </button>
                 </div>
 

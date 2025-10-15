@@ -26,7 +26,6 @@ const Page = async () => {
         },
         select: {
             googleId: true,
-            discordId: true,
         },
     });
 
@@ -35,7 +34,6 @@ const Page = async () => {
             <div className="w-full">
                 <Socials
                     googleId={userdb?.googleId}
-                    discordId={userdb?.discordId}
                 />
             </div>
         </>

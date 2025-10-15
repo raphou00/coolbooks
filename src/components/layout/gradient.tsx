@@ -79,7 +79,7 @@ const HeroGradient: React.FC<FloatingGradientProps> = () => {
                     gradientTransform="translate(932.167) rotate(90) scale(688.45 2102.29)"
                 >
                     <stop stopColor="#0EA5E9" stopOpacity="0.72"></stop>
-                    {/* <stop stopColor="#635bff" stopOpacity="0.72"></stop> */}
+                    <stop stopColor="#635bff" stopOpacity="0.72"></stop>
                     <stop
                         offset="0.223497"
                         stopColor="#ff00bdff"

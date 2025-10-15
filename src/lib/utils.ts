@@ -113,3 +113,12 @@ export const calculateTrialEndUnixTimestamp = (
     );
     return Math.floor(trialEnd.getTime() / 1000);
 };
+
+export const getS3 = (key: string) => {
+    return `https://${env.BUCKET_NAME}.s3.${env.AWS_REGION}.amazonaws.com/${key}`;
+};
+
+export const getExtension = (filename: string) => {
+    const parts = filename.split(".");
+    return parts[parts.length - 1];
+};

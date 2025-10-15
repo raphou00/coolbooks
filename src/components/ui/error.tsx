@@ -7,7 +7,7 @@ const Error: React.FC = () => {
     const t = useTranslations("messages");
 
     return (
-        <div className="flex flex-col items-center justify-center gap-2">
+        <div className="h-full flex flex-col items-center justify-center gap-2">
             <AlertCircle className="size-20 text-primary animate-pulse" />
             <span className="font-bold">{t("server-error")}</span>
         </div>

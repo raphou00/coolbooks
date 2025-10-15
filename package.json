@@ -1,5 +1,5 @@
 {
-    "name": "pinksea",
+    "name": "coolbooks",
     "version": "0.1.0",
     "private": true,
     "scripts": {
@@ -15,7 +15,7 @@
         "db:push": "prisma db push",
         "db:studio": "prisma studio",
         "db:seed": "prisma db seed",
-        "pulumi:login": "cd aws && pulumi login s3://pinksea-pulumi-state-2921",
+        "pulumi:login": "cd aws && pulumi login s3://coolbooks-pulumi-state-2921",
         "deploy:dev": "bun run pulumi:login && cd aws && pulumi up --stack dev -y",
         "destroy:dev": "bun run pulumi:login && cd aws && pulumi down --stack dev -y"
     },
@@ -51,6 +51,7 @@
         "next": "^15.3.5",
         "next-intl": "^4.3.1",
         "next-themes": "^0.4.4",
+        "openai": "^6.3.0",
         "react": "^19.0.0",
         "react-dom": "^19.0.0",
         "react-hook-form": "^7.53.1",

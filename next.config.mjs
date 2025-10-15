@@ -8,7 +8,7 @@ const nextConfig = withNextIntl({
         remotePatterns: [
             {
                 protocol: "https",
-                hostname: "d2es1jw5vkwpwt.cloudfront.net",
+                hostname: "d1wnfihdlm61e.cloudfront.net",
                 port: "",
                 pathname: "/**",
             },

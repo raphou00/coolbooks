@@ -26,7 +26,7 @@ import Logo from "@/components/ui/logo";
 import Avatar from "@/components/ui/avatar";
 import Title from "@/components/ui/title";
 import LocaleModal from "@/components/ui/locale-modal";
-import LogoText from "@/components/ui/logo-text";
+import BookModal from "../ui/book-modal";
 
 type HeaderProps = {
     user: User | null;
@@ -35,7 +35,7 @@ type HeaderProps = {
 
 const Header: React.FC<HeaderProps> = ({ user, children }) => {
     const [localeOpen, setLocaleOpen] = useState<boolean>(false);
-    const [search, setSearch] = useState<string>("");
+    const [bookOpen, setBookOpen] = useState<boolean>(false);
     const t = useTranslations("links");
     const links = useGetLinks();
     const router = useRouter();
@@ -75,7 +75,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                         role="button"
                                         className="flex items-center justify-center cursor-pointer"
                                     >
-                                        <div className="size-10 relative min-sm:hidden">
+                                        <div className="size-10 relative min-[850px]:hidden">
                                             <motion.span
                                                 className="absolute h-1 w-8 rounded-full bg-base-content"
                                                 style={{
@@ -110,11 +110,10 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                             href="/"
                                             className="flex items-center text-sm relative z-20"
                                         >
-                                            <LogoText className="h-8 w-auto mb-2 max-md:hidden" />
-                                            <Logo className="size-10 hidden max-md:block" />
+                                            <Logo className="size-10" />
                                         </Link>
                                     </div>
-                                    <ul className="menu menu-horizontal space-x-2 max-sm:hidden">
+                                    <ul className="menu menu-horizontal space-x-2 max-[850px]:hidden">
                                         {links.map((item) => (
                                             <li key={item.title}>
                                                 <Link
@@ -131,45 +130,18 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                                 </Link>
                                             </li>
                                         ))}
+                                        <li>
+                                            <button
+                                                onClick={() => setBookOpen((prev) => !prev)}
+                                                className="btn btn-sm btn-ghost btn-outline indicator"
+                                            >
+                                                <PenBox className="size-5" />
+                                                {t("newbook")}
+                                            </button>
+                                        </li>
                                     </ul>
                                 </div>
                                 <div className="navbar-end space-x-2">
-                                    <div className="w-full max-w-80 hidden lg:block">
-                                        <div className="relative w-full">
-                                            <input
-                                                type="text"
-                                                className="input input-bordered w-full border-2 bg-base-100 tracking-wide transition placeholder:text-neutral-400 focus:border-neutral focus:outline-none focus:bg-base-300 pl-4 pr-9"
-                                                placeholder={t(
-                                                    "search-placeholder"
-                                                )}
-                                                spellCheck={false}
-                                                autoComplete="off"
-                                                autoCapitalize="off"
-                                                autoCorrect="off"
-                                                value={search}
-                                                onChange={(e) =>
-                                                    setSearch(e.target.value)
-                                                }
-                                                onKeyDown={(e) => {
-                                                    if (e.key === "Enter") {
-                                                        router.push(
-                                                            `/explore?q=${search}`
-                                                        );
-                                                    }
-                                                }}
-                                            />
-                                            <button
-                                                className="cursor-pointer z-20 size-7 bg-secondary rounded-full flex items-center justify-center absolute right-0 top-1/2 mx-1.5 -translate-y-1/2"
-                                                onClick={() =>
-                                                    router.push(
-                                                        `/explore?q=${search}`
-                                                    )
-                                                }
-                                            >
-                                                <Search className="size-4 text-white" />
-                                            </button>
-                                        </div>
-                                    </div>
                                     <Link
                                         href="/pricing"
                                         className="btn max-md:btn-circle bg-neutral/10"
@@ -311,7 +283,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                             href="/"
                             className="ml-2 flex items-center text-sm relative z-20"
                         >
-                            <LogoText className="h-8 w-auto ml-2 mb-2" />
+                            <Logo className="h-16 w-auto ml-2 mb-2" />
                         </Link>
                         {links.map((item) => (
                             <li key={item.title}>
@@ -326,11 +298,23 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                 </a>
                             </li>
                         ))}
+                        <li>
+                            <button
+                                onClick={() => setBookOpen((prev) => !prev)}
+                                className="btn btn-ghost w-full justify-between"
+                            >
+                                <span className="flex items-center gap-2">
+                                    <PenBox className="size-5" />
+                                    {t("newbook")}
+                                </span>
+                            </button>
+                        </li>
                     </ul>
                 </div>
             </div>
 
             <LocaleModal open={localeOpen} setOpen={setLocaleOpen} />
+            <BookModal open={bookOpen} setOpen={setBookOpen} />
         </>
     );
 };

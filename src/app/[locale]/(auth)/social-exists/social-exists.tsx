@@ -19,7 +19,6 @@ const ResetPassword: React.FC = () => {
     const searchParams = useSearchParams();
     const name = searchParams?.get("name");
     const googleId = searchParams?.get("googleId");
-    const discordId = searchParams?.get("discordId");
     const [state, setState] = useState<ActionsState<SocialExistsSchema>>({
         success: false,
         message: undefined,
@@ -35,7 +34,7 @@ const ResetPassword: React.FC = () => {
         },
     });
 
-    if (!name || (!googleId && !discordId)) {
+    if (!name || (!googleId)) {
         return redirect("/error?error=400");
     }
 
@@ -74,7 +73,6 @@ const ResetPassword: React.FC = () => {
 
                 <input type="hidden" name="name" value={name || ""} />
                 <input type="hidden" name="googleId" value={googleId || ""} />
-                <input type="hidden" name="discordId" value={discordId || ""} />
 
                 <FormButton title={t("submit")} loading={loading} />
             </form>

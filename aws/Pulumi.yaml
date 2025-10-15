@@ -1,5 +1,5 @@
-name: pinksea
-description: aws infra for pinksea app
+name: coolbooks
+description: aws infra for coolbooks app
 runtime:
     name: nodejs
     options:

@@ -1,27 +1,39 @@
-import db from "@/lib/db";
 import Main from "@/components/layout/main";
-import Medias, { type MediaProps } from "@/components/ui/medias";
-import { findAllMedias } from "@/config/media";
+import BookViewer from "@/components/ui/book";
 import { getUser } from "@/lib/auth";
-import { WelcomeModal } from "./home";
+import db from "@/lib/db";
 
 const Page = async () => {
     const user = await getUser();
 
-    const allMedias = await db.image.findMany({
-        select: findAllMedias,
-        orderBy: {
-            createdAt: "desc",
+    const book = await db.book.findFirst({
+        where: {
+            userId: user?.user?.id,
         },
+        select: {
+            title: true,
+            promptText: true,
+            promptImage: true,
+            pages: {
+                select: {
+                    text: true,
+                    color: true,
+                    images: {
+                        select: {
+                            src: true,
+                            width: true,
+                            height: true,
+                        },
+                    },
+                },
+            },
+        }
     });
 
     return (
-        <Main>
-            <Medias
-                medias={allMedias as MediaProps[]}
-                user={user?.user || null}
-            />
-            <WelcomeModal />
+        <Main className="mt-8 flex" gradientVariant="floatingGradient">
+            Salut {user?.user?.name}
+            <BookViewer book={book} />
         </Main>
     );
 };

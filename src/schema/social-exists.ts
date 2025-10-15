@@ -21,7 +21,6 @@ const socialExistsSchema = (t: T) =>
 
         name: z.string().min(1, { message: t("messages.required") }),
         googleId: z.string().optional(),
-        discordId: z.string().optional(),
     });
 
 export type SocialExistsSchema = z.infer<ReturnType<typeof socialExistsSchema>>;

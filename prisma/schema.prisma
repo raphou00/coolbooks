@@ -19,16 +19,15 @@ model User {
   password             String?
   role                 Role       @default(USER)
   googleId             String?    @unique
-  discordId            String?    @unique
   stripeCustomerId     String?
   stripeSubscriptionId String?
   stripeProductId      String?
   subscriptionStatus   String?
-  likedMedias          String[]   @default([])
   createdAt            DateTime   @default(now())
   updatedAt            DateTime   @updatedAt
   sessions             Session[]
   tokens               Token[]
+  books                Book[]
 }
 
 model Session {
@@ -53,28 +52,37 @@ model Token {
   updatedAt DateTime @updatedAt
 }
 
-model Image {
+model Book {
   id          String   @id @default(uuid())
-  src         String
-  blurred     String
-  width       Int
-  height      Int
-  free        Boolean
-  description String   @default("")
-  tags        String[] @default([])
-  likes       Int      @default(0)
+  title       String
+  promptImage String?
+  promptText  String
+  cover       String
+  pages       Page[]
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
 
-model Video {
-  id        String   @id @default(uuid())
-  src       String
-  blurred   String
-  width     Int
-  height    Int
-  time      Int
-  free      Boolean
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model Page {
+  id          String   @id @default(uuid())
+  images      Image[]
+  text        String
+  color       String
+  bookId      String
+  book        Book     @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Image {
+  id          String   @id @default(uuid())
+  src         String
+  width       Int
+  height      Int
+  pageId      String
+  page        Page     @relation(fields: [pageId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }

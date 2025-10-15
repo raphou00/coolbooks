@@ -1,5 +1,5 @@
-export const title = "Pinksea";
-export const name = "Pinksea";
-export const keywords = ["pinksea", "of leaks"];
+export const title = "Cool Books";
+export const name = "Cool Books";
+export const keywords = ["cool books"];
 export const category = "productivity";
-export const domain = "https://pinksea.me";
+export const domain = "https://coolbooks.app";

@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useTheme } from "next-themes";
@@ -20,8 +19,8 @@ const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
     return (
         <>
             <div className="flex">
-                <Image
-                    src="/logotext.svg"
+                {/* <Image
+                    src="/logo.svg"
                     alt="favicon"
                     className="absolute z-50 w-auto h-10 m-0.5 max-lg:hidden"
                     width={100}
@@ -34,7 +33,7 @@ const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
                         backgroundPosition: "center",
                     }}
                     className="h-screen w-1/2 relative max-lg:hidden"
-                />
+                /> */}
                 <div className="relative w-full">
                     <div className="flex items-center justify-between z-50 absolute p-2 w-full">
                         <Link href="/" className="btn btn-sm max-sm:btn-circle">

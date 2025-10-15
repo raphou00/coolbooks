@@ -6,7 +6,7 @@ import { PrismaAdapter } from "@lucia-auth/adapter-prisma";
 import { Lucia, TimeSpan } from "lucia";
 import db from "./db";
 import env from "./env";
-import { Discord, Google } from "arctic";
+import { Google } from "arctic";
 
 const adapter = new PrismaAdapter(db.session, db.user);
 
@@ -26,12 +26,10 @@ export const lucia = new Lucia(adapter, {
             email: user.email,
             role: user.role,
             googleId: user.googleId,
-            discordId: user.discordId,
             stripeCustomerId: user.stripeCustomerId,
             stripeProductId: user.stripeProductId,
             stripeSubscriptionId: user.stripeSubscriptionId,
             subscriptionStatus: user.subscriptionStatus,
-            likedMedias: user.likedMedias,
         };
     },
 });
@@ -92,12 +90,6 @@ export const google = new Google(
     env.APP_URL + "/api/auth/google/callback"
 );
 
-export const discord = new Discord(
-    env.DISCORD_CLIENT_ID,
-    env.DISCORD_CLIENT_SECRET,
-    env.APP_URL + "/api/auth/discord/callback"
-);
-
 declare module "lucia" {
     interface Register {
         Lucia: typeof lucia;
@@ -117,9 +109,7 @@ type DatabaseUserAttributes = {
     name: string;
     email: string;
     role: Role;
-    likedMedias: string[];
     googleId?: string;
-    discordId?: string;
     stripeCustomerId?: string;
     stripeSubscriptionId?: string;
     stripeProductId?: string;

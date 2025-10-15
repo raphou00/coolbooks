@@ -4,12 +4,12 @@ import * as pulumi from "@pulumi/pulumi";
 const provision = () => {
     const stack = pulumi.getStack();
 
-    const files = new aws.s3.Bucket(`pinksea-files-${stack}`, {
-        bucket: `pinksea-files-${stack}`,
+    const files = new aws.s3.Bucket(`coolbooks-files-${stack}`, {
+        bucket: `coolbooks-files-${stack}`,
         forceDestroy: true,
     });
 
-    new aws.s3.BucketPolicy(`pinksea-files-policy-${stack}`, {
+    new aws.s3.BucketPolicy(`coolbooks-files-policy-${stack}`, {
         bucket: files.bucket,
         policy: files.bucket.apply((bucketName) =>
             JSON.stringify({
@@ -26,9 +26,9 @@ const provision = () => {
         ),
     });
 
-    const s3Origin = `pinksea-s3-origin-${stack}`;
+    const s3Origin = `coolbooks-s3-origin-${stack}`;
     const cloudfront = new aws.cloudfront.Distribution(
-        `pinksea-cloudfront-${stack}`,
+        `coolbooks-cloudfront-${stack}`,
         {
             origins: [
                 {

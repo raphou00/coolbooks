@@ -8,6 +8,7 @@ const RootProviders: React.FC<React.PropsWithChildren> = ({ children }) => {
         <ThemeProvider
             enableSystem={false}
             attribute="data-theme"
+            defaultTheme="light"
             enableColorScheme
         >
             <ToasterEl />

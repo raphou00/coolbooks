@@ -49,7 +49,6 @@ export const POST = async (req: NextRequest) => {
                 data: {
                     name: body.name,
                     email: body.email,
-                    discordId: body.discordId,
                 },
             })) as User;
         }
