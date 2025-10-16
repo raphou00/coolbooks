@@ -1,0 +1,244 @@
+{
+    "common": {
+        "copyright": "All Rights Reserved",
+        "description": "Create cool books for your kids with only one prompt!",
+        "no-sessions-results": "No sessions found",
+        "not-found": "Page Not Found",
+        "back-home": "Back to Home"
+    },
+    "pages": {
+        "login": {
+            "title": "Login",
+            "description": "Login to your account",
+            "email": "E-Mail",
+            "email-placeholder": "Enter your e-mail...",
+            "password": "Password",
+            "password-placeholder": "Enter your password...",
+            "forgot": "Forgot Password?",
+            "submit": "Login",
+            "register": "Don't have an account?"
+        },
+        "register": {
+            "title": "Register",
+            "description": "Create an account",
+            "name": "Name",
+            "name-placeholder": "Enter your name...",
+            "email": "E-Mail",
+            "email-placeholder": "Enter your e-mail...",
+            "password": "Password",
+            "password-placeholder": "Enter your password...",
+            "submit": "Register",
+            "login": "Already have an account?",
+            "legal": "By creating an account, you agree to the <terms>Terms of Service</terms> and <privacy>Privacy Policy</privacy>"
+        },
+        "logout": {
+            "title": "Logout",
+            "description": "Logged Out"
+        },
+        "reset-password": {
+            "title": "Reset Password",
+            "description": "Create a new password",
+            "password": "Password",
+            "password-placeholder": "Enter your password...",
+            "confirm-password": "Confirm Password",
+            "confirm-password-placeholder": "Confirm your password...",
+            "submit": "Reset Password"
+        },
+        "forgot-password": {
+            "title": "Forgot Password",
+            "description": "Reset your forgotten password",
+            "email": "E-Mail",
+            "email-placeholder": "Enter your e-mail...",
+            "submit": "Send",
+            "info": "An E-Mail will be sent with a link to create a new password"
+        },
+        "social-exists": {
+            "title": "Create Account",
+            "description": "Information already in use",
+            "info": "Some of your information are already associated with an account, use different ones, or <login>login</login> to your account",
+            "name": "Name",
+            "name-placeholder": "Enter your name...",
+            "email": "E-Mail",
+            "email-placeholder": "Enter your e-mail...",
+            "submit": "Submit"
+        },
+        "account-profile": {
+            "title": "Profile",
+            "description": "Edit your profile",
+            "name": "Name",
+            "name-placeholder": "Enter your name...",
+            "email": "E-Mail",
+            "email-placeholder": "Enter your e-mail...",
+            "password": "Password",
+            "password-placeholder": "Enter your password...",
+            "submit": "Update"
+        },
+        "account-password": {
+            "title": "Password",
+            "description": "Change your password",
+            "current": "Current Password",
+            "current-placeholder": "Enter your current password...",
+            "new": "New Password",
+            "new-placeholder": "Enter your new password...",
+            "confirm": "Confirm Password",
+            "confirm-placeholder": "Confirm your new password...",
+            "change": "Change",
+            "create": "Create"
+        },
+        "account-sessions": {
+            "title": "Sessions",
+            "description": "View your sessions",
+            "current": "Current",
+            "last-seen": "Last Seen:",
+            "expires": "Expires:",
+            "delete": "Delete"
+        },
+        "account-socials": {
+            "title": "Socials",
+            "description": "Link your socials providers to your account",
+            "connect": "Connect",
+            "disconnect": "Disconnect",
+            "google": "Use google to login to your account"
+        },
+        "account-delete": {
+            "title": "Delete Account",
+            "description": "Delete your account",
+            "email": "E-Mail",
+            "email-placeholder": "Enter your e-mail...",
+            "confirm": "Confirm your e-mail to delete your account",
+            "submit": "Delete"
+        },
+        "home": {},
+        "pricing": {
+            "title": "Pricing",
+            "description": "Hey, do you want to see the locked images ? Get the only subscription at only {price} per month!",
+            "month": "Month",
+            "subscribe": "Subscribe",
+            "portal": "Open Portal",
+            "subscription": {
+                "title": "Subscription",
+                "description": "Get full access to the content on Cool Books, you will not regret it!"
+            }
+        },
+        "contact": {
+            "title": "Contact",
+            "description": "Contact us",
+            "name": "Name",
+            "name-placeholder": "Enter your name...",
+            "email": "E-Mail",
+            "email-placeholder": "Enter your e-mail...",
+            "subject": "Subject",
+            "subject-placeholder": "Enter a subject...",
+            "message": "Message",
+            "message-placeholder": "Enter your message...",
+            "submit": "Send"
+        },
+        "new-book": {
+            "title": "New Book",
+            "prompt": "Prompt",
+            "prompt-placeholder": "Toto playing football...",
+            "submit": "Generate"
+        },
+        "terms": {
+            "title": "Terms of Service",
+            "description": "View our terms of service",
+            "date": "Effective Date: ",
+            "content": "Welcome to Cool Books. By accessing or using our platform, you agree to the following terms:<title>1. Eligibility</title>You must be at least 18 years old to use this service. By using the platform, you confirm you are of legal age in your jurisdiction.<title>2. Content</title>All content is fictional and generated by artificial intelligence created and maintained by Cool Books. Any resemblance to real individuals is purely coincidental.<title>3. Subscription and Payments</title>- Access to content requires an active monthly subscription.- All sales are final. No refunds will be provided under any circumstances.- Optional tips can be sent to the AI creator. These are also non-refundable.<title>4. Ownership</title>All content and revenue remain the sole property of Cool Books. Users receive no ownership or licensing rights by subscribing.<title>5. User Conduct</title>Users may not:- Share, reproduce, or distribute content from the platform.- Attempt to impersonate or contact the AI creator.- Violate any applicable laws while using the platform.<title>6. Limitation of Liability</title>The service is provided “as is” without warranties. Cool Books is not liable for any damages resulting from use of the platform.<title>7. Modifications</title>Terms may be updated at any time. Continued use of the platform after changes constitutes acceptance.<title>8. Contact</title>For any questions, contact: admin@coolbooks.app"
+        },
+        "privacy": {
+            "title": "Privacy Policy",
+            "description": "View our privacy policy",
+            "date": "Effective Date: ",
+            "content": "Cool Books is committed to protecting your privacy. This policy explains how we collect, use, and protect your data.<title>1. Information We Collect</title>We may collect:- Email address (if provided)- Payment information (processed by third-party providers)- Usage data (pages viewed, time spent, etc.) We do not collect personal chats or messages, as no messaging exists on the platform.<title>2. How We Use Information</title>- To deliver purchased content- To process payments- To improve our services- To comply with legal obligations<title>3. Sharing of Information</title>We do not sell your data. We may share it with:- Payment processors- Analytics providers- Legal authorities if required<title>4. Data Security</title>We use reasonable measures to protect your data. However, no system is 100% secure.<title>5. Your Rights</title>Depending on your location, you may have rights to:- Access your data- Delete your data- Correct inaccurate data Contact us to make a request: admin@Cool Books.me<title>6. Cookies</title>We may use cookies to improve functionality and analyze usage.<title>7. Changes to This Policy</title>We may update this policy at any time. Continued use of the service means you accept the changes.<title>8. Contact</title>For privacy concerns, email: admin@coolbooks.app"
+        }
+    },
+    "emails": {
+        "register": {
+            "title": "Welcome to Cool Books!",
+            "hello": "Hello {name}!",
+            "body": "Hi, you're now a member on Cool Books, head over to the pricing page to get full access. Click on the link below to get started. 😘",
+            "get-started": "Get started",
+            "best": "Best regards, Cool Books Team"
+        },
+        "forgot-password": {
+            "title": "Reset your Cool Books password",
+            "hello": "Hello {name}!",
+            "body": "Please click on the link below to reset your password.",
+            "warning": "If you did not request a password reset, please ignore this email.",
+            "link": "You can also click or copy paste the link into your browser."
+        }
+    },
+    "messages": {
+        "required": "Required",
+        "invalid-email": "Invalid E-Mail",
+        "taken-email": "E-Mail already taken",
+        "invalid-password": "Invalid password",
+        "passwords-dont-match": "Passwords don't match",
+        "min": "Min {min} characters required",
+        "max": "Max {max} characters allowed",
+        "unauthorized": "Unauthorized",
+        "server-error": "Something went wrong",
+        "profile-updated": "Profile successfully updated",
+        "already-have-password": "You already have a password",
+        "password-created": "Password successfully created",
+        "book-created": "Book successfully created",
+        "wrong-email": "Wrong E-Mail",
+        "account-deleted": "Account successfully deleted",
+        "session-deleted": "Session successfully deleted",
+        "set-password-first": "You need to set a password first",
+        "current-password-wrong": "Current password is wrong",
+        "password-updated": "Password successfully updated",
+        "email-sent": "E-Mail successfully sent",
+        "invalid-credentials": "Invalid credentials",
+        "logged-in": "Logged in",
+        "logged-out": "Logged out",
+        "code-invalid": "Code invalid or expired",
+        "code-not-found": "Code not found",
+        "email-verified": "E-Mail successfully verified",
+        "payment-success": "Payment successfully processed",
+        "payment-failed": "Payment failed",
+        "tips-success": "Tip successfully processed",
+        "tips-failed": "Tip failed",
+        "gift-success": "Gift successfully processed",
+        "gift-failed": "Gift failed",
+        "tips-unauthorized": "First buy a subscription",
+        "add-password": "Please add a password before, <password>click here</password>",
+        "too-many-requests": "Too many requests, please try again later",
+        "forbidden": "Forbidden",
+        "bad-request": "Bad request",
+        "home": "Home",
+        "google-disconnected": "Google successfully disconnected",
+        "message-sent": "Message successfully sent",
+        "min-amount": "Minimum amount is {min}",
+        "max-amount": "Maximum amount is {max}",
+        "billing": "Manage your subscriptions",
+        "loginLike": "You need to login first"
+    },
+    "links": {
+        "login": "Login",
+        "register": "Register",
+        "logout": "Logout",
+        "account": "Account",
+        "profile": "Profile",
+        "password": "Password",
+        "sessions": "Sessions",
+        "socials": "Socials",
+        "delete-account": "Delete Account",
+        "contact": "Contact us",
+        "legal": "Legal",
+        "privacy": "Privacy Policy",
+        "terms": "Terms of Service",
+        "cookies": "Cookies Policy",
+        "home": "Home",
+        "theme": "Theme",
+        "language": "Language",
+        "pricing": "Pricing",
+        "mybooks": "My Books",
+        "newbook": "New Book",
+        "plan": "Plan",
+        "portal": "Open Customer Portal",
+        "latest": "Latest",
+        "oldest": "Oldest",
+        "popular": "Popular"
+    }
+}
