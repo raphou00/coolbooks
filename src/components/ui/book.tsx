@@ -1,7 +1,6 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { Book, Image, Page } from "@prisma/client";
 import NextImage from "@/components/ui/image";
 import { useRef, useState } from "react";
 
@@ -19,17 +18,17 @@ type BookViewerProps = {
                 height: number;
             }[];
         }[];
-    } | null;
+    };
 };
 
 const PAGE_WIDTH = 800;
 
 const BookViewer: React.FC<BookViewerProps> = ({ book }) => {
-    if (!book) return null;
     const bookRef = useRef<HTMLDivElement>(null);
     const [currentPage, setCurrentPage] = useState(0);
     const { title, pages } = book;
-    const pageDesign = "flex justify-center items-center !size-[400px] rounded-lg shadow-lg overflow-hidden border border-gray-200";
+    const pageDesign =
+        "flex justify-center items-center !size-[400px] rounded-lg shadow-lg overflow-hidden border border-gray-200";
 
     const scrollToPage = (pageIdx: number) => {
         if (!bookRef.current) return;
@@ -73,10 +72,13 @@ const BookViewer: React.FC<BookViewerProps> = ({ book }) => {
                         className="flex flex-row gap-x-2 w-[810px] snap-center"
                     >
                         <div
-                            className={cn("flex-1 flex items-center justify-center", pageDesign)}
+                            className={cn(
+                                "flex-1 flex items-center justify-center",
+                                pageDesign
+                            )}
                             style={{ background: page.color }}
                         >
-                            {page.images?.[0] ? (
+                            {page.images?.[0] ?
                                 <NextImage
                                     src={page.images[0].src}
                                     className="size-full rounded shadow"
@@ -84,18 +86,22 @@ const BookViewer: React.FC<BookViewerProps> = ({ book }) => {
                                     width={1024}
                                     height={1024}
                                 />
-                            ) : (
-                                <div className="w-full h-52 rounded bg-gray-200 flex items-center justify-center text-gray-400">
+                            :   <div className="w-full h-52 rounded bg-gray-200 flex items-center justify-center text-gray-400">
                                     No Image
                                 </div>
-                            )}
+                            }
                         </div>
 
                         <div
-                            className={cn("flex-1 flex items-center pl-8", pageDesign)}
+                            className={cn(
+                                "flex-1 flex items-center pl-8",
+                                pageDesign
+                            )}
                             style={{ background: page.color }}
                         >
-                            <div className="text-lg text-gray-800">{page.text}</div>
+                            <div className="text-lg text-gray-800">
+                                {page.text}
+                            </div>
                         </div>
                     </div>
                 ))}
@@ -118,6 +124,6 @@ const BookViewer: React.FC<BookViewerProps> = ({ book }) => {
             </div>
         </>
     );
-}
+};
 
-export default BookViewer
+export default BookViewer;

@@ -32,9 +32,7 @@ const Page = async () => {
     return (
         <>
             <div className="w-full">
-                <Socials
-                    googleId={userdb?.googleId}
-                />
+                <Socials googleId={userdb?.googleId} />
             </div>
         </>
     );

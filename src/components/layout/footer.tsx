@@ -85,7 +85,7 @@ const Footer: React.FC = () => {
     );
 };
 
-const Instagram: React.FC = () => {
+const _Instagram: React.FC = () => {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"

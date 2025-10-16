@@ -1,11 +1,10 @@
 "use client";
 
-// import { useState } from "react";
-import Image from "next/image";
+import NextImage from "next/image";
 import type { ImageProps } from "next/image";
 import { cn, getImage } from "@/lib/utils";
 
-const BlurImage: React.FC<ImageProps> = ({
+const Image: React.FC<ImageProps> = ({
     height,
     width,
     src,
@@ -13,16 +12,9 @@ const BlurImage: React.FC<ImageProps> = ({
     alt,
     ...rest
 }) => {
-    // const [isLoading, setLoading] = useState<boolean>(true);
-
     return (
-        <Image
-            className={cn(
-                "transition duration-300",
-                // isLoading ? "blur-sm" : "blur-0",
-                className
-            )}
-            // onLoad={() => setLoading(false)}
+        <NextImage
+            className={cn("transition duration-300", className)}
             src={getImage(src as string)}
             width={width}
             height={height}
@@ -35,4 +27,4 @@ const BlurImage: React.FC<ImageProps> = ({
     );
 };
 
-export default BlurImage;
+export default Image;

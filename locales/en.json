@@ -1,11 +1,6 @@
 {
     "common": {
-        "yes": "Yes",
-        "no": "No",
-        "back": "Back",
-        "or": "or",
         "copyright": "All Rights Reserved",
-        "try": "Try now",
         "description": "Create cool books for your kids with only one prompt!",
         "no-sessions-results": "No sessions found",
         "not-found": "Page Not Found",
@@ -113,8 +108,7 @@
             "confirm": "Confirm your e-mail to delete your account",
             "submit": "Delete"
         },
-        "home": {
-        },
+        "home": {},
         "pricing": {
             "title": "Pricing",
             "description": "Hey, do you want to see the locked images ? Get the only subscription at only {price} per month!",

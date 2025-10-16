@@ -12,7 +12,6 @@ import {
     LogIn,
     LogOut,
     PenBox,
-    Search,
     Settings2,
     SunMoon,
     UserIcon,
@@ -132,7 +131,9 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                         ))}
                                         <li>
                                             <button
-                                                onClick={() => setBookOpen((prev) => !prev)}
+                                                onClick={() =>
+                                                    setBookOpen((prev) => !prev)
+                                                }
                                                 className="btn btn-sm btn-ghost btn-outline indicator"
                                             >
                                                 <PenBox className="size-5" />

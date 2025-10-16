@@ -6,7 +6,7 @@ const bookSchema = (t: T) =>
         prompt: z
             .string()
             .trim()
-            .min(1, { message: t("messages.required") })
+            .min(1, { message: t("messages.required") }),
     });
 
 export type BookSchema = z.infer<ReturnType<typeof bookSchema>>;

@@ -2,9 +2,8 @@
 
 import { useTranslations } from "next-intl";
 import Modal from "@/components/ui/modal";
-import Title from "@/components/ui/title";
 import { useState } from "react";
-import { ActionsState } from "@/lib/types";
+import { type ActionsState } from "@/lib/types";
 import { type BookSchema } from "@/schema/book";
 import { useForm } from "react-hook-form";
 import { handleFormPost } from "@/lib/utils";

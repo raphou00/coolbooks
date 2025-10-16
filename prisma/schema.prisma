@@ -55,9 +55,9 @@ model Token {
 model Book {
   id          String   @id @default(uuid())
   title       String
+  cover       String
   promptImage String?
   promptText  String
-  cover       String
   pages       Page[]
   userId      String
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)

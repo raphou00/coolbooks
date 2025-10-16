@@ -27,13 +27,13 @@ const Page = async () => {
                     },
                 },
             },
-        }
+        },
     });
 
     return (
         <Main className="mt-8 flex" gradientVariant="floatingGradient">
             Salut {user?.user?.name}
-            <BookViewer book={book} />
+            <BookViewer book={book!} />
         </Main>
     );
 };

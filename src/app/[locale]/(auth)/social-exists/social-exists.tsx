@@ -34,7 +34,7 @@ const ResetPassword: React.FC = () => {
         },
     });
 
-    if (!name || (!googleId)) {
+    if (!name || !googleId) {
         return redirect("/error?error=400");
     }
 

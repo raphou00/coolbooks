@@ -1,18 +1,17 @@
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 import db from "@/lib/db";
 import { randomHex } from "@/config/colors";
 import { getUser } from "@/lib/auth";
 import { getTranslations } from "next-intl/server";
-import bookSchema, {
-    type BookSchema,
-} from "@/schema/book";
+import bookSchema, { type BookSchema } from "@/schema/book";
 import { ratelimitBasePost } from "@/lib/rate-limiter";
 import { createImage, createPlan } from "@/lib/ai";
+import { localesTitle } from "@/lib/navigation";
 
 export const POST = async (req: NextRequest) => {
-        const t = await getTranslations({
-        locale: req.cookies.get("NEXT_LOCALE")?.value || "en",
-    });
+    const locale = (req.cookies.get("NEXT_LOCALE")?.value ||
+        "en") as keyof typeof localesTitle;
+    const t = await getTranslations({ locale });
     try {
         const identifier = req.headers.get("x-forwarded-for");
 
@@ -46,8 +45,8 @@ export const POST = async (req: NextRequest) => {
 
         const bookId = crypto.randomUUID();
 
-        const plan = await createPlan(body.prompt);
-        const coverKey = await createImage(plan.cover, bookId)
+        const plan = await createPlan(body.prompt, localesTitle[locale]);
+        const coverKey = await createImage(plan.cover, bookId);
 
         const book = await db.book.create({
             data: {
@@ -60,7 +59,7 @@ export const POST = async (req: NextRequest) => {
         });
 
         for (const page of plan.pages) {
-            const key = await createImage(page.image, bookId)
+            const key = await createImage(page.image, bookId);
             await db.page.create({
                 data: {
                     bookId: book.id,
@@ -71,7 +70,7 @@ export const POST = async (req: NextRequest) => {
                             src: key,
                             width: 1024,
                             height: 1024,
-                        }
+                        },
                     },
                 },
             });
@@ -88,4 +87,4 @@ export const POST = async (req: NextRequest) => {
             message: t("messages.server-error"),
         });
     }
-}
+};

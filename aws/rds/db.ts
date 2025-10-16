@@ -39,15 +39,18 @@ const provision = () => {
         }
     );
 
-    const routeTable = new aws.ec2.RouteTable(`coolbooks-route-table-${stack}`, {
-        vpcId: vpc.id,
-        routes: [
-            {
-                cidrBlock: "0.0.0.0/0",
-                gatewayId: igw.id,
-            },
-        ],
-    });
+    const routeTable = new aws.ec2.RouteTable(
+        `coolbooks-route-table-${stack}`,
+        {
+            vpcId: vpc.id,
+            routes: [
+                {
+                    cidrBlock: "0.0.0.0/0",
+                    gatewayId: igw.id,
+                },
+            ],
+        }
+    );
 
     new aws.ec2.RouteTableAssociation(
         `coolbooks-route-table-association-a-${stack}`,
