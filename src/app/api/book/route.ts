@@ -3,7 +3,7 @@ import db from "@/lib/db";
 import { getUser } from "@/lib/auth";
 import { ratelimitBasePost } from "@/lib/rate-limiter";
 import { getTranslations } from "next-intl/server";
-import { localesTitle } from "@/lib/navigation";
+import { type localesTitle } from "@/lib/navigation";
 import bookSchema, { type BookSchema } from "@/schema/book";
 import { randomHex } from "@/config/colors";
 import { createPlan, createImage } from "@/lib/ai";
