@@ -7,11 +7,11 @@ import { selectBook } from "@/config/book";
 import { redirect } from "next/navigation";
 import { title } from "@/config/seo";
 
-const generateMetadata = async ({
-    params,
-}: {
-    params: { bookId: string };
-}): Promise<Metadata> => {
+type PageProps = {
+    params: Promise<{ bookId: string }>;
+};
+
+const generateMetadata = async ({ params }: PageProps): Promise<Metadata> => {
     const t = await getTranslations("pages");
     const { bookId } = await params;
     if (!bookId) {
@@ -45,7 +45,7 @@ const generateMetadata = async ({
     };
 };
 
-const Page = async ({ params }: { params: { bookId: string } }) => {
+const Page = async ({ params }: PageProps) => {
     const { bookId } = await params;
     if (!bookId) {
         redirect("/404");
