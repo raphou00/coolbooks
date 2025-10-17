@@ -7,6 +7,7 @@ import { useRef, useState } from "react";
 type BookViewerProps = {
     book: {
         title: string;
+        cover: string;
         promptImage: string | null;
         promptText: string;
         pages: {
@@ -26,7 +27,6 @@ const PAGE_WIDTH = 800;
 const BookViewer: React.FC<BookViewerProps> = ({ book }) => {
     const bookRef = useRef<HTMLDivElement>(null);
     const [currentPage, setCurrentPage] = useState(0);
-    const { title, pages } = book;
     const pageDesign =
         "flex justify-center items-center !size-[400px] rounded-lg shadow-lg overflow-hidden border border-gray-200";
 
@@ -39,7 +39,7 @@ const BookViewer: React.FC<BookViewerProps> = ({ book }) => {
     };
 
     const handleNext = () => {
-        if (currentPage < pages.length) {
+        if (currentPage < book.pages.length) {
             const nextPage = currentPage + 1;
             setCurrentPage(nextPage);
             scrollToPage(nextPage);
@@ -61,12 +61,17 @@ const BookViewer: React.FC<BookViewerProps> = ({ book }) => {
                 className="max-w-[810px] mx-auto my-8 flex gap-2 overflow-x-scroll snap-x snap-mandatory"
             >
                 <div className="flex justify-center min-w-[810px] snap-center">
-                    <div className={cn("bg-white py-10", pageDesign)}>
-                        <h1 className="text-3xl font-bold">{title}</h1>
+                    <div className={cn("py-10 text-center", pageDesign)}>
+                        <NextImage
+                            src={book.cover}
+                            width={1024}
+                            height={1024}
+                            alt={book.promptText}
+                        />
                     </div>
                 </div>
 
-                {pages.map((page, idx) => (
+                {book.pages.map((page, idx) => (
                     <div
                         key={idx}
                         className="flex flex-row gap-x-2 w-[810px] snap-center"
@@ -117,7 +122,7 @@ const BookViewer: React.FC<BookViewerProps> = ({ book }) => {
                 <button
                     className="h-[40px] w-20 border"
                     onClick={handleNext}
-                    disabled={currentPage === pages.length}
+                    disabled={currentPage === book.pages.length}
                 >
                     {">"}
                 </button>

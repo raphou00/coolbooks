@@ -1,6 +1,6 @@
 import * as z from "zod";
 import { type T } from "@/lib/types";
-import { maxPasswordLength, minPasswordLength } from "@/config/user";
+import { maxPasswordLength, minPasswordLength } from "@/config/char";
 
 const createPasswordSchema = (t: T) =>
     z

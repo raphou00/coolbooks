@@ -27,11 +27,15 @@ const LocaleModal: React.FC<LocaleModalProps> = ({ open, setOpen }) => {
         register,
         handleSubmit,
         formState: { isSubmitting: loading },
-    } = useForm<BookSchema>();
+    } = useForm<BookSchema>({
+        defaultValues: { prompt: "ayla the tabby cat playing football" },
+    });
 
     const submit = async (data: BookSchema) => {
         const res = await handleFormPost<BookSchema>("/api/book", data);
         setState(res);
+
+        // if (res.success) window.location.replace(`/book/${(res as any).bookId}`);
     };
 
     return (

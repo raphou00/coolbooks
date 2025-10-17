@@ -109,6 +109,10 @@
             "submit": "Delete"
         },
         "home": {},
+        "book": {
+            "title": "{title}",
+            "description": "{title} by {author} generated with {app}"
+        },
         "pricing": {
             "title": "Pricing",
             "description": "Hey, do you want to see the locked images ? Get the only subscription at only {price} per month!",

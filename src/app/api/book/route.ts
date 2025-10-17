@@ -1,12 +1,13 @@
 import { type NextRequest, NextResponse } from "next/server";
 import db from "@/lib/db";
-import { randomHex } from "@/config/colors";
 import { getUser } from "@/lib/auth";
-import { getTranslations } from "next-intl/server";
-import bookSchema, { type BookSchema } from "@/schema/book";
 import { ratelimitBasePost } from "@/lib/rate-limiter";
-import { createImage, createPlan } from "@/lib/ai";
+import { getTranslations } from "next-intl/server";
 import { localesTitle } from "@/lib/navigation";
+import bookSchema, { type BookSchema } from "@/schema/book";
+import { randomHex } from "@/config/colors";
+import { createPlan, createImage } from "@/lib/ai";
+import { getS3 } from "@/lib/utils";
 
 export const POST = async (req: NextRequest) => {
     const locale = (req.cookies.get("NEXT_LOCALE")?.value ||
@@ -45,8 +46,15 @@ export const POST = async (req: NextRequest) => {
 
         const bookId = crypto.randomUUID();
 
-        const plan = await createPlan(body.prompt, localesTitle[locale]);
-        const coverKey = await createImage(plan.cover, bookId);
+        const plan = await createPlan(body.prompt);
+
+        const coverKey = bookId + "/" + crypto.randomUUID() + ".png";
+        const bookCover = await createImage(
+            plan.cover,
+            coverKey,
+            null,
+            plan.title
+        );
 
         const book = await db.book.create({
             data: {
@@ -59,7 +67,8 @@ export const POST = async (req: NextRequest) => {
         });
 
         for (const page of plan.pages) {
-            const key = await createImage(page.image, bookId);
+            const key = bookId + "/" + crypto.randomUUID() + ".png";
+            await createImage(page.image, key, getS3(coverKey));
             await db.page.create({
                 data: {
                     bookId: book.id,
@@ -79,6 +88,7 @@ export const POST = async (req: NextRequest) => {
         return NextResponse.json({
             success: true,
             message: t("messages.book-created"),
+            bookCover: bookCover,
         });
     } catch (err) {
         console.error(err);

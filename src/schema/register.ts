@@ -6,7 +6,7 @@ import {
     maxUsernameLength,
     minPasswordLength,
     minUsernameLength,
-} from "@/config/user";
+} from "@/config/char";
 
 const registerSchema = async (t: T) =>
     z.object({

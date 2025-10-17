@@ -1,10 +1,13 @@
-import env from "@/lib/env";
-import OpenAI from "openai";
-import { putObject } from "./file";
-import { createPrompt } from "@/config/prompt";
-import { domain, title } from "@/config/seo";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
-type Completion = {
+import { generateObject } from "ai";
+import { OpenAI } from "openai";
+import { putObject } from "./file";
+import { promptPlan, promptImage } from "@/config/prompt";
+import { z } from "zod";
+import env from "./env";
+
+type ImageCompletion = {
     choices: {
         message: {
             images: {
@@ -16,84 +19,72 @@ type Completion = {
     }[];
 };
 
-type Plan = {
-    title: string;
-    cover: string;
-    pages: {
-        text: string;
-        image: string;
-    }[];
-};
+const PLANNER_MODEL = "anthropic/claude-3-haiku";
+const IMAGE_MODEL = "google/gemini-2.5-flash-image-preview";
 
 const openai = new OpenAI({
     baseURL: "https://openrouter.ai/api/v1",
     apiKey: env.OPENROUTER_KEY,
-    defaultHeaders: {
-        "HTTP-Referer": domain,
-        "X-Title": title,
-    },
 });
 
+export const createPlan = async (topic: string): Promise<any> => {
+    const result = await generateObject<any>({
+        model: PLANNER_MODEL,
+        prompt: promptPlan(topic),
+        maxRetries: 3,
+        schema: z.object({
+            title: z.string(),
+            cover: z.string(),
+            pages: z.array(
+                z.object({
+                    text: z.string(),
+                    image: z.string(),
+                })
+            ),
+        }),
+    });
+
+    return result.object;
+};
+
 export const createImage = async (
-    prompt: string,
-    bookId: string
+    topic: string,
+    key: string,
+    base?: string | null,
+    title?: string
 ): Promise<string> => {
-    const completion = await openai.chat.completions.create({
-        model: "google/gemini-2.5-flash-image",
+    const content: any = [
+        {
+            type: "text",
+            text: promptImage(topic, title),
+        },
+    ];
+
+    if (base) {
+        content.push({
+            type: "image_url",
+            image_url: {
+                url: base,
+            },
+        });
+    }
+
+    const completion = (await openai.chat.completions.create({
+        model: IMAGE_MODEL,
         messages: [
             {
                 role: "user",
-                content: [
-                    {
-                        type: "text",
-                        text: prompt + ", cartoon style",
-                    },
-                ],
+                content: content,
             },
         ],
-    });
+    })) as unknown as ImageCompletion;
 
-    const imageBase64 = (completion as unknown as Completion).choices[0].message
-        .images[0].image_url.url;
-    const base64Data = imageBase64.replace(/^data:image\/\w+;base64,/, "");
+    const image = completion.choices[0].message.images[0].image_url.url;
+
+    const base64Data = image.replace(/^data:image\/\w+;base64,/, "");
     const buffer = Buffer.from(base64Data, "base64");
 
-    const key = bookId + "/" + crypto.randomUUID() + ".png";
     await putObject(buffer, key);
 
     return key;
 };
-
-export const createPlan = async (
-    prompt: string,
-    lang: string
-): Promise<Plan> => {
-    const completion = await openai.chat.completions.create({
-        model: "anthropic/claude-3-haiku",
-        messages: [
-            {
-                role: "user",
-                content: [
-                    {
-                        type: "text",
-                        text: createPrompt(prompt, lang),
-                    },
-                ],
-            },
-        ],
-    });
-
-    const content = completion.choices[0].message.content;
-
-    if (!content) {
-        throw new Error("No content");
-    }
-
-    const plan = JSON.parse(
-        content.replaceAll("\n", "").replaceAll("\r", "").replaceAll("\\", "")
-    );
-
-    return plan;
-};
-
-export default openai;

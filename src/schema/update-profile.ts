@@ -1,7 +1,7 @@
 import * as z from "zod";
 import db from "@/lib/db";
 import { type T } from "@/lib/types";
-import { maxPasswordLength, minUsernameLength } from "@/config/user";
+import { maxPasswordLength, minUsernameLength } from "@/config/char";
 
 const updateProfileSchema = (t: T, curEmail: string) =>
     z.object({
