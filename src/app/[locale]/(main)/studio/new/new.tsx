@@ -1,7 +1,6 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import Modal from "@/components/ui/modal";
 import { useState } from "react";
 import { type ActionsState } from "@/lib/types";
 import { type BookSchema } from "@/schema/book";

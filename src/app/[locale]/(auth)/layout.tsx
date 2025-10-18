@@ -5,7 +5,6 @@ import { useState } from "react";
 import { useTheme } from "next-themes";
 import { Home, Languages, SunMoon } from "lucide-react";
 import Link from "next/link";
-import Image from "next/image";
 import LocaleModal from "@/components/ui/locale-modal";
 
 const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {

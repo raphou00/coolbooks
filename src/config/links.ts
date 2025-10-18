@@ -3,7 +3,6 @@ import {
     Lock,
     Settings2,
     Coins,
-    Home,
     BookHeart,
     Palette,
     Compass,
