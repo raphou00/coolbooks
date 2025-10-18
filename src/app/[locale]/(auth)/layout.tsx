@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useTheme } from "next-themes";
 import { Home, Languages, SunMoon } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import LocaleModal from "@/components/ui/locale-modal";
 
 const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
@@ -19,21 +20,14 @@ const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
     return (
         <>
             <div className="flex">
-                {/* <Image
-                    src="/logo.svg"
-                    alt="favicon"
-                    className="absolute z-50 w-auto h-10 m-0.5 max-lg:hidden"
-                    width={100}
-                    height={100}
-                />
                 <div
                     style={{
-                        backgroundImage: `url('/images/banner.png')`,
+                        backgroundImage: `url('/images/magical-forest-kid-reading-a-book.svg')`,
                         backgroundSize: "cover",
                         backgroundPosition: "center",
                     }}
-                    className="h-screen w-1/2 relative max-lg:hidden"
-                /> */}
+                    className="h-screen w-2/5 relative max-lg:hidden border-r border-neutral"
+                />
                 <div className="relative w-full">
                     <div className="flex items-center justify-between z-50 absolute p-2 w-full">
                         <Link href="/" className="btn btn-sm max-sm:btn-circle">

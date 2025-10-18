@@ -1,21 +1,35 @@
 import Main from "@/components/layout/main";
+import Books from "@/components/ui/books";
+import { getUser } from "@/lib/auth";
 import db from "@/lib/db";
-import Link from "next/link";
 
 const Page = async () => {
-    const books = await db.book.findMany();
+    const user = await getUser();
+    const books = await db.book.findMany({
+        where: {
+            user: {
+                id: user?.user?.id,
+            },
+        },
+        select: {
+            id: true,
+            title: true,
+            cover: true,
+            user: {
+                select: {
+                    name: true,
+                },
+            },
+        },
+        take: 5,
+        orderBy: {
+            updatedAt: "desc",
+        },
+    });
 
     return (
         <Main className="mt-8 flex" gradientVariant="floatingGradient">
-            {books.map((book) => (
-                <Link
-                    key={book.id}
-                    href={`/book/${book.id}`}
-                    className="link link-primary"
-                >
-                    {book.title}
-                </Link>
-            ))}
+            <Books books={books} />
         </Main>
     );
 };

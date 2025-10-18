@@ -1,18 +1,31 @@
 import { useTranslations } from "next-intl";
-import { Lock, Settings2, Coins, Home, BookHeart } from "lucide-react";
+import {
+    Lock,
+    Settings2,
+    Coins,
+    Home,
+    BookHeart,
+    Palette,
+    Compass,
+} from "lucide-react";
 
 export const useGetLinks = () => {
     const t = useTranslations("links");
     return [
         {
-            title: t("home"),
+            title: t("my-books"),
             path: "/",
-            icon: Home,
+            icon: BookHeart,
         },
         {
-            title: t("mybooks"),
-            path: "/mybooks",
-            icon: BookHeart,
+            title: t("studio"),
+            path: "/studio",
+            icon: Palette,
+        },
+        {
+            title: t("explore"),
+            path: "/explore",
+            icon: Compass,
         },
     ];
 };
@@ -73,8 +86,8 @@ export const useGetFooterLinks = () => {
             title: "Cool Books",
             links: [
                 {
-                    title: t("mybooks"),
-                    path: "/mybooks",
+                    title: t("my-books"),
+                    path: "/",
                     icon: BookHeart,
                 },
                 {

@@ -108,7 +108,11 @@
             "confirm": "Confirm your e-mail to delete your account",
             "submit": "Delete"
         },
-        "home": {},
+        "home": {
+            "books": "My recent books",
+            "new-book": "New Book",
+            "next-book": "Your next book!"
+        },
         "book": {
             "title": "{title}",
             "description": "{title} by {author} generated with {app}"
@@ -139,6 +143,7 @@
         },
         "new-book": {
             "title": "New Book",
+            "description": "Create a new book with only one prompt",
             "prompt": "Prompt",
             "prompt-placeholder": "Toto playing football...",
             "submit": "Generate"
@@ -233,12 +238,14 @@
         "privacy": "Privacy Policy",
         "terms": "Terms of Service",
         "cookies": "Cookies Policy",
-        "home": "Home",
+        "explore": "Explore",
         "theme": "Theme",
         "language": "Language",
+        "home": "Home",
         "pricing": "Pricing",
-        "mybooks": "My Books",
-        "newbook": "New Book",
+        "my-books": "My Books",
+        "new-book": "New Book",
+        "studio": "Studio",
         "plan": "Plan",
         "portal": "Open Customer Portal",
         "latest": "Latest",

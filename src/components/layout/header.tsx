@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import type { User } from "lucia";
 import axios from "axios";
 import {
+    BookPlus,
     DollarSign,
     Languages,
     LogIn,
@@ -25,7 +26,6 @@ import Logo from "@/components/ui/logo";
 import Avatar from "@/components/ui/avatar";
 import Title from "@/components/ui/title";
 import LocaleModal from "@/components/ui/locale-modal";
-import BookModal from "../ui/book-modal";
 
 type HeaderProps = {
     user: User | null;
@@ -34,7 +34,6 @@ type HeaderProps = {
 
 const Header: React.FC<HeaderProps> = ({ user, children }) => {
     const [localeOpen, setLocaleOpen] = useState<boolean>(false);
-    const [bookOpen, setBookOpen] = useState<boolean>(false);
     const t = useTranslations("links");
     const links = useGetLinks();
     const router = useRouter();
@@ -129,20 +128,18 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                                 </Link>
                                             </li>
                                         ))}
-                                        <li>
-                                            <button
-                                                onClick={() =>
-                                                    setBookOpen((prev) => !prev)
-                                                }
-                                                className="btn btn-sm btn-ghost btn-outline indicator"
-                                            >
-                                                <PenBox className="size-5" />
-                                                {t("newbook")}
-                                            </button>
-                                        </li>
                                     </ul>
                                 </div>
                                 <div className="navbar-end space-x-2">
+                                    <Link
+                                        href="/studio/new"
+                                        className="btn max-md:btn-circle bg-neutral/10"
+                                    >
+                                        <BookPlus className="size-5" />
+                                        <span className="hidden md:inline bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                                            {t("new-book")}
+                                        </span>
+                                    </Link>
                                     <Link
                                         href="/pricing"
                                         className="btn max-md:btn-circle bg-neutral/10"
@@ -299,23 +296,11 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                 </a>
                             </li>
                         ))}
-                        <li>
-                            <button
-                                onClick={() => setBookOpen((prev) => !prev)}
-                                className="btn btn-ghost w-full justify-between"
-                            >
-                                <span className="flex items-center gap-2">
-                                    <PenBox className="size-5" />
-                                    {t("newbook")}
-                                </span>
-                            </button>
-                        </li>
                     </ul>
                 </div>
             </div>
 
             <LocaleModal open={localeOpen} setOpen={setLocaleOpen} />
-            <BookModal open={bookOpen} setOpen={setBookOpen} />
         </>
     );
 };

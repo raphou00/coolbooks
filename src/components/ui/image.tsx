@@ -1,10 +1,11 @@
 "use client";
 
-import NextImage from "next/image";
+import { useState } from "react";
+import Image from "next/image";
 import type { ImageProps } from "next/image";
 import { cn, getImage } from "@/lib/utils";
 
-const Image: React.FC<ImageProps> = ({
+const NextImage: React.FC<ImageProps> = ({
     height,
     width,
     src,
@@ -12,9 +13,16 @@ const Image: React.FC<ImageProps> = ({
     alt,
     ...rest
 }) => {
+    const [isLoading, setLoading] = useState<boolean>(true);
+
     return (
-        <NextImage
-            className={cn("transition duration-300", className)}
+        <Image
+            className={cn(
+                "transition duration-300",
+                isLoading ? "blur-sm skeleton" : "blur-0",
+                className
+            )}
+            onLoad={() => setLoading(false)}
             src={getImage(src as string)}
             width={width}
             height={height}
@@ -27,4 +35,4 @@ const Image: React.FC<ImageProps> = ({
     );
 };
 
-export default Image;
+export default NextImage;
