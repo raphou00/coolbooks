@@ -66,6 +66,10 @@ export default createEnv({
         OPENROUTER_KEY: z
             .string()
             .min(1, { message: "OpenRouter Key is missing" }),
+
+        AI_GATEWAY_API_KEY: z
+            .string()
+            .min(1, { message: "AI Gateway API Key is missing" }),
     },
     client: {
         NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: z
@@ -75,6 +79,10 @@ export default createEnv({
         NEXT_PUBLIC_CLOUDFRONT_URL: z
             .string()
             .min(1, { message: "Cloudinary URL is missing" }),
+
+        NEXT_PUBLIC_STRIPE_PRODUCT_ID: z
+            .string()
+            .min(1, { message: "Stripe Product ID is missing" }),
     },
     runtimeEnv: {
         NODE_ENV: process.env.VERCEL_ENV,
@@ -95,8 +103,11 @@ export default createEnv({
             process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
         STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
         STRIPE_WEBHOOK_SECRET: process.env.STRIPE_WEBHOOK_SECRET,
+        NEXT_PUBLIC_STRIPE_PRODUCT_ID:
+            process.env.NEXT_PUBLIC_STRIPE_PRODUCT_ID,
         GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
         GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
         OPENROUTER_KEY: process.env.OPENROUTER_KEY,
+        AI_GATEWAY_API_KEY: process.env.AI_GATEWAY_API_KEY,
     },
 });

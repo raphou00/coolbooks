@@ -1,7 +1,7 @@
 import Main from "@/components/layout/main";
-import Books from "@/components/ui/books";
 import { getUser } from "@/lib/auth";
 import db from "@/lib/db";
+import { Home } from "./home";
 
 const Page = async () => {
     const user = await getUser();
@@ -21,15 +21,14 @@ const Page = async () => {
                 },
             },
         },
-        take: 5,
         orderBy: {
             updatedAt: "desc",
         },
     });
 
     return (
-        <Main className="mt-8 flex" gradientVariant="floatingGradient">
-            <Books books={books} />
+        <Main className="mt-8 flex">
+            <Home books={books} />
         </Main>
     );
 };

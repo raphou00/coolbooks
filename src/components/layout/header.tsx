@@ -14,7 +14,6 @@ import {
     LogOut,
     PenBox,
     Settings2,
-    SunMoon,
     UserIcon,
 } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
@@ -46,7 +45,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
         router.refresh();
     };
 
-    const toggleTheme = () => {
+    const _toggleTheme = () => {
         setTheme((e) => (e === "dark" ? "light" : "dark"));
     };
 
@@ -62,8 +61,9 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                     <header className="fixed w-full top-0 z-60">
                         <div
                             className={cn(
-                                "w-full",
-                                scroll && "bg-base-100/80 backdrop-blur-3xl"
+                                "w-full backdrop-blur bg-base-content/90",
+                                pathname === "/" && "bg-base-100/10",
+                                scroll && ""
                             )}
                         >
                             <div className="navbar min-h-14 py-0 mx-auto transition max-w-7xl w-full px-4 md:px-6 lg:px-8 xl:px-12">
@@ -108,7 +108,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                             href="/"
                                             className="flex items-center text-sm relative z-20"
                                         >
-                                            <Logo className="size-10" />
+                                            <Logo className="size-12" />
                                         </Link>
                                     </div>
                                     <ul className="menu menu-horizontal space-x-2 max-[850px]:hidden">
@@ -117,10 +117,10 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                                 <Link
                                                     href={item.path}
                                                     className={cn(
-                                                        "btn btn-sm indicator",
-                                                        item.path === pathname ?
-                                                            "btn-accent"
-                                                        :   "btn-ghost btn-outline"
+                                                        "btn btn-sm bg-base-content/80 text-white border-none"
+                                                        // item.path === pathname ?
+                                                        //     "btn-"
+                                                        // :   "bg-base-content hover:bg-base-content/20",
                                                     )}
                                                 >
                                                     <item.icon className="size-5" />
@@ -133,18 +133,18 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                 <div className="navbar-end space-x-2">
                                     <Link
                                         href="/studio/new"
-                                        className="btn max-md:btn-circle bg-neutral/10"
+                                        className="btn max-md:btn-circle border-none bg-base-content/80"
                                     >
-                                        <BookPlus className="size-5" />
+                                        <BookPlus className="size-5 text-base-300" />
                                         <span className="hidden md:inline bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
                                             {t("new-book")}
                                         </span>
                                     </Link>
                                     <Link
                                         href="/pricing"
-                                        className="btn max-md:btn-circle bg-neutral/10"
+                                        className="btn max-md:btn-circle border-none bg-base-content/80"
                                     >
-                                        <DollarSign className="size-5" />
+                                        <DollarSign className="size-5 text-base-300" />
                                         <span className="hidden md:inline bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
                                             {t("pricing")}
                                         </span>
@@ -220,16 +220,6 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                                 }
 
                                                 <div className="divider mx-auto my-1 w-full px-2" />
-
-                                                <button
-                                                    onClick={toggleTheme}
-                                                    className="btn btn-ghost rounded-lg m-0 w-full justify-start"
-                                                >
-                                                    <span className="flex items-center gap-2">
-                                                        <SunMoon className="size-6" />
-                                                        {t("theme")}
-                                                    </span>
-                                                </button>
 
                                                 <button
                                                     onClick={() =>

@@ -1,9 +1,9 @@
 "use client";
 
-import { Archivo_Black } from "next/font/google";
+import { Goudy_Bookletter_1911 } from "next/font/google";
 import { cn } from "@/lib/utils";
 
-const font = Archivo_Black({
+const font = Goudy_Bookletter_1911({
     subsets: ["latin"],
     weight: "400",
 });

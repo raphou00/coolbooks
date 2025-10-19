@@ -3,7 +3,7 @@
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useTheme } from "next-themes";
-import { Home, Languages, SunMoon } from "lucide-react";
+import { Home, Languages } from "lucide-react";
 import Link from "next/link";
 import LocaleModal from "@/components/ui/locale-modal";
 
@@ -12,7 +12,7 @@ const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
     const [localeOpen, setLocaleOpen] = useState<boolean>(false);
     const { setTheme } = useTheme();
 
-    const toggleTheme = () => {
+    const _toggleTheme = () => {
         setTheme((e) => (e === "dark" ? "light" : "dark"));
     };
 
@@ -34,16 +34,6 @@ const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
                             <span className="hidden sm:block">{t("home")}</span>
                         </Link>
                         <div className="space-x-2">
-                            <button
-                                onClick={toggleTheme}
-                                className="btn max-sm:btn-circle btn-sm"
-                            >
-                                <SunMoon className="size-5" />
-                                <span className="hidden sm:block">
-                                    {t("theme")}
-                                </span>
-                            </button>
-
                             <button
                                 onClick={() => setLocaleOpen((e) => !e)}
                                 className="btn max-sm:btn-circle btn-sm"

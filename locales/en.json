@@ -109,13 +109,20 @@
             "submit": "Delete"
         },
         "home": {
+            "description": "Create cool books for your kids with only one prompt!",
             "books": "My recent books",
             "new-book": "New Book",
-            "next-book": "Your next book!"
+            "next-book": "Your next book!",
+            "beta": "😍 #1 Kids book plateform",
+            "free-trial": "Start free trial"
         },
         "book": {
             "title": "{title}",
             "description": "{title} by {author} generated with {app}"
+        },
+        "explore": {
+            "title": "Explore",
+            "description": "Explore every public books on the platform!"
         },
         "pricing": {
             "title": "Pricing",
