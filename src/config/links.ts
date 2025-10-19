@@ -6,13 +6,14 @@ import {
     BookHeart,
     Palette,
     Compass,
+    Home,
 } from "lucide-react";
 
 export const useGetLinks = () => {
     const t = useTranslations("links");
     return [
         {
-            title: t("my-books"),
+            title: t("home"),
             path: "/",
             icon: BookHeart,
         },
@@ -85,7 +86,7 @@ export const useGetFooterLinks = () => {
             title: "Cool Books",
             links: [
                 {
-                    title: t("my-books"),
+                    title: t("home"),
                     path: "/",
                     icon: BookHeart,
                 },

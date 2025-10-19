@@ -46,7 +46,7 @@ export const Home: React.FC<BooksProps> = ({ books }) => {
     const boxShadow = useMotionTemplate`0px 4px 24px ${color}`;
 
     return (
-        <div className="space-y-24">
+        <div className="space-y-10 pt-22 h-screen">
             <Image
                 src="/images/magical-forest-kid-reading-a-book-fantastic.png"
                 alt=""
@@ -58,7 +58,7 @@ export const Home: React.FC<BooksProps> = ({ books }) => {
             <section className="relative grid place-content-center">
                 <div className="relative z-10 flex flex-col items-center">
                     <span className="inline-block rounded-full bg-neutral/20 backdrop-blur border border-neutral px-3 py-1.5 mb-3 text-sm text-white">
-                        {t("beta")}
+                        😍 {t("beta")}
                     </span>
                     <Title
                         text={title}
@@ -79,7 +79,7 @@ export const Home: React.FC<BooksProps> = ({ books }) => {
                         whileTap={{
                             scale: 0.985,
                         }}
-                        className="group relative flex w-fit items-center gap-1.5 rounded-full bg-gray-950/60 px-4 py-2 text-gray-50 transition-colors cursor-pointer hover:bg-gray-950/50"
+                        className="group relative flex w-fit items-center gap-1.5 rounded-full bg-gray-950/80 px-4 py-2 text-gray-50 transition-colors cursor-pointer hover:bg-gray-950/90"
                     >
                         {t("free-trial")}
                         <ArrowRight className="transition-transform group-hover:-rotate-45 group-active:-rotate-12" />
@@ -94,19 +94,63 @@ export const Home: React.FC<BooksProps> = ({ books }) => {
 
 const Books: React.FC<BooksProps> = ({ books }) => {
     const t = useTranslations("pages.home");
-    const phantomBooks = Array.from({ length: 0 });
 
     return (
         <>
             <div className="mb-4">
-                <Title text="" className="text-left w-fit text-xl" />
+                <Title
+                    text={t("trend") + " 🔥"}
+                    className="text-left w-fit text-3xl text-white"
+                    underline
+                />
+            </div>
+            <div className="w-full grid grid-cols-3 md:grid-cols-5 gap-2">
+                {books.map((book) => (
+                    <Link
+                        key={book.id}
+                        href={`/book/${book.id}`}
+                        className="group relative size-full"
+                    >
+                        <div className="w-full aspect-square shadow-lg rounded-lg overflow-hidden">
+                            <NextImage
+                                className="group-hover:scale-105 transition-all"
+                                src={book.cover}
+                                width={1024}
+                                height={1024}
+                                alt={book.title}
+                            />
+                        </div>
+                        <div className="flex flex-col items-center justify-center text-white text-sm font-bold">
+                            <h2 className="text-center">{book.title}</h2>
+                            <p className="text-gray-300">
+                                {t("by")} {book.user.name}
+                            </p>
+                        </div>
+                    </Link>
+                ))}
+            </div>
+        </>
+    );
+};
+
+export const MyBooks: React.FC<BooksProps> = ({ books }) => {
+    const t = useTranslations("pages.home");
+
+    return (
+        <>
+            <div className="mt-8 mb-4">
+                <Title
+                    text={t("my-books") + " 📖"}
+                    className="text-left w-fit text-3xl"
+                    underline
+                />
             </div>
             <div className="w-full grid grid-cols-2 md:grid-cols-5 gap-2">
                 <Link
                     href="/studio/new"
                     className={cn(
                         "flex items-center justify-center bg-gradient-to-tr from-secondary/80 to-primary/80 rounded-lg shadow-lg border-4 border-dashed overflow-hidden",
-                        "border-base-200 cursor-pointer hover:bg-base-200 hover:border-base-300 hover:rounded-xl transition-all relative z-20"
+                        "border-base-200 cursor-pointer hover:bg-base-200 hover:border-base-300 hover:rounded-xl transition-all relative z-20 aspect-square"
                     )}
                 >
                     <div className="flex flex-col items-center justify-center gap-2 bg-black/50 size-full">
@@ -118,41 +162,21 @@ const Books: React.FC<BooksProps> = ({ books }) => {
                     <Link
                         key={book.id}
                         href={`/book/${book.id}`}
-                        className="group relative size-full rounded-lg shadow-lg overflow-hidden border-2 border-neutral"
+                        className="group relative size-full"
                     >
-                        <NextImage
-                            className="group-hover:scale-105 transition-all"
-                            src={book.cover}
-                            width={1024}
-                            height={1024}
-                            alt={book.title}
-                        />
-                        <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all">
-                            <h2 className="text-white text-center text-xl font-bold max-w-3/4">
-                                {book.title}
-                            </h2>
+                        <div className="w-full aspect-square shadow-lg rounded-lg overflow-hidden">
+                            <NextImage
+                                className="group-hover:scale-105 transition-all"
+                                src={book.cover}
+                                width={1024}
+                                height={1024}
+                                alt={book.title}
+                            />
+                        </div>
+                        <div className="flex flex-col items-center justify-center text-sm font-bold mt-2">
+                            <h2 className="text-center">{book.title}</h2>
                         </div>
                     </Link>
-                ))}
-
-                {phantomBooks.map((_, index) => (
-                    <div
-                        key={index}
-                        className="bg-base-300 aspect-square rounded-lg shadow-lg border-2 border-neutral"
-                    >
-                        <div className="size-full flex flex-col items-center justify-center gap-2">
-                            <Image
-                                src="/images/book-smiley.svg"
-                                alt="Book simley"
-                                width={256}
-                                height={256}
-                                className="filter grayscale-100 w-1/2"
-                            />
-                            <h2 className="text-neutral text-sm text-center">
-                                {t("next-book")}
-                            </h2>
-                        </div>
-                    </div>
                 ))}
             </div>
         </>

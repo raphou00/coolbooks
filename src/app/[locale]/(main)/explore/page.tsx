@@ -3,6 +3,7 @@ import Main from "@/components/layout/main";
 import { getTranslations } from "next-intl/server";
 import db from "@/lib/db";
 import Books from "./explore";
+import { getUser } from "@/lib/auth";
 
 const generateMetadata = async (): Promise<Metadata> => {
     const t = await getTranslations("pages");
@@ -13,11 +14,14 @@ const generateMetadata = async (): Promise<Metadata> => {
 };
 
 const Page = async () => {
+    const user = await getUser();
+
     const books = await db.book.findMany({
         select: {
             id: true,
             title: true,
             cover: true,
+            promptText: true,
             user: {
                 select: {
                     name: true,
@@ -27,8 +31,8 @@ const Page = async () => {
     });
 
     return (
-        <Main className="mt-8 flex" gradientVariant="floatingGradient">
-            <Books books={books} />
+        <Main className="mt-8 flex" gradientVariant="heroGradient">
+            <Books user={user?.user || null} books={books} />
         </Main>
     );
 };

@@ -113,8 +113,11 @@
             "books": "My recent books",
             "new-book": "New Book",
             "next-book": "Your next book!",
-            "beta": "😍 #1 Kids book plateform",
-            "free-trial": "Start free trial"
+            "beta": "#1 Kids book plateform",
+            "free-trial": "Start free trial",
+            "by": "By",
+            "trend": "Trending",
+            "my-books": "My Books"
         },
         "book": {
             "title": "{title}",
@@ -122,7 +125,10 @@
         },
         "explore": {
             "title": "Explore",
-            "description": "Explore every public books on the platform!"
+            "description": "Explore every public books on the platform!",
+            "main-title": "Public books just for you",
+            "search-placeholder": "Search for a book...",
+            "by": "By"
         },
         "pricing": {
             "title": "Pricing",

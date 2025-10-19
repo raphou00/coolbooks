@@ -61,9 +61,9 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                     <header className="fixed w-full top-0 z-60">
                         <div
                             className={cn(
-                                "w-full backdrop-blur bg-base-content/90",
-                                pathname === "/" && "bg-base-100/10",
-                                scroll && ""
+                                "w-full",
+                                (scroll || pathname == "/") &&
+                                    "backdrop-blur bg-base-100/10"
                             )}
                         >
                             <div className="navbar min-h-14 py-0 mx-auto transition max-w-7xl w-full px-4 md:px-6 lg:px-8 xl:px-12">
@@ -117,10 +117,10 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                                 <Link
                                                     href={item.path}
                                                     className={cn(
-                                                        "btn btn-sm bg-base-content/80 text-white border-none"
-                                                        // item.path === pathname ?
-                                                        //     "btn-"
-                                                        // :   "bg-base-content hover:bg-base-content/20",
+                                                        "btn btn-sm bg-base-content/80 text-white border-none",
+                                                        item.path === pathname ?
+                                                            "btn-accent"
+                                                        :   ""
                                                     )}
                                                 >
                                                     <item.icon className="size-5" />
