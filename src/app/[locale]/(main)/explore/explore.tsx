@@ -5,9 +5,8 @@ import { useTranslations } from "next-intl";
 import NextImage from "@/components/ui/image";
 import type { User } from "lucia";
 import Title from "@/components/ui/title";
-import { Search } from "lucide-react";
-import { useState } from "react";
-import { name } from "@/config/seo";
+import Search from "@/components/ui/search";
+import { useEffect, useState } from "react";
 
 type Books = {
     id: string;
@@ -23,6 +22,8 @@ type ExploreProps = {
     user: User | null;
     books: Books;
 };
+
+const placeholders = ["Search by title", "Search by author"];
 
 const Explore: React.FC<ExploreProps> = ({ books: allBooks, user }) => {
     const t = useTranslations("pages.explore");
@@ -42,50 +43,60 @@ const Explore: React.FC<ExploreProps> = ({ books: allBooks, user }) => {
         return filteredBooks;
     };
 
-    const handleSearch = (searchTerm: string) => {
-        setSearch(searchTerm);
-        const filteredBooks = applyFilters(searchTerm);
+    const handleSearch = () => {
+        const filteredBooks = applyFilters(search);
         setBooks(filteredBooks);
     };
 
+    useEffect(() => {
+        handleSearch();
+    }, [search]);
+
     return (
         <>
-            <div className="flex flex-col items-center justify-center gap-y-6 mb-8">
-                <div className="flex items-center gap-x-2">
+            <div
+                className="relative w-full flex flex-col items-center justify-center gap-y-6 mb-8 p-6 space-y-2 md:p-12 rounded-2xl  overflow-hidden"
+                style={{
+                    backgroundImage:
+                        "url('/images/magical-forest-kid-reading-a-book-unicorn-fairy.png')",
+                    backgroundSize: "cover",
+                    backgroundPosition: "bottom bottom",
+                    backgroundRepeat: "no-repeat",
+                }}
+            >
+                <div
+                    className="absolute inset-0 brightness-75 rounded-2xl size-full"
+                    style={{
+                        backgroundImage:
+                            "url('/images/magical-forest-kid-reading-a-book-unicorn-fairy.png')",
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
+                        backgroundRepeat: "no-repeat",
+                    }}
+                />
+                <div className="flex items-center gap-x-2 pt-2 z-20">
                     <Title
                         text={t("main-title")}
-                        className="text-4xl"
-                        underline
+                        className="text-4xl md:text-5xl text-center text-white"
                     />
                 </div>
-                <div className="w-full max-w-[500px]">
-                    <div className="relative w-full">
-                        <input
-                            type="text"
-                            className="input input-lg input-bordered w-full border-2 bg-base-100 tracking-wide transition placeholder:text-neutral-400 focus:border-neutral focus:outline-none focus:bg-base-300 pl-5 pr-9"
-                            placeholder={t("search-placeholder")}
-                            value={search}
-                            onChange={(e) => handleSearch(e.target.value)}
-                            spellCheck={false}
-                            autoComplete="off"
-                            autoCapitalize="off"
-                            autoCorrect="off"
-                        />
-                        <button className="cursor-pointer z-20 size-9 bg-secondary rounded-full flex items-center justify-center absolute right-0 top-1/2 mx-1.5 -translate-y-1/2">
-                            <Search className="size-5 text-white" />
-                        </button>
-                    </div>
+                <div className="w-full">
+                    <Search
+                        placeholders={placeholders}
+                        onChange={(e) => setSearch(e.target.value)}
+                        onSubmit={handleSearch}
+                    />
                 </div>
             </div>
 
-            <div className="w-full grid grid-cols-2 md:grid-cols-5 gap-2">
+            <div className="w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 md:gap-8 lg:gap-16">
                 {books.map((book) => (
                     <Link
                         key={book.id}
                         href={`/book/${book.id}`}
                         className="group relative size-full"
                     >
-                        <div className="w-full aspect-square shadow-lg rounded-lg overflow-hidden">
+                        <div className="w-full aspect-square shadow-lg rounded-lg overflow-hidden border-4 border-accent/20">
                             <NextImage
                                 className="group-hover:scale-105 transition-all"
                                 src={book.cover}
@@ -94,7 +105,7 @@ const Explore: React.FC<ExploreProps> = ({ books: allBooks, user }) => {
                                 alt={book.title}
                             />
                         </div>
-                        <div className="flex flex-col items-center justify-center text-sm font-bold">
+                        <div className="flex flex-col items-center justify-center text-sm font-bold gap-y-1">
                             <h2 className="text-center">{book.title}</h2>
                             <p className="text-base-content/50">
                                 {t("by")} {book.user.name}

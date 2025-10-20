@@ -162,8 +162,8 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                                     alt={user.name}
                                                     className="size-11 lg:size-12"
                                                 />
-                                            :   <div className="btn btn-circle bg-neutral/10">
-                                                    <UserIcon className="size-6" />
+                                            :   <div className="btn btn-circle border-none bg-base-content/80">
+                                                    <UserIcon className="size-6 text-white" />
                                                 </div>
                                             }
                                         </div>

@@ -6,7 +6,6 @@ import {
     BookHeart,
     Palette,
     Compass,
-    Home,
 } from "lucide-react";
 
 export const useGetLinks = () => {
@@ -18,14 +17,14 @@ export const useGetLinks = () => {
             icon: BookHeart,
         },
         {
-            title: t("studio"),
-            path: "/studio",
-            icon: Palette,
-        },
-        {
             title: t("explore"),
             path: "/explore",
             icon: Compass,
+        },
+        {
+            title: t("studio"),
+            path: "/studio",
+            icon: Palette,
         },
     ];
 };
@@ -88,7 +87,6 @@ export const useGetFooterLinks = () => {
                 {
                     title: t("home"),
                     path: "/",
-                    icon: BookHeart,
                 },
                 {
                     title: t("pricing"),

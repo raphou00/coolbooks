@@ -31,7 +31,7 @@ const Page = async () => {
     });
 
     return (
-        <Main className="mt-8 flex" gradientVariant="heroGradient">
+        <Main className="mt-4 flex" gradientVariant="floatingGradient">
             <Books user={user?.user || null} books={books} />
         </Main>
     );

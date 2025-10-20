@@ -126,14 +126,14 @@
         "explore": {
             "title": "Explore",
             "description": "Explore every public books on the platform!",
-            "main-title": "Public books just for you",
+            "main-title": "Explore Books 📚",
             "search-placeholder": "Search for a book...",
             "by": "By"
         },
         "pricing": {
             "title": "Pricing",
-            "description": "Hey, do you want to see the locked images ? Get the only subscription at only {price} per month!",
-            "month": "Month",
+            "description": "Choose the plan that best fits your needs!",
+            "month": "/month",
             "subscribe": "Subscribe",
             "portal": "Open Portal",
             "subscription": {

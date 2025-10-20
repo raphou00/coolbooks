@@ -15,6 +15,7 @@ import NextImage from "@/components/ui/image";
 import Title from "@/components/ui/title";
 import { title } from "@/config/seo";
 import { cn } from "@/lib/utils";
+import useWindowSize from "@/hook/use-window-size";
 
 type BooksProps = {
     books: {
@@ -50,9 +51,16 @@ export const Home: React.FC<BooksProps> = ({ books }) => {
             <Image
                 src="/images/magical-forest-kid-reading-a-book-fantastic.png"
                 alt=""
-                className="absolute top-0 left-0 object-cover w-screen h-screen -z-50 brightness-50"
                 width={1920}
                 height={1080}
+                className="absolute top-0 left-0 object-cover w-screen h-screen -z-50 brightness-50"
+                style={{
+                    objectFit: "cover",
+                    objectPosition: "bottom",
+                    mask: "linear-gradient(to top, transparent 0%, black 4%)",
+                    WebkitMask:
+                        "linear-gradient(to top, transparent 0%, black 4%)",
+                }}
             />
 
             <section className="relative grid place-content-center">
@@ -94,6 +102,9 @@ export const Home: React.FC<BooksProps> = ({ books }) => {
 
 const Books: React.FC<BooksProps> = ({ books }) => {
     const t = useTranslations("pages.home");
+    const window = useWindowSize();
+
+    books = window.width > 768 ? books : books.slice(0, 3);
 
     return (
         <>
@@ -145,7 +156,7 @@ export const MyBooks: React.FC<BooksProps> = ({ books }) => {
                     underline
                 />
             </div>
-            <div className="w-full grid grid-cols-2 md:grid-cols-5 gap-2">
+            <div className="w-full grid grid-cols-3 md:grid-cols-5 gap-2">
                 <Link
                     href="/studio/new"
                     className={cn(
