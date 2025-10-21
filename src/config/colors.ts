@@ -1,5 +1,5 @@
 export const colors = [
-    { hex: "#FFF5F5", name: "Very light pink" },
+    { hex: "#FFF5F5", name: "Light pink" },
     { hex: "#FFF0F5", name: "Lavender blush" },
     { hex: "#F0F8FF", name: "Alice blue" },
     { hex: "#F5FFFA", name: "Mint cream" },
@@ -18,12 +18,12 @@ export const colors = [
     { hex: "#FFF5EE", name: "Seashell" },
     { hex: "#F0FFFF", name: "Azure" },
     { hex: "#FFFAF0", name: "Floral white" },
-    { hex: "#F5F0FF", name: "Very light lavender" },
-    { hex: "#FFF0F0", name: "Very light rose" },
-    { hex: "#F0FFF8", name: "Very light mint" },
+    { hex: "#F5F0FF", name: "Light lavender" },
+    { hex: "#FFF0F0", name: "Light rose" },
+    { hex: "#F0FFF8", name: "Light mint" },
     { hex: "#FFFFF0", name: "Ivory" },
-    { hex: "#F8FFF8", name: "Very light green" },
-    { hex: "#FFF8F0", name: "Very light peach" },
+    { hex: "#F8FFF8", name: "Light green" },
+    { hex: "#FFF8F0", name: "Light peach" },
 ];
 
 export const randomHex = () =>
