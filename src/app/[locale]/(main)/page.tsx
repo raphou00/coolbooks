@@ -1,12 +1,10 @@
 import { getTranslations } from "next-intl/server";
-import { getUser } from "@/lib/auth";
 import db from "@/lib/db";
 import Main from "@/components/layout/main";
 import Books from "@/components/ui/books";
 import Home from "./home";
 
 const Page = async () => {
-    const user = await getUser();
     const t = await getTranslations("pages.home");
 
     const booksWeekly = await db.book.findMany({

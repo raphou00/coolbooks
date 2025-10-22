@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import NextImage from "@/components/ui/image";
-import type { User } from "lucia";
 import Title from "@/components/ui/title";
 import Search from "@/components/ui/search";
 import { useEffect, useState } from "react";
@@ -19,13 +18,12 @@ type Books = {
 }[];
 
 type ExploreProps = {
-    user: User | null;
     books: Books;
 };
 
 const placeholders = ["Football", "Astronaut", "Science"];
 
-const Explore: React.FC<ExploreProps> = ({ books: allBooks, user }) => {
+const Explore: React.FC<ExploreProps> = ({ books: allBooks }) => {
     const t = useTranslations("pages.explore");
     const [search, setSearch] = useState("");
     const [books, setBooks] = useState<Books>(allBooks);

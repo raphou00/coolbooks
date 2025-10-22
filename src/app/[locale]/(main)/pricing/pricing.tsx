@@ -9,64 +9,25 @@ import type { getSubscription } from "@/lib/stripe";
 import type { User } from "lucia";
 import { CheckIcon } from "lucide-react";
 
-type Subscription = Awaited<ReturnType<typeof getSubscription>>;
+type Subscriptions = Awaited<ReturnType<typeof getSubscription>>;
 
 type PricingProps = {
-    sub: Subscription;
+    subs: Subscriptions;
     user: User | null;
 };
 
-const tiers = [
-    {
-        name: "Basic",
-        id: "tier-basic",
-        price: 10,
-        description: "Cool",
-        features: [
-            "5 AI book creation",
-            "Standard illustrations",
-            "Basic customization",
-        ],
-        popular: false,
-    },
-    {
-        name: "Family",
-        id: "tier-family",
-        price: 18,
-        description: "Very cool",
-        features: [
-            "15 AI books creation",
-            "Premium illustrations",
-            "Better personalization",
-        ],
-        popular: true,
-    },
-    {
-        name: "Premium",
-        id: "tier-premium",
-        price: 30,
-        description: "Very cool",
-        features: [
-            "Unlimited AI books creation",
-            "All premium features",
-            "Priority generation (faster processing)",
-        ],
-        popular: false,
-    },
-];
-
-const Pricing: React.FC<PricingProps> = ({ sub, user }) => {
+const Pricing: React.FC<PricingProps> = ({ subs, user }) => {
     const t = useTranslations("pages.pricing");
 
-    const submit = async () => {
-        if (!user?.stripeCustomerId) await createCheckout();
+    const submit = async (priceId: string) => {
+        if (!user?.stripeCustomerId) await createCheckout(priceId);
         else await openPortal();
     };
 
-    const createCheckout = async () => {
-        const res = await axios.get("/api/stripe/create-checkout", {
-            method: "POST",
-        });
+    const createCheckout = async (priceId: string) => {
+        const res = await axios.get(
+            `/api/stripe/create-checkout?priceId=${priceId}`
+        );
         if (!res.data.success) toast.error(res.data.message);
         else window.location.replace(res.data.redirect);
     };
@@ -90,15 +51,15 @@ const Pricing: React.FC<PricingProps> = ({ sub, user }) => {
                 {t("description")}
             </p>
             <div className="isolate mx-auto mt- grid max-w-md grid-cols-1 gap-y-8 sm:mt-12 lg:mx-0 lg:max-w-none lg:grid-cols-3">
-                {tiers.map((tier, tierIdx) => (
+                {subs.map((tier, tierIdx) => (
                     <div
-                        key={tier.id}
+                        key={tier.name}
                         className={cn(
                             tier.popular ?
                                 "lg:z-10 lg:rounded-b-none"
                             :   "lg:mt-8",
                             tierIdx === 0 ? "-mr-px lg:rounded-r-none" : "",
-                            tierIdx === tiers.length - 1 ?
+                            tierIdx === subs.length - 1 ?
                                 "-ml-px lg:rounded-l-none"
                             :   "",
                             "flex flex-col justify-between rounded-3xl bg-white p-8 inset-ring inset-ring-gray-200 xl:p-10"
@@ -107,7 +68,6 @@ const Pricing: React.FC<PricingProps> = ({ sub, user }) => {
                         <div>
                             <div className="flex items-center justify-between gap-x-4">
                                 <h3
-                                    id={tier.id}
                                     className={cn(
                                         tier.popular ? "text-primary" : (
                                             "text-base-content"
@@ -148,7 +108,7 @@ const Pricing: React.FC<PricingProps> = ({ sub, user }) => {
                             </ul>
                         </div>
                         <button
-                            onClick={() => submit()}
+                            onClick={() => submit(tier.priceId)}
                             className={cn(
                                 "btn mt-4",
                                 tier.popular ? "btn-primary" : "btn-outline"

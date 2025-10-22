@@ -4,7 +4,11 @@ import { title } from "@/config/seo";
 import type { User } from "@prisma/client";
 import db from "./db";
 import type { T } from "./types";
-import { productId } from "@/config/stripe";
+import {
+    productIdBasic,
+    productIdFamily,
+    productIdPremium,
+} from "@/config/stripe";
 
 export const stripe = new Stripe(env.STRIPE_SECRET_KEY, {
     apiVersion: "2025-02-24.acacia",
@@ -48,14 +52,48 @@ export const handleSubscriptionChange = async (
 };
 
 export const getSubscription = async (t: T) => {
-    const prices = await stripe.prices.list({ product: productId });
+    const priceBasic = await stripe.prices.list({ product: productIdBasic });
+    const priceFamily = await stripe.prices.list({ product: productIdFamily });
+    const pricePremium = await stripe.prices.list({
+        product: productIdPremium,
+    });
 
-    const tiers = {
-        name: t("pages.pricing.subscription.title"),
-        description: t("pages.pricing.subscription.description"),
-        price: prices.data[0].unit_amount! / 100,
-        priceId: prices.data[0].id,
-    };
+    const tiers = [
+        {
+            name: t("pages.pricing.subscriptions.basic.title"),
+            description: t("pages.pricing.subscriptions.basic.description"),
+            features: [
+                t("pages.pricing.subscriptions.basic.features.0"),
+                t("pages.pricing.subscriptions.basic.features.1"),
+                t("pages.pricing.subscriptions.basic.features.2"),
+            ],
+            price: priceBasic.data[0].unit_amount! / 100,
+            priceId: priceBasic.data[0].id,
+        },
+        {
+            name: t("pages.pricing.subscriptions.family.title"),
+            description: t("pages.pricing.subscriptions.family.description"),
+            features: [
+                t("pages.pricing.subscriptions.family.features.0"),
+                t("pages.pricing.subscriptions.family.features.1"),
+                t("pages.pricing.subscriptions.family.features.2"),
+            ],
+            price: priceFamily.data[0].unit_amount! / 100,
+            priceId: priceFamily.data[0].id,
+            popular: true,
+        },
+        {
+            name: t("pages.pricing.subscriptions.premium.title"),
+            description: t("pages.pricing.subscriptions.premium.description"),
+            features: [
+                t("pages.pricing.subscriptions.premium.features.0"),
+                t("pages.pricing.subscriptions.premium.features.1"),
+                t("pages.pricing.subscriptions.premium.features.2"),
+            ],
+            price: pricePremium.data[0].unit_amount! / 100,
+            priceId: pricePremium.data[0].id,
+        },
+    ];
 
     return tiers;
 };

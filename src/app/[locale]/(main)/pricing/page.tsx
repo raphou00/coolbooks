@@ -4,16 +4,12 @@ import { getTranslations } from "next-intl/server";
 import Pricing from "./pricing";
 import { getSubscription } from "@/lib/stripe";
 import { getUser } from "@/lib/auth";
-import { formatAmountForDisplay } from "@/lib/utils";
 
 const generateMetadata = async (): Promise<Metadata> => {
     const t = await getTranslations();
-    const subscription = await getSubscription(t);
     return {
         title: t("pages.pricing.title"),
-        description: t("pages.pricing.description", {
-            price: formatAmountForDisplay(subscription.price),
-        }),
+        description: t("pages.pricing.description"),
     };
 };
 
@@ -27,7 +23,7 @@ const Page = async () => {
             className="mt-8 flex justify-center"
             gradientVariant="floatingGradient"
         >
-            <Pricing user={user?.user || null} sub={subscription} />
+            <Pricing user={user?.user || null} subs={subscription} />
         </Main>
     );
 };

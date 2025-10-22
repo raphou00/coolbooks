@@ -3,7 +3,6 @@ import { getTranslations } from "next-intl/server";
 import { stripe } from "@/lib/stripe";
 import { getUser } from "@/lib/auth";
 import env from "@/lib/env";
-import { productId } from "@/config/stripe";
 import type { Locale } from "@/lib/types";
 
 export const GET = async (req: NextRequest) => {
@@ -12,6 +11,7 @@ export const GET = async (req: NextRequest) => {
         locale,
     });
     try {
+        const priceId = req.nextUrl.searchParams.get("productId");
         const user = await getUser();
 
         if (!user || !user.user) {
@@ -21,8 +21,7 @@ export const GET = async (req: NextRequest) => {
             });
         }
 
-        const priceId = await stripe.prices.list({ product: productId });
-        if (!priceId.data[0].id) {
+        if (!priceId) {
             return NextResponse.json({
                 success: true,
                 redirect: "/pricing",
@@ -33,7 +32,7 @@ export const GET = async (req: NextRequest) => {
             payment_method_types: ["card"],
             line_items: [
                 {
-                    price: priceId.data[0].id,
+                    price: priceId,
                     quantity: 1,
                 },
             ],

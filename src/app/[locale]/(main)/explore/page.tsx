@@ -3,7 +3,6 @@ import Main from "@/components/layout/main";
 import { getTranslations } from "next-intl/server";
 import db from "@/lib/db";
 import Books from "./explore";
-import { getUser } from "@/lib/auth";
 
 const generateMetadata = async (): Promise<Metadata> => {
     const t = await getTranslations("pages");
@@ -14,8 +13,6 @@ const generateMetadata = async (): Promise<Metadata> => {
 };
 
 const Page = async () => {
-    const user = await getUser();
-
     const books = await db.book.findMany({
         select: {
             id: true,
@@ -32,7 +29,7 @@ const Page = async () => {
 
     return (
         <Main className="mt-4 flex" gradientVariant="floatingGradient">
-            <Books user={user?.user || null} books={books} />
+            <Books books={books} />
         </Main>
     );
 };

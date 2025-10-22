@@ -134,9 +134,34 @@
             "popular": "Most popular",
             "subscribe": "Subscribe",
             "portal": "Open Portal",
-            "subscription": {
-                "title": "Subscription",
-                "description": "Get full access to the content on Cool Books, you will not regret it!"
+            "subscriptions": {
+                "basic": {
+                    "title": "Basic",
+                    "description": "Cool",
+                    "features": [
+                        "5 AI book creation",
+                        "Standard illustrations",
+                        "Basic customization"
+                    ]
+                },
+                "family": {
+                    "title": "Family",
+                    "description": "Very cool",
+                    "features": [
+                        "15 AI books creation",
+                        "Premium illustrations",
+                        "Better personalization"
+                    ]
+                },
+                "premium": {
+                    "title": "Premium",
+                    "description": "Extra cool",
+                    "features": [
+                        "Unlimited AI books creation",
+                        "All premium features",
+                        "Priority generation (faster processing)"
+                    ]
+                }
             }
         },
         "contact": {
