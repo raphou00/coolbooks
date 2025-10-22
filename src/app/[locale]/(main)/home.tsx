@@ -46,11 +46,11 @@ const Home: React.FC<BooksProps> = ({ books }) => {
     return (
         <div className="space-y-10 pt-22 h-screen text-white">
             <Image
-                src="/images/magical-forest-kid-reading-a-book-home.svg"
+                src="/images/magical-forest--kid-reading-a-book.png"
                 alt=""
                 width={1920}
                 height={1080}
-                className="absolute top-0 left-0 object-cover w-screen h-screen -z-50 brightness-50 border-b border-neutral"
+                className="absolute top-0 left-0 object-cover w-screen h-screen -z-50 border-b border-neutral brightness-[0.5] saturate-200"
                 priority
             />
 
