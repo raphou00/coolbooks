@@ -23,7 +23,7 @@ type ExploreProps = {
     books: Books;
 };
 
-const placeholders = ["Search by title", "Search by author"];
+const placeholders = ["Football", "Astronaut", "Science"];
 
 const Explore: React.FC<ExploreProps> = ({ books: allBooks, user }) => {
     const t = useTranslations("pages.explore");
@@ -54,21 +54,12 @@ const Explore: React.FC<ExploreProps> = ({ books: allBooks, user }) => {
 
     return (
         <>
-            <div
-                className="relative w-full flex flex-col items-center justify-center gap-y-6 mb-8 p-6 space-y-2 md:p-12 rounded-2xl  overflow-hidden"
-                style={{
-                    backgroundImage:
-                        "url('/images/magical-forest-kid-reading-a-book-unicorn-fairy.png')",
-                    backgroundSize: "cover",
-                    backgroundPosition: "bottom bottom",
-                    backgroundRepeat: "no-repeat",
-                }}
-            >
+            <div className="relative w-full flex flex-col items-center justify-center gap-y-6 mb-8 p-6 space-y-2 md:p-12 rounded-2xl  overflow-hidden">
                 <div
                     className="absolute inset-0 brightness-75 rounded-2xl size-full"
                     style={{
                         backgroundImage:
-                            "url('/images/magical-forest-kid-reading-a-book-unicorn-fairy.png')",
+                            "url('/images/magical-forest-kid-reading-a-book-fantastic.png')",
                         backgroundSize: "cover",
                         backgroundPosition: "center",
                         backgroundRepeat: "no-repeat",

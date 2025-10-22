@@ -28,7 +28,7 @@ const LocaleModal: React.FC<LocaleModalProps> = ({ open, setOpen }) => {
             <div className="flex flex-col items-center justify-center mx-auto gap-y-6 w-full max-w-lg p-6">
                 <Title
                     text={t("language")}
-                    className="text-3xl mb-6 text-center"
+                    className="text-5xl mb-6 text-center"
                     underline
                 />
 

@@ -89,8 +89,25 @@ export const useGetFooterLinks = () => {
                     path: "/",
                 },
                 {
+                    title: t("explore"),
+                    path: "/explore",
+                },
+                {
                     title: t("pricing"),
                     path: "/pricing",
+                },
+            ],
+        },
+        {
+            title: t("me"),
+            links: [
+                {
+                    title: t("my-books"),
+                    path: "/",
+                },
+                {
+                    title: t("studio"),
+                    path: "/studio",
                 },
                 {
                     title: t("account"),

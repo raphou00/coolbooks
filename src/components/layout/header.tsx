@@ -75,7 +75,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                     >
                                         <div className="size-10 relative min-[850px]:hidden">
                                             <motion.span
-                                                className="absolute h-1 w-8 rounded-full bg-base-content"
+                                                className="absolute h-1 w-8 bg-base-content"
                                                 style={{
                                                     y: "-50%",
                                                     left: "50%",
@@ -84,7 +84,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                                 }}
                                             />
                                             <motion.span
-                                                className="absolute h-1 w-8 rounded-full bg-base-content"
+                                                className="absolute h-1 w-8 bg-base-content"
                                                 style={{
                                                     left: "50%",
                                                     x: "-50%",
@@ -93,7 +93,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                                 }}
                                             />
                                             <motion.span
-                                                className="absolute h-1 w-4 rounded-full bg-base-content"
+                                                className="absolute h-1 w-4 bg-base-content"
                                                 style={{
                                                     x: "-50%",
                                                     y: "50%",
@@ -106,9 +106,9 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                     <div className="flex items-center ml-2 mr-3">
                                         <Link
                                             href="/"
-                                            className="flex items-center text-sm relative z-20"
+                                            className="flex items-center text-sm relative z-20 focus:scale-95"
                                         >
-                                            <Logo className="size-12" />
+                                            <Logo className="size-10" />
                                         </Link>
                                     </div>
                                     <ul className="menu menu-horizontal space-x-2 max-[850px]:hidden">
@@ -162,7 +162,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                                     alt={user.name}
                                                     className="size-11 lg:size-12"
                                                 />
-                                            :   <div className="btn btn-circle border-none bg-base-content/80">
+                                            :   <div className="btn btn-circle size-11 lg:size-12 border-none bg-base-content/80">
                                                     <UserIcon className="size-6 text-white" />
                                                 </div>
                                             }
@@ -171,7 +171,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                             tabIndex={0}
                                             className="dropdown-content pt-2 !z-[1]"
                                         >
-                                            <div className="space-y-1 rounded-xl bg-base-200 p-2 border border-neutral/20 shadow-xl w-72 z-100">
+                                            <div className="space-y-1 rounded-xl bg-base-200 p-2 border-4 border-black/90 shadow-xl w-72 z-100">
                                                 {user ?
                                                     <>
                                                         <div className="my-2 flex flex-col items-center justify-center gap-y-2">

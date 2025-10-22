@@ -110,14 +110,11 @@
         },
         "home": {
             "description": "Create cool books for your kids with only one prompt!",
-            "books": "My recent books",
-            "new-book": "New Book",
-            "next-book": "Your next book!",
             "beta": "#1 Kids book plateform",
-            "free-trial": "Start free trial",
+            "create": "Create your own book",
             "by": "By",
-            "trend": "Trending",
-            "my-books": "My Books"
+            "weekly": "Books of the week",
+            "explore": "Explore"
         },
         "book": {
             "title": "{title}",
@@ -259,6 +256,7 @@
         "my-books": "My Books",
         "new-book": "New Book",
         "studio": "Studio",
+        "me": "Me",
         "plan": "Plan",
         "portal": "Open Customer Portal",
         "latest": "Latest",

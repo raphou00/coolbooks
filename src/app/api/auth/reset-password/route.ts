@@ -79,6 +79,7 @@ export const POST = async (req: NextRequest) => {
         return NextResponse.json({
             success: true,
             message: t("messages.password-updated"),
+            redirect: "/login",
         });
     } catch (_) {
         return NextResponse.json({

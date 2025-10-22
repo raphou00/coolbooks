@@ -112,24 +112,36 @@ const _Pricing: React.FC<PricingProps> = ({ sub, user }) => {
 
 const tiers = [
     {
-        name: "Freelancer",
-        id: "tier-freelancer",
-        price: 5,
+        name: "Basic",
+        id: "tier-basic",
+        price: 8,
         description: "Cool",
         features: ["1 AI book creation", "Access to explore page"],
-        featured: false,
+        popular: false,
     },
     {
-        name: "Startup",
-        id: "tier-startup",
-        price: 8,
+        name: "Family",
+        id: "tier-family",
+        price: 12,
         description: "Very cool",
         features: [
             "3 AI books creation",
             "Unlimited manual books creation",
             "Access to explore page",
         ],
-        featured: true,
+        popular: true,
+    },
+    {
+        name: "Premium",
+        id: "tier-premium",
+        price: 20,
+        description: "Very cool",
+        features: [
+            "3 AI books creation",
+            "Unlimited manual books creation",
+            "Access to explore page",
+        ],
+        popular: false,
     },
 ];
 
@@ -167,98 +179,77 @@ const Pricing: React.FC<PricingProps> = ({ sub, user }) => {
             <p className="mx-auto mt-6 max-w-2xl text-center text-lg font-medium text-pretty">
                 {t("description")}
             </p>
-            <div className="mx-auto mt-16 grid max-w-lg grid-cols-1 items-center gap-y-6 sm:mt-20 sm:gap-y-0 lg:max-w-4xl lg:grid-cols-2">
+            <div className="isolate mx-auto mt-16 grid max-w-md grid-cols-1 gap-y-8 sm:mt-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
                 {tiers.map((tier, tierIdx) => (
                     <div
                         key={tier.id}
                         className={cn(
-                            tier.featured ?
-                                "relative bg-gray-900 shadow-2xl"
-                            :   "bg-white/60 sm:mx-8 lg:mx-0",
-                            tier.featured ? ""
-                            : tierIdx === 0 ?
-                                "rounded-t-3xl sm:rounded-b-none lg:rounded-tr-none lg:rounded-bl-3xl"
-                            :   "sm:rounded-t-none lg:rounded-tr-3xl lg:rounded-bl-none",
-                            "rounded-3xl p-8 ring-1 ring-gray-900/10 sm:p-10"
+                            tier.popular ?
+                                "lg:z-10 lg:rounded-b-none"
+                            :   "lg:mt-8",
+                            tierIdx === 0 ? "-mr-px lg:rounded-r-none" : "",
+                            tierIdx === tiers.length - 1 ?
+                                "-ml-px lg:rounded-l-none"
+                            :   "",
+                            "flex flex-col justify-between rounded-3xl bg-white p-8 inset-ring inset-ring-gray-200 xl:p-10"
                         )}
                     >
-                        <h3
-                            id={tier.id}
-                            className={cn(
-                                tier.featured ? "text-indigo-400" : (
-                                    "text-indigo-600"
-                                ),
-                                "text-base/7 font-semibold"
-                            )}
-                        >
-                            {tier.name}
-                        </h3>
-                        <p className="mt-4 flex items-baseline gap-x-2">
-                            <span
-                                className={cn(
-                                    tier.featured ? "text-white" : (
-                                        "text-gray-900"
-                                    ),
-                                    "text-5xl font-semibold tracking-tight"
-                                )}
+                        <div>
+                            <div className="flex items-center justify-between gap-x-4">
+                                <h3
+                                    id={tier.id}
+                                    className={cn(
+                                        tier.popular ? "text-indigo-600" : (
+                                            "text-gray-900"
+                                        ),
+                                        "text-lg/8 font-semibold"
+                                    )}
+                                >
+                                    {tier.name}
+                                </h3>
+                                {tier.popular ?
+                                    <p className="rounded-full bg-indigo-600/10 px-2.5 py-1 text-xs/5 font-semibold text-indigo-600">
+                                        Most popular
+                                    </p>
+                                :   null}
+                            </div>
+                            <p className="mt-4 text-sm/6 text-gray-600">
+                                {tier.description}
+                            </p>
+                            <p className="mt-6 flex items-baseline gap-x-1">
+                                <span className="text-4xl font-semibold tracking-tight text-gray-900">
+                                    {tier.price}
+                                </span>
+                                <span className="text-sm/6 font-semibold text-gray-600">
+                                    /month
+                                </span>
+                            </p>
+                            <ul
+                                role="list"
+                                className="mt-8 space-y-3 text-sm/6 text-gray-600"
                             >
-                                {formatAmountForDisplay(tier.price)}
-                            </span>
-                            <span
-                                className={cn(
-                                    tier.featured ? "text-gray-400" : (
-                                        "text-gray-500"
-                                    ),
-                                    "text-base"
-                                )}
-                            >
-                                {t("month")}
-                            </span>
-                        </p>
-                        <p
+                                {tier.features.map((feature) => (
+                                    <li key={feature} className="flex gap-x-3">
+                                        <CheckIcon
+                                            aria-hidden="true"
+                                            className="h-6 w-5 flex-none text-indigo-600"
+                                        />
+                                        {feature}
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                        <a
+                            aria-describedby={tier.id}
                             className={cn(
-                                tier.featured ? "text-gray-300" : (
-                                    "text-gray-600"
-                                ),
-                                "mt-6 text-base/7"
+                                tier.popular ?
+                                    "bg-indigo-600 text-white shadow-xs hover:bg-indigo-500"
+                                :   "text-indigo-600 inset-ring inset-ring-indigo-200 hover:inset-ring-indigo-300",
+                                "mt-8 block rounded-md px-3 py-2 text-center text-sm/6 font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                             )}
                         >
-                            {tier.description}
-                        </p>
-                        <ul
-                            role="list"
-                            className={cn(
-                                tier.featured ? "text-gray-300" : (
-                                    "text-gray-600"
-                                ),
-                                "mt-8 space-y-3 text-sm/6 sm:mt-10"
-                            )}
-                        >
-                            {tier.features.map((feature) => (
-                                <li key={feature} className="flex gap-x-3">
-                                    <CheckIcon
-                                        aria-hidden="true"
-                                        className={cn(
-                                            tier.featured ? "text-indigo-400"
-                                            :   "text-indigo-600",
-                                            "h-6 w-5 flex-none"
-                                        )}
-                                    />
-                                    {feature}
-                                </li>
-                            ))}
-                        </ul>
-                        <button
-                            onClick={() => submit()}
-                            className={cn(
-                                "btn w-full mt-3",
-                                tier.featured ? "btn-secondary" : "btn-outline"
-                            )}
-                        >
-                            {user?.stripeCustomerId ?
-                                t("portal")
-                            :   t("subscribe")}
-                        </button>
+                            Buy plan
+                        </a>
                     </div>
                 ))}
             </div>
