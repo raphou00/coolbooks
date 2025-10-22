@@ -160,9 +160,9 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                                 <Avatar
                                                     src={null}
                                                     alt={user.name}
-                                                    className="size-11 lg:size-12"
+                                                    className="size-11"
                                                 />
-                                            :   <div className="btn btn-circle size-11 lg:size-12 border-none bg-base-content/80">
+                                            :   <div className="btn btn-circle size-11 border-none bg-base-content/80">
                                                     <UserIcon className="size-6 text-white" />
                                                 </div>
                                             }

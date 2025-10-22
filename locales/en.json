@@ -131,6 +131,7 @@
             "title": "Pricing",
             "description": "Choose the plan that best fits your needs!",
             "month": "/month",
+            "popular": "Most popular",
             "subscribe": "Subscribe",
             "portal": "Open Portal",
             "subscription": {
