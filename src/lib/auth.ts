@@ -20,10 +20,13 @@ export const lucia = new Lucia(adapter, {
         },
     },
     getUserAttributes: (user) => {
+        console.log(user);
+
         return {
             id: user.id,
             name: user.name,
             email: user.email,
+            credits: user.credits,
             role: user.role,
             googleId: user.googleId,
             stripeCustomerId: user.stripeCustomerId,
@@ -108,6 +111,7 @@ type DatabaseUserAttributes = {
     id: string;
     name: string;
     email: string;
+    credits: number;
     role: Role;
     googleId?: string;
     stripeCustomerId?: string;

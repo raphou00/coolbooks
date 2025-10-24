@@ -55,11 +55,7 @@ const Books: React.FC<BooksProps> = ({ title, books }) => {
     return (
         <section className="mt-10">
             <div className="mb-4">
-                <Title
-                    text={title}
-                    className="text-left w-fit text-4xl"
-                    underline
-                />
+                <Title text={title} className="text-left w-fit text-2xl" />
             </div>
             <div className="relative group">
                 <button
@@ -101,7 +97,7 @@ const Books: React.FC<BooksProps> = ({ title, books }) => {
                         <Link
                             key={book.id}
                             href={`/book/${book.id}`}
-                            className="relative flex-shrink-0 w-32 md:w-40 lg:w-56"
+                            className="relative flex-shrink-0 w-36 md:w-40 lg:w-56"
                         >
                             <div className="aspect-square shadow-lg rounded-lg overflow-hidden">
                                 <NextImage

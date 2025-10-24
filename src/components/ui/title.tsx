@@ -1,12 +1,6 @@
 "use client";
 
-import { Goudy_Bookletter_1911 } from "next/font/google";
 import { cn } from "@/lib/utils";
-
-const font = Goudy_Bookletter_1911({
-    subsets: ["latin"],
-    weight: "400",
-});
 
 type TitleProps = {
     text: string;
@@ -20,7 +14,7 @@ const Title: React.FC<TitleProps> = ({
     underline = false,
 }: TitleProps) => {
     return (
-        <h1 className={cn("text-2xl", className, font.className)}>
+        <h1 className={cn("text-2xl", className)}>
             {text}
             {underline && (
                 <div className="-mt-1.5 static z-0">

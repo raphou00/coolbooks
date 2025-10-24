@@ -18,24 +18,32 @@ const Page = async () => {
                 },
             },
         },
+        take: 5,
         orderBy: {
             createdAt: "desc",
         },
     });
 
-    const books = Array.from({ length: 10 }, (_, index) => ({
-        ...booksWeekly[0],
-        id: index.toString(),
-    }));
+    const booksExplore = await db.book.findMany({
+        select: {
+            id: true,
+            title: true,
+            cover: true,
+            user: {
+                select: {
+                    name: true,
+                },
+            },
+        },
+        orderBy: {
+            createdAt: "desc",
+        },
+    });
 
     return (
         <Main className="flex my-0 pt-0">
-            <Home books={books} />
-            <Books title={t("explore") + " 📚"} books={books} />
-            <Books title={t("explore") + " 📚"} books={books} />
-            <Books title={t("explore") + " 📚"} books={books} />
-            <Books title={t("explore") + " 📚"} books={books} />
-            <Books title={t("explore") + " 📚"} books={books} />
+            <Home books={booksWeekly} />
+            <Books title={t("explore") + " 📚"} books={booksExplore} />
         </Main>
     );
 };

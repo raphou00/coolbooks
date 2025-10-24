@@ -7,8 +7,7 @@ import { motion } from "framer-motion";
 import type { User } from "lucia";
 import axios from "axios";
 import {
-    BookPlus,
-    DollarSign,
+    Coins,
     Languages,
     LogIn,
     LogOut,
@@ -119,7 +118,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                                     className={cn(
                                                         "btn btn-sm bg-base-content/80 text-white border-none",
                                                         item.path === pathname ?
-                                                            "btn-accent"
+                                                            "invert"
                                                         :   ""
                                                     )}
                                                 >
@@ -132,22 +131,27 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                 </div>
                                 <div className="navbar-end space-x-2">
                                     <Link
-                                        href="/studio/new"
-                                        className="btn max-md:btn-circle border-none bg-base-content/80"
-                                    >
-                                        <BookPlus className="size-5 text-base-300" />
-                                        <span className="hidden md:inline bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                                            {t("new-book")}
-                                        </span>
-                                    </Link>
-                                    <Link
                                         href="/pricing"
-                                        className="btn max-md:btn-circle border-none bg-base-content/80"
+                                        className="bg-black/70 no-underline group cursor-pointer relative shadow-2xl shadow-zinc-900 rounded-full p-px font-semibold leading-6 inline-block"
                                     >
-                                        <DollarSign className="size-5 text-base-300" />
-                                        <span className="hidden md:inline bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                                            {t("pricing")}
+                                        <span className="absolute inset-0 overflow-hidden rounded-full">
+                                            <span className="absolute inset-0 rounded-full bg-[image:radial-gradient(75%_100%_at_50%_0%,rgba(251,191,36,0.6)_0%,rgba(251,191,36,0)_75%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
                                         </span>
+                                        <div className="relative flex space-x-2 items-center z-10 rounded-full py-2 px-4 ring-1 ring-white/10 text-white">
+                                            <Coins className="size-5 text-yellow-300" />
+                                            {user ?
+                                                <span
+                                                    className={cn(
+                                                        user?.credits > 0 ?
+                                                            ""
+                                                        :   "text-red-300"
+                                                    )}
+                                                >
+                                                    {user?.credits}
+                                                </span>
+                                            :   <span>{t("pricing")}</span>}
+                                        </div>
+                                        <span className="absolute -bottom-0 left-[1.125rem] h-px w-[calc(100%-2.25rem)] bg-gradient-to-r from-yellow-400/0 via-yellow-400/90 to-yellow-400/0 transition-opacity duration-500 group-hover:opacity-40" />
                                     </Link>
 
                                     <div className="dropdown dropdown-end dropdown-bottom dropdown-hover flex items-center size-12 z-100">
@@ -171,7 +175,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                             tabIndex={0}
                                             className="dropdown-content pt-2 !z-[1]"
                                         >
-                                            <div className="space-y-1 rounded-xl bg-base-200 p-2 border-4 border-black/90 shadow-xl w-72 z-100">
+                                            <div className="space-y-1 rounded-xl backdrop-blur-2xl bg-black/90 p-2 border border-black/90 shadow-xl w-72 z-100">
                                                 {user ?
                                                     <>
                                                         <div className="my-2 flex flex-col items-center justify-center gap-y-2">
@@ -266,10 +270,10 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                         aria-label="close sidebar"
                         className="drawer-overlay"
                     ></label>
-                    <ul className="menu bg-base-200 min-h-full w-80 space-y-2 p-4 z-[99999999]">
+                    <ul className="menu bg-base-200 min-h-full w-80 space-y-3 p-4 z-[99999999]">
                         <Link
                             href="/"
-                            className="ml-2 flex items-center text-sm relative z-20"
+                            className="ml-2 mb-4 flex items-center text-sm relative z-20"
                         >
                             <Logo className="h-16 w-auto ml-2 mb-2" />
                         </Link>
@@ -277,7 +281,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                             <li key={item.title}>
                                 <a
                                     href={item.path}
-                                    className="btn btn-ghost w-full justify-between"
+                                    className="btn btn-ghost btn-lg w-full justify-between"
                                 >
                                     <span className="flex items-center gap-2">
                                         <item.icon className="size-6" />

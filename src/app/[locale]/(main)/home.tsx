@@ -8,11 +8,13 @@ import {
     motion,
     animate,
 } from "framer-motion";
+import { Goudy_Bookletter_1911 } from "next/font/google";
 import { ArrowRight } from "lucide-react";
 import { useTranslations } from "next-intl";
-import Title from "@/components/ui/title";
 import { title } from "@/config/seo";
+import Title from "@/components/ui/title";
 import Books from "@/components/ui/books";
+import { cn } from "@/lib/utils";
 
 type BooksProps = {
     books: {
@@ -24,6 +26,11 @@ type BooksProps = {
         };
     }[];
 };
+
+const font = Goudy_Bookletter_1911({
+    subsets: ["latin"],
+    weight: "400",
+});
 
 const COLORS_TOP = ["#FF9AA2", "#FFB347", "#87CEEB", "#98FB98", "#DDA0DD"];
 
@@ -50,8 +57,9 @@ const Home: React.FC<BooksProps> = ({ books }) => {
                 alt=""
                 width={1920}
                 height={1080}
-                className="absolute top-0 left-0 object-cover w-screen h-screen -z-50 border-b border-neutral brightness-[0.5] saturate-200"
                 priority
+                className="absolute top-0 left-0 object-cover w-screen -z-50 border-b border-neutral brightness-[0.5] saturate-200"
+                style={{ height: "100dvh" }}
             />
 
             <section className="relative grid place-content-center">
@@ -61,7 +69,10 @@ const Home: React.FC<BooksProps> = ({ books }) => {
                     </span>
                     <Title
                         text={title}
-                        className="text-7xl mx-auto w-fit text-center font-bold"
+                        className={cn(
+                            "text-7xl mx-auto w-fit text-center font-bold",
+                            font.className
+                        )}
                         underline
                     />
                     <p className="my-6 max-w-xl text-center text-base leading-relaxed md:text-lg md:leading-relaxed">

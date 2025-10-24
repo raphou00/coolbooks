@@ -1,7 +1,7 @@
 {
     "common": {
         "copyright": "All Rights Reserved",
-        "description": "Create cool books for your kids with only one prompt!",
+        "description": "Every Child Deserves Their Own Adventure",
         "no-sessions-results": "No sessions found",
         "not-found": "Page Not Found",
         "back-home": "Back to Home"
@@ -109,7 +109,7 @@
             "submit": "Delete"
         },
         "home": {
-            "description": "Create cool books for your kids with only one prompt!",
+            "description": "Every Child Deserves Their Own Adventure",
             "beta": "#1 Kids book plateform",
             "create": "Create your own book",
             "by": "By",
@@ -157,7 +157,7 @@
                     "title": "Premium",
                     "description": "Extra cool",
                     "features": [
-                        "Unlimited AI books creation",
+                        "30 AI books creation",
                         "All premium features",
                         "Priority generation (faster processing)"
                     ]

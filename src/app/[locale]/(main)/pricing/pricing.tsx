@@ -43,7 +43,7 @@ const Pricing: React.FC<PricingProps> = ({ subs, user }) => {
             <div className="mx-auto max-w-4xl text-center">
                 <Title
                     text={t("title")}
-                    className="text-6xl mx-auto w-fit text-center"
+                    className="text-4xl mx-auto w-fit text-center"
                     underline
                 />
             </div>
