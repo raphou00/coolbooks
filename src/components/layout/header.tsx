@@ -66,7 +66,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                     "backdrop-blur bg-base-100/10"
                             )}
                         >
-                            <div className="navbar min-h-16 py-0 mx-auto transition max-w-7xl w-full px-4 md:px-6 lg:px-8 xl:px-12">
+                            <div className="navbar min-h-16 py-0 mx-auto transition max-w-8xl w-full px-4 md:px-6 lg:px-8 xl:px-12">
                                 <div className="navbar-start">
                                     <label
                                         htmlFor="my-drawer-3"
@@ -107,12 +107,12 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                 <div className="navbar-end space-x-2">
                                     <Link
                                         href="/pricing"
-                                        className="bg-black/70 no-underline group cursor-pointer relative shadow-2xl shadow-zinc-900 rounded-full p-px font-semibold leading-6 inline-block"
+                                        className="bg-black/70 no-underline group cursor-pointer relative rounded-full p-px font-semibold leading-6 inline-block"
                                     >
                                         <span className="absolute inset-0 overflow-hidden rounded-full">
                                             <span className="absolute inset-0 rounded-full bg-[image:radial-gradient(75%_100%_at_50%_0%,rgba(251,191,36,0.6)_0%,rgba(251,191,36,0)_75%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
                                         </span>
-                                        <div className="relative flex space-x-3 items-center z-10 rounded-full py-3 px-6 ring-1 ring-white/10 text-white">
+                                        <div className="relative flex space-x-3 items-center z-10 rounded-full py-2 px-4 ring-1 ring-white/10 text-lg text-white">
                                             <Coins className="size-6 text-yellow-300" />
                                             {user ?
                                                 <span

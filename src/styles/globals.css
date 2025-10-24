@@ -86,3 +86,7 @@ html[data-theme="dark"] {
   -webkit-mask-size: 100% 100%;
   mask-size: 100% 100%;
 }
+
+.max-w-8xl {
+    max-width: 90rem;
+}

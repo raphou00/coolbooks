@@ -29,14 +29,14 @@ const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
                 />
                 <div className="relative w-full">
                     <div className="flex items-center justify-between z-50 absolute p-2 w-full">
-                        <Link href="/" className="btn btn-sm max-sm:btn-circle">
+                        <Link href="/" className="btn max-sm:btn-circle">
                             <Home className="size-5" />
                             <span className="hidden sm:block">{t("home")}</span>
                         </Link>
                         <div className="space-x-2">
                             <button
                                 onClick={() => setLocaleOpen((e) => !e)}
-                                className="btn max-sm:btn-circle btn-sm"
+                                className="btn max-sm:btn-circle"
                             >
                                 <Languages className="size-5" />
                                 <span className="hidden sm:block">

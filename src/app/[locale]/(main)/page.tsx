@@ -44,7 +44,10 @@ const Page = async () => {
         <Main className="flex my-0 pt-0 space-y-2">
             <Home />
             <Books title={t("weekly") + " 🔥"} books={booksWeekly} />
-            <Books title={t("explore") + " 📚"} books={booksExplore} />
+            <Books title={t("halloween") + " 🎃"} books={booksExplore} />
+            <Books title={t("education") + " 📚"} books={booksExplore} />
+            <Books title={t("hero") + " 🦸"} books={booksExplore} />
+            <Books title={t("adventure") + " 🌲"} books={booksExplore} />
         </Main>
     );
 };

@@ -3,8 +3,9 @@
 import { cn } from "@/lib/utils";
 import NextImage from "@/components/ui/image";
 import { useRef, useState } from "react";
+import { ImageMinus } from "lucide-react";
 
-type BookViewerProps = {
+type BookProps = {
     book: {
         title: string;
         cover: string;
@@ -24,11 +25,11 @@ type BookViewerProps = {
 
 const PAGE_WIDTH = 800;
 
-const BookViewer: React.FC<BookViewerProps> = ({ book }) => {
+const Book: React.FC<BookProps> = ({ book }) => {
     const bookRef = useRef<HTMLDivElement>(null);
     const [currentPage, setCurrentPage] = useState(0);
     const pageDesign =
-        "flex justify-center items-center !size-[400px] rounded-lg shadow-lg overflow-hidden border border-gray-200";
+        "flex justify-center items-center !size-[400px] rounded-lg shadow-lg overflow-hidden";
 
     const scrollToPage = (pageIdx: number) => {
         if (!bookRef.current) return;
@@ -81,7 +82,6 @@ const BookViewer: React.FC<BookViewerProps> = ({ book }) => {
                                 "flex-1 flex items-center justify-center",
                                 pageDesign
                             )}
-                            style={{ background: page.color }}
                         >
                             {page.images?.[0] ?
                                 <NextImage
@@ -92,17 +92,20 @@ const BookViewer: React.FC<BookViewerProps> = ({ book }) => {
                                     height={1024}
                                 />
                             :   <div className="w-full h-52 rounded bg-gray-200 flex items-center justify-center text-gray-400">
-                                    No Image
+                                    <ImageMinus className="w-8 h-8" />
                                 </div>
                             }
                         </div>
 
                         <div
                             className={cn(
-                                "flex-1 flex items-center pl-8",
+                                "flex-1 flex items-center p-8 border-8",
                                 pageDesign
                             )}
-                            style={{ background: page.color }}
+                            style={{
+                                background: page.color,
+                                borderColor: `${page.color}88`,
+                            }}
                         >
                             <div className="text-lg text-gray-800">
                                 {page.text}
@@ -131,4 +134,4 @@ const BookViewer: React.FC<BookViewerProps> = ({ book }) => {
     );
 };
 
-export default BookViewer;
+export default Book;

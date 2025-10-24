@@ -1,7 +1,7 @@
 import { type Metadata } from "next";
 import Main from "@/components/layout/main";
 import { getTranslations } from "next-intl/server";
-import BookViewer from "@/components/ui/book";
+import Book from "@/components/ui/book";
 import db from "@/lib/db";
 import { selectBook } from "@/config/book";
 import { redirect } from "next/navigation";
@@ -63,7 +63,7 @@ const Page = async ({ params }: PageProps) => {
 
     return (
         <Main className="mt-8 flex" gradientVariant="floatingGradient">
-            <BookViewer book={book} />
+            <Book book={book} />
         </Main>
     );
 };

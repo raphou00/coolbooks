@@ -57,12 +57,12 @@ const Home: React.FC = () => {
                     <Title
                         text={title}
                         className={cn(
-                            "text-7xl mx-auto w-fit text-center font-bold",
+                            "text-7xl md:text-8xl mx-auto w-fit text-center font-bold",
                             font.className
                         )}
                         underline
                     />
-                    <p className="my-6 max-w-xl text-center text-base leading-relaxed md:text-lg md:leading-relaxed">
+                    <p className="my-6 max-w-xl text-center text-base leading-relaxed md:text-xl md:leading-relaxed">
                         {t("description")}
                     </p>
                     <motion.a

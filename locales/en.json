@@ -114,7 +114,10 @@
             "create": "Create your own book",
             "by": "By",
             "weekly": "Books of the week",
-            "explore": "Explore"
+            "halloween": "Halloween",
+            "education": "Education",
+            "hero": "Hero",
+            "adventure": "Adventure"
         },
         "book": {
             "title": "{title}",
