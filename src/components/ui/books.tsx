@@ -53,7 +53,7 @@ const Books: React.FC<BooksProps> = ({ title, books }) => {
     }, [books]);
 
     return (
-        <section className="mt-10">
+        <section className="mt-14">
             <div className="mb-4">
                 <Title text={title} className="text-left w-fit text-2xl" />
             </div>
@@ -97,7 +97,7 @@ const Books: React.FC<BooksProps> = ({ title, books }) => {
                         <Link
                             key={book.id}
                             href={`/book/${book.id}`}
-                            className="relative flex-shrink-0 w-36 md:w-40 lg:w-56"
+                            className="relative flex-shrink-0 w-44 md:w-56 lg:w-60 xl:w-64"
                         >
                             <div className="aspect-square shadow-lg rounded-lg overflow-hidden">
                                 <NextImage

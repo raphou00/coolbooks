@@ -41,8 +41,9 @@ const Page = async () => {
     });
 
     return (
-        <Main className="flex my-0 pt-0">
-            <Home books={booksWeekly} />
+        <Main className="flex my-0 pt-0 space-y-2">
+            <Home />
+            <Books title={t("weekly") + " 🔥"} books={booksWeekly} />
             <Books title={t("explore") + " 📚"} books={booksExplore} />
         </Main>
     );

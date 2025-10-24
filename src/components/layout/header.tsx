@@ -11,6 +11,7 @@ import {
     Languages,
     LogIn,
     LogOut,
+    Menu,
     PenBox,
     Settings2,
     UserIcon,
@@ -65,65 +66,39 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                     "backdrop-blur bg-base-100/10"
                             )}
                         >
-                            <div className="navbar min-h-14 py-0 mx-auto transition max-w-7xl w-full px-4 md:px-6 lg:px-8 xl:px-12">
+                            <div className="navbar min-h-16 py-0 mx-auto transition max-w-7xl w-full px-4 md:px-6 lg:px-8 xl:px-12">
                                 <div className="navbar-start">
                                     <label
                                         htmlFor="my-drawer-3"
                                         role="button"
-                                        className="flex items-center justify-center cursor-pointer"
+                                        className="items-center justify-center cursor-pointer hidden max-[950px]:flex"
                                     >
-                                        <div className="size-10 relative min-[850px]:hidden">
-                                            <motion.span
-                                                className="absolute h-1 w-8 bg-base-content"
-                                                style={{
-                                                    y: "-50%",
-                                                    left: "50%",
-                                                    x: "-50%",
-                                                    top: "30%",
-                                                }}
-                                            />
-                                            <motion.span
-                                                className="absolute h-1 w-8 bg-base-content"
-                                                style={{
-                                                    left: "50%",
-                                                    x: "-50%",
-                                                    top: "50%",
-                                                    y: "-50%",
-                                                }}
-                                            />
-                                            <motion.span
-                                                className="absolute h-1 w-4 bg-base-content"
-                                                style={{
-                                                    x: "-50%",
-                                                    y: "50%",
-                                                    bottom: "30%",
-                                                    left: "calc(50% - 8px)",
-                                                }}
-                                            />
-                                        </div>
+                                        <Menu className="size-11 text-black/90" />
                                     </label>
                                     <div className="flex items-center ml-2 mr-3">
                                         <Link
                                             href="/"
                                             className="flex items-center text-sm relative z-20 focus:scale-95"
                                         >
-                                            <Logo className="size-10" />
+                                            <Logo className="size-12" />
                                         </Link>
                                     </div>
-                                    <ul className="menu menu-horizontal space-x-2 max-[850px]:hidden">
+                                    <ul className="menu menu-horizontal space-x-2 max-[950px]:hidden">
                                         {links.map((item) => (
                                             <li key={item.title}>
                                                 <Link
                                                     href={item.path}
                                                     className={cn(
-                                                        "btn btn-sm bg-base-content/80 text-white border-none",
+                                                        "btn bg-base-content/80 text-white border-none",
                                                         item.path === pathname ?
                                                             "invert"
                                                         :   ""
                                                     )}
                                                 >
                                                     <item.icon className="size-5" />
-                                                    {item.title}
+                                                    <span className="text-[16px]">
+                                                        {item.title}
+                                                    </span>
                                                 </Link>
                                             </li>
                                         ))}
@@ -137,8 +112,8 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                         <span className="absolute inset-0 overflow-hidden rounded-full">
                                             <span className="absolute inset-0 rounded-full bg-[image:radial-gradient(75%_100%_at_50%_0%,rgba(251,191,36,0.6)_0%,rgba(251,191,36,0)_75%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
                                         </span>
-                                        <div className="relative flex space-x-2 items-center z-10 rounded-full py-2 px-4 ring-1 ring-white/10 text-white">
-                                            <Coins className="size-5 text-yellow-300" />
+                                        <div className="relative flex space-x-3 items-center z-10 rounded-full py-3 px-6 ring-1 ring-white/10 text-white">
+                                            <Coins className="size-6 text-yellow-300" />
                                             {user ?
                                                 <span
                                                     className={cn(
@@ -164,9 +139,9 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                                 <Avatar
                                                     src={null}
                                                     alt={user.name}
-                                                    className="size-11"
+                                                    className="size-12"
                                                 />
-                                            :   <div className="btn btn-circle size-11 border-none bg-base-content/80">
+                                            :   <div className="btn btn-circle size-12 border-none bg-base-content/80">
                                                     <UserIcon className="size-6 text-white" />
                                                 </div>
                                             }
@@ -175,7 +150,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                             tabIndex={0}
                                             className="dropdown-content pt-2 !z-[1]"
                                         >
-                                            <div className="space-y-1 rounded-xl backdrop-blur-2xl bg-black/90 p-2 border border-black/90 shadow-xl w-72 z-100">
+                                            <div className="space-y-1 rounded-xl backdrop-blur-3xl bg-base-100 p-2 border border-black/90 shadow-xl w-72 z-100">
                                                 {user ?
                                                     <>
                                                         <div className="my-2 flex flex-col items-center justify-center gap-y-2">
