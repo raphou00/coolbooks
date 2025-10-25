@@ -1,5 +1,9 @@
 import { type NextRequest, NextResponse } from "next/server";
-import { handleSubscriptionChange, stripe } from "@/lib/stripe";
+import {
+    handleInvoicePayment,
+    handleSubscriptionChange,
+    stripe,
+} from "@/lib/stripe";
 import type Stripe from "stripe";
 import env from "@/lib/env";
 import db from "@/lib/db";
@@ -63,10 +67,17 @@ export const POST = async (req: NextRequest) => {
             );
         }
 
+        let invoice: Stripe.Invoice;
         switch (event.type) {
             case "customer.subscription.updated":
             case "customer.subscription.deleted":
                 await handleSubscriptionChange(subscription, user);
+                break;
+            case "invoice.payment_succeeded":
+                invoice = event.data.object as Stripe.Invoice;
+                if (invoice.subscription) {
+                    await handleInvoicePayment(invoice, user);
+                }
                 break;
             default:
                 console.log(`Unhandled event type ${event.type}`);

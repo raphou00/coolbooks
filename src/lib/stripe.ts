@@ -51,6 +51,49 @@ export const handleSubscriptionChange = async (
     }
 };
 
+export const handleInvoicePayment = async (
+    invoice: Stripe.Invoice,
+    user: User
+) => {
+    try {
+        const customerId = invoice.customer;
+
+        let creditsToAdd = 0;
+
+        if (invoice.lines.data.length > 0) {
+            const lineItem = invoice.lines.data[0];
+            const priceId = lineItem.price!.id;
+
+            switch (priceId) {
+                case productIdBasic:
+                    creditsToAdd = 5;
+                    break;
+                case productIdFamily:
+                    creditsToAdd = 15;
+                    break;
+                case productIdPremium:
+                    creditsToAdd = 30;
+                    break;
+            }
+        }
+
+        await db.user.update({
+            where: {
+                id: user.id,
+            },
+            data: {
+                credits: {
+                    increment: creditsToAdd,
+                },
+            },
+        });
+
+        console.log(`Added ${creditsToAdd} credits to customer ${customerId}`);
+    } catch (error) {
+        console.error("Error handling subscription payment:", error);
+    }
+};
+
 export const getSubscription = async (t: T) => {
     const priceBasic = await stripe.prices.list({ product: productIdBasic });
     const priceFamily = await stripe.prices.list({ product: productIdFamily });

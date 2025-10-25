@@ -22,7 +22,7 @@ const Form: React.FC<FormProps> = ({
     return (
         <div className="size-full flex items-center justify-center">
             <div className={cn("relative w-full max-w-md", className)}>
-                <div className="mb-2 flex flex-col items-center gap-y-2">
+                <div className="flex flex-col items-center gap-y-2">
                     {logo && <Logo className="w-auto h-16" />}
                     <div className="flex">
                         {title && (

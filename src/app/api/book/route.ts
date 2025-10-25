@@ -44,6 +44,13 @@ export const POST = async (req: NextRequest) => {
             });
         }
 
+        if (user.user.credits < 1) {
+            return NextResponse.json({
+                success: false,
+                message: t("messages.no-credits"),
+            });
+        }
+
         const bookId = crypto.randomUUID();
 
         const plan = await createPlan(body.prompt);
@@ -84,6 +91,17 @@ export const POST = async (req: NextRequest) => {
                 },
             });
         }
+
+        await db.user.update({
+            where: {
+                id: user.user.id,
+            },
+            data: {
+                credits: {
+                    decrement: 1,
+                },
+            },
+        });
 
         return NextResponse.json({
             success: true,

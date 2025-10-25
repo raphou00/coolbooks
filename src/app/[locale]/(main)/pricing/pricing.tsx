@@ -7,7 +7,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import type { getSubscription } from "@/lib/stripe";
 import type { User } from "lucia";
-import { CheckIcon } from "lucide-react";
+import { CheckCircleIcon, CheckIcon } from "lucide-react";
 
 type Subscriptions = Awaited<ReturnType<typeof getSubscription>>;
 
@@ -43,11 +43,11 @@ const Pricing: React.FC<PricingProps> = ({ subs, user }) => {
             <div className="mx-auto max-w-4xl text-center">
                 <Title
                     text={t("title")}
-                    className="text-4xl mx-auto w-fit text-center"
+                    className="text-6xl mx-auto w-fit text-center"
                     underline
                 />
             </div>
-            <p className="mx-auto mt-6 max-w-2xl text-center text-lg font-medium text-pretty">
+            <p className="mx-auto mt-6 max-w-2xl text-center text-xl font-medium text-pretty">
                 {t("description")}
             </p>
             <div className="isolate mx-auto mt- grid max-w-md grid-cols-1 gap-y-8 sm:mt-12 lg:mx-0 lg:max-w-none lg:grid-cols-3">
@@ -72,20 +72,20 @@ const Pricing: React.FC<PricingProps> = ({ subs, user }) => {
                                         tier.popular ? "text-primary" : (
                                             "text-base-content"
                                         ),
-                                        "text-lg/8 font-semibold"
+                                        "text-2xl"
                                     )}
                                 >
                                     {tier.name}
                                 </h3>
                                 {tier.popular ?
-                                    <p className="rounded-full px-2.5 py-1 text-xs/5 font-semibold bg-secondary/40 text-secondary">
+                                    <p className="rounded-full px-3 py-1 bg-secondary/20 text-secondary">
                                         {t("popular")}
                                     </p>
                                 :   null}
                             </div>
                             <p className="mt-4 text-sm/6">{tier.description}</p>
                             <p className="mt-6 flex items-baseline gap-x-1">
-                                <span className="text-4xl font-semibold tracking-tight">
+                                <span className="text-5xl font-semibold tracking-tight">
                                     {formatAmountForDisplay(tier.price)}
                                 </span>
                                 <span className="text-sm/6 font-semibold">
@@ -98,7 +98,7 @@ const Pricing: React.FC<PricingProps> = ({ subs, user }) => {
                             >
                                 {tier.features.map((feature) => (
                                     <li key={feature} className="flex gap-x-3">
-                                        <CheckIcon
+                                        <CheckCircleIcon
                                             aria-hidden="true"
                                             className="h-6 w-5 flex-none text-primary"
                                         />
@@ -110,7 +110,7 @@ const Pricing: React.FC<PricingProps> = ({ subs, user }) => {
                         <button
                             onClick={() => submit(tier.priceId)}
                             className={cn(
-                                "btn mt-4",
+                                "btn btn-lg mt-4",
                                 tier.popular ? "btn-primary" : "btn-outline"
                             )}
                         >

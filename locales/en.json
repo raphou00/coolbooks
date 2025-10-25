@@ -132,7 +132,7 @@
         },
         "pricing": {
             "title": "Pricing",
-            "description": "Choose the plan that best fits your needs!",
+            "description": "Find the Perfect Plan for Your Family",
             "month": "/month",
             "popular": "Most popular",
             "subscribe": "Subscribe",
@@ -140,7 +140,7 @@
             "subscriptions": {
                 "basic": {
                     "title": "Basic",
-                    "description": "Cool",
+                    "description": "Get Started with Story Magic",
                     "features": [
                         "5 AI book creation",
                         "Standard illustrations",
@@ -149,7 +149,7 @@
                 },
                 "family": {
                     "title": "Family",
-                    "description": "Very cool",
+                    "description": "Stories for the Whole Family",
                     "features": [
                         "15 AI books creation",
                         "Premium illustrations",
@@ -158,7 +158,7 @@
                 },
                 "premium": {
                     "title": "Premium",
-                    "description": "Extra cool",
+                    "description": "Endless Stories, Endless Smiles",
                     "features": [
                         "30 AI books creation",
                         "All premium features",
@@ -260,7 +260,8 @@
         "min-amount": "Minimum amount is {min}",
         "max-amount": "Maximum amount is {max}",
         "billing": "Manage your subscriptions",
-        "loginLike": "You need to login first"
+        "loginLike": "You need to login first",
+        "no-credits": "You don't have enough credits"
     },
     "links": {
         "login": "Login",

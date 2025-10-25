@@ -51,7 +51,7 @@ const Home: React.FC = () => {
 
             <div className="relative grid place-content-center h-[400px]">
                 <div className="relative z-10 flex flex-col items-center">
-                    <span className="inline-block rounded-full glass border border-neutral px-3 py-1.5 mb-3 text-sm">
+                    <span className="inline-block rounded-full glass border border-neutral px-3 py-1.5 mb-3">
                         😍 {t("beta")}
                     </span>
                     <Title
@@ -77,7 +77,7 @@ const Home: React.FC = () => {
                             scale: 0.985,
                         }}
                         href="/studio/new"
-                        className="group relative flex w-fit items-center gap-1.5 rounded-full bg-gray-950/80 px-4 py-2 transition-colors cursor-pointer hover:bg-gray-950/90"
+                        className="group relative flex w-fit items-center gap-1.5 rounded-full bg-gray-950/90 backdrop-blur-3xl px-4 py-2 transition-colors cursor-pointer hover:bg-gray-950/90"
                     >
                         {t("create")}
                         <ArrowRight className="transition-transform group-hover:-rotate-45 group-active:-rotate-12" />
