@@ -2,18 +2,29 @@ import { type Metadata } from "next";
 import Main from "@/components/layout/main";
 import { getTranslations } from "next-intl/server";
 import db from "@/lib/db";
-import Books from "./explore";
+import Studio from "./studio";
+import { getUser } from "@/lib/auth";
+import { redirect } from "next/navigation";
 
 const generateMetadata = async (): Promise<Metadata> => {
     const t = await getTranslations("pages");
     return {
-        title: t("explore.title"),
-        description: t("explore.description"),
+        title: t("studio.title"),
+        description: t("studio.description"),
     };
 };
 
 const Page = async () => {
+    const user = await getUser();
+
+    if (!user?.user) {
+        redirect("/login");
+    }
+
     const books = await db.book.findMany({
+        where: {
+            userId: user.user.id,
+        },
         select: {
             id: true,
             title: true,
@@ -24,12 +35,13 @@ const Page = async () => {
                     name: true,
                 },
             },
+            updatedAt: true,
         },
     });
 
     return (
         <Main className="mt-4 flex" gradientVariant="floatingGradient">
-            <Books books={books} />
+            <Studio books={books} />
         </Main>
     );
 };

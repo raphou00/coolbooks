@@ -29,7 +29,9 @@ export const POST = async (req: NextRequest) => {
                 { status: 400 }
             );
         }
-        const eventData = event.data.object as Stripe.Subscription | Stripe.Invoice;
+        const eventData = event.data.object as
+            | Stripe.Subscription
+            | Stripe.Invoice;
         const customerId = eventData.customer;
 
         if (!customerId) {
@@ -71,7 +73,10 @@ export const POST = async (req: NextRequest) => {
         switch (event.type) {
             case "customer.subscription.updated":
             case "customer.subscription.deleted":
-                await handleSubscriptionChange(eventData as Stripe.Subscription, user);
+                await handleSubscriptionChange(
+                    eventData as Stripe.Subscription,
+                    user
+                );
                 break;
             case "invoice.payment_succeeded":
                 invoice = eventData as Stripe.Invoice;

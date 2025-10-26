@@ -113,7 +113,7 @@ const Books: React.FC<BooksProps> = ({ title, books }) => {
                                     {book.title}
                                 </h2>
                                 {book.user && (
-                                    <p className="text-inherit text-xs text-left truncate w-full">
+                                    <p className="text-neutral text-xs text-left truncate w-full">
                                         {t("by")} {book.user.name}
                                     </p>
                                 )}

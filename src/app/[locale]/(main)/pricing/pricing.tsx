@@ -7,7 +7,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import type { getSubscription } from "@/lib/stripe";
 import type { User } from "lucia";
-import { CheckCircleIcon, CheckIcon } from "lucide-react";
+import { CheckCircleIcon } from "lucide-react";
 
 type Subscriptions = Awaited<ReturnType<typeof getSubscription>>;
 

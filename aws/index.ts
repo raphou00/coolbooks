@@ -1,5 +1,5 @@
-import db from "./rds/db";
-import bucket from "./s3/bucket";
+import db from "./rds";
+import bucket from "./s3";
 
 const rds = db();
 const { files, cloudfront } = bucket();

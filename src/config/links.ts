@@ -1,12 +1,5 @@
 import { useTranslations } from "next-intl";
-import {
-    Lock,
-    Settings2,
-    Coins,
-    BookHeart,
-    Palette,
-    Compass,
-} from "lucide-react";
+import { Lock, Settings2, Coins, BookHeart, Palette } from "lucide-react";
 
 export const useGetLinks = () => {
     const t = useTranslations("links");
@@ -17,16 +10,16 @@ export const useGetLinks = () => {
             icon: BookHeart,
         },
         {
-            title: t("explore"),
-            path: "/explore",
-            icon: Compass,
-        },
-        {
             title: t("studio"),
             path: "/studio",
             icon: Palette,
         },
     ];
+};
+
+export const useGetPlaceholders = () => {
+    const t = useTranslations("pages.home");
+    return [t("education"), t("hero"), t("adventure")];
 };
 
 export const useGetSorts = () => {
@@ -89,29 +82,12 @@ export const useGetFooterLinks = () => {
                     path: "/",
                 },
                 {
-                    title: t("explore"),
-                    path: "/explore",
-                },
-                {
-                    title: t("pricing"),
-                    path: "/pricing",
-                },
-            ],
-        },
-        {
-            title: t("me"),
-            links: [
-                {
-                    title: t("my-books"),
-                    path: "/",
-                },
-                {
                     title: t("studio"),
                     path: "/studio",
                 },
                 {
-                    title: t("account"),
-                    path: "/account/profile",
+                    title: t("pricing"),
+                    path: "/pricing",
                 },
             ],
         },
@@ -131,16 +107,6 @@ export const useGetFooterLinks = () => {
                     path: "/contact",
                 },
             ],
-        },
-    ];
-};
-
-export const useGetSocialLinks = () => {
-    return [
-        {
-            title: "Instagram",
-            path: "https://instagram.com/",
-            icon: Coins,
         },
     ];
 };

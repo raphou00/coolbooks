@@ -62,7 +62,7 @@ html[data-theme="dark"] {
 }
 
 ::selection {
-    @apply bg-primary text-primary-content;
+    @apply bg-primary/80 text-primary-content;
 }
 
 .button:focus {

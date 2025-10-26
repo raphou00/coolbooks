@@ -3,7 +3,6 @@
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useTheme } from "next-themes";
-import { motion } from "framer-motion";
 import type { User } from "lucia";
 import axios from "axios";
 import {
@@ -14,7 +13,6 @@ import {
     Menu,
     PenBox,
     Settings2,
-    UserIcon,
 } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
@@ -25,6 +23,7 @@ import Logo from "@/components/ui/logo";
 import Avatar from "@/components/ui/avatar";
 import Title from "@/components/ui/title";
 import LocaleModal from "@/components/ui/locale-modal";
+import Search from "@/components/ui/search";
 
 type HeaderProps = {
     user: User | null;
@@ -52,11 +51,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
     return (
         <>
             <div className="drawer">
-                <input
-                    id="drawer"
-                    type="checkbox"
-                    className="drawer-toggle"
-                />
+                <input id="drawer" type="checkbox" className="drawer-toggle" />
                 <div className="drawer-content flex flex-col">
                     <header className="fixed w-full top-0 z-60">
                         <div
@@ -105,6 +100,9 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                     </ul>
                                 </div>
                                 <div className="navbar-end space-x-2">
+                                    <div className="max-[950px]:hidden">
+                                        <Search />
+                                    </div>
                                     <Link
                                         href="/pricing"
                                         className="bg-black/70 no-underline group cursor-pointer relative rounded-full p-px font-semibold leading-6 inline-block"
@@ -136,7 +134,12 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                             className="flex items-center group cursor-pointer"
                                         >
                                             <Avatar
-                                                className={cn("size-12 p-3", user ? "ring-2 ring-secondary" : "")}
+                                                className={cn(
+                                                    "size-12 p-3",
+                                                    user ? "avatar-online" : (
+                                                        "avatar-offline"
+                                                    )
+                                                )}
                                             />
                                         </div>
                                         <div
@@ -240,6 +243,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                         >
                             <Logo className="h-16 w-auto ml-2 mb-2" />
                         </Link>
+                        <Search />
                         {links.map((item) => (
                             <li key={item.title}>
                                 <a

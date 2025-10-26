@@ -41,9 +41,7 @@ export const AccoutMenu: React.FC<AccoutProps> = ({ user, children }) => {
             <div className="flex flex-col w-full">
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-x-4">
-                        <Avatar
-                            className="size-14 p-3"
-                        />
+                        <Avatar className="size-14 p-3" />
 
                         <div className="flex flex-col">
                             <Title

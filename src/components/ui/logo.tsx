@@ -14,6 +14,7 @@ const Logo: React.FC<LogoProps> = ({ className }) => {
             className={cn("size-16", className)}
             width={256}
             height={256}
+            priority
         />
     );
 };

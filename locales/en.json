@@ -130,6 +130,15 @@
             "search-placeholder": "Search for a book...",
             "by": "By"
         },
+        "studio": {
+            "title": "Studio",
+            "description": "Create & edit your own books",
+            "search-placeholder": "Search your books...",
+            "create": "New Book",
+            "modify": "Last modified ",
+            "no-books": "You don't have any books yet",
+            "no-books-found": "No books found"
+        },
         "pricing": {
             "title": "Pricing",
             "description": "Find the Perfect Plan for Your Family",
