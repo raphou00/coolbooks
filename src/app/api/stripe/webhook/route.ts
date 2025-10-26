@@ -29,8 +29,8 @@ export const POST = async (req: NextRequest) => {
                 { status: 400 }
             );
         }
-        const subscription = event.data.object as Stripe.Subscription;
-        const customerId = subscription.customer;
+        const eventData = event.data.object as Stripe.Subscription | Stripe.Invoice;
+        const customerId = eventData.customer;
 
         if (!customerId) {
             console.error("Missing customer ID");
@@ -71,10 +71,10 @@ export const POST = async (req: NextRequest) => {
         switch (event.type) {
             case "customer.subscription.updated":
             case "customer.subscription.deleted":
-                await handleSubscriptionChange(subscription, user);
+                await handleSubscriptionChange(eventData as Stripe.Subscription, user);
                 break;
             case "invoice.payment_succeeded":
-                invoice = event.data.object as Stripe.Invoice;
+                invoice = eventData as Stripe.Invoice;
                 if (invoice.subscription) {
                     await handleInvoicePayment(invoice, user);
                 }

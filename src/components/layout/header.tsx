@@ -53,7 +53,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
         <>
             <div className="drawer">
                 <input
-                    id="my-drawer-3"
+                    id="drawer"
                     type="checkbox"
                     className="drawer-toggle"
                 />
@@ -69,7 +69,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                             <div className="navbar min-h-16 py-0 mx-auto transition max-w-8xl w-full px-4 md:px-6 lg:px-8 xl:px-12">
                                 <div className="navbar-start">
                                     <label
-                                        htmlFor="my-drawer-3"
+                                        htmlFor="drawer"
                                         role="button"
                                         className="items-center justify-center cursor-pointer hidden max-[950px]:flex"
                                     >
@@ -135,16 +135,9 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                             tabIndex={0}
                                             className="flex items-center group cursor-pointer"
                                         >
-                                            {user ?
-                                                <Avatar
-                                                    src={null}
-                                                    alt={user.name}
-                                                    className="size-12"
-                                                />
-                                            :   <div className="btn btn-circle size-12 border-none bg-base-content/80">
-                                                    <UserIcon className="size-6 text-white" />
-                                                </div>
-                                            }
+                                            <Avatar
+                                                className={cn("size-12 p-3", user ? "ring-2 ring-secondary" : "")}
+                                            />
                                         </div>
                                         <div
                                             tabIndex={0}
@@ -153,12 +146,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                             <div className="space-y-1 rounded-xl backdrop-blur-3xl bg-base-100 p-2 border border-black/90 shadow-xl w-72 z-100">
                                                 {user ?
                                                     <>
-                                                        <div className="my-2 flex flex-col items-center justify-center gap-y-2">
-                                                            <Avatar
-                                                                src={null}
-                                                                alt={user.name}
-                                                                className="size-16"
-                                                            />
+                                                        <div className="my-4 flex flex-col items-center justify-center gap-y-2">
                                                             <Title
                                                                 text={user.name}
                                                                 className="text-center font-bold"
@@ -167,7 +155,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
 
                                                         <a
                                                             href="/account/profile"
-                                                            className="btn btn-ghost rounded-lg m-0 w-full justify-start"
+                                                            className="btn btn-ghost rounded-xl border-none m-0 w-full justify-start"
                                                         >
                                                             <span className="flex items-center gap-2">
                                                                 <Settings2 className="size-6" />
@@ -178,7 +166,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                                 :   <>
                                                         <a
                                                             href={`/login?redirect=${pathname}`}
-                                                            className="btn btn-ghost rounded-lg m-0 w-full justify-start"
+                                                            className="btn btn-ghost rounded-xl border-none m-0 w-full justify-start"
                                                         >
                                                             <span className="flex items-center gap-2">
                                                                 <LogIn className="size-6" />
@@ -188,7 +176,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
 
                                                         <a
                                                             href={`/register?redirect=${pathname}`}
-                                                            className="btn btn-ghost rounded-lg m-0 w-full justify-start"
+                                                            className="btn btn-ghost rounded-xl border-none m-0 w-full justify-start"
                                                         >
                                                             <span className="flex items-center gap-2">
                                                                 <PenBox className="size-6" />
@@ -204,7 +192,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                                     onClick={() =>
                                                         setLocaleOpen((e) => !e)
                                                     }
-                                                    className="btn btn-ghost rounded-lg m-0 w-full justify-start"
+                                                    className="btn btn-ghost rounded-xl border-none m-0 w-full justify-start"
                                                 >
                                                     <span className="flex items-center gap-2">
                                                         <Languages className="size-6" />
@@ -220,7 +208,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                                             onClick={
                                                                 handleLogout
                                                             }
-                                                            className="btn btn-ghost rounded-lg m-0 w-full justify-start"
+                                                            className="btn btn-ghost rounded-xl border-none m-0 w-full justify-start"
                                                         >
                                                             <span className="flex items-center gap-2">
                                                                 <LogOut className="size-6" />
@@ -241,14 +229,14 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                 </div>
                 <div className="drawer-side z-[9999]">
                     <label
-                        htmlFor="my-drawer-3"
+                        htmlFor="drawer"
                         aria-label="close sidebar"
                         className="drawer-overlay"
                     ></label>
                     <ul className="menu bg-base-200 min-h-full w-80 space-y-3 p-4 z-[99999999]">
                         <Link
                             href="/"
-                            className="ml-2 mb-4 flex items-center text-sm relative z-20"
+                            className="ml-2 mb-8 flex items-center text-sm relative z-20"
                         >
                             <Logo className="h-16 w-auto ml-2 mb-2" />
                         </Link>

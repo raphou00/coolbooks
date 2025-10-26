@@ -62,7 +62,7 @@ const Pricing: React.FC<PricingProps> = ({ subs, user }) => {
                             tierIdx === subs.length - 1 ?
                                 "-ml-px lg:rounded-l-none"
                             :   "",
-                            "flex flex-col justify-between rounded-3xl bg-white p-8 inset-ring inset-ring-gray-200 xl:p-10"
+                            "flex flex-col justify-between rounded-3xl bg-white p-8 inset-ring inset-ring-neutral xl:p-10"
                         )}
                     >
                         <div>

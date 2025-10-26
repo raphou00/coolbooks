@@ -42,9 +42,7 @@ export const AccoutMenu: React.FC<AccoutProps> = ({ user, children }) => {
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-x-4">
                         <Avatar
-                            src={null}
-                            alt={user.name}
-                            className="size-14"
+                            className="size-14 p-3"
                         />
 
                         <div className="flex flex-col">
@@ -64,13 +62,13 @@ export const AccoutMenu: React.FC<AccoutProps> = ({ user, children }) => {
 
                     <button
                         onClick={openPortal}
-                        className="px-6 py-2 border-2 hover:bg-base-content hover:text-base-100 rounded-sm cursor-pointer"
+                        className="px-3 py-1.5 border-2 hover:bg-accent/5 rounded-lg cursor-pointer shadow hover:shadow-lg"
                     >
                         <div className="flex flex-col justify-center">
-                            <span className="text-lg font-bold text-primary">
-                                {t("plan")}
+                            <span className="font-bold text-primary">
+                                {t("subscription")}
                             </span>
-                            <span className="">{t("portal")}</span>
+                            <span className="text-sm">{t("billing")}</span>
                         </div>
                     </button>
                 </div>

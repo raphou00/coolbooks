@@ -287,8 +287,8 @@
         "new-book": "New Book",
         "studio": "Studio",
         "me": "Me",
-        "plan": "Plan",
-        "portal": "Open Customer Portal",
+        "subscription": "Subscription",
+        "billing": "Manage Billing & Plan",
         "latest": "Latest",
         "oldest": "Oldest",
         "popular": "Popular"

@@ -18,8 +18,8 @@ const Title: React.FC<TitleProps> = ({
             {text}
             {underline && (
                 <div className="-mt-1.5 static z-0">
-                    <span className="block h-[3px] w-full bg-primary"></span>
-                    <span className="block h-[3px] w-full bg-secondary ml-2"></span>
+                    <span className="block h-[4px] w-full bg-primary"></span>
+                    <span className="block h-[4px] w-full bg-secondary ml-2"></span>
                 </div>
             )}
         </h1>
