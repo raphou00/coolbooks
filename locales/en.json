@@ -121,14 +121,38 @@
         },
         "book": {
             "title": "{title}",
-            "description": "{title} by {author} generated with {app}"
+            "description": "{title} by {author} generated with {app}",
+            "next": "Next",
+            "prev": "Previous",
+            "share": "Share",
+            "download": "Download",
+            "download-epub": "Download EPUB",
+            "download-pdf": "Download PDF",
+            "download-mobi": "Download MOBI"
         },
-        "explore": {
-            "title": "Explore",
-            "description": "Explore every public books on the platform!",
-            "main-title": "Explore Books 📚",
-            "search-placeholder": "Search for a book...",
-            "by": "By"
+        "new-book": {
+            "title": "New Book",
+            "description": "Create a new book with only one prompt",
+            "submit": "Generate",
+            "prev": "Previous",
+            "next": "Next",
+            "child-details": "📖 Tell us about your child",
+            "story-style": "🎨 Describe your story style",
+            "story-idea": "📝 Describe your story idea",
+            "child-name": "Child Name",
+            "child-name-placeholder": "Your child's name...",
+            "age": "Age",
+            "hair-color": "Hair Color",
+            "eye-color": "Eye Color",
+            "gender": "Gender",
+            "skin-tone": "Skin Tone",
+            "themes": "Themes",
+            "art-style": "Art Style",
+            "setting": "Setting",
+            "setting-placeholder": "In a fairy castle...",
+            "prompt": "Describe your story",
+            "prompt-placeholder": "Toto playing football...",
+            "create": "Generate"
         },
         "studio": {
             "title": "Studio",
@@ -188,13 +212,6 @@
             "message": "Message",
             "message-placeholder": "Enter your message...",
             "submit": "Send"
-        },
-        "new-book": {
-            "title": "New Book",
-            "description": "Create a new book with only one prompt",
-            "prompt": "Prompt",
-            "prompt-placeholder": "Toto playing football...",
-            "submit": "Generate"
         },
         "terms": {
             "title": "Terms of Service",
@@ -296,7 +313,9 @@
         "new-book": "New Book",
         "studio": "Studio",
         "me": "Me",
-        "subscription": "Subscription",
+        "subscribe": "Subscribe",
+        "current-plan": "Current Plan:",
+        "credits": "Credits remaining",
         "billing": "Manage Billing & Plan",
         "latest": "Latest",
         "oldest": "Oldest",

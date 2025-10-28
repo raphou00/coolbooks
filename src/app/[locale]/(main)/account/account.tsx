@@ -63,9 +63,25 @@ export const AccoutMenu: React.FC<AccoutProps> = ({ user, children }) => {
                         className="px-3 py-1.5 border-2 hover:bg-accent/5 rounded-lg cursor-pointer shadow hover:shadow-lg"
                     >
                         <div className="flex flex-col justify-center">
-                            <span className="font-bold text-primary">
-                                {t("subscription")}
-                            </span>
+                            {user.subscriptionStatus === "active" ?
+                                <>
+                                    <span className="font-bold">
+                                        {t("current-plan")}{" "}
+                                        <span className="text-primary">
+                                            {user.stripeSubscriptionId}
+                                        </span>
+                                    </span>
+                                    <span className="text-sm">
+                                        <span className="text-yellow-500">
+                                            {user.credits}
+                                        </span>{" "}
+                                        {t("credits")}
+                                    </span>
+                                </>
+                            :   <span className="font-bold text-primary">
+                                    {t("subscribe")}
+                                </span>
+                            }
                             <span className="text-sm">{t("billing")}</span>
                         </div>
                     </button>

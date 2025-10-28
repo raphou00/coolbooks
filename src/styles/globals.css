@@ -36,7 +36,7 @@ html[data-theme="dark"] {
     --color-primary-content: #000000;
     --color-secondary: #ff00e6;
     --color-secondary-content: #000000;
-    --color-neutral: #666666;
+    --color-neutral: #aaaaaa;
     --color-neutral-content: #000000;
     --color-accent: #ffffff;
     --color-accent-content: #000000;
@@ -78,6 +78,10 @@ html[data-theme="dark"] {
     scrollbar-width: none;
 }
 
+.max-w-8xl {
+    max-width: 90rem;
+}
+
 .mask-image-fade {
   -webkit-mask-image: radial-gradient(circle, black 60%, transparent 100%);
   mask-image: radial-gradient(circle, black 60%, transparent 100%);
@@ -85,8 +89,4 @@ html[data-theme="dark"] {
   mask-repeat: no-repeat;
   -webkit-mask-size: 100% 100%;
   mask-size: 100% 100%;
-}
-
-.max-w-8xl {
-    max-width: 90rem;
 }

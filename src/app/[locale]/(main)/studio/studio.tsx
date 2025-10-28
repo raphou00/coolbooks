@@ -63,10 +63,10 @@ const Studio: React.FC<StudioProps> = ({ books: allBooks }) => {
                         />
                     </div>
                 </div>
-                <button className="btn btn-lg btn-primary">
-                    <BookPlus className="size-6" />
+                <Link href="/studio/new" className="btn btn-lg btn-primary">
+                    <BookPlus className="size-6 text-white" />
                     <span className="max-md:hidden">{t("create")}</span>
-                </button>
+                </Link>
             </div>
 
             {allBooks.length === 0 ?

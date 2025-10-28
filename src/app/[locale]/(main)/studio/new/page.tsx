@@ -11,9 +11,9 @@ const generateMetadata = async (): Promise<Metadata> => {
     };
 };
 
-const Page = () => {
+const Page = async () => {
     return (
-        <Main className="mt-8 flex">
+        <Main className="flex">
             <NewBook />
         </Main>
     );

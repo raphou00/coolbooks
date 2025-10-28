@@ -1,9 +1,76 @@
 import * as z from "zod";
 import { type T } from "@/lib/types";
-import { maxPromptLength, minPromptLength } from "@/config/char";
+import {
+    maxPromptLength,
+    maxSettingLength,
+    maxUsernameLength,
+    minPromptLength,
+    minUsernameLength,
+} from "@/config/char";
+
+export const ageOptions = ["2-3", "4-5", "6-7", "8-9", "10-12", "13+"] as const;
+export const hairColorOptions = [
+    "black",
+    "brown",
+    "blonde",
+    "red",
+    "gray",
+] as const;
+export const eyeColorOptions = [
+    "brown",
+    "blue",
+    "green",
+    "gray",
+    "hazel",
+] as const;
+export const skinToneOptions = [
+    "👶🏻 Light",
+    "👶🏼 Medium",
+    "👶🏽 Dark",
+    "👶🏾 Olive",
+    "👶🏿 Brown",
+] as const;
+export const artStyleOptions = ["Cartoon", "Line Art", "Anime"] as const;
+export const themesOptions = [
+    "Hero",
+    "Adventure",
+    "Education",
+    "Friendship",
+    "Magic",
+    "Bedtime",
+] as const;
+const themesEnum = z.enum(themesOptions);
 
 const bookSchema = (t: T) =>
     z.object({
+        childName: z
+            .string()
+            .trim()
+            .max(maxUsernameLength, {
+                message: t("messages.max", { max: maxUsernameLength }),
+            })
+            .min(minUsernameLength, {
+                message: t("messages.min", { min: minUsernameLength }),
+            })
+            .min(1, { message: t("messages.required") }),
+        age: z.enum(ageOptions, { message: t("messages.required") }),
+        hairColor: z.enum(hairColorOptions, {
+            message: t("messages.required"),
+        }),
+        eyeColor: z.enum(eyeColorOptions, { message: t("messages.required") }),
+        skinTone: z.enum(skinToneOptions, { message: t("messages.required") }),
+        artStyle: z.enum(artStyleOptions, { message: t("messages.required") }),
+        themes: z
+            .array(themesEnum, {
+                message: t("messages.required"),
+            })
+            .min(1, { message: t("messages.required") }),
+        setting: z
+            .string()
+            .trim()
+            .max(maxSettingLength, {
+                message: t("messages.max", { max: maxPromptLength }),
+            }),
         prompt: z
             .string()
             .trim()

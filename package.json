@@ -25,6 +25,7 @@
         "@ai-sdk/openai": "^2.0.52",
         "@aws-sdk/client-s3": "^3.744.0",
         "@fal-ai/client": "^1.6.2",
+        "@hookform/resolvers": "^5.2.2",
         "@lucia-auth/adapter-prisma": "^4.0.1",
         "@pilcrowjs/object-parser": "^0.0.4",
         "@prisma/client": "5.22.0",
@@ -67,7 +68,8 @@
         "screenfull": "^6.0.2",
         "sharp": "^0.34.0",
         "stripe": "^17.7.0",
-        "tailwind-merge": "^2.5.3"
+        "tailwind-merge": "^2.5.3",
+        "zod": "^4.1.12"
     },
     "devDependencies": {
         "@pulumi/aws": "^6.68.0",

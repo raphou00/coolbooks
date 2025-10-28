@@ -68,7 +68,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                         role="button"
                                         className="items-center justify-center cursor-pointer hidden max-[950px]:flex"
                                     >
-                                        <Menu className="size-11 text-black/90" />
+                                        <Menu className="size-11 text-base-content/90" />
                                     </label>
                                     <div className="flex items-center ml-2 mr-3">
                                         <Link

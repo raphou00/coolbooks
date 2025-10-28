@@ -50,7 +50,7 @@ const Pricing: React.FC<PricingProps> = ({ subs, user }) => {
             <p className="mx-auto mt-6 max-w-2xl text-center text-xl font-medium text-pretty">
                 {t("description")}
             </p>
-            <div className="isolate mx-auto mt- grid max-w-md grid-cols-1 gap-y-8 sm:mt-12 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+            <div className="isolate mx-auto mt-8 grid max-w-md grid-cols-1 gap-y-8 sm:mt-12 lg:mx-0 lg:max-w-none lg:grid-cols-3">
                 {subs.map((tier, tierIdx) => (
                     <div
                         key={tier.name}

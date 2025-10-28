@@ -10,7 +10,12 @@ type AvatarProps = {
 const Avatar: React.FC<AvatarProps> = ({ className }) => {
     return (
         <div className="avatar">
-            <div className={cn("rounded-full shadow bg-accent/70", className)}>
+            <div
+                className={cn(
+                    "rounded-full ring ring-white/10 shadow bg-black/70",
+                    className
+                )}
+            >
                 <User className="size-full text-white" />
             </div>
         </div>

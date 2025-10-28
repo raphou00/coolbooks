@@ -20,7 +20,7 @@ const Page = async () => {
 
     return (
         <Main
-            className="mt-8 flex justify-center"
+            className="flex justify-center"
             gradientVariant="floatingGradient"
         >
             <Pricing user={user?.user || null} subs={subscription} />

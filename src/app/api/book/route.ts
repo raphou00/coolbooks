@@ -53,11 +53,12 @@ export const POST = async (req: NextRequest) => {
 
         const bookId = crypto.randomUUID();
 
-        const plan = await createPlan(body.prompt);
+        const plan = await createPlan(body);
 
         const coverKey = bookId + "/" + crypto.randomUUID() + ".png";
         const bookCover = await createImage(
             plan.cover,
+            body.artStyle,
             coverKey,
             null,
             plan.title
@@ -75,7 +76,7 @@ export const POST = async (req: NextRequest) => {
 
         for (const page of plan.pages) {
             const key = bookId + "/" + crypto.randomUUID() + ".png";
-            await createImage(page.image, key, getS3(coverKey));
+            await createImage(page.image, body.artStyle, key, getS3(coverKey));
             await db.page.create({
                 data: {
                     bookId: book.id,

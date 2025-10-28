@@ -1,11 +1,11 @@
 import { type Metadata } from "next";
-import Main from "@/components/layout/main";
 import { getTranslations } from "next-intl/server";
-import BookViewer from "@/components/ui/book";
 import db from "@/lib/db";
 import { selectBook } from "@/config/book";
 import { redirect } from "next/navigation";
 import { title } from "@/config/seo";
+import Main from "@/components/layout/main";
+import Book from "@/components/ui/book";
 
 type PageProps = {
     params: Promise<{ bookId: string }>;
@@ -62,8 +62,8 @@ const Page = async ({ params }: PageProps) => {
     }
 
     return (
-        <Main className="mt-8 flex" gradientVariant="floatingGradient">
-            <BookViewer book={book} />
+        <Main className="flex" gradientVariant="floatingGradient">
+            <Book book={book} />
         </Main>
     );
 };

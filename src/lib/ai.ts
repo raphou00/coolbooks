@@ -6,6 +6,7 @@ import { putObject } from "./file";
 import { promptPlan, promptImage } from "@/config/prompt";
 import { z } from "zod";
 import env from "./env";
+import type { BookSchema } from "@/schema/book";
 
 type ImageCompletion = {
     choices: {
@@ -27,7 +28,7 @@ const openai = new OpenAI({
     apiKey: env.OPENROUTER_KEY,
 });
 
-export const createPlan = async (topic: string): Promise<any> => {
+export const createPlan = async (topic: BookSchema): Promise<any> => {
     const result = await generateObject<any>({
         model: PLANNER_MODEL,
         prompt: promptPlan(topic),
@@ -49,6 +50,7 @@ export const createPlan = async (topic: string): Promise<any> => {
 
 export const createImage = async (
     topic: string,
+    artStyle: string,
     key: string,
     base?: string | null,
     title?: string
@@ -56,7 +58,7 @@ export const createImage = async (
     const content: any = [
         {
             type: "text",
-            text: promptImage(topic, title),
+            text: promptImage(topic, artStyle, title),
         },
     ];
 
