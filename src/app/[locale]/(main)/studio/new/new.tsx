@@ -104,7 +104,10 @@ const NewBook: React.FC = () => {
     };
 
     const submit = async (data: BookSchema) => {
-        const res = await handleFormPost<BookSchema>("/api/book", data);
+        const res = await handleFormPost<BookSchema>(
+            "/api/book/generate",
+            data
+        );
         setState(res);
     };
 

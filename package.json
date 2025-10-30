@@ -23,6 +23,7 @@
         "@ai-sdk/google": "^2.0.23",
         "@ai-sdk/google-vertex": "^3.0.47",
         "@ai-sdk/openai": "^2.0.52",
+        "@aws-sdk/client-lambda": "^3.920.0",
         "@aws-sdk/client-s3": "^3.744.0",
         "@fal-ai/client": "^1.6.2",
         "@hookform/resolvers": "^5.2.2",

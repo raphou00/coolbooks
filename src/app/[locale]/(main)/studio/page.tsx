@@ -40,7 +40,7 @@ const Page = async () => {
     });
 
     return (
-        <Main className="flex" gradientVariant="floatingGradient">
+        <Main className="flex">
             <Studio books={books} />
         </Main>
     );

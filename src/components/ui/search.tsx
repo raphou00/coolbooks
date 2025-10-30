@@ -19,6 +19,12 @@ const Search: React.FC = () => {
         router.push(`/search?q=${value}`);
     };
 
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === "Enter") {
+            onSubmit();
+        }
+    };
+
     useEffect(() => {
         intervalRef.current = setInterval(() => {
             setCurrentPlaceholder((prev) => (prev + 1) % placeholders.length);
@@ -35,6 +41,7 @@ const Search: React.FC = () => {
         <div className="w-full relative mx-auto bg-black/70 h-12 mr-2 rounded-full overflow-hidden shadow transition duration-200 max-w-xs">
             <input
                 onChange={(e) => setValue(e.target.value)}
+                onKeyDown={handleKeyDown}
                 ref={inputRef}
                 value={value}
                 type="text"

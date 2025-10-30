@@ -69,34 +69,18 @@ const Studio: React.FC<StudioProps> = ({ books: allBooks }) => {
                 </Link>
             </div>
 
-            {allBooks.length === 0 ?
+            {books.length === 0 ?
                 <div className="flex flex-col justify-between items-center">
                     <Image
-                        src="/images/book-smiley.svg"
-                        width={600}
-                        height={600}
-                        className="size-28"
-                        alt=""
+                        src="/images/book-sad.svg"
+                        width={400}
+                        height={400}
+                        alt="404"
+                        className="mx-auto h-44 grayscale"
                     />
                     <Title
                         text={t("no-books")}
                         className="mx-auto w-fit text-center"
-                        underline
-                    />
-                </div>
-            : books.length === 0 && search.length > 0 ?
-                <div className="flex flex-col justify-between items-center">
-                    <Image
-                        src="/images/book-smiley.svg"
-                        width={600}
-                        height={600}
-                        className="size-28"
-                        alt=""
-                    />
-                    <Title
-                        text={t("no-books-found")}
-                        className="mx-auto w-fit text-center"
-                        underline
                     />
                 </div>
             :   <div className="w-full grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-2 md:gap-8">

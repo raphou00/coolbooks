@@ -1,5 +1,5 @@
-import { HeartCrack } from "lucide-react";
 import { useTranslations } from "next-intl";
+import Image from "next/image";
 import Link from "next/link";
 import Title from "@/components/ui/title";
 
@@ -9,7 +9,13 @@ const RootNotFound: React.FC = () => {
     const t = useTranslations("common");
     return (
         <div className="text-center h-screen w-screen flex flex-col items-center justify-center">
-            <HeartCrack className="text-primary mx-auto h-16 w-auto" />
+            <Image
+                src="/images/book-sad.svg"
+                width={400}
+                height={400}
+                alt="404"
+                className="mx-auto h-44"
+            />
             <Title
                 text={t("not-found")}
                 className="mx-auto w-max my-2"

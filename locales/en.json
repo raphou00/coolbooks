@@ -156,12 +156,18 @@
         },
         "studio": {
             "title": "Studio",
-            "description": "Create & edit your own books",
+            "description": "Create, read & edit your own books",
             "search-placeholder": "Search your books...",
             "create": "New Book",
             "modify": "Last modified ",
-            "no-books": "You don't have any books yet",
-            "no-books-found": "No books found"
+            "no-books": "No books found"
+        },
+        "search": {
+            "title": "{query}",
+            "description": "Results for {query}",
+            "search-placeholder": "Search your books...",
+            "modify": "Last modified ",
+            "no-books": "No books found"
         },
         "pricing": {
             "title": "Pricing",
@@ -243,6 +249,7 @@
         }
     },
     "messages": {
+        "done": "Done",
         "required": "Required",
         "invalid-email": "Invalid E-Mail",
         "taken-email": "E-Mail already taken",
@@ -255,7 +262,7 @@
         "profile-updated": "Profile successfully updated",
         "already-have-password": "You already have a password",
         "password-created": "Password successfully created",
-        "book-created": "Book successfully created",
+        "book-creating": "Creating book",
         "wrong-email": "Wrong E-Mail",
         "account-deleted": "Account successfully deleted",
         "session-deleted": "Session successfully deleted",

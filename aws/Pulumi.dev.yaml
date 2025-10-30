@@ -1,3 +1,7 @@
 encryptionsalt: v1:znDyPpXDk8M=:v1:wJfW505WVwfQ2XGz:r4zprkDDdgXujhRffMUnLUClg3Hb9g==
 config:
   aws:region: us-east-1
+  coolbooks:OPENROUTER_API_KEY:
+    secure: v1:ls8on0SbaagY2WEs:O0hFVRDAebRVTLFoIdiXqoXc9p41eHoY5/hws3+o4v2uwcnSQ4U3c6c3k0LuFBZUbK7jcb3apvxPC3GKG33UN1msmHFIaqDNyS49ds2Ug8Cyg69Oht3IbhY=
+  coolbooks:AI_GATEWAY_API_KEY:
+    secure: v1:8Vd14fDZVJxRZBJV:txJRbqnr1EqKRRi5fCcyB7H7zn8I/cCd26wBU8q8mPQfs8ZyYd4MDAFasNh+x2Ocyg+avNEJPEqiDluE/OCqofmIy1W2xmLIZOiLaQ==

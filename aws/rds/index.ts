@@ -126,7 +126,7 @@ const provision = () => {
     const dbUrl = pulumi.interpolate`postgresql://${rds.username}:${rdsPassword}@${rds.endpoint}/${rds.dbName}`;
     dbUrl.apply((url) => writeFileSync("../DATABASE_URL", url));
 
-    return rds;
+    return { rds, dbUrl };
 };
 
 export default provision;

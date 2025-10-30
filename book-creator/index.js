@@ -1,0 +1,254 @@
+const { generateObject } = require("ai");
+const { OpenAI } = require("openai");
+const { z } = require("zod");
+const { S3Client,PutObjectCommand } = require("@aws-sdk/client-s3")
+
+const { BUCKET_NAME, OPENROUTER_API_KEY, AI_GATEWAY_API_KEY } = process.env;
+const API_URL = "https://coolbooks.app/api";
+const PLANNER_MODEL = "anthropic/claude-3-haiku";
+const IMAGE_MODEL = "google/gemini-2.5-flash-image-preview";
+
+const openai = new OpenAI({
+    baseURL: "https://openrouter.ai/api/v1",
+    apiKey: OPENROUTER_API_KEY,
+});
+
+const s3 = new S3Client();
+
+const colors = [
+    { hex: "#FFF5F5", name: "Light pink" },
+    { hex: "#FFF0F5", name: "Lavender blush" },
+    { hex: "#F0F8FF", name: "Alice blue" },
+    { hex: "#F5FFFA", name: "Mint cream" },
+    { hex: "#FFFACD", name: "Lemon chiffon" },
+    { hex: "#FFF8DC", name: "Cornsilk" },
+    { hex: "#F0FFF0", name: "Honeydew" },
+    { hex: "#F8F8FF", name: "Ghost white" },
+    { hex: "#FDF5E6", name: "Old lace" },
+    { hex: "#FAF0E6", name: "Linen" },
+    { hex: "#E6E6FA", name: "Lavender" },
+    { hex: "#F0E68C", name: "Khaki (light)" },
+    { hex: "#FFEFD5", name: "Papaya whip" },
+    { hex: "#FFE4E1", name: "Misty rose" },
+    { hex: "#E0FFFF", name: "Light cyan" },
+    { hex: "#F5F5DC", name: "Beige" },
+    { hex: "#FFF5EE", name: "Seashell" },
+    { hex: "#F0FFFF", name: "Azure" },
+    { hex: "#FFFAF0", name: "Floral white" },
+    { hex: "#F5F0FF", name: "Light lavender" },
+    { hex: "#FFF0F0", name: "Light rose" },
+    { hex: "#F0FFF8", name: "Light mint" },
+    { hex: "#FFFFF0", name: "Ivory" },
+    { hex: "#F8FFF8", name: "Light green" },
+    { hex: "#FFF8F0", name: "Light peach" },
+];
+
+const randomHex = () =>
+    colors[Math.floor(Math.random() * colors.length)].hex;
+
+const getS3 = (key) => {
+    return `https://${BUCKET_NAME}.s3.us-east-1.amazonaws.com/${key}`;
+};
+
+const promptPlan = (topic) => `
+Create a kid book of 10 pages using the following details:
+
+-  Prompt/Topic: ${topic.prompt}
+-  Main Character: ${topic.childName}, Age: ${topic.age}
+-  Appearance: Hair Color: ${topic.hairColor}, Eye Color: ${topic.eyeColor}, Skin Tone: ${topic.skinTone}
+-  Art Style: ${topic.artStyle}
+-  Theme: ${topic.themes}
+-  Setting: ${topic.setting}
+
+Requirements:
+* The title must be short and concise.
+* Each page's text should be long enough to be interesting for the target age group.
+* Describe the cover and each page's image in a detailed prompt, matching the specified art style, character appearance, theme, and setting.
+* Be very precise with the image prompts to ensure the visuals match the description.
+
+Output:
+1. Title
+2. Page-by-page story text (10 pages)
+3. For each page (including the cover), a detailed image prompt reflecting all the above details.
+`;
+
+const promptImage = (topic, artStyle, title) => `
+generate an image of "${topic}, ${artStyle} style",
+use the reference image as a base for character, background and style design
+${title ? `include the title: ${title}` : "no text should be displayed on the image"}
+`;
+
+const putObject = async (file, key) => {
+    const body =
+        file instanceof File ? Buffer.from(await file.arrayBuffer()) : file;
+    const params = {
+        Bucket: BUCKET_NAME,
+        Key: key,
+        Body: body,
+    };
+
+    try {
+        const res = await s3.send(new PutObjectCommand(params));
+
+        return res;
+    } catch (err) {
+        console.error("Error", err);
+    }
+};
+
+const createPlan = async (topic) => {
+    const result = await generateObject({
+        model: PLANNER_MODEL,
+        prompt: promptPlan(topic),
+        maxRetries: 3,
+        schema: z.object({
+            title: z.string(),
+            cover: z.string(),
+            pages: z.array(
+                z.object({
+                    text: z.string(),
+                    image: z.string(),
+                })
+            ),
+        }),
+    });
+
+    return result.object;
+};
+
+const createImage = async (
+    topic,
+    artStyle,
+    key,
+    base,
+    title
+) => {
+    const content = [
+        {
+            type: "text",
+            text: promptImage(topic, artStyle, title),
+        },
+    ];
+
+    if (base) {
+        content.push({
+            type: "image_url",
+            image_url: {
+                url: base,
+            },
+        });
+    }
+
+    const completion = (await openai.chat.completions.create({
+        model: IMAGE_MODEL,
+        messages: [
+            {
+                role: "user",
+                content: content,
+            },
+        ],
+    }));
+
+    const image = completion.choices[0].message.images[0].image_url.url;
+
+    const base64Data = image.replace(/^data:image\/\w+;base64,/, "");
+    const buffer = Buffer.from(base64Data, "base64");
+
+    await putObject(buffer, key);
+
+    return key;
+};
+
+const lambda_handler = async (event) => {
+    const { bookId, userId, topic } = event;
+
+    const plan = await createPlan(topic);
+
+    const coverKey = bookId + "/" + crypto.randomUUID() + ".png";
+    await createImage(
+        plan.cover,
+        topic.artStyle,
+        coverKey,
+        null,
+        plan.title
+    );
+
+    await fetch(
+        API_URL + "/book",
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                id: bookId,
+                title: plan.title,
+                cover: coverKey,
+                promptText: topic.prompt,
+                userId: userId,
+            }),
+        }
+    );
+
+    for (const page of plan.pages) {
+        const key = bookId + "/" + crypto.randomUUID() + ".png";
+        await createImage(page.image, topic.artStyle, key, getS3(coverKey));
+        await fetch(
+            API_URL + "/page",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    bookId: bookId,
+                    color: randomHex(),
+                    text: page.text,
+                    images: {
+                        create: {
+                            src: key,
+                            width: 1024,
+                            height: 1024,
+                        },
+                    },
+                }),
+            }
+        );
+    }
+
+    return {
+        statusCode: 201,
+        body: "done"
+    };
+};
+
+exports.lambda_handler = lambda_handler;
+
+// const pagePromises = plan.pages.map(async (page) => {
+//     const key = bookId + "/" + crypto.randomUUID() + ".png";
+//     await createImage(page.image, topic.artStyle, key, await getS3(coverKey));
+
+//     await fetch(
+//         API_URL + "/page",
+//         {
+//             method: "POST",
+//             headers: {
+//                 "Content-Type": "application/json",
+//             },
+//             body: JSON.stringify({
+//                 bookId: bookId,
+//                 color: randomHex(),
+//                 text: page.text,
+//                 images: {
+//                     create: {
+//                         src: key,
+//                         width: 1024,
+//                         height: 1024,
+//                     },
+//                 },
+//             }),
+//         }
+//     );
+// });
+
+// await Promise.all(pagePromises);
