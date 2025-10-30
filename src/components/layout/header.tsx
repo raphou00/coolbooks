@@ -86,7 +86,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                                     className={cn(
                                                         "btn bg-base-content/80 text-white border-none",
                                                         item.path === pathname ?
-                                                            "invert"
+                                                            "inset-ring-4 inset-ring-primary"
                                                         :   ""
                                                     )}
                                                 >

@@ -16,6 +16,8 @@ type FormSelectProps = {
     control: Control<any>;
     error?: FieldError | string | null;
     defaultValue?: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    t?: any;
 };
 
 const FormSelect: React.FC<FormSelectProps> = ({
@@ -25,6 +27,7 @@ const FormSelect: React.FC<FormSelectProps> = ({
     control,
     error,
     defaultValue = "",
+    t,
 }) => {
     return (
         <div className="w-full my-2">
@@ -53,7 +56,7 @@ const FormSelect: React.FC<FormSelectProps> = ({
                                         {values.map((e) => (
                                             <SelectItem key={e} value={e}>
                                                 <div className="flex items-center gap-2">
-                                                    {e}
+                                                    {t ? t(e) : e}
                                                 </div>
                                             </SelectItem>
                                         ))}

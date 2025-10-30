@@ -45,10 +45,10 @@ const Home: React.FC = () => {
                 alt=""
                 width={1920}
                 height={1080}
-                className="absolute top-0 left-0 object-cover w-screen -z-50 border-b border-neutral brightness-[0.5] saturate-200 h-[500px]"
+                className="absolute top-0 left-0 object-cover w-screen -z-50 border-b border-neutral brightness-[0.5] saturate-200 h-[450px]"
             />
 
-            <div className="relative grid place-content-center h-[400px]">
+            <div className="relative grid place-content-center h-[350px]">
                 <div className="relative z-10 flex flex-col items-center">
                     <span className="inline-block rounded-full glass border border-neutral px-3 py-1.5 mb-3">
                         😍 {t("beta")}

@@ -54,8 +54,8 @@ const promptPlan = (topic) => `
 Create a kid book of 10 pages using the following details:
 
 -  Prompt/Topic: ${topic.prompt}
--  Main Character: ${topic.childName}, Age: ${topic.age}
--  Appearance: Hair Color: ${topic.hairColor}, Eye Color: ${topic.eyeColor}, Skin Tone: ${topic.skinTone}
+-  Main Character: ${topic.childName}, Gender: ${topic.gender}, Age: ${topic.age}
+-  Appearance: Hair Color: ${topic.hairColor}, Eye Color: ${topic.eyeColor}, Skin Color: ${topic.skinTone}
 -  Art Style: ${topic.artStyle}
 -  Theme: ${topic.themes}
 -  Setting: ${topic.setting}
@@ -65,6 +65,8 @@ Requirements:
 * Each page's text should be long enough to be interesting for the target age group.
 * Describe the cover and each page's image in a detailed prompt, matching the specified art style, character appearance, theme, and setting.
 * Be very precise with the image prompts to ensure the visuals match the description.
+* Write the text in a kid-friendly style corresponding to the target age group.
+* Everything MUST be in English.
 
 Output:
 1. Title
@@ -203,13 +205,7 @@ const lambda_handler = async (event) => {
                     bookId: bookId,
                     color: randomHex(),
                     text: page.text,
-                    images: {
-                        create: {
-                            src: key,
-                            width: 1024,
-                            height: 1024,
-                        },
-                    },
+                    image: key
                 }),
             }
         );
@@ -222,32 +218,3 @@ const lambda_handler = async (event) => {
 };
 
 exports.lambda_handler = lambda_handler;
-
-// const pagePromises = plan.pages.map(async (page) => {
-//     const key = bookId + "/" + crypto.randomUUID() + ".png";
-//     await createImage(page.image, topic.artStyle, key, await getS3(coverKey));
-
-//     await fetch(
-//         API_URL + "/page",
-//         {
-//             method: "POST",
-//             headers: {
-//                 "Content-Type": "application/json",
-//             },
-//             body: JSON.stringify({
-//                 bookId: bookId,
-//                 color: randomHex(),
-//                 text: page.text,
-//                 images: {
-//                     create: {
-//                         src: key,
-//                         width: 1024,
-//                         height: 1024,
-//                     },
-//                 },
-//             }),
-//         }
-//     );
-// });
-
-// await Promise.all(pagePromises);

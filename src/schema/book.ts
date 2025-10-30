@@ -9,6 +9,7 @@ import {
 } from "@/config/char";
 
 export const ageOptions = ["2-3", "4-5", "6-7", "8-9", "10-12", "13+"] as const;
+export const genderOptions = ["boy", "girl"] as const;
 export const hairColorOptions = [
     "black",
     "brown",
@@ -24,20 +25,20 @@ export const eyeColorOptions = [
     "hazel",
 ] as const;
 export const skinToneOptions = [
-    "👶🏻 Light",
-    "👶🏼 Medium",
-    "👶🏽 Dark",
-    "👶🏾 Olive",
-    "👶🏿 Brown",
+    "light",
+    "medium",
+    "dark",
+    "olive",
+    "brown",
 ] as const;
-export const artStyleOptions = ["Cartoon", "Line Art", "Anime"] as const;
+export const artStyleOptions = ["cartoon", "line-art", "anime"] as const;
 export const themesOptions = [
-    "Hero",
-    "Adventure",
-    "Education",
-    "Friendship",
-    "Magic",
-    "Bedtime",
+    "hero",
+    "adventure",
+    "education",
+    "friendship",
+    "magic",
+    "bedtime",
 ] as const;
 const themesEnum = z.enum(themesOptions);
 
@@ -54,6 +55,7 @@ const bookSchema = (t: T) =>
             })
             .min(1, { message: t("messages.required") }),
         age: z.enum(ageOptions, { message: t("messages.required") }),
+        gender: z.enum(genderOptions, { message: t("messages.required") }),
         hairColor: z.enum(hairColorOptions, {
             message: t("messages.required"),
         }),

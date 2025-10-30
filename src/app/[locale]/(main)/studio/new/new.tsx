@@ -16,6 +16,7 @@ import bookSchema, {
     ageOptions,
     artStyleOptions,
     eyeColorOptions,
+    genderOptions,
     hairColorOptions,
     skinToneOptions,
     themesOptions,
@@ -23,19 +24,24 @@ import bookSchema, {
 } from "@/schema/book";
 import Image from "next/image";
 
+const genderImages: Record<string, string> = {
+    boy: "👦",
+    girl: "👧",
+};
+
 const themeImages: Record<string, string> = {
-    Hero: "🦸",
-    Adventure: "🕵️‍♂️",
-    Education: "👨‍🎓",
-    Friendship: "👫",
-    Magic: "🧙",
-    Bedtime: "😴",
+    hero: "🦸",
+    adventure: "🕵️‍♂️",
+    education: "👨‍🎓",
+    friendship: "👫",
+    magic: "🧙",
+    bedtime: "😴",
 };
 
 const artStyleImages: Record<string, string> = {
-    Cartoon: "/images/artstyles/cartoon.png",
-    "Line Art": "/images/artstyles/lineart.png",
-    Anime: "/images/artstyles/anime.png",
+    cartoon: "/images/artstyles/cartoon.png",
+    "line-art": "/images/artstyles/lineart.png",
+    anime: "/images/artstyles/anime.png",
 };
 
 const NewBook: React.FC = () => {
@@ -67,6 +73,7 @@ const NewBook: React.FC = () => {
 
     const artStyle = watch("artStyle");
     const themes = watch("themes");
+    const gender = watch("gender");
 
     const nextStep = async () => {
         let fieldsToValidate: (keyof BookSchema)[] = [];
@@ -76,6 +83,7 @@ const NewBook: React.FC = () => {
                 fieldsToValidate = [
                     "childName",
                     "age",
+                    "gender",
                     "hairColor",
                     "eyeColor",
                     "skinTone",
@@ -90,7 +98,6 @@ const NewBook: React.FC = () => {
         }
 
         const isValid = await trigger(fieldsToValidate);
-        console.log(errors);
 
         if (isValid && currentStep < totalSteps) {
             setCurrentStep(currentStep + 1);
@@ -168,6 +175,45 @@ const NewBook: React.FC = () => {
                                 {...register("childName")}
                             />
 
+                            <div className="w-full text-sm mt-4">
+                                <div className="w-full flex justify-between pb-1">
+                                    <span className="label-text px-1 font-bold">
+                                        {t("gender")}
+                                    </span>
+                                    <span className="label-text-alt text-error">
+                                        {errors.gender?.message}
+                                    </span>
+                                </div>
+                                <div className="grid grid-cols-2 gap-3">
+                                    {genderOptions.map((g) => (
+                                        <label
+                                            key={g}
+                                            className={cn(
+                                                "cursor-pointer flex flex-col items-center border-2 border-neutral/30 rounded-xl p-2 transition",
+                                                "hover:shadow-md relative group",
+                                                gender == g && "border-primary"
+                                            )}
+                                        >
+                                            <div className="absolute top-0 right-0 m-px">
+                                                {gender == g ?
+                                                    <CheckCircle2 className="size-6 text-primary" />
+                                                :   <div className="size-6 border-2 border-neutral/30 rounded-full" />
+                                                }
+                                            </div>
+                                            <input
+                                                type="radio"
+                                                value={g}
+                                                className="absolute left-2 top-2 opacity-0 group-checked:border-primary"
+                                                {...register("gender")}
+                                            />
+                                            <span className="capitalize text-lg text-center">
+                                                {genderImages[g]} {t(g)}
+                                            </span>
+                                        </label>
+                                    ))}
+                                </div>
+                            </div>
+
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                 <FormSelect
                                     name="age"
@@ -187,6 +233,7 @@ const NewBook: React.FC = () => {
                                     }
                                     control={control}
                                     error={errors.hairColor?.message}
+                                    t={t}
                                 />
 
                                 <FormSelect
@@ -198,6 +245,7 @@ const NewBook: React.FC = () => {
                                     }
                                     control={control}
                                     error={errors.eyeColor?.message}
+                                    t={t}
                                 />
                             </div>
 
@@ -208,6 +256,7 @@ const NewBook: React.FC = () => {
                                 values={skinToneOptions as unknown as string[]}
                                 control={control}
                                 error={errors.skinTone?.message}
+                                t={t}
                             />
                         </div>
                     </div>
@@ -257,7 +306,7 @@ const NewBook: React.FC = () => {
                                                 {themeImages[theme]}
                                             </span>
                                             <span className="capitalize text-sm text-center">
-                                                {theme}
+                                                {t(theme)}
                                             </span>
                                         </label>
                                     ))}
@@ -304,7 +353,7 @@ const NewBook: React.FC = () => {
                                                 className="size-16 object-cover mb-2 rounded-lg"
                                             />
                                             <span className="capitalize text-sm text-center">
-                                                {style}
+                                                {t(style)}
                                             </span>
                                         </label>
                                     ))}
