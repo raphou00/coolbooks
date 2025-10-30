@@ -24,6 +24,35 @@ const provision = (bucketName: pulumi.Output<string>) => {
         }
     );
 
+    const s3Policy = new aws.iam.Policy(
+        `coolbooks-book-creator-lambda-role-policy-${stack}`,
+        {
+            policy: bucketName.apply((bucketName) =>
+                JSON.stringify({
+                    Version: "2012-10-17",
+                    Statement: [
+                        {
+                            Effect: "Allow",
+                            Action: "s3:PutObject",
+                            Resource: [
+                                `arn:aws:s3:::${bucketName}/*`,
+                                `arn:aws:s3:::${bucketName}`,
+                            ],
+                        },
+                    ],
+                })
+            ),
+        }
+    );
+
+    new aws.iam.RolePolicyAttachment(
+        `coolbooks-book-creator-lambda-role-policy-attachment-${stack}`,
+        {
+            role: lambdaRole.name,
+            policyArn: s3Policy.arn,
+        }
+    );
+
     const lambda = new aws.lambda.Function(
         `coolbooks-book-creator-lambda-${stack}`,
         {

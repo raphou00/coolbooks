@@ -12,7 +12,6 @@ import Date from "@/components/ui/date";
 type Books = {
     id: string;
     title: string;
-    promptText: string;
     cover: string;
     user: {
         name: string;

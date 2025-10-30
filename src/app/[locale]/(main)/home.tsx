@@ -20,7 +20,7 @@ const font = Goudy_Bookletter_1911({
     weight: "400",
 });
 
-const COLORS_TOP = ["#FF9AA2", "#FFB347", "#87CEEB", "#98FB98", "#DDA0DD"];
+const COLORS_TOP = ["#6366f2", "#ff00e6"];
 
 const Home: React.FC = () => {
     const t = useTranslations("pages.home");

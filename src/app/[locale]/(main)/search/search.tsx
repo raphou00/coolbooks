@@ -13,7 +13,6 @@ import { useSearchParams } from "next/navigation";
 type Books = {
     id: string;
     title: string;
-    promptText: string;
     cover: string;
     user: {
         name: string;

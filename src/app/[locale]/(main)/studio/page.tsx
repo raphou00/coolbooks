@@ -29,7 +29,6 @@ const Page = async () => {
             id: true,
             title: true,
             cover: true,
-            promptText: true,
             user: {
                 select: {
                     name: true,

@@ -184,7 +184,6 @@ const lambda_handler = async (event) => {
                 id: bookId,
                 title: plan.title,
                 cover: coverKey,
-                promptText: topic.prompt,
                 userId: userId,
             }),
         }

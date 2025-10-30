@@ -57,8 +57,6 @@ model Book {
   id          String   @id @default(uuid())
   title       String
   cover       String
-  promptImage String?
-  promptText  String
   pages       Page[]
   userId      String
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -68,7 +66,7 @@ model Book {
 
 model Page {
   id          String   @id @default(uuid())
-  images      Image[]
+  image       String
   text        String
   color       String
   bookId      String
@@ -76,24 +74,3 @@ model Page {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
-
-model Image {
-  id          String   @id @default(uuid())
-  src         String
-  width       Int
-  height      Int
-  pageId      String
-  page        Page     @relation(fields: [pageId], references: [id], onDelete: Cascade)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-}
-
-// model Text {
-//   id          String   @id @default(uuid())
-//   text        String
-//   lang        String
-//   pageId      String
-//   page        Page     @relation(fields: [pageId], references: [id], onDelete: Cascade)
-//   createdAt   DateTime @default(now())
-//   updatedAt   DateTime @updatedAt
-// }

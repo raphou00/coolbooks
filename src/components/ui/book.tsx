@@ -3,26 +3,20 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { motion, useMotionValue } from "framer-motion";
-import { ChevronLeft, ChevronRight, ImageMinus } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import NextImage from "@/components/ui/image";
 
 type Page = {
     text: string;
     color: string;
-    images: {
-        src: string;
-        width: number;
-        height: number;
-    }[];
+    image: string;
 };
 
 type BookProps = {
     book: {
         title: string;
         cover: string;
-        promptImage: string | null;
-        promptText: string;
         pages: Page[];
     };
 };
@@ -102,7 +96,7 @@ const Pages: React.FC<PagesProps> = ({ pages, cover, imgIndex }) => {
         {
             text: "",
             color: "",
-            images: [{ src: cover, width: 1024, height: 1024 }],
+            image: cover,
         },
         ...pages,
     ];
@@ -127,19 +121,14 @@ const Pages: React.FC<PagesProps> = ({ pages, cover, imgIndex }) => {
                                     )
                                 )}
                             >
-                                {page.images?.[0] ?
-                                    <NextImage
-                                        src={page.images[0].src}
-                                        className="rounded-2xl select-none"
-                                        alt={page.text}
-                                        width={1024}
-                                        height={1024}
-                                    />
-                                :   <div className="w-full h-52 flex items-center justify-center text-gray-400">
-                                        <ImageMinus className="w-8 h-8" />
-                                    </div>
-                                }
-                                <div className="size-inherit h-full absolute top-0 left-0"></div>
+                                <NextImage
+                                    src={page.image}
+                                    className="rounded-2xl select-none"
+                                    alt={page.text}
+                                    width={1024}
+                                    height={1024}
+                                />
+                                <div className="size-inherit h-full absolute top-0 left-0" />
                             </div>
 
                             {page.text && (
