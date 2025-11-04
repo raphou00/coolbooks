@@ -6,6 +6,7 @@ import { ratelimitBasePost } from "@/lib/rate-limiter";
 import { type localesTitle } from "@/lib/navigation";
 import bookSchema, { type BookSchema } from "@/schema/book";
 import { LambdaClient, InvokeCommand } from "@aws-sdk/client-lambda";
+import env from "@/lib/env";
 
 const client = new LambdaClient({ region: "us-east-1" });
 
@@ -66,7 +67,7 @@ export const POST = async (req: NextRequest) => {
         const userId = user.user.id;
 
         const command = new InvokeCommand({
-            FunctionName: "coolbooks-book-creator-lambda-dev-6a63048",
+            FunctionName: env.BOOK_CREATOR_LAMBDA_ARN,
             InvocationType: "Event",
             Payload: Buffer.from(
                 JSON.stringify({ bookId, userId, topic: body })

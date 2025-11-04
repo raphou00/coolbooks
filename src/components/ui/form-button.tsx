@@ -3,7 +3,7 @@
 import { cn } from "@/lib/utils";
 
 type FormButtonProps = {
-    title: string;
+    title: string | React.ReactNode;
     loading?: boolean;
     className?: string;
 };

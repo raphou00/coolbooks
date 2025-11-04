@@ -56,7 +56,7 @@ const Studio: React.FC<StudioProps> = ({ books: allBooks }) => {
                     <div className="relative w-full">
                         <input
                             type="text"
-                            className="input input-lg input-bordered w-full border-2 bg-base-100 tracking-wide transition placeholder:text-neutral-400 focus:border-neutral focus:outline-none focus:bg-base-300 pl-12 pr-9"
+                            className="input input-lg input-bordered bg-black/70 text-white w-full border-2 tracking-wide transition placeholder:text-neutral-300 focus:border-neutral focus:outline-none focus:bg-black/80 pr-12 pl-6"
                             placeholder={t("search-placeholder")}
                             spellCheck={false}
                             autoComplete="off"
@@ -67,7 +67,7 @@ const Studio: React.FC<StudioProps> = ({ books: allBooks }) => {
                             onKeyDown={handleKeyDown}
                         />
                         <button
-                            className="btn btn-primary btn-circle z-20 absolute right-0 top-1/2 mx-1.5 -translate-y-1/2"
+                            className="btn btn-primary btn-circle size-9 z-20 absolute right-0 top-1/2 mx-1.5 -translate-y-1/2"
                             onClick={handleSearch}
                         >
                             <SearchIcon className="size-6" />

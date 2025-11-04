@@ -113,8 +113,8 @@
             "beta": "#1 Kids book plateform",
             "create": "Create your own book",
             "by": "By",
-            "weekly": "Books of the week",
-            "halloween": "Halloween",
+            "cartoon": "Cartoon",
+            "anime": "Anime",
             "education": "Education",
             "hero": "Hero",
             "adventure": "Adventure"
@@ -152,6 +152,8 @@
             "setting-placeholder": "In a fairy castle...",
             "prompt": "Describe your story",
             "prompt-placeholder": "Toto playing football...",
+            "public": "Public",
+            "public-tip": "if enable your book will be visible to everyone",
             "create": "Generate",
             "boy": "Boy",
             "girl": "Girl",
@@ -184,6 +186,26 @@
             "create": "New Book",
             "modify": "Last modified ",
             "no-books": "No books found"
+        },
+        "edit-book": {
+            "title": "Edit your book",
+            "description": "Edit your own books",
+            "title-label": "Title",
+            "title-placeholder": "Title...",
+            "submit": "Save",
+            "public": "Public",
+            "public-tip": "if enable your book will be visible to everyone",
+            "page": "Page",
+            "text": "Text",
+            "age": "Age",
+            "themes": "Themes",
+            "anime": "Anime",
+            "hero": "Hero",
+            "adventure": "Adventure",
+            "education": "Education",
+            "friendship": "Friendship",
+            "magic": "Magic",
+            "bedtime": "Bedtime"
         },
         "search": {
             "title": "{query}",
@@ -317,7 +339,8 @@
         "max-amount": "Maximum amount is {max}",
         "billing": "Manage your subscriptions",
         "loginLike": "You need to login first",
-        "no-credits": "You don't have enough credits"
+        "no-credits": "You don't have enough credits",
+        "book-not-found": "Book not found"
     },
     "links": {
         "login": "Login",

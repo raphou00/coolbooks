@@ -47,11 +47,11 @@ const Studio: React.FC<StudioProps> = ({ books: allBooks }) => {
                 <div className="w-full">
                     <div className="relative w-full">
                         <div className="cursor-pointer z-20 size-10 rounded-full flex items-center justify-center absolute left-0 top-1/2 mx-1.5 -translate-y-1/2">
-                            <SearchIcon className="size-6" />
+                            <SearchIcon className="size-6 text-white" />
                         </div>
                         <input
                             type="text"
-                            className="input input-lg input-bordered w-full border-2 bg-base-100 tracking-wide transition placeholder:text-neutral-400 focus:border-neutral focus:outline-none focus:bg-base-300 pl-12 pr-9"
+                            className="input input-lg input-bordered bg-black/70 text-white w-full border-2 tracking-wide transition placeholder:text-neutral-300 focus:border-neutral focus:outline-none focus:bg-black/80 pl-12 pr-9"
                             placeholder={t("search-placeholder")}
                             spellCheck={false}
                             autoComplete="off"

@@ -1,12 +1,18 @@
 const { generateObject } = require("ai");
 const { OpenAI } = require("openai");
 const { z } = require("zod");
-const { S3Client,PutObjectCommand } = require("@aws-sdk/client-s3")
+const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
+const { Pool } = require("pg");
 
-const { BUCKET_NAME, OPENROUTER_API_KEY, AI_GATEWAY_API_KEY } = process.env;
-const API_URL = "https://coolbooks.app/api";
+const { BUCKET_NAME, DATABASE_URL, OPENROUTER_API_KEY } = process.env;
+
 const PLANNER_MODEL = "anthropic/claude-3-haiku";
 const IMAGE_MODEL = "google/gemini-2.5-flash-image-preview";
+
+const pool = new Pool({
+    connectionString: DATABASE_URL,
+    max: 1,
+})
 
 const openai = new OpenAI({
     baseURL: "https://openrouter.ai/api/v1",
@@ -161,6 +167,58 @@ const createImage = async (
     return key;
 };
 
+const createBook = async (bookData) => {
+    const client = await pool.connect();
+    try {
+        const query = `
+            INSERT INTO "Book" (id, title, cover, public, age, "artStyle", themes, "userId", "createdAt", "updatedAt")
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, NOW(), NOW())
+            RETURNING *
+        `;
+
+        const values = [
+            bookData.id,
+            bookData.title,
+            bookData.cover,
+            bookData.public,
+            bookData.age,
+            bookData.artStyle,
+            bookData.themes,
+            bookData.userId
+        ];
+
+        const result = await client.query(query, values);
+        return result.rows[0];
+    } finally {
+        client.release();
+    }
+};
+
+const createPage = async (pageData) => {
+    const client = await pool.connect();
+    try {
+        const query = `
+            INSERT INTO "Page" ("id", "bookId", color, text, image, "createdAt", "updatedAt")
+            VALUES ($1, $2, $3, $4, $5, NOW(), NOW())
+            RETURNING *
+        `;
+
+        const values = [
+            crypto.randomUUID(),
+            pageData.bookId,
+            pageData.color,
+            pageData.text,
+            pageData.image
+        ];
+
+        const result = await client.query(query, values);
+        return result.rows[0];
+    } finally {
+        client.release();
+    }
+};
+
+
 const lambda_handler = async (event) => {
     const { bookId, userId, topic } = event;
 
@@ -175,40 +233,27 @@ const lambda_handler = async (event) => {
         plan.title
     );
 
-    await fetch(
-        API_URL + "/book",
-        {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                id: bookId,
-                title: plan.title,
-                cover: coverKey,
-                userId: userId,
-            }),
-        }
-    );
+    await createBook({
+        id: bookId,
+        title: plan.title,
+        cover: coverKey,
+        public: topic.public,
+        age: topic.age,
+        artStyle: topic.artStyle,
+        themes: topic.themes,
+        public: topic.public,
+        userId: userId,
+    });
 
     for (const page of plan.pages) {
         const key = bookId + "/" + crypto.randomUUID() + ".png";
         await createImage(page.image, topic.artStyle, key, getS3(coverKey));
-        await fetch(
-            API_URL + "/page",
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    bookId: bookId,
-                    color: randomHex(),
-                    text: page.text,
-                    image: key
-                }),
-            }
-        );
+        await createPage({
+            bookId: bookId,
+            color: randomHex(),
+            text: page.text,
+            image: key
+        });
     }
 
     return {

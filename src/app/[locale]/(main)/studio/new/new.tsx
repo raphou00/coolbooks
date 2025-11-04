@@ -2,7 +2,15 @@
 
 import { useTranslations } from "next-intl";
 import { useState } from "react";
-import { Check, CheckCircle2, ChevronLeft, ChevronRight } from "lucide-react";
+import {
+    Check,
+    CheckCircle2,
+    ChevronLeft,
+    ChevronRight,
+    HelpCircle,
+    Lock,
+    LockOpen,
+} from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { cn, handleFormPost } from "@/lib/utils";
@@ -66,6 +74,7 @@ const NewBook: React.FC = () => {
     } = useForm<BookSchema>({
         resolver: zodResolver(bookSchema(tBook)),
         defaultValues: {
+            public: false,
             themes: [themesOptions[0]],
             artStyle: artStyleOptions[0],
         },
@@ -93,7 +102,7 @@ const NewBook: React.FC = () => {
                 fieldsToValidate = ["artStyle", "themes", "setting"];
                 break;
             case 3:
-                fieldsToValidate = ["prompt"];
+                fieldsToValidate = ["prompt", "public"];
                 break;
         }
 
@@ -377,7 +386,7 @@ const NewBook: React.FC = () => {
                             {t("story-idea")}
                         </h3>
 
-                        <div className="w-full">
+                        <div className="w-full flex flex-col gap-y-2">
                             <div className="w-full">
                                 <label className="w-full text-sm">
                                     <div className="w-full flex justify-between pb-1">
@@ -394,6 +403,41 @@ const NewBook: React.FC = () => {
                                         rows={5}
                                         {...register("prompt")}
                                     />
+                                </label>
+                            </div>
+
+                            <div className="w-fit flex gap-x-2">
+                                <div className="w-full flex items-center justify-between">
+                                    <span className="label-text size-full px-1 text-lg font-bold flex items-center gap-x-1">
+                                        {t("public")}
+                                        <div
+                                            className="bg-neutral rounded-full tooltip tooltip-accent"
+                                            data-tip={t("public-tip")}
+                                        >
+                                            <HelpCircle className="size-4 text-white" />
+                                        </div>
+                                    </span>
+                                    <span className="label-text-alt text-error">
+                                        {errors.public?.message}
+                                    </span>
+                                </div>
+                                <label className="toggle toggle-secondary toggle-xl">
+                                    <input
+                                        type="checkbox"
+                                        {...register("public")}
+                                    />
+                                    <div
+                                        aria-label="enabled"
+                                        className="size-full flex items-center justify-center"
+                                    >
+                                        <Lock className="size-4" />
+                                    </div>
+                                    <div
+                                        aria-label="disabled"
+                                        className="size-full flex items-center justify-center"
+                                    >
+                                        <LockOpen className="size-4" />
+                                    </div>
                                 </label>
                             </div>
                         </div>

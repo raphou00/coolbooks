@@ -7,47 +7,37 @@ import Home from "./home";
 const Page = async () => {
     const t = await getTranslations("pages.home");
 
-    const booksWeekly = await db.book.findMany({
-        select: {
-            id: true,
-            title: true,
-            cover: true,
-            user: {
-                select: {
-                    name: true,
-                },
+    const getBooksByFilter = (filter: any) =>
+        db.book.findMany({
+            where: {
+                ...filter,
+                public: true,
             },
-        },
-        take: 5,
-        orderBy: {
-            createdAt: "desc",
-        },
-    });
+            select: {
+                id: true,
+                title: true,
+                cover: true,
+                user: { select: { name: true } },
+            },
+            orderBy: { createdAt: "desc" },
+            take: 5,
+        });
 
-    const booksExplore = await db.book.findMany({
-        select: {
-            id: true,
-            title: true,
-            cover: true,
-            user: {
-                select: {
-                    name: true,
-                },
-            },
-        },
-        orderBy: {
-            createdAt: "desc",
-        },
-    });
+    const [booksCartoon, booksAnime, booksEducation, booksAdventure] =
+        await Promise.all([
+            getBooksByFilter({ artStyle: "cartoon" }),
+            getBooksByFilter({ artStyle: "anime" }),
+            getBooksByFilter({ themes: { has: "education" } }),
+            getBooksByFilter({ themes: { has: "adventure" } }),
+        ]);
 
     return (
         <Main className="flex my-0 pt-0 space-y-2">
             <Home />
-            <Books title={t("weekly") + " 🔥"} books={booksWeekly} />
-            <Books title={t("halloween") + " 🎃"} books={booksExplore} />
-            <Books title={t("education") + " 📚"} books={booksExplore} />
-            <Books title={t("hero") + " 🦸"} books={booksExplore} />
-            <Books title={t("adventure") + " 🌲"} books={booksExplore} />
+            <Books title={t("cartoon") + " 🎉"} books={booksCartoon} />
+            <Books title={t("adventure") + " 🕵️‍♂️"} books={booksEducation} />
+            <Books title={t("anime") + " 💫"} books={booksAnime} />
+            <Books title={t("education") + " 📚"} books={booksAdventure} />
         </Main>
     );
 };

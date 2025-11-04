@@ -133,7 +133,7 @@ const Pages: React.FC<PagesProps> = ({ pages, cover, imgIndex }) => {
 
                             {page.text && (
                                 <div
-                                    className="relative flex flex-col justify-center rounded-xl w-full max-w-[450px] md:aspect-square text-gray-800 max-md:mx-auto"
+                                    className="relative flex flex-col justify-center rounded-2xl w-full max-w-[450px] md:aspect-square text-gray-800 max-md:mx-auto"
                                     style={{ background: page.color }}
                                 >
                                     <div className="text-base md:text-xl leading-relaxed text-justify p-8">

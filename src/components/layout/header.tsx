@@ -134,17 +134,13 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                             className="flex items-center group cursor-pointer"
                                         >
                                             <Avatar
-                                                className={cn(
-                                                    "size-12 p-3",
-                                                    user ? "avatar-online" : (
-                                                        "avatar-offline"
-                                                    )
-                                                )}
+                                                userName={user?.name}
+                                                className="size-12 p-3"
                                             />
                                         </div>
                                         <div
                                             tabIndex={0}
-                                            className="dropdown-content pt-2 !z-[1]"
+                                            className="dropdown-content pt-4 !z-[1]"
                                         >
                                             <div className="space-y-1 rounded-xl backdrop-blur-3xl bg-base-100 p-2 border border-black/90 shadow-xl w-72 z-100">
                                                 {user ?

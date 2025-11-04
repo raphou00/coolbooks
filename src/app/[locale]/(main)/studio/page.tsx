@@ -36,6 +36,9 @@ const Page = async () => {
             },
             updatedAt: true,
         },
+        orderBy: {
+            createdAt: "desc",
+        },
     });
 
     return (

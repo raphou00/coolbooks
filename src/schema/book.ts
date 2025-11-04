@@ -40,7 +40,7 @@ export const themesOptions = [
     "magic",
     "bedtime",
 ] as const;
-const themesEnum = z.enum(themesOptions);
+export const themesEnum = z.enum(themesOptions);
 
 const bookSchema = (t: T) =>
     z.object({
@@ -73,6 +73,7 @@ const bookSchema = (t: T) =>
             .max(maxSettingLength, {
                 message: t("messages.max", { max: maxPromptLength }),
             }),
+        public: z.boolean(),
         prompt: z
             .string()
             .trim()

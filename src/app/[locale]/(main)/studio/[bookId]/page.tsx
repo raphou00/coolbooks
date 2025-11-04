@@ -1,69 +1,27 @@
 import { type Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-import db from "@/lib/db";
-import { selectBook } from "@/config/book";
-import { redirect } from "next/navigation";
-import { title } from "@/config/seo";
 import Main from "@/components/layout/main";
-import Book from "@/components/ui/book";
+import Edit from "./edit";
+import { redirect } from "next/navigation";
 
-type PageProps = {
-    params: Promise<{ bookId: string }>;
-};
-
-const generateMetadata = async ({ params }: PageProps): Promise<Metadata> => {
+const generateMetadata = async (): Promise<Metadata> => {
     const t = await getTranslations("pages");
-    const { bookId } = await params;
-    if (!bookId) {
-        redirect("/404");
-    }
-
-    const book = await db.book.findUnique({
-        where: {
-            id: bookId,
-        },
-        select: {
-            title: true,
-            user: {
-                select: {
-                    name: true,
-                },
-            },
-        },
-    });
-    if (!book) {
-        redirect("/404");
-    }
-
     return {
-        title: t("book.title", { title: book.title }),
-        description: t("book.description", {
-            title: book.title,
-            author: book.user.name,
-            app: title,
-        }),
+        title: t("edit-book.title"),
+        description: t("edit-book.description"),
     };
 };
 
-const Page = async ({ params }: PageProps) => {
+const Page = async ({ params }: { params: { bookId: string } }) => {
     const { bookId } = await params;
-    if (!bookId) {
-        redirect("/404");
-    }
 
-    const book = await db.book.findUnique({
-        where: {
-            id: bookId,
-        },
-        select: selectBook,
-    });
-    if (!book) {
+    if (!bookId) {
         redirect("/404");
     }
 
     return (
-        <Main className="flex" gradientVariant="floatingGradient">
-            <Book book={book} />
+        <Main className="flex">
+            <Edit bookId={bookId} />
         </Main>
     );
 };

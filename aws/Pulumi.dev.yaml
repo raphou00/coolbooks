@@ -5,3 +5,5 @@ config:
     secure: v1:ls8on0SbaagY2WEs:O0hFVRDAebRVTLFoIdiXqoXc9p41eHoY5/hws3+o4v2uwcnSQ4U3c6c3k0LuFBZUbK7jcb3apvxPC3GKG33UN1msmHFIaqDNyS49ds2Ug8Cyg69Oht3IbhY=
   coolbooks:AI_GATEWAY_API_KEY:
     secure: v1:8Vd14fDZVJxRZBJV:txJRbqnr1EqKRRi5fCcyB7H7zn8I/cCd26wBU8q8mPQfs8ZyYd4MDAFasNh+x2Ocyg+avNEJPEqiDluE/OCqofmIy1W2xmLIZOiLaQ==
+  coolbooks:DATABASE_URL:
+    secure: v1:1tAGv9NQZDnrsC8p:w1B+Z/SKUAy7TUlCdq3DtIMd+/7FUpXdUMjFMohqt4ZsJaZWn7WjfV+t/yHQa9PJ1gmUi/n/1IyYQogpOIT2n5wWFUNAxP0PY1/rhQ==

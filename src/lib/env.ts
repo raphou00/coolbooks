@@ -33,6 +33,10 @@ export default createEnv({
             .string()
             .min(1, { message: "Cloudfront URL is missing" }),
 
+        BOOK_CREATOR_LAMBDA_ARN: z
+            .string()
+            .min(1, { message: "Book Creator Lambda ARN is missing" }),
+
         UPSTASH_REDIS_REST_URL: z
             .string()
             .min(1, { message: "Upstash Redis REST URL is missing" }),
@@ -103,6 +107,7 @@ export default createEnv({
         BUCKET_NAME: process.env.BUCKET_NAME,
         CLOUDFRONT_URL: process.env.CLOUDFRONT_URL,
         NEXT_PUBLIC_CLOUDFRONT_URL: process.env.NEXT_PUBLIC_CLOUDFRONT_URL,
+        BOOK_CREATOR_LAMBDA_ARN: process.env.BOOK_CREATOR_LAMBDA_ARN,
         UPSTASH_REDIS_REST_URL: process.env.UPSTASH_REDIS_REST_URL,
         UPSTASH_REDIS_REST_TOKEN: process.env.UPSTASH_REDIS_REST_TOKEN,
         RESEND_API_KEY: process.env.RESEND_API_KEY,

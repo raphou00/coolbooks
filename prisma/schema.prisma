@@ -58,6 +58,11 @@ model Book {
   title       String
   cover       String
   pages       Page[]
+  public      Boolean  @default(false)
+  age         String   @default("")
+  artStyle    String   @default("")
+  themes      String[] @default([])
+  generating  Boolean  @default(true)
   userId      String
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt   DateTime @default(now())

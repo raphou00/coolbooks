@@ -39,24 +39,24 @@ const Home: React.FC = () => {
     const boxShadow = useMotionTemplate`0px 4px 24px ${color}`;
 
     return (
-        <div className="space-y-10 pt-16 mb-6 text-white">
+        <div className="space-y-10 pt-44 text-white">
             <Image
                 src="/images/magical-forest--kid-reading-a-book.png"
                 alt=""
                 width={1920}
                 height={1080}
-                className="absolute top-0 left-0 object-cover w-screen -z-50 border-b border-neutral brightness-[0.5] saturate-200 h-[450px]"
+                className="absolute top-0 left-0 object-cover w-screen -z-50 border-b border-neutral brightness-50 saturate-200 h-[550px]"
             />
 
-            <div className="relative grid place-content-center h-[350px]">
-                <div className="relative z-10 flex flex-col items-center">
+            <div className="relative h-[350px]">
+                <div className="relative z-10 flex flex-col items-start">
                     <span className="inline-block rounded-full glass border border-neutral px-3 py-1.5 mb-3">
                         😍 {t("beta")}
                     </span>
                     <Title
                         text={title}
                         className={cn(
-                            "text-7xl md:text-8xl mx-auto w-fit text-center font-bold",
+                            "text-7xl md:text-8xl mx-auto w-fit m-0 font-bold",
                             font.className
                         )}
                         underline
