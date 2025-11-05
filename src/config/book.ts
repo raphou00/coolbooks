@@ -1,4 +1,10 @@
 export const selectBook = {
+    user: {
+        select: {
+            id: true,
+        },
+    },
+    public: true,
     title: true,
     cover: true,
     pages: {

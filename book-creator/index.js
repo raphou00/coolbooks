@@ -218,6 +218,28 @@ const createPage = async (pageData) => {
     }
 };
 
+const updateBookGenerating = async (bookId, generating) => {
+    const client = await pool.connect();
+    try {
+        const query = `
+            UPDATE "Book"
+            SET generating = $1, "updatedAt" = NOW()
+            WHERE id = $2
+            RETURNING *
+        `;
+
+        const values = [
+            generating,
+            bookId
+        ];
+
+        const result = await client.query(query, values);
+        return result.rows[0];
+    } finally {
+        client.release();
+    }
+};
+
 
 const lambda_handler = async (event) => {
     const { bookId, userId, topic } = event;
@@ -255,6 +277,8 @@ const lambda_handler = async (event) => {
             image: key
         });
     }
+
+    await updateBookGenerating(bookId, false);
 
     return {
         statusCode: 201,

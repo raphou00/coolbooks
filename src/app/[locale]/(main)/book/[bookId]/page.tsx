@@ -6,6 +6,7 @@ import db from "@/lib/db";
 import { selectBook } from "@/config/book";
 import { redirect } from "next/navigation";
 import { title } from "@/config/seo";
+import { getUser } from "@/lib/auth";
 
 type PageProps = {
     params: Promise<{ bookId: string }>;
@@ -51,6 +52,11 @@ const Page = async ({ params }: PageProps) => {
         redirect("/404");
     }
 
+    const user = await getUser();
+    if (!user?.user) {
+        redirect("/404");
+    }
+
     const book = await db.book.findUnique({
         where: {
             id: bookId,
@@ -58,6 +64,10 @@ const Page = async ({ params }: PageProps) => {
         select: selectBook,
     });
     if (!book) {
+        redirect("/404");
+    }
+
+    if (!book.public && book.user.id !== user.user.id) {
         redirect("/404");
     }
 

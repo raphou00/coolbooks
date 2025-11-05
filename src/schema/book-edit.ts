@@ -5,6 +5,10 @@ import { ageOptions, themesEnum } from "./book";
 
 const bookEditSchema = (t: T) =>
     z.object({
+        id: z
+            .string()
+            .trim()
+            .min(1, { message: t("messages.required") }),
         title: z
             .string()
             .trim()

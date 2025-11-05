@@ -45,7 +45,7 @@ const Home: React.FC = () => {
                 alt=""
                 width={1920}
                 height={1080}
-                className="absolute top-0 left-0 object-cover w-screen -z-50 border-b border-neutral brightness-50 saturate-200 h-[550px]"
+                className="absolute top-0 left-0 object-cover w-screen -z-50 border-b border-neutral brightness-[0.6] saturate-200 h-[550px]"
             />
 
             <div className="relative h-[350px]">

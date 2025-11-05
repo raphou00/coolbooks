@@ -4,10 +4,15 @@ import Main from "@/components/layout/main";
 import Books from "@/components/ui/books";
 import Home from "./home";
 
+type Filter = {
+    artStyle?: string;
+    themes?: { has: string };
+};
+
 const Page = async () => {
     const t = await getTranslations("pages.home");
 
-    const getBooksByFilter = (filter: any) =>
+    const getBooksByFilter = (filter: Filter) =>
         db.book.findMany({
             where: {
                 ...filter,

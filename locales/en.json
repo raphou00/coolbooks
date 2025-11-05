@@ -205,7 +205,9 @@
             "education": "Education",
             "friendship": "Friendship",
             "magic": "Magic",
-            "bedtime": "Bedtime"
+            "bedtime": "Bedtime",
+            "read": "Read",
+            "generating": "Generating your book..."
         },
         "search": {
             "title": "{query}",
@@ -340,7 +342,9 @@
         "billing": "Manage your subscriptions",
         "loginLike": "You need to login first",
         "no-credits": "You don't have enough credits",
-        "book-not-found": "Book not found"
+        "book-not-found": "Book not found",
+        "book-updated": "Book details updated",
+        "page-updated": "Page updated"
     },
     "links": {
         "login": "Login",
