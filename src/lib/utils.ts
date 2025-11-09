@@ -123,15 +123,14 @@ export const getExtension = (filename: string) => {
     return parts[parts.length - 1];
 };
 
-export const translate = async (text: string, lang: string) => {
-    const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=en|${lang}`;
-
-    try {
-        const response = await fetch(url);
-        const data = await response.json();
-        return data.responseData.translatedText;
-    } catch (error) {
-        console.error("Translation error:", error);
-        return text;
-    }
+export const sortPages = (
+    pages: {
+        id: string;
+        text: string;
+        image: string;
+        color: string;
+        number: number;
+    }[]
+) => {
+    return [...pages].sort((a, b) => a.number - b.number);
 };

@@ -2,33 +2,61 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
-import { SearchIcon } from "lucide-react";
+import { useEffect, useState } from "react";
+import { EyeIcon, Paintbrush } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { artStyleOptions, themesOptions } from "@/schema/book";
 import NextImage from "@/components/ui/image";
 import Title from "@/components/ui/title";
 import Date from "@/components/ui/date";
-import { useSearchParams } from "next/navigation";
 
 type Books = {
     id: string;
     title: string;
     cover: string;
+    themes: string[];
+    artStyle: string;
+    public: boolean;
+    pages: {
+        text: string;
+    }[];
     user: {
         name: string;
     };
     updatedAt: Date;
 }[];
 
-type StudioProps = {
+type SearchProps = {
     books: Books;
 };
 
-const Studio: React.FC<StudioProps> = ({ books: allBooks }) => {
-    const t = useTranslations("pages.studio");
+const themeImages: Record<string, string> = {
+    hero: "🦸",
+    adventure: "🕵️‍♂️",
+    education: "👨‍🎓",
+    friendship: "👫",
+    magic: "🧙",
+    bedtime: "😴",
+};
+
+const artStyleImages: Record<string, string> = {
+    cartoon: "/images/artstyles/cartoon.png",
+    comics: "/images/artstyles/comics.png",
+    anime: "/images/artstyles/anime.png",
+};
+
+const Search: React.FC<SearchProps> = ({ books: allBooks }) => {
+    const t = useTranslations("pages.search");
     const q = useSearchParams().get("q");
-    const [search, setSearch] = useState(q || "");
+    const [search] = useState(q || "");
     const [books, setBooks] = useState<Books>(allBooks);
+    const [activeThemes, setActiveThemes] = useState<string[]>([]);
+    const [activeArtStyle, setActiveArtStyle] = useState<string | null>(null);
+
+    console.log(allBooks.length);
+    console.log(books.length);
 
     const handleSearch = () => {
         let filteredBooks = [...allBooks];
@@ -38,40 +66,127 @@ const Studio: React.FC<StudioProps> = ({ books: allBooks }) => {
             filteredBooks = filteredBooks.filter((book) =>
                 searchRegex.test(book.title.toLowerCase())
             );
+
+            filteredBooks = filteredBooks.filter((book) => {
+                const pagesText = book.pages
+                    .map((page) => page.text)
+                    .join(" ")
+                    .toLowerCase();
+                console.log(pagesText);
+
+                return searchRegex.test(pagesText);
+            });
+        }
+
+        if (activeThemes.length > 0) {
+            filteredBooks = filteredBooks.filter((book) => {
+                return activeThemes.some((theme) =>
+                    book.themes.includes(theme)
+                );
+            });
+        }
+
+        if (activeArtStyle) {
+            filteredBooks = filteredBooks.filter(
+                (book) => book.artStyle === activeArtStyle
+            );
         }
 
         setBooks(filteredBooks);
     };
 
-    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === "Enter") {
-            handleSearch();
-        }
+    const handleThemeToggle = (theme: string) => {
+        setActiveThemes((prev) => {
+            const newThemes =
+                prev.includes(theme) ?
+                    prev.filter((t) => t !== theme)
+                :   [...prev, theme];
+            return newThemes;
+        });
     };
+
+    const handleArtStyleSelect = (artStyle: string) => {
+        setActiveArtStyle((prev) => (prev === artStyle ? null : artStyle));
+    };
+
+    useEffect(() => {
+        handleSearch();
+    }, [activeThemes, activeArtStyle, search]);
 
     return (
         <>
-            <div className="relative w-full flex gap-y-6 space-x-2 mb-6 rounded-2xl overflow-hidden">
-                <div className="w-full">
-                    <div className="relative w-full">
-                        <input
-                            type="text"
-                            className="input input-lg input-bordered bg-black/70 text-white w-full border-2 tracking-wide transition placeholder:text-neutral-300 focus:border-neutral focus:outline-none focus:bg-black/80 pr-12 pl-6"
-                            placeholder={t("search-placeholder")}
-                            spellCheck={false}
-                            autoComplete="off"
-                            autoCapitalize="off"
-                            autoCorrect="off"
-                            value={search}
-                            onChange={(e) => setSearch(e.target.value)}
-                            onKeyDown={handleKeyDown}
-                        />
-                        <button
-                            className="btn btn-primary btn-circle size-9 z-20 absolute right-0 top-1/2 mx-1.5 -translate-y-1/2"
-                            onClick={handleSearch}
+            <div className="text-center my-8">
+                <Title
+                    text={search || t("title-save")}
+                    className="text-4xl md:text-5xl lg:text-6xl font-bold mb-3"
+                />
+                <p className="text-neutral text-base md:text-lg">
+                    {t("subtitle")}
+                </p>
+            </div>
+
+            <div className="w-full mb-4">
+                <div className="w-full flex items-center justify-between gap-3">
+                    <div className="overflow-x-auto scrollbar-hide flex gap-x-2">
+                        {themesOptions.map((theme) => (
+                            <button
+                                key={theme}
+                                onClick={() => handleThemeToggle(theme)}
+                                className={cn(
+                                    "btn gap-2",
+                                    activeThemes.includes(theme) ? "btn-primary"
+                                    :   "btn-outline"
+                                )}
+                            >
+                                <span className="text-lg">
+                                    {themeImages[theme]}
+                                </span>{" "}
+                                {t(theme)}
+                            </button>
+                        ))}
+                    </div>
+
+                    <div className="dropdown dropdown-end">
+                        <div
+                            tabIndex={0}
+                            role="button"
+                            className="btn btn-outline m-1"
                         >
-                            <SearchIcon className="size-6" />
-                        </button>
+                            <Paintbrush className="size-4" />
+                            <span className="hidden sm:inline">
+                                {t("art-style")}
+                            </span>
+                        </div>
+                        <ul
+                            tabIndex={0}
+                            className="dropdown-content menu bg-base-200 rounded-box z-1 w-52 p-2 shadow border border-neutral"
+                        >
+                            {artStyleOptions.map((artStyle) => (
+                                <li key={artStyle} className="my-px">
+                                    <button
+                                        onClick={() =>
+                                            handleArtStyleSelect(artStyle)
+                                        }
+                                        className={cn(
+                                            "btn-ghost btn-lg rounded-xl flex items-center justify-start gap-3",
+                                            activeArtStyle === artStyle &&
+                                                "bg-primary text-primary-content"
+                                        )}
+                                    >
+                                        <Image
+                                            src={artStyleImages[artStyle]}
+                                            width={40}
+                                            height={40}
+                                            alt={artStyle}
+                                            className="rounded-xl"
+                                        />
+                                        <span className="capitalize text-lg">
+                                            {artStyle}
+                                        </span>
+                                    </button>
+                                </li>
+                            ))}
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -90,29 +205,47 @@ const Studio: React.FC<StudioProps> = ({ books: allBooks }) => {
                         className="mx-auto w-fit text-center"
                     />
                 </div>
-            :   <div className="w-full grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-2 md:gap-8">
+            :   <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
                     {books.map((book) => (
                         <Link
                             key={book.id}
                             href={`/book/${book.id}`}
-                            className="group relative size-full"
+                            className="group relative w-full"
                         >
-                            <div className="w-full aspect-square shadow-lg rounded-lg overflow-hidden border-4 border-accent/20">
-                                <NextImage
-                                    className="group-hover:scale-105 transition-all"
-                                    src={book.cover}
-                                    width={1024}
-                                    height={1024}
-                                    alt={book.title}
-                                />
-                            </div>
-                            <div className="flex flex-col items-start text-sm font-bold mt-2">
-                                <h2 className="text-left truncate w-full">
-                                    {book.title}
-                                </h2>
-                                <p className="text-neutral text-xs text-left truncate w-full">
-                                    {t("modify")} <Date date={book.updatedAt} />
-                                </p>
+                            <div className="bg-white dark:bg-neutral-800 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300">
+                                <div className="relative w-full aspect-square overflow-hidden bg-neutral-100 dark:bg-neutral-700">
+                                    <NextImage
+                                        className="w-full h-full aspect-square group-hover:scale-105 transition-transform duration-300"
+                                        src={book.cover}
+                                        width={1024}
+                                        height={768}
+                                        alt={book.title}
+                                    />
+
+                                    <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4">
+                                        <div className="flex items-center gap-2 text-white text-sm font-medium">
+                                            <EyeIcon className="size-4" />
+                                            <span>{t("view")}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="p-4">
+                                    <div className="flex items-center gap-2 mb-2">
+                                        <span className="text-xs text-neutral font-medium">
+                                            {book.user.name}
+                                        </span>
+                                    </div>
+
+                                    <h3 className="text-base font-bold line-clamp-2 mb-1 text-white">
+                                        {book.title}
+                                    </h3>
+
+                                    <p className="text-xs text-neutral-500 dark:text-neutral-400">
+                                        {t("modify")}{" "}
+                                        <Date date={book.updatedAt} />
+                                    </p>
+                                </div>
                             </div>
                         </Link>
                     ))}
@@ -122,4 +255,4 @@ const Studio: React.FC<StudioProps> = ({ books: allBooks }) => {
     );
 };
 
-export default Studio;
+export default Search;

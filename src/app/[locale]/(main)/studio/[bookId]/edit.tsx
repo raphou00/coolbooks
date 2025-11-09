@@ -16,7 +16,7 @@ import {
     RotateCw,
     Save,
 } from "lucide-react";
-import { cn, handleFormPost } from "@/lib/utils";
+import { cn, handleFormPost, sortPages } from "@/lib/utils";
 import type { ActionsState } from "@/lib/types";
 import type { BookEditSchema } from "@/schema/book-edit";
 import type { PageEditSchema } from "@/schema/page-edit";
@@ -51,6 +51,7 @@ type Book = {
         image: string;
         text: string;
         color: string;
+        number: number;
     }[];
     updatedAt: Date;
 };
@@ -241,10 +242,10 @@ const Edit: React.FC<EditProps> = ({ bookId, userId }) => {
         setValue("age", bookData.age as (typeof ageOptions)[number]);
     }, [data, userId, setValue]);
 
-    if (data && (!data.book || data.book.user.id !== userId))
+    if (data && data.book && data.book.user.id !== userId)
         return redirect("/404");
 
-    if (data && data.book.generating)
+    if (data && data.book && data.book.generating)
         return (
             <>
                 <EditPageSkeleton />
@@ -529,7 +530,7 @@ const Edit: React.FC<EditProps> = ({ bookId, userId }) => {
                     </div>
                 </div>
 
-                {book.pages.map((bookPage, index) => (
+                {sortPages(book.pages).map((bookPage, index) => (
                     <div
                         key={bookPage.id}
                         className={cn(
@@ -584,9 +585,12 @@ const EditPageSkeleton: React.FC = () => {
                 </div>
 
                 <div className="bg-base-200 space-y-4 p-4 aspect-square rounded-2xl shadow">
-                    <div className="flex gap-x-4">
-                        <div className="h-8 bg-gray-300 rounded animate-pulse w-24"></div>
-                        <div className="h-6 w-6 bg-gray-300 rounded animate-pulse"></div>
+                    <div className="flex justify-between gap-x-4">
+                        <div className="flex items-center gap-x-2">
+                            <div className="h-8 bg-gray-300 rounded animate-pulse w-24"></div>
+                            <div className="h-6 w-6 bg-gray-300 rounded animate-pulse"></div>
+                        </div>
+                        <div className="h-6 w-12 bg-gray-300 rounded animate-pulse"></div>
                     </div>
 
                     <div className="w-full flex flex-col space-y-4">

@@ -27,6 +27,14 @@ const Page = async () => {
             id: true,
             title: true,
             cover: true,
+            themes: true,
+            artStyle: true,
+            public: true,
+            pages: {
+                select: {
+                    text: true,
+                },
+            },
             user: {
                 select: {
                     name: true,
@@ -34,10 +42,16 @@ const Page = async () => {
             },
             updatedAt: true,
         },
+        where: {
+            public: true,
+        },
+        orderBy: {
+            createdAt: "desc",
+        },
     });
 
     return (
-        <Main className="flex">
+        <Main className="flex" gradientVariant="floatingGradient">
             <Search books={books} />
         </Main>
     );

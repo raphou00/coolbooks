@@ -31,7 +31,7 @@ export const skinToneOptions = [
     "olive",
     "brown",
 ] as const;
-export const artStyleOptions = ["cartoon", "line-art", "anime"] as const;
+export const artStyleOptions = ["cartoon", "comics", "anime"] as const;
 export const themesOptions = [
     "hero",
     "adventure",

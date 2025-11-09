@@ -28,21 +28,21 @@ const Page = async () => {
             take: 5,
         });
 
-    const [booksCartoon, booksAnime, booksEducation, booksAdventure] =
+    const [booksCartoon, booksAdventure, booksAnime, booksEducation] =
         await Promise.all([
             getBooksByFilter({ artStyle: "cartoon" }),
+            getBooksByFilter({ themes: { has: "adventure" } }),
             getBooksByFilter({ artStyle: "anime" }),
             getBooksByFilter({ themes: { has: "education" } }),
-            getBooksByFilter({ themes: { has: "adventure" } }),
         ]);
 
     return (
         <Main className="flex my-0 pt-0 space-y-2">
             <Home />
             <Books title={t("cartoon") + " 🎉"} books={booksCartoon} />
-            <Books title={t("adventure") + " 🕵️‍♂️"} books={booksEducation} />
+            <Books title={t("adventure") + " 🕵️‍♂️"} books={booksAdventure} />
             <Books title={t("anime") + " 💫"} books={booksAnime} />
-            <Books title={t("education") + " 📚"} books={booksAdventure} />
+            <Books title={t("education") + " 📚"} books={booksEducation} />
         </Main>
     );
 };

@@ -60,9 +60,13 @@ const promptPlan = (topic) => `
 Create a kid book of 10 pages using the following details:
 
 -  Prompt/Topic: ${topic.prompt}
--  Main Character: ${topic.childName}, Gender: ${topic.gender}, Age: ${topic.age}
--  Appearance: Hair Color: ${topic.hairColor}, Eye Color: ${topic.eyeColor}, Skin Color: ${topic.skinTone}
--  Art Style: ${topic.artStyle}
+-  Main Character: ${topic.childName}
+-  Gender: ${topic.gender}
+-  Age: ${topic.age}
+-  Hair Color: ${topic.hairColor}
+-  Eye Color: ${topic.eyeColor}
+-  Skin Color: ${topic.skinTone}
+-  Art Style for image prompt: ${topic.artStyle}
 -  Theme: ${topic.themes}
 -  Setting: ${topic.setting}
 
@@ -198,8 +202,8 @@ const createPage = async (pageData) => {
     const client = await pool.connect();
     try {
         const query = `
-            INSERT INTO "Page" ("id", "bookId", color, text, image, "createdAt", "updatedAt")
-            VALUES ($1, $2, $3, $4, $5, NOW(), NOW())
+            INSERT INTO "Page" ("id", "bookId", color, text, image, number, "createdAt", "updatedAt")
+            VALUES ($1, $2, $3, $4, $5, $6, NOW(), NOW())
             RETURNING *
         `;
 
@@ -208,7 +212,8 @@ const createPage = async (pageData) => {
             pageData.bookId,
             pageData.color,
             pageData.text,
-            pageData.image
+            pageData.image,
+            pageData.number
         ];
 
         const result = await client.query(query, values);
@@ -274,7 +279,8 @@ const lambda_handler = async (event) => {
             bookId: bookId,
             color: randomHex(),
             text: page.text,
-            image: key
+            image: key,
+            number: plan.pages.indexOf(page)
         });
     }
 

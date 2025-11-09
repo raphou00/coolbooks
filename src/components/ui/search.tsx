@@ -2,21 +2,19 @@
 
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { useGetPlaceholders } from "@/config/links";
 import { SearchIcon } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useGetPlaceholders } from "@/config/links";
 
 const Search: React.FC = () => {
     const [currentPlaceholder, setCurrentPlaceholder] = useState(0);
     const [value, setValue] = useState("");
     const placeholders = useGetPlaceholders();
-    const router = useRouter();
 
     const intervalRef = useRef<NodeJS.Timeout | null>(null);
     const inputRef = useRef<HTMLInputElement>(null);
 
     const onSubmit = () => {
-        router.push(`/search?q=${value}`);
+        window.location.replace(`/search?q=${value}`);
     };
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -38,7 +36,7 @@ const Search: React.FC = () => {
     }, [placeholders]);
 
     return (
-        <div className="w-full relative mx-auto bg-black/70 h-12 mr-2 rounded-full overflow-hidden shadow transition duration-200 max-w-xs">
+        <div className="w-full relative mx-auto bg-black/70 h-12 mr-2 rounded-full overflow-hidden shadow transition duration-200">
             <input
                 onChange={(e) => setValue(e.target.value)}
                 onKeyDown={handleKeyDown}

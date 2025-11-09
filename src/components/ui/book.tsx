@@ -4,10 +4,12 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { motion, useMotionValue } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn, sortPages } from "@/lib/utils";
 import NextImage from "@/components/ui/image";
 
 type Page = {
+    id: string;
+    number: number;
     text: string;
     color: string;
     image: string;
@@ -94,15 +96,17 @@ const Book: React.FC<BookProps> = ({ book }) => {
 const Pages: React.FC<PagesProps> = ({ pages, cover, imgIndex }) => {
     pages = [
         {
+            id: "",
             text: "",
             color: "",
             image: cover,
+            number: 0,
         },
         ...pages,
     ];
     return (
         <>
-            {pages.map((page, idx) => {
+            {sortPages(pages).map((page, idx) => {
                 return (
                     <motion.div
                         key={idx}

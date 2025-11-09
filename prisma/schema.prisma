@@ -74,6 +74,7 @@ model Page {
   image       String
   text        String
   color       String
+  number      Int      @default(1)
   bookId      String
   book        Book     @relation(fields: [bookId], references: [id], onDelete: Cascade)
   createdAt   DateTime @default(now())

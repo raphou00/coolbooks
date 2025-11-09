@@ -100,7 +100,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                     </ul>
                                 </div>
                                 <div className="navbar-end space-x-2">
-                                    <div className="max-[950px]:hidden">
+                                    <div className="w-full max-[950px]:hidden">
                                         <Search />
                                     </div>
                                     <Link

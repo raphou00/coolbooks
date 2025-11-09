@@ -79,6 +79,7 @@ export const POST = async (req: NextRequest) => {
         return NextResponse.json({
             success: true,
             message: t("messages.book-creating"),
+            bookId,
         });
     } catch (err) {
         console.error(err);

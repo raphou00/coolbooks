@@ -9,6 +9,8 @@ export const selectBook = {
     cover: true,
     pages: {
         select: {
+            number: true,
+            id: true,
             text: true,
             color: true,
             image: true,

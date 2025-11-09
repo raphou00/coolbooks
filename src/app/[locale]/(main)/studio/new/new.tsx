@@ -31,6 +31,7 @@ import bookSchema, {
     type BookSchema,
 } from "@/schema/book";
 import Image from "next/image";
+import { redirect } from "next/navigation";
 
 const genderImages: Record<string, string> = {
     boy: "👦",
@@ -48,7 +49,7 @@ const themeImages: Record<string, string> = {
 
 const artStyleImages: Record<string, string> = {
     cartoon: "/images/artstyles/cartoon.png",
-    "line-art": "/images/artstyles/lineart.png",
+    comics: "/images/artstyles/comics.png",
     anime: "/images/artstyles/anime.png",
 };
 
@@ -125,6 +126,12 @@ const NewBook: React.FC = () => {
             data
         );
         setState(res);
+
+        if (res.success) {
+            redirect(
+                `/studio/${(res as unknown as { bookId: string }).bookId}`
+            );
+        }
     };
 
     const StepIndicator = () => (

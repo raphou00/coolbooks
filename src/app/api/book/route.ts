@@ -42,6 +42,7 @@ export const GET = async (req: NextRequest) => {
                         image: true,
                         text: true,
                         color: true,
+                        number: true,
                     },
                 },
                 updatedAt: true,
