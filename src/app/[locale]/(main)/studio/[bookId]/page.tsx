@@ -13,7 +13,7 @@ const generateMetadata = async (): Promise<Metadata> => {
     };
 };
 
-const Page = async ({ params }: { params: { bookId: string } }) => {
+const Page = async ({ params }: { params: Promise<{ bookId: string }> }) => {
     const { bookId } = await params;
     if (!bookId) {
         redirect("/404");
