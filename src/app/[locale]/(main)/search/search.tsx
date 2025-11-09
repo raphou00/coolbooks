@@ -5,12 +5,11 @@ import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
-import { EyeIcon, Paintbrush } from "lucide-react";
+import { Paintbrush } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { artStyleOptions, themesOptions } from "@/schema/book";
 import NextImage from "@/components/ui/image";
 import Title from "@/components/ui/title";
-import Date from "@/components/ui/date";
 
 type Books = {
     id: string;
@@ -54,9 +53,6 @@ const Search: React.FC<SearchProps> = ({ books: allBooks }) => {
     const [books, setBooks] = useState<Books>(allBooks);
     const [activeThemes, setActiveThemes] = useState<string[]>([]);
     const [activeArtStyle, setActiveArtStyle] = useState<string | null>(null);
-
-    console.log(allBooks.length);
-    console.log(books.length);
 
     const handleSearch = () => {
         let filteredBooks = [...allBooks];

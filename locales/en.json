@@ -203,7 +203,8 @@
             "magic": "Magic",
             "bedtime": "Bedtime",
             "read": "Read",
-            "delete": "Delete"
+            "delete": "Delete",
+            "generating": "Generating book..."
         },
         "search": {
             "title": "{query}",
