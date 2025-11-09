@@ -57,7 +57,7 @@ const getS3 = (key) => {
 };
 
 const promptPlan = (topic) => `
-Create a kid book of 10 pages using the following details:
+Create a kid book using the following details:
 
 -  Prompt/Topic: ${topic.prompt}
 -  Main Character: ${topic.childName}

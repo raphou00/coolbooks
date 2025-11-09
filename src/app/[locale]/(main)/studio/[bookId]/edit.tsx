@@ -15,6 +15,7 @@ import {
     LockOpen,
     RotateCw,
     Save,
+    Trash2,
 } from "lucide-react";
 import { cn, handleFormPost, sortPages } from "@/lib/utils";
 import type { ActionsState } from "@/lib/types";
@@ -28,6 +29,7 @@ import FormSelect from "@/components/ui/form-select";
 import NextImage from "@/components/ui/image";
 import FormInput from "@/components/ui/form-input";
 import Logo from "@/components/ui/logo";
+import DeleteBook from "@/components/ui/delete-book";
 
 type EditProps = {
     bookId: string;
@@ -268,7 +270,7 @@ const Edit: React.FC<EditProps> = ({ bookId, userId }) => {
 
     return (
         <>
-            <div className="flex flex-col gap-3 mb-2">
+            <div className="flex items-center justify-between mb-2">
                 <div className="flex gap-3">
                     <button
                         type="button"
@@ -301,6 +303,22 @@ const Edit: React.FC<EditProps> = ({ bookId, userId }) => {
                     >
                         {t("text")}
                     </button>
+                </div>
+                <div className="flex gap-x-2">
+                    <DeleteBook
+                        bookId={book.id}
+                        callback={() => window.location.replace("/studio")}
+                    >
+                        <button className="btn btn-soft btn-error">
+                            <Trash2 className="size-5" />
+                            {t("delete")}
+                        </button>
+                    </DeleteBook>
+
+                    <Link href={`/book/${bookId}`} className="btn btn-primary">
+                        <BookOpenText className="stroke-2 size-5" />
+                        {t("read")}
+                    </Link>
                 </div>
             </div>
 
@@ -378,14 +396,6 @@ const Edit: React.FC<EditProps> = ({ bookId, userId }) => {
                                 <RotateCw className="stroke-2 size-5 text-neutral" />
                             </button>
                         </div>
-
-                        <Link
-                            href={`/book/${bookId}`}
-                            className="btn btn-sm btn-primary"
-                        >
-                            <BookOpenText className="stroke-2 size-5" />
-                            {t("read")}
-                        </Link>
                     </div>
 
                     <form

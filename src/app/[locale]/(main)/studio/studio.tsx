@@ -4,10 +4,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
-import { BookPlus, SearchIcon } from "lucide-react";
+import { BookPlus, SearchIcon, Trash2 } from "lucide-react";
 import NextImage from "@/components/ui/image";
 import Title from "@/components/ui/title";
 import Date from "@/components/ui/date";
+import DeleteBook from "@/components/ui/delete-book";
 
 type Books = {
     id: string;
@@ -84,29 +85,43 @@ const Studio: React.FC<StudioProps> = ({ books: allBooks }) => {
                 </div>
             :   <div className="w-full grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-2 md:gap-8">
                     {books.map((book) => (
-                        <Link
-                            key={book.id}
-                            href={`/studio/${book.id}`}
-                            className="group relative size-full"
-                        >
-                            <div className="w-full aspect-square shadow-lg rounded-lg overflow-hidden border-4 border-accent/20">
-                                <NextImage
-                                    className="group-hover:scale-105 transition-all"
-                                    src={book.cover}
-                                    width={1024}
-                                    height={1024}
-                                    alt={book.title}
-                                />
-                            </div>
-                            <div className="flex flex-col items-start text-sm font-bold mt-2">
-                                <h2 className="text-left truncate w-full">
-                                    {book.title}
-                                </h2>
-                                <p className="text-neutral text-xs text-left truncate w-full">
-                                    {t("modify")} <Date date={book.updatedAt} />
-                                </p>
-                            </div>
-                        </Link>
+                        <div key={book.id} className="group relative size-full">
+                            <DeleteBook
+                                bookId={book.id}
+                                callback={() =>
+                                    setBooks(
+                                        books.filter((b) => b.id !== book.id)
+                                    )
+                                }
+                            >
+                                <div className="absolute z-50 top-2 right-2 transition opacity-0 group-hover:opacity-100">
+                                    <button className="btn btn-sm btn-circle btn-soft btn-error">
+                                        <Trash2 className="size-5" />
+                                    </button>
+                                </div>
+                            </DeleteBook>
+
+                            <Link href={`/studio/${book.id}`}>
+                                <div className="w-full aspect-square shadow-lg rounded-lg overflow-hidden">
+                                    <NextImage
+                                        className="group-hover:scale-105 transition-all"
+                                        src={book.cover}
+                                        width={1024}
+                                        height={1024}
+                                        alt={book.title}
+                                    />
+                                </div>
+                                <div className="flex flex-col items-start text-sm font-bold mt-2">
+                                    <h2 className="text-left truncate w-full">
+                                        {book.title}
+                                    </h2>
+                                    <p className="text-neutral text-xs text-left truncate w-full">
+                                        {t("modify")}{" "}
+                                        <Date date={book.updatedAt} />
+                                    </p>
+                                </div>
+                            </Link>
+                        </div>
                     ))}
                 </div>
             }

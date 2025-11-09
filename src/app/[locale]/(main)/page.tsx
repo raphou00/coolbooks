@@ -37,7 +37,7 @@ const Page = async () => {
         ]);
 
     return (
-        <Main className="flex my-0 pt-0 space-y-2">
+        <Main className="flex my-0 pt-0" gradientVariant="floatingGradient">
             <Home />
             <Books title={t("cartoon") + " 🎉"} books={booksCartoon} />
             <Books title={t("adventure") + " 🕵️‍♂️"} books={booksAdventure} />

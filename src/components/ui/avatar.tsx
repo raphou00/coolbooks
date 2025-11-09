@@ -22,7 +22,7 @@ const Avatar: React.FC<AvatarProps> = ({ userName, className }) => {
         <div className="avatar">
             <div
                 className={cn(
-                    "rounded-full ring ring-white/10 shadow from-primary/60 to-secondary/60 bg-gradient-to-br",
+                    "rounded-full ring ring-white/10 shadow from-primary/80 to-secondary/80 bg-gradient-to-br",
                     className
                 )}
             >

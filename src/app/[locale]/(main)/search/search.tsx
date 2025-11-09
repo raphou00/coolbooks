@@ -210,42 +210,26 @@ const Search: React.FC<SearchProps> = ({ books: allBooks }) => {
                         <Link
                             key={book.id}
                             href={`/book/${book.id}`}
-                            className="group relative w-full"
+                            className="relative flex-shrink-0 w-56 md:w-60 lg:w-64 xl:w-72"
                         >
-                            <div className="bg-white dark:bg-neutral-800 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300">
-                                <div className="relative w-full aspect-square overflow-hidden bg-neutral-100 dark:bg-neutral-700">
-                                    <NextImage
-                                        className="w-full h-full aspect-square group-hover:scale-105 transition-transform duration-300"
-                                        src={book.cover}
-                                        width={1024}
-                                        height={768}
-                                        alt={book.title}
-                                    />
-
-                                    <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4">
-                                        <div className="flex items-center gap-2 text-white text-sm font-medium">
-                                            <EyeIcon className="size-4" />
-                                            <span>{t("view")}</span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="p-4">
-                                    <div className="flex items-center gap-2 mb-2">
-                                        <span className="text-xs text-neutral font-medium">
-                                            {book.user.name}
-                                        </span>
-                                    </div>
-
-                                    <h3 className="text-base font-bold line-clamp-2 mb-1 text-white">
-                                        {book.title}
-                                    </h3>
-
-                                    <p className="text-xs text-neutral-500 dark:text-neutral-400">
-                                        {t("modify")}{" "}
-                                        <Date date={book.updatedAt} />
+                            <div className="aspect-square shadow-lg rounded-lg overflow-hidden">
+                                <NextImage
+                                    className="hover:scale-105 transition-all"
+                                    src={book.cover}
+                                    width={1024}
+                                    height={1024}
+                                    alt={book.title}
+                                />
+                            </div>
+                            <div className="flex flex-col items-start text-sm font-bold mt-2">
+                                <h2 className="text-left truncate w-full">
+                                    {book.title}
+                                </h2>
+                                {book.user && (
+                                    <p className="text-neutral text-xs text-left truncate w-full">
+                                        {t("by")} {book.user.name}
                                     </p>
-                                </div>
+                                )}
                             </div>
                         </Link>
                     ))}

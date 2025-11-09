@@ -1,4 +1,5 @@
 export const selectBook = {
+    id: true,
     user: {
         select: {
             id: true,

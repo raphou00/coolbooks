@@ -72,8 +72,8 @@ const Page = async ({ params }: PageProps) => {
     }
 
     return (
-        <Main className="mt-8 flex" gradientVariant="floatingGradient">
-            <Book book={book} />
+        <Main>
+            <Book book={book} isCreator={book.user.id === user.user.id} />
         </Main>
     );
 };

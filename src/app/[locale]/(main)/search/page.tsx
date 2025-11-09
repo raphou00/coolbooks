@@ -15,6 +15,12 @@ const generateMetadata = async ({
 }: PageProps): Promise<Metadata> => {
     const t = await getTranslations("pages");
     const { q } = await searchParams;
+    if (!q) {
+        return {
+            title: t("search.title-save"),
+            description: t("search.subtitle"),
+        };
+    }
     return {
         title: t("search.title", { query: q }),
         description: t("search.description", { query: q }),

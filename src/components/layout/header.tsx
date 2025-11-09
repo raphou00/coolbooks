@@ -84,10 +84,10 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                                 <Link
                                                     href={item.path}
                                                     className={cn(
-                                                        "btn bg-base-content/80 text-white border-none",
+                                                        "btn text-white",
                                                         item.path === pathname ?
-                                                            "inset-ring-4 inset-ring-primary"
-                                                        :   ""
+                                                            "btn-secondary"
+                                                        :   "bg-black/70"
                                                     )}
                                                 >
                                                     <item.icon className="size-5" />

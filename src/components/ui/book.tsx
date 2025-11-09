@@ -3,9 +3,11 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { motion, useMotionValue } from "framer-motion";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Edit } from "lucide-react";
 import { cn, sortPages } from "@/lib/utils";
 import NextImage from "@/components/ui/image";
+import Title from "./title";
+import Link from "next/link";
 
 type Page = {
     id: string;
@@ -17,10 +19,12 @@ type Page = {
 
 type BookProps = {
     book: {
+        id: string;
         title: string;
         cover: string;
         pages: Page[];
     };
+    isCreator: boolean;
 };
 
 type PagesProps = {
@@ -44,7 +48,8 @@ const SPRING_OPTIONS = {
     damping: 50,
 };
 
-const Book: React.FC<BookProps> = ({ book }) => {
+const Book: React.FC<BookProps> = ({ book, isCreator }) => {
+    const t = useTranslations("pages.book");
     const [imgIndex, setImgIndex] = useState(0);
 
     const dragX = useMotionValue(0);
@@ -60,36 +65,53 @@ const Book: React.FC<BookProps> = ({ book }) => {
     };
 
     return (
-        <div className="relative overflow-hidden mt-8">
-            <motion.div
-                drag="x"
-                dragConstraints={{
-                    left: 0,
-                    right: 0,
-                }}
-                style={{
-                    x: dragX,
-                }}
-                animate={{
-                    translateX: `-${imgIndex * 100}%`,
-                }}
-                transition={SPRING_OPTIONS}
-                onDragEnd={onDragEnd}
-                className="flex cursor-grab items-center active:cursor-grabbing"
-            >
-                <Pages
-                    pages={book.pages}
-                    cover={book.cover}
-                    imgIndex={imgIndex}
-                />
-            </motion.div>
+        <>
+            <div className="w-full max-w-[850px] flex items-center justify-between mt-4 mx-auto">
+                <Title text={book.title} className="font-bold text-xl" />
 
-            <Navigation
-                pages={book.pages}
-                imgIndex={imgIndex}
-                setImgIndex={setImgIndex}
-            />
-        </div>
+                <div>
+                    {isCreator && (
+                        <Link
+                            href={"/studio/" + book.id}
+                            className="btn btn-sm btn-secondary"
+                        >
+                            <Edit className="size-5" />
+                            {t("edit")}
+                        </Link>
+                    )}
+                </div>
+            </div>
+            <div className="relative overflow-hidden mt-4">
+                <motion.div
+                    drag="x"
+                    dragConstraints={{
+                        left: 0,
+                        right: 0,
+                    }}
+                    style={{
+                        x: dragX,
+                    }}
+                    animate={{
+                        translateX: `-${imgIndex * 100}%`,
+                    }}
+                    transition={SPRING_OPTIONS}
+                    onDragEnd={onDragEnd}
+                    className="flex cursor-grab items-center active:cursor-grabbing"
+                >
+                    <Pages
+                        pages={book.pages}
+                        cover={book.cover}
+                        imgIndex={imgIndex}
+                    />
+                </motion.div>
+
+                <Navigation
+                    pages={book.pages}
+                    imgIndex={imgIndex}
+                    setImgIndex={setImgIndex}
+                />
+            </div>
+        </>
     );
 };
 

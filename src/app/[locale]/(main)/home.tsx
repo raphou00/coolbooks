@@ -39,29 +39,21 @@ const Home: React.FC = () => {
     const boxShadow = useMotionTemplate`0px 4px 24px ${color}`;
 
     return (
-        <div className="space-y-10 pt-44 text-white">
-            <Image
-                src="/images/magical-forest--kid-reading-a-book.png"
-                alt=""
-                width={1920}
-                height={1080}
-                className="absolute top-0 left-0 object-cover w-screen -z-50 border-b border-neutral brightness-[0.6] saturate-200 h-[550px]"
-            />
-
-            <div className="relative h-[350px]">
+        <div className="space-y-10 pt-20">
+            <div className="grid grid-cols-2 max-[780px]:grid-cols-1 place-items-center">
                 <div className="relative z-10 flex flex-col items-start">
-                    <span className="inline-block rounded-full glass border border-neutral px-3 py-1.5 mb-3">
+                    <span className="inline-block rounded-full glass bg-accent/10 border border-neutral px-3 py-1.5 mb-3">
                         😍 {t("beta")}
                     </span>
                     <Title
                         text={title}
                         className={cn(
-                            "text-7xl md:text-8xl mx-auto w-fit m-0 font-bold",
+                            "text-7xl lg:text-8xl mx-auto w-fit m-0 font-bold",
                             font.className
                         )}
                         underline
                     />
-                    <p className="my-6 max-w-xl text-center text-base leading-relaxed md:text-xl md:leading-relaxed">
+                    <p className="my-6 max-w-xl text-left text-base leading-relaxed lg:text-xl lg:leading-relaxed">
                         {t("description")}
                     </p>
                     <motion.a
@@ -76,11 +68,19 @@ const Home: React.FC = () => {
                             scale: 0.985,
                         }}
                         href="/studio/new"
-                        className="group relative flex w-fit items-center gap-1.5 rounded-full bg-gray-950/90 backdrop-blur-3xl px-4 py-2 transition-colors cursor-pointer hover:bg-gray-950/90"
+                        className="group relative text-white flex w-fit items-center gap-1.5 rounded-full bg-gray-950/90 backdrop-blur-3xl px-4 py-2 transition-colors cursor-pointer hover:bg-gray-950/90"
                     >
                         {t("create")}
                         <ArrowRight className="transition-transform group-hover:-rotate-45 group-active:-rotate-12" />
                     </motion.a>
+                </div>
+                <div className="home-container size-[400px] max-lg:size-[300px] max-[780px]:!hidden">
+                    <Image
+                        src="/images/2-kid-reading-a-book.jpg"
+                        alt=""
+                        width={1080}
+                        height={1080}
+                    />
                 </div>
             </div>
         </div>
@@ -88,3 +88,13 @@ const Home: React.FC = () => {
 };
 
 export default Home;
+
+{
+    /* <Image
+    src="/images/magical-forest--kid-reading-a-book.png"
+    alt=""
+    width={1920}
+    height={1080}
+    className="absolute top-0 left-0 object-cover w-screen -z-50 border-b border-neutral brightness-[0.6] saturate-200 h-[550px]"
+/> */
+}

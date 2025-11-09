@@ -80,7 +80,7 @@ export const LogoutSessions: React.FC<SessionsProps> = ({
                                             className="font-bold text-primary"
                                         />
                                     :   <button
-                                            className="btn btn-sm text-error"
+                                            className="btn btn-sm btn-soft btn-error"
                                             onClick={() =>
                                                 logoutSession(session.id)
                                             }
