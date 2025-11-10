@@ -53,9 +53,6 @@ const Page = async ({ params }: PageProps) => {
     }
 
     const user = await getUser();
-    if (!user?.user) {
-        redirect("/404");
-    }
 
     const book = await db.book.findUnique({
         where: {
@@ -67,13 +64,13 @@ const Page = async ({ params }: PageProps) => {
         redirect("/404");
     }
 
-    if (!book.public && book.user.id !== user.user.id) {
+    if (!book.public && book.user.id !== user?.user?.id) {
         redirect("/404");
     }
 
     return (
         <Main>
-            <Book book={book} isCreator={book.user.id === user.user.id} />
+            <Book book={book} isCreator={book.user.id === user?.user?.id} />
         </Main>
     );
 };
