@@ -21,7 +21,7 @@ const Page = async () => {
     }
 
     return (
-        <Main className="flex w-full items-center justify-center">
+        <Main className="flex w-full items-center justify-center mt-0">
             <ForgotPassword />
         </Main>
     );

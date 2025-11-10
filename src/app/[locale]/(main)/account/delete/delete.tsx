@@ -35,10 +35,7 @@ export const DeleteAccount: React.FC = () => {
 
     return (
         <>
-            <form
-                onSubmit={handleSubmit(submit)}
-                className="w-full  flex flex-col gap-y-2"
-            >
+            <form onSubmit={handleSubmit(submit)} className="w-full space-y-2">
                 <FormReponse message={state.message} success={state.success} />
 
                 <FormInput

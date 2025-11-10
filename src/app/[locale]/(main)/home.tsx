@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
     useMotionTemplate,
     useMotionValue,
@@ -14,6 +14,7 @@ import { useTranslations } from "next-intl";
 import { title } from "@/config/seo";
 import Title from "@/components/ui/title";
 import { cn } from "@/lib/utils";
+import Modal from "@/components/ui/modal";
 
 const font = Goudy_Bookletter_1911({
     subsets: ["latin"],
@@ -39,7 +40,7 @@ const Home: React.FC = () => {
     const boxShadow = useMotionTemplate`0px 4px 24px ${color}`;
 
     return (
-        <div className="space-y-10 pt-20">
+        <div className="space-y-5 pt-20">
             <div className="grid grid-cols-2 max-[780px]:grid-cols-1 place-items-center">
                 <div className="relative z-10 flex flex-col items-start">
                     <span className="inline-block rounded-full glass bg-accent/10 border border-neutral px-3 py-1.5 mb-3">
@@ -87,14 +88,26 @@ const Home: React.FC = () => {
     );
 };
 
-export default Home;
+const ModalDisplay: React.FC = () => {
+    const [showModal, setShowModal] = useState<boolean>(false);
 
-{
-    /* <Image
-    src="/images/magical-forest--kid-reading-a-book.png"
-    alt=""
-    width={1920}
-    height={1080}
-    className="absolute top-0 left-0 object-cover w-screen -z-50 border-b border-neutral brightness-[0.6] saturate-200 h-[550px]"
-/> */
-}
+    useEffect(() => {
+        const hasVisited = "";
+        // const hasVisited = sessionStorage.getItem("hasVisited");
+
+        if (!hasVisited) {
+            setShowModal(true);
+            sessionStorage.setItem("hasVisited", "true");
+        } else {
+            setShowModal(false);
+        }
+    }, []);
+
+    return (
+        <Modal isOpen={showModal} setIsOpen={setShowModal}>
+            <></>
+        </Modal>
+    );
+};
+
+export default Home;

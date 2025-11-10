@@ -59,18 +59,16 @@ const Search: React.FC<SearchProps> = ({ books: allBooks }) => {
 
         if (search) {
             const searchRegex = new RegExp(search.toLowerCase(), "i");
-            filteredBooks = filteredBooks.filter((book) =>
-                searchRegex.test(book.title.toLowerCase())
-            );
-
             filteredBooks = filteredBooks.filter((book) => {
                 const pagesText = book.pages
                     .map((page) => page.text)
                     .join(" ")
                     .toLowerCase();
-                console.log(pagesText);
 
-                return searchRegex.test(pagesText);
+                return (
+                    searchRegex.test(book.title.toLowerCase()) ||
+                    searchRegex.test(pagesText)
+                );
             });
         }
 
@@ -111,32 +109,33 @@ const Search: React.FC<SearchProps> = ({ books: allBooks }) => {
 
     return (
         <>
-            <div className="text-center my-8">
+            <div className="text-center my-6 px-4">
                 <Title
                     text={search || t("title-save")}
-                    className="text-4xl md:text-5xl lg:text-6xl font-bold mb-3"
+                    className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent"
                 />
-                <p className="text-neutral text-base md:text-lg">
+                <p className="text-neutral text-base md:text-lg max-w-2xl mx-auto">
                     {t("subtitle")}
                 </p>
             </div>
 
             <div className="w-full mb-4">
-                <div className="w-full flex items-center justify-between gap-3">
-                    <div className="overflow-x-auto scrollbar-hide flex gap-x-2">
+                <div className="w-full flex items-center justify-between gap-4 flex-wrap md:flex-nowrap">
+                    <div className="overflow-x-scroll scrollbar-hide flex gap-2">
                         {themesOptions.map((theme) => (
                             <button
                                 key={theme}
                                 onClick={() => handleThemeToggle(theme)}
                                 className={cn(
                                     "btn gap-2",
-                                    activeThemes.includes(theme) ? "btn-primary"
-                                    :   "btn-outline"
+                                    activeThemes.includes(theme) ?
+                                        "btn-secondary"
+                                    :   ""
                                 )}
                             >
                                 <span className="text-lg">
                                     {themeImages[theme]}
-                                </span>{" "}
+                                </span>
                                 {t(theme)}
                             </button>
                         ))}
@@ -146,7 +145,7 @@ const Search: React.FC<SearchProps> = ({ books: allBooks }) => {
                         <div
                             tabIndex={0}
                             role="button"
-                            className="btn btn-outline m-1"
+                            className="btn btn-soft bg-secondary/10"
                         >
                             <Paintbrush className="size-4" />
                             <span className="hidden sm:inline">
@@ -155,28 +154,31 @@ const Search: React.FC<SearchProps> = ({ books: allBooks }) => {
                         </div>
                         <ul
                             tabIndex={0}
-                            className="dropdown-content menu bg-base-200 rounded-box z-1 w-52 p-2 shadow border border-neutral"
+                            className="dropdown-content menu bg-base-200 rounded-box z-[1] w-64 p-3 shadow-xl border border-base-300 mt-2"
                         >
                             {artStyleOptions.map((artStyle) => (
-                                <li key={artStyle} className="my-px">
+                                <li key={artStyle} className="my-1">
                                     <button
                                         onClick={() =>
                                             handleArtStyleSelect(artStyle)
                                         }
                                         className={cn(
-                                            "btn-ghost btn-lg rounded-xl flex items-center justify-start gap-3",
-                                            activeArtStyle === artStyle &&
-                                                "bg-primary text-primary-content"
+                                            "rounded-xl flex items-center justify-start gap-3 p-3 transition-all duration-200",
+                                            activeArtStyle === artStyle ?
+                                                "bg-primary text-primary-content shadow-md"
+                                            :   "hover:bg-base-300"
                                         )}
                                     >
-                                        <Image
-                                            src={artStyleImages[artStyle]}
-                                            width={40}
-                                            height={40}
-                                            alt={artStyle}
-                                            className="rounded-xl"
-                                        />
-                                        <span className="capitalize text-lg">
+                                        <div className="relative w-10 h-10 flex-shrink-0">
+                                            <Image
+                                                src={artStyleImages[artStyle]}
+                                                width={40}
+                                                height={40}
+                                                alt={artStyle}
+                                                className="rounded-lg object-cover"
+                                            />
+                                        </div>
+                                        <span className="capitalize text-base font-medium">
                                             {artStyle}
                                         </span>
                                     </button>
@@ -188,42 +190,55 @@ const Search: React.FC<SearchProps> = ({ books: allBooks }) => {
             </div>
 
             {books.length === 0 ?
-                <div className="flex flex-col justify-between items-center">
-                    <Image
-                        src="/images/book-sad.svg"
-                        width={400}
-                        height={400}
-                        alt="404"
-                        className="mx-auto h-44 grayscale"
-                    />
+                <div className="flex flex-col justify-center items-center py-16 px-4">
+                    <div className="relative mb-8">
+                        <Image
+                            src="/images/book-sad.svg"
+                            width={400}
+                            height={400}
+                            alt="No books found"
+                            className="h-48 w-auto grayscale opacity-60 animate-pulse"
+                        />
+                    </div>
                     <Title
                         text={t("no-books")}
-                        className="mx-auto w-fit text-center"
+                        className="text-2xl md:text-3xl text-center mb-4"
                     />
+                    <p className="text-neutral text-center max-w-md">
+                        {t("no-books")}
+                    </p>
                 </div>
-            :   <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
-                    {books.map((book) => (
+            :   <div className="w-full grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6 md:gap-8 pb-8">
+                    {books.map((book, index) => (
                         <Link
                             key={book.id}
                             href={`/book/${book.id}`}
-                            className="relative flex-shrink-0 w-56 md:w-60 lg:w-64 xl:w-72"
+                            className="group relative w-full transition-transform duration-300 hover:-translate-y-2"
+                            style={{
+                                animationDelay: `${index * 50}ms`,
+                            }}
                         >
-                            <div className="aspect-square shadow-lg rounded-lg overflow-hidden">
+                            <div className="relative aspect-square shadow-xl rounded-2xl overflow-hidden bg-base-300">
                                 <NextImage
-                                    className="hover:scale-105 transition-all"
+                                    className="transition-all duration-500 group-hover:scale-110 group-hover:brightness-110"
                                     src={book.cover}
                                     width={1024}
                                     height={1024}
                                     alt={book.title}
                                 />
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                             </div>
-                            <div className="flex flex-col items-start text-sm font-bold mt-2">
-                                <h2 className="text-left truncate w-full">
+
+                            <div className="flex flex-col items-start mt-4 px-1">
+                                <h2 className="text-left text-base md:text-lg font-bold truncate w-full group-hover:text-primary transition-colors duration-200">
                                     {book.title}
                                 </h2>
                                 {book.user && (
-                                    <p className="text-neutral text-xs text-left truncate w-full">
-                                        {t("by")} {book.user.name}
+                                    <p className="text-neutral text-xs md:text-sm text-left truncate w-full mt-1">
+                                        {t("by")}{" "}
+                                        <span className="font-medium">
+                                            {book.user.name}
+                                        </span>
                                     </p>
                                 )}
                             </div>

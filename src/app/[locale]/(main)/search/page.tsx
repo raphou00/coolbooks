@@ -57,7 +57,7 @@ const Page = async () => {
     });
 
     return (
-        <Main className="flex" gradientVariant="floatingGradient">
+        <Main className="flex">
             <Search books={books} />
         </Main>
     );

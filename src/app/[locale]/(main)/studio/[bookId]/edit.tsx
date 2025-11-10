@@ -78,7 +78,10 @@ const Edit: React.FC<EditProps> = ({ bookId, userId }) => {
     const t = useTranslations("pages.edit-book");
     const { data, isLoading } = useSWR<BookResponse>(
         `/api/book?bookId=${bookId}`,
-        fetcher
+        fetcher,
+        {
+            refreshInterval: 10000,
+        }
     );
 
     const [book, setBook] = useState<Book | null>(null);

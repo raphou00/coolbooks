@@ -34,10 +34,7 @@ export const UpdatePassword: React.FC = () => {
 
     return (
         <>
-            <form
-                onSubmit={handleSubmit(submit)}
-                className="w-full  flex flex-col gap-y-2"
-            >
+            <form onSubmit={handleSubmit(submit)} className="w-full space-y-2">
                 <div className="mb-2">
                     <FormReponse
                         message={state.message}

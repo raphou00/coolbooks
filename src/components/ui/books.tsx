@@ -53,7 +53,7 @@ const Books: React.FC<BooksProps> = ({ title, books }) => {
     }, [books]);
 
     return (
-        <section className="mt-14">
+        <section className="mt-8">
             <div className="mb-4">
                 <Title text={title} className="text-left w-fit text-2xl" />
             </div>

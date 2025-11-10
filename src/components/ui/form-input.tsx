@@ -34,7 +34,7 @@ const FormInput: React.FC<FormInputProps> = forwardRef<
         const [passwordVisible, setPasswordVisible] = useState(false);
 
         return (
-            <div className="w-full my-2">
+            <div className="w-full my-4">
                 <label className="w-full text-sm">
                     <div className="w-full flex justify-between pb-1">
                         <span className="label-text px-1 font-bold">

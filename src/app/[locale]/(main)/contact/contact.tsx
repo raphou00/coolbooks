@@ -31,21 +31,16 @@ const Page: React.FC = () => {
 
     return (
         <>
-            <div className="flex w-full">
-                <div
-                    style={{
-                        backgroundImage: `url('/images/banner.png')`,
-                        backgroundSize: "cover",
-                        backgroundPosition: "center",
-                    }}
-                    className="h-mi w-1/2 relative max-lg:hidden rounded-xl"
-                />
-
+            <div className="w-full mt-8">
                 <div className="relative w-full">
-                    <Form title={t("title")} description={t("description")}>
+                    <Form
+                        title={t("title")}
+                        description={t("description")}
+                        logo={false}
+                    >
                         <form
                             onSubmit={handleSubmit(submit)}
-                            className="w-full flex flex-col gap-y-2"
+                            className="w-full max-w-md space-y-2"
                         >
                             <FormReponse
                                 success={state.success}
@@ -88,7 +83,7 @@ const Page: React.FC = () => {
                                     </div>
                                     <textarea
                                         placeholder={t("message-placeholder")}
-                                        className="textarea w-full rounded-box resize-none border-2 bg-base-100 transition placeholder:text-neutral-400 focus:border-primary/50 focus:outline-none focus:bg-base-300"
+                                        className="textarea textarea-lg px-4 py-3 w-full rounded-2xl resize-none border-2 bg-base-100 transition placeholder:text-neutral-400 focus:border-primary/50 focus:outline-none focus:bg-base-300"
                                         rows={5}
                                         {...register("message")}
                                     />

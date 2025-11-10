@@ -45,7 +45,7 @@ export const LogoutSessions: React.FC<SessionsProps> = ({
                         >
                             <div className="flex min-w-0 gap-x-4">
                                 <div className="min-w-0 flex-auto">
-                                    <p className="badge badge-ghost badge-outline badge-lg mt-1">
+                                    <p className="badge badge-ghost badge-outline badge-lg mb-1.5">
                                         {session.ip}
                                     </p>
                                     <p className="text-sm">
