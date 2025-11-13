@@ -64,9 +64,9 @@ export const POST = async (req: NextRequest) => {
         });
 
         if (!user) {
-            console.error("Missing user");
+            console.error("Missing user in db");
             return NextResponse.json(
-                { error: "Missing user" },
+                { error: "Missing user in db" },
                 { status: 400 }
             );
         }
