@@ -34,14 +34,20 @@ export const POST = async (req: NextRequest) => {
         const eventData = event.data.object as
             | Stripe.Subscription
             | Stripe.Invoice;
-        const customerId = eventData.metadata?.userId;
+
+        let customerId = eventData.metadata?.userId;
 
         if (!customerId) {
-            console.error("Missing customer ID");
-            return NextResponse.json(
-                { error: "Missing customer ID" },
-                { status: 400 }
-            );
+            customerId = (eventData as Stripe.Invoice).parent
+                ?.subscription_details?.metadata?.userId;
+
+            if (!customerId) {
+                console.error("Missing user id");
+                return NextResponse.json(
+                    { error: "Missing user id" },
+                    { status: 400 }
+                );
+            }
         }
 
         const user = await db.user.findUnique({
