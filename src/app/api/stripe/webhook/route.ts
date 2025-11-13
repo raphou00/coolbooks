@@ -44,22 +44,9 @@ export const POST = async (req: NextRequest) => {
             );
         }
 
-        const stripeUser = await stripe.customers.retrieve(
-            customerId as string
-        );
-        const stripeUserEmail = (stripeUser as Stripe.Customer).email;
-
-        if (!stripeUserEmail) {
-            console.error("Missing user");
-            return NextResponse.json(
-                { error: "Missing user" },
-                { status: 400 }
-            );
-        }
-
         const user = await db.user.findUnique({
             where: {
-                email: stripeUserEmail,
+                stripeCustomerId: customerId.toString(),
             },
         });
 

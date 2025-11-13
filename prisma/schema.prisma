@@ -20,7 +20,7 @@ model User {
   credits              Int        @default(1)
   role                 Role       @default(USER)
   googleId             String?    @unique
-  stripeCustomerId     String?
+  stripeCustomerId     String?    @unique
   stripeSubscriptionId String?
   stripeProductId      String?
   subscriptionStatus   String?
