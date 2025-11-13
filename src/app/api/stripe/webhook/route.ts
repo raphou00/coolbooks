@@ -35,6 +35,8 @@ export const POST = async (req: NextRequest) => {
             | Stripe.Subscription
             | Stripe.Invoice;
         const customerId = eventData.customer;
+        console.log(eventData);
+        console.log(customerId);
 
         if (!customerId) {
             console.error("Missing customer ID");
