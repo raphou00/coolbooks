@@ -34,7 +34,7 @@ const Register: React.FC<EmailProps> = async ({ t, name }) => {
                         <Row className="my-6">
                             <Link
                                 href={domain}
-                                className="rounded-full bg-[#ff00bdff] w-1/2 px-6 py-4 text-center text-xl font-bold text-white"
+                                className="rounded-full bg-[#6bc4d9] w-1/2 px-6 py-4 text-center text-xl font-bold text-white"
                             >
                                 {t("emails.register.get-started")}
                             </Link>

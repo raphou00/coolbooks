@@ -15,13 +15,13 @@ const generateMetadata = async (): Promise<Metadata> => {
 const Page = async () => {
     const t = await getTranslations("pages.privacy");
     return (
-        <Main className="max-w-3xl mx-auto">
+        <Main className="max-w-3xl mx-auto pt-4">
             <Title
                 text={t("title")}
                 className="text-4xl mx-auto w-fit text-center"
                 underline
             />
-            <p className="mt-2 text-center">
+            <p className="mt-4 text-center">
                 {t("date")} <DateEl date={new Date("2025-06-03")} />
             </p>
 

@@ -38,7 +38,7 @@ const ResetPasswordEmail: React.FC<ResetPasswordEmailProps> = async ({
                             <Text>{t("emails.forgot-password.body")}</Text>
                         </Row>
                         <Row>
-                            <Text className="rounded-full bg-[#ff00bdff] w-1/2 px-6 py-4 text-center text-xl font-bold text-white">
+                            <Text className="rounded-full bg-[#6bc4d9] w-1/2 px-6 py-4 text-center text-xl font-bold text-white">
                                 {code}
                             </Text>
                         </Row>
