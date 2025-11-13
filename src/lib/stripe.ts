@@ -11,7 +11,7 @@ import {
 } from "@/config/stripe";
 
 export const stripe = new Stripe(env.STRIPE_SECRET_KEY, {
-    apiVersion: "2025-02-24.acacia",
+    apiVersion: "2025-10-29.clover",
     appInfo: {
         name: title,
         url: env.APP_URL,
@@ -87,31 +87,31 @@ export const handleInvoicePayment = async (
 ) => {
     let creditsToAdd = 0;
 
-    if (invoice.lines.data.length > 0) {
-        const lineItem = invoice.lines.data[0];
-        const priceId = lineItem.price!.id;
+    const subscriptionId = (invoice as unknown as { subscription: string })
+        .subscription;
+    const subscription = await stripe.subscriptions.retrieve(subscriptionId);
+    const priceId = subscription.items.data[0]?.price.id;
 
-        const priceBasic = await stripe.prices.search({
-            query: `product:"${productIdBasic}"`,
-        });
-        const priceFamily = await stripe.prices.search({
-            query: `product:"${productIdFamily}"`,
-        });
-        const pricePremium = await stripe.prices.search({
-            query: `product:"${productIdPremium}"`,
-        });
+    const priceBasic = await stripe.prices.search({
+        query: `product:"${productIdBasic}"`,
+    });
+    const priceFamily = await stripe.prices.search({
+        query: `product:"${productIdFamily}"`,
+    });
+    const pricePremium = await stripe.prices.search({
+        query: `product:"${productIdPremium}"`,
+    });
 
-        switch (priceId) {
-            case priceBasic.data[0].id:
-                creditsToAdd = 5;
-                break;
-            case priceFamily.data[0].id:
-                creditsToAdd = 15;
-                break;
-            case pricePremium.data[0].id:
-                creditsToAdd = 30;
-                break;
-        }
+    switch (priceId) {
+        case priceBasic.data[0].id:
+            creditsToAdd = 5;
+            break;
+        case priceFamily.data[0].id:
+            creditsToAdd = 10;
+            break;
+        case pricePremium.data[0].id:
+            creditsToAdd = 20;
+            break;
     }
 
     await db.user.update({

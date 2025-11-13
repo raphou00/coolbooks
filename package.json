@@ -64,7 +64,7 @@
         "react-hot-toast": "^2.4.1",
         "resend": "^4.1.2",
         "screenfull": "^6.0.2",
-        "stripe": "^17.7.0",
+        "stripe": "^19.3.1",
         "swr": "^2.3.6",
         "tailwind-merge": "^2.5.3",
         "zod": "^4.1.12"

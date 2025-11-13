@@ -40,7 +40,7 @@ const Home: React.FC<HomeProps> = ({ user }) => {
     const t = useTranslations("pages.home");
     const color = useMotionValue(COLORS_TOP[0]);
     const searchParams = useSearchParams();
-    const thanks = searchParams.get("success") === "true";
+    const thanks = searchParams.get("payment") === "true";
     const [open, setOpen] = useState<boolean>(thanks);
 
     useEffect(() => {

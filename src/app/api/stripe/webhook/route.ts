@@ -71,7 +71,6 @@ export const POST = async (req: NextRequest) => {
             );
         }
 
-        let invoice: Stripe.Invoice;
         switch (event.type) {
             case "customer.subscription.created":
             case "customer.subscription.updated":
@@ -87,10 +86,7 @@ export const POST = async (req: NextRequest) => {
                 );
                 break;
             case "invoice.payment_succeeded":
-                invoice = eventData as Stripe.Invoice;
-                if (invoice.subscription) {
-                    await handleInvoicePayment(invoice, user);
-                }
+                await handleInvoicePayment(eventData as Stripe.Invoice, user);
                 break;
             case "invoice.payment_failed":
                 await handlePaymentFailed(eventData as Stripe.Invoice, user);

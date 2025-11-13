@@ -244,7 +244,7 @@
                 "premium": {
                     "title": "Premium",
                     "features": [
-                        "30 creaciones de libros con IA",
+                        "20 creaciones de libros con IA",
                         "Todas las funciones premium",
                         "Generación prioritaria (procesamiento más rápido)"
                     ],
@@ -253,7 +253,7 @@
                 "family": {
                     "title": "Familia",
                     "features": [
-                        "15 creaciones de libros con IA",
+                        "10 creaciones de libros con IA",
                         "Ilustraciones premium",
                         "Mejor personalización"
                     ],
