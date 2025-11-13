@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import {
     useMotionTemplate,
     useMotionValue,
@@ -10,11 +10,15 @@ import {
 } from "framer-motion";
 import { Goudy_Bookletter_1911 } from "next/font/google";
 import { ArrowRight } from "lucide-react";
+import type { User } from "lucia";
 import { useTranslations } from "next-intl";
 import { title } from "@/config/seo";
-import Title from "@/components/ui/title";
 import { cn } from "@/lib/utils";
-import Modal from "@/components/ui/modal";
+import Title from "@/components/ui/title";
+
+type HomeProps = {
+    user: User | null;
+};
 
 const font = Goudy_Bookletter_1911({
     subsets: ["latin"],
@@ -23,7 +27,7 @@ const font = Goudy_Bookletter_1911({
 
 const COLORS_TOP = ["#6bc4d9", "#e89fdf"];
 
-const Home: React.FC = () => {
+const Home: React.FC<HomeProps> = ({ user }) => {
     const t = useTranslations("pages.home");
     const color = useMotionValue(COLORS_TOP[0]);
 
@@ -43,7 +47,7 @@ const Home: React.FC = () => {
         <div className="space-y-5 pt-20">
             <div className="grid grid-cols-2 max-[780px]:grid-cols-1 place-items-center">
                 <div className="relative z-10 flex flex-col items-start">
-                    <span className="inline-block rounded-full glass bg-accent/10 border border-neutral px-3 py-1.5 mb-3">
+                    <span className="inline-block rounded-full glass bg-accent/5 border border-neutral px-3 py-1.5 mb-3">
                         😍 {t("beta")}
                     </span>
                     <Title
@@ -68,7 +72,9 @@ const Home: React.FC = () => {
                         whileTap={{
                             scale: 0.985,
                         }}
-                        href="/studio/new"
+                        href={
+                            user ? "/studio/new" : "/login?redirect=/studio/new"
+                        }
                         className="group relative text-white flex w-fit items-center gap-1.5 rounded-full bg-gray-950/90 backdrop-blur-3xl px-4 py-2 transition-colors cursor-pointer hover:bg-gray-950/90"
                     >
                         {t("create")}
@@ -85,28 +91,6 @@ const Home: React.FC = () => {
                 </div>
             </div>
         </div>
-    );
-};
-
-const ModalDisplay: React.FC = () => {
-    const [showModal, setShowModal] = useState<boolean>(false);
-
-    useEffect(() => {
-        const hasVisited = "";
-        // const hasVisited = sessionStorage.getItem("hasVisited");
-
-        if (!hasVisited) {
-            setShowModal(true);
-            sessionStorage.setItem("hasVisited", "true");
-        } else {
-            setShowModal(false);
-        }
-    }, []);
-
-    return (
-        <Modal isOpen={showModal} setIsOpen={setShowModal}>
-            <></>
-        </Modal>
     );
 };
 

@@ -209,36 +209,28 @@ const Search: React.FC<SearchProps> = ({ books: allBooks }) => {
                     </p>
                 </div>
             :   <div className="w-full grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6 md:gap-8 pb-8">
-                    {books.map((book, index) => (
+                    {books.map((book) => (
                         <Link
                             key={book.id}
                             href={`/book/${book.id}`}
-                            className="group relative w-full transition-transform duration-300 hover:-translate-y-2"
-                            style={{
-                                animationDelay: `${index * 50}ms`,
-                            }}
+                            className="relative w-full"
                         >
-                            <div className="relative aspect-square shadow-xl rounded-2xl overflow-hidden bg-base-300">
+                            <div className="aspect-square shadow-lg rounded-lg overflow-hidden">
                                 <NextImage
-                                    className="transition-all duration-500 group-hover:scale-110 group-hover:brightness-110"
+                                    className="hover:scale-105 transition-all"
                                     src={book.cover}
                                     width={1024}
                                     height={1024}
                                     alt={book.title}
                                 />
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                             </div>
-
-                            <div className="flex flex-col items-start mt-4 px-1">
-                                <h2 className="text-left text-base md:text-lg font-bold truncate w-full group-hover:text-primary transition-colors duration-200">
+                            <div className="flex flex-col items-start text-sm font-bold mt-2">
+                                <h2 className="text-left truncate w-full">
                                     {book.title}
                                 </h2>
                                 {book.user && (
-                                    <p className="text-neutral text-xs md:text-sm text-left truncate w-full mt-1">
-                                        {t("by")}{" "}
-                                        <span className="font-medium">
-                                            {book.user.name}
-                                        </span>
+                                    <p className="text-neutral text-xs text-left truncate w-full">
+                                        {t("by")} {book.user.name}
                                     </p>
                                 )}
                             </div>

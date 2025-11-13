@@ -263,6 +263,7 @@ const Edit: React.FC<EditProps> = ({ bookId, userId }) => {
                 >
                     <Logo className="size-20 animate-spin" />
                     <Title text={t("generating")} className="text-lg mt-4" />
+                    <p>{t("generating-tip")}</p>
                 </div>
             </>
         );
@@ -312,15 +313,18 @@ const Edit: React.FC<EditProps> = ({ bookId, userId }) => {
                         bookId={book.id}
                         callback={() => window.location.replace("/studio")}
                     >
-                        <button className="btn btn-soft btn-error">
+                        <button className="btn btn-soft btn-error max-sm:btn-circle">
                             <Trash2 className="size-5" />
-                            {t("delete")}
+                            <span className="max-sm:hidden">{t("delete")}</span>
                         </button>
                     </DeleteBook>
 
-                    <Link href={`/book/${bookId}`} className="btn btn-primary">
+                    <Link
+                        href={`/book/${bookId}`}
+                        className="btn btn-primary max-sm:btn-circle"
+                    >
                         <BookOpenText className="stroke-2 size-5" />
-                        {t("read")}
+                        <span className="max-sm:hidden">{t("read")}</span>
                     </Link>
                 </div>
             </div>

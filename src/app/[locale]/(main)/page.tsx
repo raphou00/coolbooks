@@ -3,6 +3,7 @@ import db from "@/lib/db";
 import Main from "@/components/layout/main";
 import Books from "@/components/ui/books";
 import Home from "./home";
+import { getUser } from "@/lib/auth";
 
 type Filter = {
     artStyle?: string;
@@ -11,6 +12,7 @@ type Filter = {
 
 const Page = async () => {
     const t = await getTranslations("pages.home");
+    const user = await getUser();
 
     const getBooksByFilter = (filter: Filter) =>
         db.book.findMany({
@@ -38,7 +40,7 @@ const Page = async () => {
 
     return (
         <Main className="flex my-0 pt-0" gradientVariant="floatingGradient">
-            <Home />
+            <Home user={user?.user || null} />
             <Books title={t("cartoon") + " 🎉"} books={booksCartoon} />
             <Books title={t("adventure") + " 🕵️‍♂️"} books={booksAdventure} />
             <Books title={t("anime") + " 💫"} books={booksAnime} />

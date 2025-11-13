@@ -8,6 +8,7 @@ import { X } from "lucide-react";
 type ModalProps = {
     isOpen: boolean;
     setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+    closeButton?: boolean;
     className?: string;
     children: React.ReactNode;
 };
@@ -15,6 +16,7 @@ type ModalProps = {
 const Modal: React.FC<ModalProps> = ({
     isOpen,
     setIsOpen,
+    closeButton = true,
     children,
     className,
 }) => {
@@ -46,7 +48,7 @@ const Modal: React.FC<ModalProps> = ({
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    onClick={() => setIsOpen(false)}
+                    onClick={() => setIsOpen(!closeButton)}
                     className="fixed inset-0 h-screen w-full flex items-center justify-center z-[999] cursor-pointer bg-base-300/20 backdrop-blur sm:p-2"
                 >
                     <motion.div
@@ -59,12 +61,14 @@ const Modal: React.FC<ModalProps> = ({
                             className
                         )}
                     >
-                        <button
-                            className="absolute right-0 top-0 m-2 btn btn-ghost btn-square btn-sm z-50"
-                            onClick={() => setIsOpen(false)}
-                        >
-                            <X />
-                        </button>
+                        {closeButton && (
+                            <button
+                                className="absolute right-0 top-0 m-2 btn btn-ghost btn-square btn-sm z-50"
+                                onClick={() => setIsOpen(false)}
+                            >
+                                <X />
+                            </button>
+                        )}
                         <div className="relative z-[999]">{children}</div>
                     </motion.div>
                 </motion.div>

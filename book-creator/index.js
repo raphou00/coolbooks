@@ -68,12 +68,11 @@ Create a kid book using the following details:
 -  Skin Color: ${topic.skinTone}
 -  Art Style for image prompt: ${topic.artStyle}
 -  Theme: ${topic.themes}
--  Setting: ${topic.setting}
 
 Requirements:
 * The title must be short and concise.
 * Each page's text should be long enough to be interesting for the target age group.
-* Describe the cover and each page's image in a detailed prompt, matching the specified art style, character appearance, theme, and setting.
+* Describe the cover and each page's image in a detailed prompt, matching the specified art style, character appearance, theme.
 * Be very precise with the image prompts to ensure the visuals match the description.
 * Write the text in a kid-friendly style corresponding to the target age group.
 * Everything MUST be in English.

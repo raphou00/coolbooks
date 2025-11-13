@@ -2,7 +2,7 @@ import { type NextRequest, NextResponse } from "next/server";
 import { getTranslations } from "next-intl/server";
 import { stripe } from "@/lib/stripe";
 import type Stripe from "stripe";
-import { createSession, getUser } from "@/lib/auth";
+import { getUser } from "@/lib/auth";
 import db from "@/lib/db";
 
 export const GET = async (req: NextRequest) => {
@@ -77,9 +77,7 @@ export const GET = async (req: NextRequest) => {
             },
         });
 
-        await createSession(user.user.id);
-
-        return NextResponse.redirect(new URL("/", req.url));
+        return NextResponse.redirect(new URL("/?payment=true", req.url));
     } catch (err) {
         console.error(err);
         return NextResponse.json({

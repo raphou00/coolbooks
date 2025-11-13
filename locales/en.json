@@ -16,7 +16,8 @@
             "password-placeholder": "Enter your password...",
             "forgot": "Forgot Password?",
             "submit": "Login",
-            "register": "Don't have an account?"
+            "register": "Don't have an account?",
+            "or": "or"
         },
         "register": {
             "title": "Register",
@@ -29,7 +30,8 @@
             "password-placeholder": "Enter your password...",
             "submit": "Register",
             "login": "Already have an account?",
-            "legal": "By creating an account, you agree to the <terms>Terms of Service</terms> and <privacy>Privacy Policy</privacy>"
+            "legal": "By creating an account, you agree to the <terms>Terms of Service</terms> and <privacy>Privacy Policy</privacy>",
+            "or": "or"
         },
         "logout": {
             "title": "Logout",
@@ -144,12 +146,10 @@
             "skin-tone": "Skin Tone",
             "themes": "Themes",
             "art-style": "Art Style",
-            "setting": "Setting",
-            "setting-placeholder": "In a fairy castle...",
             "prompt": "Describe your story",
-            "prompt-placeholder": "Toto playing football...",
+            "prompt-placeholder": "Toto is playing football, in the park with his friends, warm colors, fun...",
             "public": "Public",
-            "public-tip": "if enable your book will be visible to everyone",
+            "public-tip": "If enable your book will be visible to everyone",
             "create": "Generate",
             "boy": "Boy",
             "girl": "Girl",
@@ -173,7 +173,10 @@
             "education": "Education",
             "friendship": "Friendship",
             "magic": "Magic",
-            "bedtime": "Bedtime"
+            "bedtime": "Bedtime",
+            "no-credits": "No more credits",
+            "no-credits-text": "You dont have enough credits to generate books, buy more to unlock this feature",
+            "no-credits-button": "Buy more credits"
         },
         "studio": {
             "title": "Studio",
@@ -190,7 +193,7 @@
             "title-placeholder": "Title...",
             "submit": "Save",
             "public": "Public",
-            "public-tip": "if enable your book will be visible to everyone",
+            "public-tip": "If enable your book will be visible to everyone",
             "page": "Page",
             "text": "Text",
             "age": "Age",
@@ -204,7 +207,8 @@
             "bedtime": "Bedtime",
             "read": "Read",
             "delete": "Delete",
-            "generating": "Generating book..."
+            "generating": "Generating book...",
+            "generating-tip": "This can last up to 2 minutes"
         },
         "search": {
             "title": "{query}",
@@ -294,6 +298,21 @@
             "delete-book-text": "Are you sure you want to delete this book? This action cannot be undone.",
             "delete": "Delete",
             "cancel": "Cancel"
+        },
+        "account-billing": {
+            "title": "Billing",
+            "description": "Manage your billing information",
+            "free": "Free",
+            "basic": "Basic",
+            "family": "Family",
+            "premium": "Premium",
+            "plan": "Plan",
+            "credits": "Credits",
+            "payment-failed": "⚠️ Payment failed. Please update your payment method.",
+            "free-trial": "Free trial",
+            "manage": "Manage Subscription",
+            "upgrade": "Upgrade plan",
+            "manage-tip": "Click \"Manage Subscription\" to view invoices, update payment method, or cancel your plan."
         }
     },
     "emails": {
@@ -384,14 +403,13 @@
         "language": "Language",
         "home": "Home",
         "pricing": "Pricing",
-        "my-books": "My Books",
         "new-book": "New Book",
-        "studio": "Studio",
+        "my-books": "My Books",
         "me": "Me",
         "subscribe": "Subscribe",
         "current-plan": "Current Plan:",
         "credits": "Credits remaining",
-        "billing": "Manage Billing & Plan",
+        "billing": "Billing & Plan",
         "latest": "Latest",
         "oldest": "Oldest",
         "popular": "Popular"

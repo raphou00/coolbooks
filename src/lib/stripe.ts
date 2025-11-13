@@ -37,18 +37,48 @@ export const handleSubscriptionChange = async (
                 subscriptionStatus: status,
             },
         });
-    } else if (status === "canceled" || status === "unpaid") {
+    } else if (status === "past_due" || status === "incomplete") {
         await db.user.update({
             where: {
                 id: user.id,
             },
             data: {
-                stripeSubscriptionId: null,
-                stripeProductId: null,
                 subscriptionStatus: status,
             },
         });
     }
+};
+
+export const handleSubscriptionDeleted = async (
+    subscription: Stripe.Subscription,
+    user: User
+) => {
+    await db.user.update({
+        where: {
+            id: user.id,
+        },
+        data: {
+            stripeSubscriptionId: null,
+            stripeProductId: null,
+            subscriptionStatus: "canceled",
+        },
+    });
+};
+
+export const handlePaymentFailed = async (
+    invoice: Stripe.Invoice,
+    user: User
+) => {
+    await db.user.update({
+        where: {
+            id: user.id,
+        },
+        data: {
+            subscriptionStatus: "past_due",
+        },
+    });
+
+    console.log(`Payment failed for user ${user.email}`);
 };
 
 export const handleInvoicePayment = async (
@@ -61,14 +91,24 @@ export const handleInvoicePayment = async (
         const lineItem = invoice.lines.data[0];
         const priceId = lineItem.price!.id;
 
+        const priceBasic = await stripe.prices.search({
+            query: `product:"${productIdBasic}"`,
+        });
+        const priceFamily = await stripe.prices.search({
+            query: `product:"${productIdFamily}"`,
+        });
+        const pricePremium = await stripe.prices.search({
+            query: `product:"${productIdPremium}"`,
+        });
+
         switch (priceId) {
-            case productIdBasic:
+            case priceBasic.data[0].id:
                 creditsToAdd = 5;
                 break;
-            case productIdFamily:
+            case priceFamily.data[0].id:
                 creditsToAdd = 15;
                 break;
-            case productIdPremium:
+            case pricePremium.data[0].id:
                 creditsToAdd = 30;
                 break;
         }
@@ -89,10 +129,14 @@ export const handleInvoicePayment = async (
 };
 
 export const getSubscription = async (t: T) => {
-    const priceBasic = await stripe.prices.list({ product: productIdBasic });
-    const priceFamily = await stripe.prices.list({ product: productIdFamily });
-    const pricePremium = await stripe.prices.list({
-        product: productIdPremium,
+    const priceBasic = await stripe.prices.search({
+        query: `product:"${productIdBasic}"`,
+    });
+    const priceFamily = await stripe.prices.search({
+        query: `product:"${productIdFamily}"`,
+    });
+    const pricePremium = await stripe.prices.search({
+        query: `product:"${productIdPremium}"`,
     });
 
     const tiers = [

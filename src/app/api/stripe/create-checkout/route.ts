@@ -11,7 +11,7 @@ export const GET = async (req: NextRequest) => {
         locale,
     });
     try {
-        const priceId = req.nextUrl.searchParams.get("productId");
+        const priceId = req.nextUrl.searchParams.get("priceId");
         const user = await getUser();
 
         if (!user || !user.user) {

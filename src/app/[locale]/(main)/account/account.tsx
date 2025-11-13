@@ -15,9 +15,6 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import { useTranslations } from "next-intl";
-import axios from "axios";
-import toast from "react-hot-toast";
 
 type AccoutProps = {
     user: User;
@@ -25,66 +22,29 @@ type AccoutProps = {
 };
 
 export const AccoutMenu: React.FC<AccoutProps> = ({ user, children }) => {
-    const t = useTranslations("links");
     const pathname = usePathname();
     const accountLinks = useGetAccountLinks();
     const router = useRouter();
 
-    const openPortal = async () => {
-        const res = await axios.get("/api/stripe/portal");
-        if (!res.data.success) toast.error(res.data.message);
-        else window.location.href = res.data.redirect;
-    };
-
     return (
         <div className="mx-auto mt-12 max-w-4xl space-y-4">
             <div className="flex flex-col w-full">
-                <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-x-4">
-                        <Avatar userName={user.name} className="size-14 p-3" />
+                <div className="flex items-center gap-x-4">
+                    <Avatar userName={user.name} className="size-14 p-3" />
 
-                        <div className="flex flex-col">
-                            <Title
-                                text={
-                                    accountLinks.find(
-                                        (link) => link.path === pathname
-                                    )?.title ?? ""
-                                }
-                                className="text-2xl w-fit"
-                            />
-                            <p className="text-sm text-base-content/80">
-                                {user.name}
-                            </p>
-                        </div>
-                    </div>
-
-                    <button
-                        onClick={openPortal}
-                        className="px-3 py-1.5 border-2 hover:bg-accent/5 rounded-lg cursor-pointer shadow hover:shadow-lg"
-                    >
-                        <div className="flex flex-col justify-center">
-                            {user.subscriptionStatus === "active" ?
-                                <>
-                                    <span className="font-bold">
-                                        {t("current-plan")}{" "}
-                                        <span className="text-primary">
-                                            {user.stripeSubscriptionId}
-                                        </span>
-                                    </span>
-                                    <span className="text-sm">
-                                        <span className="text-yellow-500">
-                                            {user.credits}
-                                        </span>{" "}
-                                        {t("credits")}
-                                    </span>
-                                </>
-                            :   <span className="font-bold text-primary">
-                                    {t("subscribe")}
-                                </span>
+                    <div className="flex flex-col">
+                        <Title
+                            text={
+                                accountLinks.find(
+                                    (link) => link.path === pathname
+                                )?.title ?? ""
                             }
-                            <span className="text-sm">{t("billing")}</span>
-                        </div>
-                    </button>
+                            className="text-2xl w-fit"
+                        />
+                        <p className="text-sm text-base-content/80">
+                            {user.name}
+                        </p>
+                    </div>
                 </div>
 
                 <div className="w-full hidden max-md:block mt-2">

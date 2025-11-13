@@ -1,18 +1,19 @@
 import { useTranslations } from "next-intl";
-import { Lock, Settings2, Coins, BookHeart, Palette } from "lucide-react";
+import { Lock, Settings2, Coins, BookHeart, Home } from "lucide-react";
+import type { User } from "lucia";
 
-export const useGetLinks = () => {
+export const useGetLinks = (user: User | null) => {
     const t = useTranslations("links");
     return [
         {
             title: t("home"),
             path: "/",
-            icon: BookHeart,
+            icon: Home,
         },
         {
-            title: t("studio"),
-            path: "/studio",
-            icon: Palette,
+            title: t("my-books"),
+            path: user ? "/studio" : "/login?redirect=/studio",
+            icon: BookHeart,
         },
     ];
 };
@@ -59,6 +60,11 @@ export const useGetAccountLinks = () => {
             icon: Lock,
         },
         {
+            title: t("billing"),
+            path: "/account/billing",
+            icon: Coins,
+        },
+        {
             title: t("socials"),
             path: "/account/socials",
             icon: Coins,
@@ -82,7 +88,7 @@ export const useGetFooterLinks = () => {
                     path: "/",
                 },
                 {
-                    title: t("studio"),
+                    title: t("my-books"),
                     path: "/studio",
                 },
                 {

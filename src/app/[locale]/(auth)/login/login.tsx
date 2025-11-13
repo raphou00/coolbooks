@@ -52,11 +52,11 @@ const Login: React.FC = () => {
                 onSubmit={handleSubmit(submit)}
                 className="w-full max-w-md space-y-2"
             >
-                <div className="flex justify-between gap-x-2">
+                <div className="flex justify-between gap-x-2 pt-2">
                     <button
                         type="button"
                         onClick={google}
-                        className="btn text-lg w-full"
+                        className="btn btn-lg w-full"
                     >
                         <Image
                             src="/images/icons/google.svg"
@@ -69,7 +69,7 @@ const Login: React.FC = () => {
                     </button>
                 </div>
 
-                <div className="divider my-1" />
+                <div className="divider px-4 uppercase">{t("or")}</div>
 
                 <FormReponse success={state.success} message={state.message} />
 

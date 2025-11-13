@@ -33,7 +33,7 @@ type HeaderProps = {
 const Header: React.FC<HeaderProps> = ({ user, children }) => {
     const [localeOpen, setLocaleOpen] = useState<boolean>(false);
     const t = useTranslations("links");
-    const links = useGetLinks();
+    const links = useGetLinks(user);
     const router = useRouter();
     const pathname = usePathname();
     const scroll = useScroll(0);

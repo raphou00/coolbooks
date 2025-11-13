@@ -2,7 +2,6 @@ import * as z from "zod";
 import { type T } from "@/lib/types";
 import {
     maxPromptLength,
-    maxSettingLength,
     maxUsernameLength,
     minPromptLength,
     minUsernameLength,
@@ -67,12 +66,6 @@ const bookSchema = (t: T) =>
                 message: t("messages.required"),
             })
             .min(1, { message: t("messages.required") }),
-        setting: z
-            .string()
-            .trim()
-            .max(maxSettingLength, {
-                message: t("messages.max", { max: maxPromptLength }),
-            }),
         public: z.boolean(),
         prompt: z
             .string()

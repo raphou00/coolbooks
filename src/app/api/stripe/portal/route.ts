@@ -57,6 +57,7 @@ export const GET = async (req: NextRequest) => {
                 business_profile: {
                     headline: t("messages.billing"),
                 },
+                default_return_url: `${env.APP_URL}/pricing`,
                 features: {
                     subscription_cancel: {
                         enabled: true,

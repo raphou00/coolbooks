@@ -1,7 +1,11 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { redirect } from "next/navigation";
+import Image from "next/image";
+import Link from "next/link";
+import type { User } from "lucia";
 import {
     Check,
     CheckCircle2,
@@ -19,6 +23,8 @@ import FormInput from "@/components/ui/form-input";
 import FormButton from "@/components/ui/form-button";
 import FormReponse from "@/components/ui/form-response";
 import FormSelect from "@/components/ui/form-select";
+import Modal from "@/components/ui/modal";
+import Title from "@/components/ui/title";
 import { type ActionsState } from "@/lib/types";
 import bookSchema, {
     ageOptions,
@@ -30,8 +36,15 @@ import bookSchema, {
     themesOptions,
     type BookSchema,
 } from "@/schema/book";
-import Image from "next/image";
-import { redirect } from "next/navigation";
+
+type NewBookProps = {
+    user: User;
+};
+
+type NoCreditsModalProps = {
+    open: boolean;
+    setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+};
 
 const genderImages: Record<string, string> = {
     boy: "👦",
@@ -53,9 +66,10 @@ const artStyleImages: Record<string, string> = {
     anime: "/images/artstyles/anime.png",
 };
 
-const NewBook: React.FC = () => {
+const NewBook: React.FC<NewBookProps> = ({ user }) => {
     const t = useTranslations("pages.new-book");
     const tBook = useTranslations();
+    const [open, setOpen] = useState<boolean>(false);
     const [currentStep, setCurrentStep] = useState(1);
     const totalSteps = 3;
 
@@ -100,7 +114,7 @@ const NewBook: React.FC = () => {
                 ];
                 break;
             case 2:
-                fieldsToValidate = ["artStyle", "themes", "setting"];
+                fieldsToValidate = ["artStyle", "themes"];
                 break;
             case 3:
                 fieldsToValidate = ["prompt", "public"];
@@ -133,6 +147,12 @@ const NewBook: React.FC = () => {
             );
         }
     };
+
+    useEffect(() => {
+        if (user.credits == 0) {
+            setOpen(true);
+        }
+    }, [user]);
 
     const StepIndicator = () => (
         <div className="flex items-center justify-center my-6">
@@ -205,7 +225,7 @@ const NewBook: React.FC = () => {
                                         <label
                                             key={g}
                                             className={cn(
-                                                "cursor-pointer flex flex-col items-center border-2 border-neutral/30 rounded-xl p-2 transition",
+                                                "cursor-pointer flex flex-col items-center border-2 border-neutral/30 rounded-2xl p-2 transition",
                                                 "hover:shadow-md relative group",
                                                 gender == g && "border-primary"
                                             )}
@@ -230,7 +250,7 @@ const NewBook: React.FC = () => {
                                 </div>
                             </div>
 
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-x-2">
                                 <FormSelect
                                     name="age"
                                     label={t("age")}
@@ -375,13 +395,6 @@ const NewBook: React.FC = () => {
                                     ))}
                                 </div>
                             </div>
-
-                            <FormInput
-                                type="text"
-                                label={t("setting")}
-                                placeholder={t("setting-placeholder")}
-                                {...register("setting")}
-                            />
                         </div>
                     </div>
                 );
@@ -457,57 +470,94 @@ const NewBook: React.FC = () => {
     };
 
     return (
-        <div className="flex flex-col items-center justify-center mx-auto gap-y-6 w-full p-6">
-            <div className="w-full">
-                <Form title={t("title")} logo={false}>
-                    <StepIndicator />
+        <>
+            <div className="flex flex-col items-center justify-center mx-auto gap-y-6 w-full p-6">
+                <div className="w-full">
+                    <Form title={t("title")} logo={false}>
+                        <StepIndicator />
 
-                    <form
-                        onSubmit={handleSubmit(submit)}
-                        className="w-full flex flex-col gap-y-6"
-                    >
-                        <FormReponse
-                            success={state.success}
-                            message={state.message}
-                        />
+                        <form
+                            onSubmit={handleSubmit(submit)}
+                            className="w-full flex flex-col gap-y-6"
+                        >
+                            <FormReponse
+                                success={state.success}
+                                message={state.message}
+                            />
 
-                        {renderStepContent()}
+                            {renderStepContent()}
 
-                        <div className="flex justify-between items-center">
-                            <button
-                                className="btn btn-lg max-md:btn-circle flex items-center gap-1"
-                                onClick={prevStep}
-                                disabled={currentStep === 1}
-                                type="button"
-                            >
-                                <ChevronLeft className="size-5" />
-                                <span className="max-md:hidden">
-                                    {t("prev")}
-                                </span>
-                            </button>
-
-                            {currentStep < totalSteps ?
+                            <div className="flex justify-between items-center">
                                 <button
                                     className="btn btn-lg max-md:btn-circle flex items-center gap-1"
-                                    onClick={nextStep}
+                                    onClick={prevStep}
+                                    disabled={currentStep === 1}
                                     type="button"
                                 >
+                                    <ChevronLeft className="size-5" />
                                     <span className="max-md:hidden">
-                                        {t("next")}
+                                        {t("prev")}
                                     </span>
-                                    <ChevronRight className="size-5" />
                                 </button>
-                            :   <FormButton
-                                    title={t("create")}
-                                    className="mt-0 w-fit btn-primary"
-                                    loading={loading}
-                                />
-                            }
-                        </div>
-                    </form>
-                </Form>
+
+                                {currentStep < totalSteps ?
+                                    <button
+                                        className="btn btn-lg max-md:btn-circle flex items-center gap-1"
+                                        onClick={nextStep}
+                                        type="button"
+                                    >
+                                        <span className="max-md:hidden">
+                                            {t("next")}
+                                        </span>
+                                        <ChevronRight className="size-5" />
+                                    </button>
+                                :   <FormButton
+                                        title={t("create")}
+                                        className="mt-0 w-fit btn-primary"
+                                        loading={loading}
+                                    />
+                                }
+                            </div>
+                        </form>
+                    </Form>
+                </div>
             </div>
-        </div>
+
+            <NoCreditsModal open={open} setOpen={setOpen} />
+        </>
+    );
+};
+
+const NoCreditsModal: React.FC<NoCreditsModalProps> = ({ open, setOpen }) => {
+    const t = useTranslations("pages.new-book");
+
+    return (
+        <Modal isOpen={open} setIsOpen={setOpen} closeButton={false}>
+            <div className="flex flex-col items-center justify-center mx-auto w-full max-w-lg">
+                <Image
+                    src="/images/book-sad.svg"
+                    width={400}
+                    height={400}
+                    alt="404"
+                    className="mx-auto h-40"
+                />
+
+                <Title
+                    text={t("no-credits")}
+                    className="text-2xl mb-6 text-center"
+                    underline
+                />
+
+                <p className="text-center max-w-sm">{t("no-credits-text")}</p>
+
+                <div className="w-full flex justify-center mt-4">
+                    <Link href="/pricing" className="btn btn-secondary">
+                        <span>{t("no-credits-button")}</span>
+                        <ChevronRight className="size-5" />
+                    </Link>
+                </div>
+            </div>
+        </Modal>
     );
 };
 
