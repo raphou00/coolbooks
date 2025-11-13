@@ -34,7 +34,7 @@ export const POST = async (req: NextRequest) => {
         const eventData = event.data.object as
             | Stripe.Subscription
             | Stripe.Invoice;
-        const customerId = eventData.customer;
+        const customerId = eventData.metadata?.userId;
 
         if (!customerId) {
             console.error("Missing customer ID");
@@ -46,7 +46,7 @@ export const POST = async (req: NextRequest) => {
 
         const user = await db.user.findUnique({
             where: {
-                stripeCustomerId: customerId.toString(),
+                id: customerId.toString(),
             },
         });
 
