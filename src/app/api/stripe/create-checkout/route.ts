@@ -42,6 +42,14 @@ export const GET = async (req: NextRequest) => {
             customer: user.user.stripeCustomerId || undefined,
             client_reference_id: user.user.id,
             locale: locale as Locale,
+            metadata: {
+                userId: user.user.id,
+            },
+            subscription_data: {
+                metadata: {
+                    userId: user.user.id,
+                },
+            },
         });
 
         return NextResponse.json({
