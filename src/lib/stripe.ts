@@ -87,8 +87,12 @@ export const handleInvoicePayment = async (
 ) => {
     let creditsToAdd = 0;
 
-    const subscriptionId = (invoice as unknown as { subscription: string })
-        .subscription;
+    const subscriptionId =
+        invoice.parent?.subscription_details?.subscription.toString();
+    if (!subscriptionId) {
+        return;
+    }
+
     const subscription = await stripe.subscriptions.retrieve(subscriptionId);
     const priceId = subscription.items.data[0]?.price.id;
 
