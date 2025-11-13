@@ -34,7 +34,7 @@ const TemplateEmail: React.FC<TemplateEmailProps> = async ({
             <Html>
                 <Head />
                 <Preview>{body}</Preview>
-                <Body className="mx-auto my-0 bg-stone-50">
+                <Body className="mx-auto my-0 bg-stone-50 p-4">
                     <Container className="mx-auto my-0 max-w-2xl">
                         <Section className="mt-8">
                             <Img
