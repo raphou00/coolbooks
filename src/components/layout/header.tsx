@@ -52,8 +52,9 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
         <>
             <div className="drawer">
                 <input id="drawer" type="checkbox" className="drawer-toggle" />
-                <div className="drawer-content flex flex-col">
-                    <header className="fixed w-full top-0 z-60">
+                <div className="drawer-content">
+                    {children}
+                    <div className="fixed w-full top-0 z-60">
                         <div
                             className={cn(
                                 "w-full",
@@ -222,9 +223,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                 </div>
                             </div>
                         </div>
-                    </header>
-
-                    {children}
+                    </div>
                 </div>
                 <div className="drawer-side z-[9999]">
                     <label

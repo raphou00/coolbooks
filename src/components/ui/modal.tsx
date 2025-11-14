@@ -49,7 +49,7 @@ const Modal: React.FC<ModalProps> = ({
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     onClick={() => setIsOpen(!closeButton)}
-                    className="fixed inset-0 h-screen w-full flex items-center justify-center z-[999] cursor-pointer bg-base-300/20 backdrop-blur sm:p-2"
+                    className="fixed inset-0 h-screen w-full flex items-center justify-center z-70 cursor-pointer bg-base-300/20 backdrop-blur sm:p-2"
                 >
                     <motion.div
                         initial={{ scale: 0, rotate: "12.5deg" }}
@@ -57,7 +57,7 @@ const Modal: React.FC<ModalProps> = ({
                         exit={{ scale: 0, rotate: "0deg" }}
                         onClick={(e) => e.stopPropagation()}
                         className={cn(
-                            "relative z-[999] w-fit max-w-2xl max-sm:w-screen max-sm:h-screen cursor-default sm:rounded-2xl bg-base-100 p-6 shadow-xl",
+                            "relative z-[9999] w-fit max-w-2xl max-sm:w-[calc(100%-1.5rem)] cursor-default rounded-2xl bg-base-100 p-6 shadow-xl",
                             className
                         )}
                     >

@@ -182,7 +182,7 @@ const Thanks: React.FC<ThanksProps> = ({ open, setOpen }) => {
                     </div>
                 </div>
 
-                <div className="flex flex-col sm:flex-row gap-3">
+                <div className="flex gap-3">
                     <Link href="/studio/new" className="btn btn-primary w-1/2">
                         {t("cta-primary")}
                     </Link>

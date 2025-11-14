@@ -89,7 +89,7 @@ const NewBook: React.FC<NewBookProps> = ({ user }) => {
     } = useForm<BookSchema>({
         resolver: zodResolver(bookSchema(tBook)),
         defaultValues: {
-            public: false,
+            public: true,
             themes: [themesOptions[0]],
             artStyle: artStyleOptions[0],
         },
