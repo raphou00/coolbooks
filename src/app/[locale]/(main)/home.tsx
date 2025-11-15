@@ -8,11 +8,10 @@ import {
     motion,
     animate,
 } from "framer-motion";
-import { Goudy_Bookletter_1911 } from "next/font/google";
+import { Lexend as Font } from "next/font/google";
 import { ArrowRight } from "lucide-react";
 import type { User } from "lucia";
 import { useTranslations } from "next-intl";
-import { title } from "@/config/seo";
 import { cn } from "@/lib/utils";
 import Title from "@/components/ui/title";
 import Modal from "@/components/ui/modal";
@@ -29,9 +28,9 @@ type ThanksProps = {
     setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const font = Goudy_Bookletter_1911({
+const font = Font({
     subsets: ["latin"],
-    weight: "400",
+    weight: "900",
 });
 
 const COLORS_TOP = ["#6bc4d9", "#e89fdf"];
@@ -57,19 +56,29 @@ const Home: React.FC<HomeProps> = ({ user }) => {
 
     return (
         <>
-            <div className="space-y-5 pt-20">
+            <div className="w-full bg-gradient-to-r from-green-100 via-primary/20 to-secondary/20 px-4 py-2 rounded-2xl">
+                <div className="flex items-center justify-center text-center">
+                    <span className="mr-2">🎄</span>
+                    <p className="text-sm text-gray-800">
+                        {t("banner-pricing")}{" "}
+                        <Link href="/pricing" className="link">
+                            {t("banner-pricing-link")}
+                        </Link>
+                    </p>
+                </div>
+            </div>
+            <div className="space-y-5 mt-6">
                 <div className="grid grid-cols-2 max-[780px]:grid-cols-1 place-items-center">
                     <div className="relative z-10 flex flex-col items-start">
-                        <span className="inline-block rounded-full glass bg-accent/5 border border-neutral px-3 py-1.5 mb-3">
+                        <span className="inline-block rounded-full glass bg-primary/5 border border-neutral px-3 py-1.5 mb-3">
                             😍 {t("beta")}
                         </span>
                         <Title
-                            text={title}
+                            text={t("title")}
                             className={cn(
-                                "text-7xl lg:text-8xl mx-auto w-fit m-0 font-bold",
+                                "text-4xl lg:text-5xl mx-auto w-fit m-0 font-bold",
                                 font.className
                             )}
-                            underline
                         />
                         <p className="my-6 max-w-xl text-left text-base leading-relaxed lg:text-xl lg:leading-relaxed">
                             {t("description")}
@@ -96,7 +105,7 @@ const Home: React.FC<HomeProps> = ({ user }) => {
                             <ArrowRight className="transition-transform group-hover:-rotate-45 group-active:-rotate-12" />
                         </motion.a>
                     </div>
-                    <div className="home-container size-[400px] max-lg:size-[300px] max-[780px]:!hidden">
+                    <div className="home-container size-[400px] max-lg:size-[250px] max-[780px]:!hidden">
                         <Image
                             src="/images/2-kid-reading-a-book.jpg"
                             alt=""
@@ -108,6 +117,154 @@ const Home: React.FC<HomeProps> = ({ user }) => {
             </div>
             <Thanks open={open} setOpen={setOpen} />
         </>
+    );
+};
+
+export const Features: React.FC = () => {
+    const t = useTranslations("pages.home.features");
+    return (
+        <section className="mt-10 md:mt-16">
+            <div className="mb-8 flex flex-col items-start justify-between gap-4 md:flex-row md:items-end">
+                <h2 className="max-w-lg text-3xl font-bold sm:text-4xl md:text-5xl">
+                    {t("title")}{" "}
+                    <span className="text-slate-400">
+                        {t("titleHighlight")}
+                    </span>
+                </h2>
+            </div>
+
+            <div className="flex flex-col-reverse items-stretch gap-6 md:flex-row md:items-start">
+                <div className="flex-1">
+                    <div className="mb-4 grid w-full [90rem]:max-w-4xl grid-cols-12 gap-4 px-2 sm:px-0">
+                        <motion.div
+                            whileHover={{ scale: 0.98, rotate: "-1deg" }}
+                            className="group relative col-span-12 min-h-[220px] overflow-hidden rounded-2xl bg-slate-100 p-6 sm:min-h-[240px] md:col-span-4 md:p-8"
+                        >
+                            <h3 className="mx-auto text-center text-2xl font-semibold sm:text-3xl">
+                                <div>🌎</div>
+                                {t("cards.everywhere.title")}
+                            </h3>
+                            <div className="absolute bottom-0 left-3 right-3 top-[7rem] translate-y-8 rounded-t-2xl bg-gradient-to-br from-violet-400 to-indigo-400 p-4 transition-transform duration-[250ms] group-hover:translate-y-4 group-hover:rotate-[2deg] sm:left-4 sm:right-4 sm:top-[7.5rem]">
+                                <span className="block text-center font-semibold text-indigo-50">
+                                    {t("cards.everywhere.body")}
+                                </span>
+                            </div>
+                        </motion.div>
+
+                        <motion.div
+                            whileHover={{ scale: 0.98, rotate: "-1deg" }}
+                            className="group relative col-span-12 min-h-[220px] overflow-hidden rounded-2xl bg-slate-100 p-6 sm:min-h-[240px] md:col-span-8 md:p-8"
+                        >
+                            <h3 className="mx-auto text-center text-2xl font-semibold sm:text-3xl">
+                                <div>🚀</div>
+                                {t("cards.instant.title")}
+                            </h3>
+                            <div className="absolute bottom-0 left-3 right-3 top-[7rem] translate-y-8 rounded-t-2xl bg-gradient-to-br from-amber-400 to-orange-400 p-4 transition-transform duration-[250ms] group-hover:translate-y-4 group-hover:rotate-[2deg] sm:left-4 sm:right-4 sm:top-[7.5rem]">
+                                <span className="block text-center font-semibold text-orange-50">
+                                    {t("cards.instant.body")}
+                                </span>
+                            </div>
+                        </motion.div>
+                    </div>
+
+                    <div className="grid w-full [90rem]:max-w-4xl grid-cols-12 gap-4 px-2 sm:px-0">
+                        <motion.div
+                            whileHover={{ scale: 0.98, rotate: "-1deg" }}
+                            className="group relative col-span-12 min-h-[220px] overflow-hidden rounded-2xl bg-slate-100 p-6 sm:min-h-[240px] md:col-span-8 md:p-8"
+                        >
+                            <h3 className="mx-auto text-center text-2xl font-semibold sm:text-3xl">
+                                <div>🎨</div>
+                                {t("cards.customizable.title")}
+                            </h3>
+                            <div className="absolute bottom-0 left-3 right-3 top-[7rem] translate-y-8 rounded-t-2xl bg-gradient-to-br from-green-400 to-emerald-400 p-4 transition-transform duration-[250ms] group-hover:translate-y-4 group-hover:rotate-[2deg] sm:left-4 sm:right-4 sm:top-[7.5rem]">
+                                <span className="block text-center font-semibold text-emerald-50">
+                                    {t("cards.customizable.body")}
+                                </span>
+                            </div>
+                        </motion.div>
+
+                        <motion.div
+                            whileHover={{ scale: 0.98, rotate: "-1deg" }}
+                            className="group relative col-span-12 min-h-[220px] overflow-hidden rounded-2xl bg-slate-100 p-6 sm:min-h-[240px] md:col-span-4 md:p-8"
+                        >
+                            <h3 className="mx-auto text-center text-2xl font-semibold sm:text-3xl">
+                                <div>🎓</div>
+                                {t("cards.educational.title")}
+                            </h3>
+                            <div className="absolute bottom-0 left-3 right-3 top-[7rem] translate-y-8 rounded-t-2xl bg-gradient-to-br from-pink-400 to-red-400 p-4 transition-transform duration-[250ms] group-hover:translate-y-4 group-hover:rotate-[2deg] sm:left-4 sm:right-4 sm:top-[7.5rem]">
+                                <span className="block text-center font-semibold text-red-50">
+                                    {t("cards.educational.body")}
+                                </span>
+                            </div>
+                        </motion.div>
+                    </div>
+                </div>
+
+                <div className="w-full max-[90rem]:hidden md:w-auto md:ml-4 rounded-2xl overflow-hidden">
+                    <Image
+                        src="/images/a-kid-holding-a-book--looking-on-the-right.jpg"
+                        width={683}
+                        height={1024}
+                        alt="a-kid-holding-a-book--looking-on-the-right"
+                        className="mx-auto my-0 w-auto max-h-[496px] rounded-2xl transition hover:scale-105"
+                        priority
+                    />
+                </div>
+            </div>
+        </section>
+    );
+};
+
+export const HowItWorks: React.FC = () => {
+    const t = useTranslations("pages.home.how-it-works");
+    return (
+        <section className="w-full py-12 sm:py-16 lg:py-20">
+            <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+                <Title
+                    text={t("title")}
+                    className="mx-auto w-fit text-2xl font-bold sm:text-3xl md:text-4xl"
+                    underline
+                />
+
+                <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                    <article className="group rounded-2xl bg-slate-100 p-6 shadow-md ring-1 ring-neutral/20 transition-transform duration-200 ease-out hover:-translate-y-0.5 hover:shadow-lg">
+                        <div className="mb-3 text-center text-3xl font-serif text-slate-800">
+                            {t("card1.roman")}
+                        </div>
+                        <h3 className="text-center text-xl font-semibold text-slate-900">
+                            {t("card1.heading")}
+                        </h3>
+                        <p className="mt-2 text-center text-slate-600">
+                            {t("card1.text")}
+                        </p>
+                    </article>
+
+                    <article className="group rounded-2xl bg-slate-100 p-6 shadow-md ring-1 ring-neutral/20 transition-transform duration-200 ease-out hover:-translate-y-0.5 hover:shadow-lg">
+                        <div className="mb-3 text-center text-3xl font-serif text-slate-800">
+                            {t("card2.roman")}
+                        </div>
+                        <h3 className="text-center text-xl font-semibold text-slate-900">
+                            {t("card2.heading")}
+                        </h3>
+                        <p className="mt-2 text-center text-slate-600">
+                            {t("card2.text")}
+                        </p>
+                    </article>
+
+                    <article className="group rounded-2xl bg-slate-100 p-6 shadow-md ring-1 ring-neutral/20 transition-transform duration-200 ease-out hover:-translate-y-0.5 hover:shadow-lg">
+                        <div className="mb-3 text-center text-3xl font-serif text-slate-800">
+                            {t("card3.roman")}
+                        </div>
+                        <h3 className="text-center text-xl font-semibold text-slate-900">
+                            {t("card3.heading")}
+                        </h3>
+                        <p className="mt-2 text-center text-slate-600">
+                            {t("card3.text")}
+                        </p>
+                    </article>
+                </div>
+            </div>
+        </section>
     );
 };
 

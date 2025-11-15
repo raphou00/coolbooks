@@ -54,7 +54,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                 <input id="drawer" type="checkbox" className="drawer-toggle" />
                 <div className="drawer-content">
                     {children}
-                    <div className="fixed w-full top-0 z-60">
+                    <div className={cn("fixed w-full top-0 z-60")}>
                         <div
                             className={cn(
                                 "w-full",

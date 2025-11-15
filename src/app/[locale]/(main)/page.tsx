@@ -1,9 +1,9 @@
 import { getTranslations } from "next-intl/server";
 import db from "@/lib/db";
+import { getUser } from "@/lib/auth";
 import Main from "@/components/layout/main";
 import Books from "@/components/ui/books";
-import Home from "./home";
-import { getUser } from "@/lib/auth";
+import Home, { Features, HowItWorks } from "./home";
 
 type Filter = {
     artStyle?: string;
@@ -27,7 +27,7 @@ const Page = async () => {
                 user: { select: { name: true } },
             },
             orderBy: { createdAt: "desc" },
-            take: 5,
+            take: 10,
         });
 
     const [booksCartoon, booksAdventure, booksAnime, booksEducation] =
@@ -39,12 +39,14 @@ const Page = async () => {
         ]);
 
     return (
-        <Main className="flex my-0 pt-0" gradientVariant="floatingGradient">
+        <Main className="flex" gradientVariant="floatingGradient">
             <Home user={user?.user || null} />
-            <Books title={t("cartoon") + " 🎉"} books={booksCartoon} />
-            <Books title={t("adventure") + " 🕵️‍♂️"} books={booksAdventure} />
-            <Books title={t("anime") + " 💫"} books={booksAnime} />
-            <Books title={t("education") + " 📚"} books={booksEducation} />
+            <Books title={"🎉 " + t("cartoon")} books={booksCartoon} />
+            <Books title={"🕵️‍♂️️ " + t("adventure")} books={booksAdventure} />
+            <Features />
+            <Books title={"💫 " + t("anime")} books={booksAnime} />
+            <Books title={"📚 " + t("education")} books={booksEducation} />
+            <HowItWorks />
         </Main>
     );
 };

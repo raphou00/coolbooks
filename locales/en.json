@@ -126,7 +126,8 @@
             "submit": "Delete"
         },
         "home": {
-            "description": "Every Child Deserves Their Own Adventure",
+            "title": "Create a personalized book for your child in 30 seconds",
+            "description": "Recommended by parents, designed to spark imagination and reading.",
             "beta": "#1 Kids E-Book plateform",
             "create": "Create your own book",
             "by": "By",
@@ -135,6 +136,8 @@
             "education": "Education",
             "hero": "Hero",
             "adventure": "Adventure",
+            "banner-pricing": "20% off all subscriptions until December 25",
+            "banner-pricing-link": "See more!",
             "thanks": {
                 "title": "Welcome to Cool Books Premium!",
                 "subtitle": "Your subscription is now active",
@@ -144,6 +147,47 @@
                 "feature3": "Access to all AI features",
                 "cta-primary": "Start Creating",
                 "cta-secondary": "View My Account"
+            },
+            "features": {
+                "title": "Designed for parents",
+                "titleHighlight": "Loved by parents",
+                "cards": {
+                    "customizable": {
+                        "title": "Fully customizable",
+                        "body": "Name, avatar, illustration style, eye color, hairstyle, clothing, and more…"
+                    },
+                    "instant": {
+                        "title": "Instant creation",
+                        "body": "Describe the story and our AI turns it into a complete book in seconds."
+                    },
+                    "everywhere": {
+                        "title": "Available everywhere",
+                        "body": "Instant reading on your phone or tablet."
+                    },
+                    "educational": {
+                        "title": "Educational & motivating",
+                        "body": "Ideal for early reading development."
+                    }
+                }
+            },
+            "how-it-works": {
+                "title": "How it works ?",
+                "card1": {
+                    "roman": "I",
+                    "heading": "Create your account",
+                    "text": "Create your account and pick the plan that suits you."
+                },
+                "card2": {
+                    "roman": "II",
+                    "heading": "Story customization",
+                    "text": "Enter the name and appearance, then describe the story in a few words."
+                },
+                "card3": {
+                    "roman": "III",
+                    "heading": "Generate & read",
+                    "text": "Our AI generates your book (text + images) in seconds and it’s ready to read!"
+                },
+                "underlineLabel": "decorative underline"
             }
         },
         "book": {
@@ -263,6 +307,7 @@
             "popular": "Most popular",
             "subscribe": "Subscribe",
             "portal": "Open Portal",
+            "on-sale": "On sale",
             "subscriptions": {
                 "basic": {
                     "title": "Basic",

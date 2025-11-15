@@ -53,9 +53,12 @@ const Books: React.FC<BooksProps> = ({ title, books }) => {
     }, [books]);
 
     return (
-        <section className="mt-8">
+        <section className="mt-12">
             <div className="mb-4">
-                <Title text={title} className="text-left w-fit text-2xl" />
+                <Title
+                    text={title}
+                    className="text-left w-fit text-2xl font-bold sm:text-3xl md:text-4xl"
+                />
             </div>
             <div className="relative group">
                 <button
