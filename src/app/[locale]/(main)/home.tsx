@@ -69,7 +69,7 @@ const Home: React.FC<HomeProps> = ({ user }) => {
             </div>
             <div className="space-y-5 mt-6">
                 <div className="grid grid-cols-2 max-[780px]:grid-cols-1 place-items-center">
-                    <div className="relative z-10 flex flex-col items-start">
+                    <div className="flex flex-col items-start">
                         <span className="inline-block rounded-full glass bg-primary/5 border border-neutral px-3 py-1.5 mb-3">
                             😍 {t("beta")}
                         </span>
@@ -99,7 +99,7 @@ const Home: React.FC<HomeProps> = ({ user }) => {
                                     "/login?redirect=/studio/new"
                                 )
                             }
-                            className="group relative text-white flex w-fit items-center gap-1.5 rounded-full bg-gray-950/90 backdrop-blur-3xl px-4 py-2 transition-colors cursor-pointer hover:bg-gray-950/90"
+                            className="group text-white flex w-fit items-center gap-1.5 rounded-full bg-gray-950/90 backdrop-blur-3xl px-4 py-2 transition-colors cursor-pointer hover:bg-gray-950/90"
                         >
                             {t("create")}
                             <ArrowRight className="transition-transform group-hover:-rotate-45 group-active:-rotate-12" />
