@@ -38,9 +38,9 @@ const TemplateEmail: React.FC<TemplateEmailProps> = async ({
                     <Container className="mx-auto my-0 max-w-2xl">
                         <Section className="mt-8">
                             <Img
-                                src={`${domain}/favicon.svg`}
-                                width="60"
-                                height="60"
+                                src={`${domain}/favicon-96x96.png`}
+                                width="96"
+                                height="96"
                                 alt=""
                             />
                         </Section>
