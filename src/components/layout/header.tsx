@@ -5,15 +5,7 @@ import { useState } from "react";
 import { useTheme } from "next-themes";
 import type { User } from "lucia";
 import axios from "axios";
-import {
-    Coins,
-    Languages,
-    LogIn,
-    LogOut,
-    Menu,
-    PenBox,
-    Settings2,
-} from "lucide-react";
+import { Coins, LogIn, LogOut, Menu, PenBox, Settings2 } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
@@ -186,7 +178,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                                     </>
                                                 }
 
-                                                <div className="divider mx-auto my-1 w-full px-2" />
+                                                {/* <div className="divider mx-auto my-1 w-full px-2" />
 
                                                 <button
                                                     onClick={() =>
@@ -198,7 +190,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                                         <Languages className="size-6" />
                                                         {t("language")}
                                                     </span>
-                                                </button>
+                                                </button> */}
 
                                                 {user && (
                                                     <>

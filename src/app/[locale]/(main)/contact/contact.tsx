@@ -35,12 +35,12 @@ const Page: React.FC = () => {
                 <div className="relative w-full">
                     <Form
                         title={t("title")}
-                        description={t("description")}
                         logo={false}
+                        className="bg-secondary/10 px-2 md:px-5 lg:px-8 py-6 rounded-2xl max-w-lg"
                     >
                         <form
                             onSubmit={handleSubmit(submit)}
-                            className="w-full max-w-md space-y-2"
+                            className="w-full space-y-2"
                         >
                             <FormReponse
                                 success={state.success}

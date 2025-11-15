@@ -34,6 +34,7 @@ export const POST = async (req: NextRequest) => {
 
         await sendEmail(
             env.SENDER_EMAIL,
+            body.email,
             body.subject,
             body.message,
             <div>

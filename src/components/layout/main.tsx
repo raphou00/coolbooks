@@ -17,7 +17,7 @@ const Main: React.FC<MainProps> = ({
     return (
         <main
             className={cn(
-                "max-w-8xl min-h-screen w-full py-2 px-4 md:px-6 lg:px-8 xl:px-12 mx-auto mt-16",
+                "max-w-8xl min-h-screen w-full py-2 px-2 md:px-6 lg:px-8 xl:px-12 mx-auto mt-16",
                 className
             )}
         >

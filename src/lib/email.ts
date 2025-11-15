@@ -6,12 +6,13 @@ const resend = new Resend(env.RESEND_API_KEY);
 
 const sendEmail = async (
     to: string,
+    from: string,
     subject: string,
     text: string,
     react: React.ReactElement
 ) => {
     const params: CreateEmailOptions = {
-        from: title + " <" + env.SENDER_EMAIL + ">",
+        from: title + " <" + from + ">",
         to,
         subject,
         react,
