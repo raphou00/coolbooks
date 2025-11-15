@@ -7,6 +7,7 @@ import forgotPasswordSchema, {
 } from "@/schema/forgot-password";
 import ResetPasswordEmail from "@/components/emails/reset-password";
 import { ratelimitForgotPassword } from "@/lib/rate-limiter";
+import env from "@/lib/env";
 
 export const POST = async (req: NextRequest) => {
     const t = await getTranslations({
@@ -60,6 +61,7 @@ export const POST = async (req: NextRequest) => {
 
         await sendEmail(
             user.email,
+            env.SENDER_EMAIL,
             t("emails.forgot-password.title"),
             t("emails.forgot-password.body"),
             <ResetPasswordEmail t={t} code={code} name={user.name} />

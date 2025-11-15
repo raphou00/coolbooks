@@ -7,6 +7,7 @@ import { createSession } from "@/lib/auth";
 import registerSchema, { type RegisterSchema } from "@/schema/register";
 import Register from "@/components/emails/register";
 import { ratelimitRegiser } from "@/lib/rate-limiter";
+import env from "@/lib/env";
 
 export const POST = async (req: NextRequest) => {
     const t = await getTranslations({
@@ -49,6 +50,7 @@ export const POST = async (req: NextRequest) => {
 
         await sendEmail(
             user.email,
+            env.SENDER_EMAIL,
             t("emails.register.title"),
             t("emails.register.body"),
             <Register t={t} name={user.name} />
