@@ -3,7 +3,7 @@ import db from "@/lib/db";
 import { getUser } from "@/lib/auth";
 import Main from "@/components/layout/main";
 import Books from "@/components/ui/books";
-import Home, { Features, HowItWorks } from "./home";
+import Home, { Features, HowItWorks, VelocityText } from "./home";
 
 type Filter = {
     artStyle?: string;
@@ -41,6 +41,7 @@ const Page = async () => {
     return (
         <Main className="flex" gradientVariant="floatingGradient">
             <Home user={user?.user || null} />
+            <VelocityText />
             <Books title={"🎉 " + t("cartoon")} books={booksCartoon} />
             <Books title={"🕵️‍♂️️ " + t("adventure")} books={booksAdventure} />
             <Features />

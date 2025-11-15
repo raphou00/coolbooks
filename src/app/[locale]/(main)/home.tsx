@@ -58,8 +58,8 @@ const Home: React.FC<HomeProps> = ({ user }) => {
         <>
             <div className="w-full bg-gradient-to-r from-green-100 via-primary/20 to-secondary/20 px-4 py-2 rounded-2xl">
                 <div className="flex items-center justify-center text-center">
-                    <span className="mr-2">🎄</span>
-                    <p className="text-sm text-gray-800">
+                    <span className="mr-2 text-lg">🎄</span>
+                    <p className="max-sm:text-sm text-gray-800">
                         {t("banner-pricing")}{" "}
                         <Link href="/pricing" className="link">
                             {t("banner-pricing-link")}
@@ -70,13 +70,13 @@ const Home: React.FC<HomeProps> = ({ user }) => {
             <div className="space-y-5 mt-6">
                 <div className="grid grid-cols-2 max-[780px]:grid-cols-1 place-items-center">
                     <div className="flex flex-col items-start">
-                        <span className="inline-block rounded-full glass bg-primary/5 border border-neutral px-3 py-1.5 mb-3">
+                        <span className="inline-block rounded-full glass bg-primary/20 border border-neutral px-3 py-1.5 mb-3">
                             😍 {t("beta")}
                         </span>
                         <Title
                             text={t("title")}
                             className={cn(
-                                "text-4xl lg:text-5xl mx-auto w-fit m-0 font-bold",
+                                "text-2xl lg:text-5xl mx-auto w-fit m-0 font-bold",
                                 font.className
                             )}
                         />
@@ -99,7 +99,7 @@ const Home: React.FC<HomeProps> = ({ user }) => {
                                     "/login?redirect=/studio/new"
                                 )
                             }
-                            className="group text-white flex w-fit items-center gap-1.5 rounded-full bg-gray-950/90 backdrop-blur-3xl px-4 py-2 transition-colors cursor-pointer hover:bg-gray-950/90"
+                            className="group text-white flex w-fit items-center gap-1.5 rounded-full bg-gray-950/90 backdrop-blur-3xl px-4 py-2 transition cursor-pointer hover:bg-gray-950/90"
                         >
                             {t("create")}
                             <ArrowRight className="transition-transform group-hover:-rotate-45 group-active:-rotate-12" />
@@ -126,10 +126,8 @@ export const Features: React.FC = () => {
         <section className="mt-10 md:mt-16">
             <div className="mb-8 flex flex-col items-start justify-between gap-4 md:flex-row md:items-end">
                 <h2 className="max-w-lg text-3xl font-bold sm:text-4xl md:text-5xl">
-                    {t("title")}{" "}
-                    <span className="text-slate-400">
-                        {t("titleHighlight")}
-                    </span>
+                    {t("title")}
+                    <div className="text-slate-400">{t("titleHighlight")}</div>
                 </h2>
             </div>
 
@@ -144,7 +142,7 @@ export const Features: React.FC = () => {
                                 <div>🌎</div>
                                 {t("cards.everywhere.title")}
                             </h3>
-                            <div className="absolute bottom-0 left-3 right-3 top-[7rem] translate-y-8 rounded-t-2xl bg-gradient-to-br from-violet-400 to-indigo-400 p-4 transition-transform duration-[250ms] group-hover:translate-y-4 group-hover:rotate-[2deg] sm:left-4 sm:right-4 sm:top-[7.5rem]">
+                            <div className="absolute bottom-0 left-3 right-3 top-[5rem] translate-y-8 rounded-t-2xl bg-gradient-to-br from-violet-400 to-indigo-400 p-4 transition-transform duration-[250ms] group-hover:translate-y-4 group-hover:rotate-[2deg] sm:left-4 sm:right-4 sm:top-[7.5rem]">
                                 <span className="block text-center font-semibold text-indigo-50">
                                     {t("cards.everywhere.body")}
                                 </span>
@@ -159,7 +157,7 @@ export const Features: React.FC = () => {
                                 <div>🚀</div>
                                 {t("cards.instant.title")}
                             </h3>
-                            <div className="absolute bottom-0 left-3 right-3 top-[7rem] translate-y-8 rounded-t-2xl bg-gradient-to-br from-amber-400 to-orange-400 p-4 transition-transform duration-[250ms] group-hover:translate-y-4 group-hover:rotate-[2deg] sm:left-4 sm:right-4 sm:top-[7.5rem]">
+                            <div className="absolute bottom-0 left-3 right-3 top-[5rem] translate-y-8 rounded-t-2xl bg-gradient-to-br from-amber-400 to-orange-400 p-4 transition-transform duration-[250ms] group-hover:translate-y-4 group-hover:rotate-[2deg] sm:left-4 sm:right-4 sm:top-[7.5rem]">
                                 <span className="block text-center font-semibold text-orange-50">
                                     {t("cards.instant.body")}
                                 </span>
@@ -176,7 +174,7 @@ export const Features: React.FC = () => {
                                 <div>🎨</div>
                                 {t("cards.customizable.title")}
                             </h3>
-                            <div className="absolute bottom-0 left-3 right-3 top-[7rem] translate-y-8 rounded-t-2xl bg-gradient-to-br from-green-400 to-emerald-400 p-4 transition-transform duration-[250ms] group-hover:translate-y-4 group-hover:rotate-[2deg] sm:left-4 sm:right-4 sm:top-[7.5rem]">
+                            <div className="absolute bottom-0 left-3 right-3 top-[5rem] translate-y-8 rounded-t-2xl bg-gradient-to-br from-green-400 to-emerald-400 p-4 transition-transform duration-[250ms] group-hover:translate-y-4 group-hover:rotate-[2deg] sm:left-4 sm:right-4 sm:top-[7.5rem]">
                                 <span className="block text-center font-semibold text-emerald-50">
                                     {t("cards.customizable.body")}
                                 </span>
@@ -191,7 +189,7 @@ export const Features: React.FC = () => {
                                 <div>🎓</div>
                                 {t("cards.educational.title")}
                             </h3>
-                            <div className="absolute bottom-0 left-3 right-3 top-[7rem] translate-y-8 rounded-t-2xl bg-gradient-to-br from-pink-400 to-red-400 p-4 transition-transform duration-[250ms] group-hover:translate-y-4 group-hover:rotate-[2deg] sm:left-4 sm:right-4 sm:top-[7.5rem]">
+                            <div className="absolute bottom-0 left-3 right-3 top-[5rem] translate-y-8 rounded-t-2xl bg-gradient-to-br from-pink-400 to-red-400 p-4 transition-transform duration-[250ms] group-hover:translate-y-4 group-hover:rotate-[2deg] sm:left-4 sm:right-4 sm:top-[7.5rem]">
                                 <span className="block text-center font-semibold text-red-50">
                                     {t("cards.educational.body")}
                                 </span>
@@ -265,6 +263,39 @@ export const HowItWorks: React.FC = () => {
                 </div>
             </div>
         </section>
+    );
+};
+
+export const VelocityText: React.FC = () => {
+    const t = useTranslations("pages.home.weekly-update");
+
+    return (
+        <div className="grid place-content-center mt-12 mb-8">
+            <h1 className="max-w-2xl text-center leading-snug">
+                {t("first-part")}{" "}
+                <span className="relative">
+                    {t("surrounded")}
+                    <svg
+                        viewBox="0 0 286 73"
+                        fill="none"
+                        className="absolute -left-2 -right-2 -top-2 bottom-0 translate-y-1"
+                    >
+                        <motion.path
+                            initial={{ pathLength: 0 }}
+                            whileInView={{ pathLength: 1 }}
+                            transition={{
+                                duration: 1.25,
+                                ease: "easeInOut",
+                            }}
+                            d="M142.293 1C106.854 16.8908 6.08202 7.17705 1.23654 43.3756C-2.10604 68.3466 29.5633 73.2652 122.688 71.7518C215.814 70.2384 316.298 70.689 275.761 38.0785C230.14 1.37835 97.0503 24.4575 52.9384 1"
+                            stroke="#6bc4d9"
+                            strokeWidth="5"
+                        />
+                    </svg>
+                </span>{" "}
+                {t("second-part")}
+            </h1>
+        </div>
     );
 };
 
