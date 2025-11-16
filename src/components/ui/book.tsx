@@ -117,7 +117,7 @@ const Book: React.FC<BookProps> = ({ book }) => {
     return (
         <>
             <div className="w-full max-w-[850px] flex items-center justify-between mt-4 mx-auto">
-                <Title text={book.title} className="font-bold text-2xl" />
+                <Title text={book.title} className="font-bold text-xl" />
 
                 <div className="flex gap-2">
                     <button
@@ -159,7 +159,11 @@ const Book: React.FC<BookProps> = ({ book }) => {
                         showFullscreen && "flex-1"
                     )}
                 >
-                    <Pages pages={allPages} imgIndex={imgIndex} fullscreen />
+                    <Pages
+                        pages={allPages}
+                        imgIndex={imgIndex}
+                        fullscreen={showFullscreen}
+                    />
                 </motion.div>
 
                 <div className={cn(showFullscreen && "mt-4")}>
@@ -196,40 +200,84 @@ const Pages: React.FC<PagesProps> = ({ pages, fullscreen }) => {
                             "w-full shrink-0 rounded-xl object-cover"
                         )}
                     >
-                        <div className="flex flex-col md:flex-row items-center justify-center min-w-full gap-4 snap-center">
-                            <div
-                                className={cn(
-                                    "relative aspect-square w-full max-w-[450px]",
-                                    idx === 0 ? "max-md:w-full" : (
-                                        "max-md:w-[70vw]"
-                                    )
-                                )}
-                            >
-                                {page.image !== "" && (
-                                    <NextImage
-                                        src={page.image}
-                                        className="rounded-2xl select-none"
-                                        alt={page.text}
-                                        width={1024}
-                                        height={1024}
-                                    />
+                        {fullscreen ?
+                            <div className="min-w-full h-screen snap-center flex justify-center">
+                                <div className="w-1/2 h-full flex items-center justify-center">
+                                    <div
+                                        className="aspect-square"
+                                        style={{
+                                            width: "min(50vw, 100vh)",
+                                            height: "min(50vw, 100vh)",
+                                        }}
+                                    >
+                                        {page.image !== "" && (
+                                            <NextImage
+                                                src={page.image}
+                                                className={cn(
+                                                    "select-none h-full w-full object-cover",
+                                                    page.text === "" &&
+                                                        "rounded-2xl"
+                                                )}
+                                                alt={page.text}
+                                                width={1024}
+                                                height={1024}
+                                            />
+                                        )}
+                                    </div>
+                                </div>
+                                {page.text && (
+                                    <div className="w-1/2 h-full flex items-center justify-center">
+                                        <div
+                                            className="aspect-square overflow-hidden text-gray-800"
+                                            style={{
+                                                width: "min(50vw, 100vh)",
+                                                height: "min(50vw, 100vh)",
+                                                background: page.color,
+                                            }}
+                                        >
+                                            <div className="h-full w-full p-8 overflow-auto flex items-center justify-center">
+                                                <div className="text-lg md:text-xl leading-relaxed text-justify">
+                                                    {page.text}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 )}
                             </div>
-
-                            {page.text && (
+                        :   <div className="flex flex-col md:flex-row items-center justify-center min-w-full gap-4 snap-center">
                                 <div
-                                    className="relative flex flex-col justify-center rounded-2xl w-full max-w-[450px] md:aspect-square text-gray-800 max-md:mx-auto"
-                                    style={{ background: page.color }}
+                                    className={cn(
+                                        "relative aspect-square w-full max-w-[450px]",
+                                        idx === 0 ? "max-md:w-full" : (
+                                            "max-md:w-[70vw]"
+                                        )
+                                    )}
                                 >
-                                    <div className="text-base md:text-xl leading-relaxed text-justify p-8">
-                                        {page.text}
-                                    </div>
-                                    <p className="absolute bottom-2 left-1/2 -translate-x-1/2 text-sm text-gray-600">
-                                        {idx}
-                                    </p>
+                                    {page.image !== "" && (
+                                        <NextImage
+                                            src={page.image}
+                                            className="rounded-2xl select-none"
+                                            alt={page.text}
+                                            width={1024}
+                                            height={1024}
+                                        />
+                                    )}
                                 </div>
-                            )}
-                        </div>
+                                {page.text && (
+                                    <div
+                                        className="relative flex flex-col justify-center rounded-2xl w-full max-w-[450px] md:aspect-square text-gray-800 max-md:mx-auto"
+                                        style={{ background: page.color }}
+                                    >
+                                        <div className="text-base md:text-xl leading-relaxed text-justify p-8">
+                                            {page.text}
+                                        </div>
+                                        <p className="absolute bottom-2 left-1/2 -translate-x-1/2 text-sm text-gray-600">
+                                            {idx}
+                                        </p>
+                                    </div>
+                                )}
+                            </div>
+                        }
                     </motion.div>
                 );
             })}

@@ -14,6 +14,7 @@ import Title from "./title";
 import NextImage from "./image";
 import type { User } from "lucia";
 import toast from "react-hot-toast";
+import useSave from "@/hook/use-save";
 
 type BooksProps = {
     title: string;
@@ -31,9 +32,13 @@ type BooksProps = {
 const Books: React.FC<BooksProps> = ({ title, books, user }) => {
     const t = useTranslations("pages.home");
     const tLoginSave = useTranslations("links");
+    const [allSavedBooks, setAllSavedBooks] = useState<string[]>(
+        user?.savedBooks || []
+    );
     const [canScrollLeft, setCanScrollLeft] = useState(false);
     const [canScrollRight, setCanScrollRight] = useState(true);
     const scrollRef = useRef<HTMLDivElement | null>(null);
+    const toggleSave = useSave();
 
     const scrollContainer = (direction: "left" | "right") => {
         const container = scrollRef.current;
@@ -62,14 +67,22 @@ const Books: React.FC<BooksProps> = ({ title, books, user }) => {
         handleScroll();
     }, [books]);
 
-    const handleSave = (e: React.MouseEvent) => {
-        e.stopPropagation();
-
+    const handleSave = async (bookId: string) => {
         if (!user) {
             toast(tLoginSave("login-save"), {
                 icon: <Info className="text-info" />,
             });
             return;
+        }
+
+        const alreadySaved = allSavedBooks.includes(bookId);
+
+        await toggleSave(alreadySaved ? "unsave" : "save", bookId);
+
+        if (alreadySaved) {
+            setAllSavedBooks(allSavedBooks.filter((id) => id !== bookId));
+        } else {
+            setAllSavedBooks([...allSavedBooks, bookId]);
         }
     };
 
@@ -193,7 +206,7 @@ const Books: React.FC<BooksProps> = ({ title, books, user }) => {
                         >
                             <button
                                 className="absolute right-0 bottom-15 z-60 bg-primary/95 rounded-l-full pl-2 pr-3 py-1 max-md:hidden cursor-pointer"
-                                onClick={handleSave}
+                                onClick={() => handleSave(book.id)}
                             >
                                 <Bookmark
                                     className={cn(

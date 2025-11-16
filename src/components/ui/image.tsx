@@ -19,7 +19,7 @@ const NextImage: React.FC<ImageProps> = ({
         <div className={cn("relative overflow-hidden", className)}>
             <Image
                 className={cn(
-                    "z-20 transition duration-300 rounded-xl",
+                    "z-20 transition duration-300",
                     isLoading ? "blur-sm skeleton" : "blur-0"
                 )}
                 onLoad={() => setLoading(false)}

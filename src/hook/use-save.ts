@@ -1,49 +1,38 @@
 import { useState, useCallback } from "react";
 
-type UseSaveReturn = {
-    saved: string[];
-    toggleSave: (bookId: string) => Promise<boolean>;
-    loading: boolean;
-};
+type UseSaveReturn = (
+    action: "save" | "unsave",
+    bookId: string
+) => Promise<boolean>;
 
-const useSave = (initialSavedbooks: string[] = []): UseSaveReturn => {
-    const [saved, setSaved] = useState<string[]>(initialSavedbooks);
-    const [loading, setLoading] = useState<boolean>(false);
+const useSave = (): UseSaveReturn => {
+    const toggleSave = useCallback(
+        async (action: "save" | "unsave", bookId: string): Promise<boolean> => {
+            try {
+                const response = await fetch(`/api/book/save`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ bookId }),
+                });
 
-    const toggleSave = useCallback(async (bookId: string): Promise<boolean> => {
-        setLoading(true);
+                if (!response.ok) {
+                    throw new Error("Failed to toggle Save");
+                }
 
-        try {
-            const response = await fetch(`/api/book/save`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ bookId }),
-            });
+                const data = await response.json();
 
-            if (!response.ok) {
-                throw new Error("Failed to toggle Save");
+                return data.saved;
+            } catch (error) {
+                console.error("Error toggling save:", error);
+                throw error;
             }
+        },
+        []
+    );
 
-            const data = await response.json();
-
-            setSaved((prevSaved) =>
-                data.Saved ?
-                    [...prevSaved, bookId]
-                :   prevSaved.filter((id) => id !== bookId)
-            );
-
-            return data.saved;
-        } catch (error) {
-            console.error("Error toggling save:", error);
-            throw error;
-        } finally {
-            setLoading(false);
-        }
-    }, []);
-
-    return { saved, toggleSave, loading };
+    return toggleSave;
 };
 
 export default useSave;

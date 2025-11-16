@@ -271,7 +271,7 @@ export const VelocityText: React.FC = () => {
 
     return (
         <div className="grid place-content-center mt-12 mb-8">
-            <h1 className="text-center rounded-full bg-secondary/20 border border-neutral/10 px-3 py-1.5 text-base md:text-xl lg:text-2xl">
+            <h1 className="text-center rounded-full bg-primary/20 border border-neutral/10 px-3 py-1.5 text-base md:text-xl lg:text-2xl">
                 {t("first-part")}{" "}
                 <span className="relative">
                     {t("surrounded")}
