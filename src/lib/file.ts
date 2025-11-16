@@ -2,10 +2,13 @@ import {
     S3Client,
     PutObjectCommand,
     DeleteObjectCommand,
+    ListObjectsV2Command,
+    DeleteObjectsCommand,
 } from "@aws-sdk/client-s3";
 import type {
     PutObjectCommandInput,
     DeleteObjectCommandInput,
+    ListObjectsV2CommandOutput,
 } from "@aws-sdk/client-s3";
 import env from "@/lib/env";
 
@@ -39,17 +42,32 @@ export const putObject = async (file: File | Buffer, key: string) => {
     }
 };
 
-export const deleteObject = async (key: string) => {
-    const params: DeleteObjectCommandInput = {
-        Bucket: env.BUCKET_NAME,
-        Key: key,
-    };
+export const deleteObject = async (prefix: string) => {
+    let continuationToken: string | undefined = undefined;
 
-    try {
-        const res = await s3.send(new DeleteObjectCommand(params));
+    do {
+        const listRes: ListObjectsV2CommandOutput = await s3.send(
+            new ListObjectsV2Command({
+                Bucket: env.BUCKET_NAME,
+                Prefix: prefix.endsWith("/") ? prefix : `${prefix}/`,
+                ContinuationToken: continuationToken,
+            })
+        );
 
-        return res;
-    } catch (err) {
-        console.error("Error", err);
-    }
+        const contents = listRes.Contents ?? [];
+        if (contents.length > 0) {
+            const objects = contents.map((o: { Key?: string }) => ({
+                Key: o.Key!,
+            }));
+            await s3.send(
+                new DeleteObjectsCommand({
+                    Bucket: env.BUCKET_NAME,
+                    Delete: { Objects: objects, Quiet: true },
+                })
+            );
+        }
+
+        continuationToken =
+            listRes.IsTruncated ? listRes.NextContinuationToken : undefined;
+    } while (continuationToken);
 };

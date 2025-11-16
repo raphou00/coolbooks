@@ -77,83 +77,14 @@ const Books: React.FC<BooksProps> = ({ title, books, user }) => {
 
         const alreadySaved = allSavedBooks.includes(bookId);
 
-        await toggleSave(alreadySaved ? "unsave" : "save", bookId);
-
         if (alreadySaved) {
             setAllSavedBooks(allSavedBooks.filter((id) => id !== bookId));
         } else {
             setAllSavedBooks([...allSavedBooks, bookId]);
         }
+
+        await toggleSave(alreadySaved ? "unsave" : "save", bookId);
     };
-
-    // const handleSave = async (user: User | null, bookId: string) => {
-    //     if (!user) {
-    //         toast(t("messages.login-save"), {
-    //             icon: <Info className="text-info" />,
-    //         });
-    //     }
-
-    //     setIsLiking((prev) => ({ ...prev, [mediaId]: true }));
-
-    //     const isCurrentlyLiked = user?.savedBooks.has(mediaId);
-    //     const newLikedMedias = new Set(likedMedias);
-
-    //     if (isCurrentlyLiked) {
-    //         newLikedMedias.delete(mediaId);
-    //         setLikeCounts((prev) => ({
-    //             ...prev,
-    //             [mediaId]: prev[mediaId] - 1,
-    //         }));
-    //     } else {
-    //         newLikedMedias.add(mediaId);
-    //         setLikeCounts((prev) => ({
-    //             ...prev,
-    //             [mediaId]: prev[mediaId] + 1,
-    //         }));
-    //     }
-
-    //     setLikedMedias(newLikedMedias);
-
-    //     try {
-    //         const response = await fetch("/api/book/save", {
-    //             method: "POST",
-    //             headers: {
-    //                 "Content-Type": "application/json",
-    //             },
-    //             body: JSON.stringify({
-    //                 bookId,
-    //                 action: isCurrentlySaved ? "unsave" : "save",
-    //             }),
-    //         });
-
-    //         if (!response.ok) {
-    //             throw new Error("Failed to update like");
-    //         }
-
-    //         const data = await response.json();
-
-    //         setLikeCounts((prev) => ({ ...prev, [mediaId]: data.likes }));
-    //     } catch (error) {
-    //         console.error("Error updating like:", error);
-
-    //         if (isCurrentlyLiked) {
-    //             newLikedMedias.add(mediaId);
-    //             setLikeCounts((prev) => ({
-    //                 ...prev,
-    //                 [mediaId]: prev[mediaId] + 1,
-    //             }));
-    //         } else {
-    //             newLikedMedias.delete(mediaId);
-    //             setLikeCounts((prev) => ({
-    //                 ...prev,
-    //                 [mediaId]: prev[mediaId] - 1,
-    //             }));
-    //         }
-    //         setLikedMedias(newLikedMedias);
-    //     } finally {
-    //         setIsLiking((prev) => ({ ...prev, [mediaId]: false }));
-    //     }
-    // };
 
     return (
         <section className="mt-12">
@@ -211,7 +142,8 @@ const Books: React.FC<BooksProps> = ({ title, books, user }) => {
                                 <Bookmark
                                     className={cn(
                                         "size-6 text-white",
-                                        "fill-whit2"
+                                        allSavedBooks.includes(book.id) &&
+                                            "fill-white"
                                     )}
                                 />
                             </button>

@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useCallback } from "react";
 
 type UseSaveReturn = (
     action: "save" | "unsave",
@@ -14,7 +14,7 @@ const useSave = (): UseSaveReturn => {
                     headers: {
                         "Content-Type": "application/json",
                     },
-                    body: JSON.stringify({ bookId }),
+                    body: JSON.stringify({ action, bookId }),
                 });
 
                 if (!response.ok) {

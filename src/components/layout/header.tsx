@@ -5,7 +5,15 @@ import { useState } from "react";
 import { useTheme } from "next-themes";
 import type { User } from "lucia";
 import axios from "axios";
-import { Coins, LogIn, LogOut, Menu, PenBox, Settings2 } from "lucide-react";
+import {
+    BookMarked,
+    Coins,
+    LogIn,
+    LogOut,
+    Menu,
+    PenBox,
+    UserIcon,
+} from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
@@ -142,8 +150,18 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                                             className="btn btn-ghost rounded-xl border-none m-0 w-full justify-start"
                                                         >
                                                             <span className="flex items-center gap-2">
-                                                                <Settings2 className="size-6" />
+                                                                <UserIcon className="size-6" />
                                                                 {t("account")}
+                                                            </span>
+                                                        </a>
+
+                                                        <a
+                                                            href="/favorites"
+                                                            className="btn btn-ghost rounded-xl border-none m-0 w-full justify-start"
+                                                        >
+                                                            <span className="flex items-center gap-2">
+                                                                <BookMarked className="size-6" />
+                                                                {t("favorites")}
                                                             </span>
                                                         </a>
                                                     </>

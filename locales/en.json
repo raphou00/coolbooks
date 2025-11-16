@@ -4,7 +4,8 @@
         "description": "Every Child Deserves Their Own Adventure",
         "no-sessions-results": "No sessions found",
         "not-found": "Page Not Found",
-        "back-home": "Back to Home"
+        "back-home": "Back to Home",
+        "generating": "Generating this image"
     },
     "pages": {
         "login": {
@@ -197,11 +198,18 @@
         "book": {
             "title": "{title}",
             "description": "{title} by {author} generated with {app}",
+            "by": "By",
             "next": "Next",
             "prev": "Previous",
             "edit": "Edit",
             "minimize": "Minimize",
             "maximize": "Maximize"
+        },
+        "favorites": {
+            "title": "Favorites",
+            "description": "Browse your favorite books",
+            "by": "By",
+            "no-books": "No favorite books found"
         },
         "new-book": {
             "title": "New Book",
@@ -475,6 +483,7 @@
         "billing": "Billing & Plan",
         "latest": "Latest",
         "oldest": "Oldest",
-        "popular": "Popular"
+        "popular": "Popular",
+        "favorites": "Favorites"
     }
 }

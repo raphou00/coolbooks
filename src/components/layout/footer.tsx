@@ -37,7 +37,7 @@ const Footer: React.FC = () => {
                                 key={section.title}
                                 className="flex flex-col gap-2.5"
                             >
-                                <p className="mb-1 uppercase font-bold">
+                                <p className="mb-1 uppercase font-bold text-lg">
                                     {section.title}
                                 </p>
 
@@ -47,7 +47,7 @@ const Footer: React.FC = () => {
                                         href={link.path}
                                         target="_blank"
                                         rel="noreferrer"
-                                        className="link link-hover text-sm"
+                                        className="link link-hover"
                                     >
                                         {link.title}
                                     </Link>

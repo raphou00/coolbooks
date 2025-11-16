@@ -58,6 +58,8 @@ export async function POST(req: NextRequest) {
 
         const isCurrentlySaved = user.user.savedBooks.includes(bookId);
 
+        console.log(isCurrentlySaved, bookId, action);
+
         if (action === "save" && !isCurrentlySaved) {
             await db.user.update({
                 where: { id: user.user.id },
@@ -72,7 +74,9 @@ export async function POST(req: NextRequest) {
                 (id) => id !== bookId
             );
 
-            db.user.update({
+            console.log(updatedSavedBooks);
+
+            await db.user.update({
                 where: { id: user.user.id },
                 data: {
                     savedBooks: updatedSavedBooks,

@@ -98,6 +98,23 @@ export const useGetFooterLinks = () => {
             ],
         },
         {
+            title: t("me"),
+            links: [
+                {
+                    title: t("profile"),
+                    path: "/account/profile",
+                },
+                {
+                    title: t("billing"),
+                    path: "/account/billing",
+                },
+                {
+                    title: t("favorites"),
+                    path: "/favorites",
+                },
+            ],
+        },
+        {
             title: t("legal"),
             links: [
                 {

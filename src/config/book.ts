@@ -2,6 +2,7 @@ export const selectBook = {
     id: true,
     user: {
         select: {
+            name: true,
             id: true,
         },
     },

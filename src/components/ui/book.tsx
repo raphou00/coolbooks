@@ -3,10 +3,23 @@
 import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { motion, useMotionValue } from "framer-motion";
-import { ChevronLeft, ChevronRight, Maximize2, Minimize2 } from "lucide-react";
+import {
+    Bookmark,
+    ChevronLeft,
+    ChevronRight,
+    Info,
+    Maximize2,
+    Minimize2,
+    Trash2,
+} from "lucide-react";
 import { cn, sortPages } from "@/lib/utils";
 import NextImage from "@/components/ui/image";
 import Title from "./title";
+import DeleteBook from "./delete-book";
+import { redirect } from "next/navigation";
+import useSave from "@/hook/use-save";
+import toast from "react-hot-toast";
+import { User } from "lucia";
 
 type Page = {
     id: string;
@@ -22,7 +35,11 @@ type BookProps = {
         title: string;
         cover: string;
         pages: Page[];
+        user: {
+            name: string;
+        };
     };
+    user: User | null;
     isCreator: boolean;
 };
 
@@ -47,11 +64,16 @@ const SPRING_OPTIONS = {
     damping: 50,
 };
 
-const Book: React.FC<BookProps> = ({ book }) => {
+const Book: React.FC<BookProps> = ({ book, user, isCreator }) => {
     const t = useTranslations("pages.book");
+    const tLoginSave = useTranslations("links");
     const [imgIndex, setImgIndex] = useState(0);
     const [showFullscreen, setShowFullscreen] = useState(false);
     const containerRef = useRef<HTMLDivElement | null>(null);
+    const [isSaved, setIsSaved] = useState<boolean>(
+        user?.savedBooks.includes(book.id) ?? false
+    );
+    const toggleSave = useSave();
 
     const allPages = [
         {
@@ -114,12 +136,53 @@ const Book: React.FC<BookProps> = ({ book }) => {
         }
     };
 
+    const handleSave = async () => {
+        if (!user) {
+            toast(tLoginSave("login-save"), {
+                icon: <Info className="text-info" />,
+            });
+            return;
+        }
+
+        setIsSaved((e) => !e);
+
+        await toggleSave(isSaved ? "unsave" : "save", book.id);
+    };
+
     return (
         <>
             <div className="w-full max-w-[850px] flex items-center justify-between mt-4 mx-auto">
-                <Title text={book.title} className="font-bold text-xl" />
+                <div className="flex flex-col">
+                    <Title text={book.title} className="font-bold text-xl" />
+                    <p className="text-neutral">
+                        {t("by")} {book.user.name}
+                    </p>
+                </div>
 
                 <div className="flex gap-2">
+                    {isCreator && (
+                        <DeleteBook
+                            bookId={book.id}
+                            callback={() => redirect("/")}
+                        >
+                            <button className="btn btn-circle btn-soft btn-error">
+                                <Trash2 className="size-6" />
+                            </button>
+                        </DeleteBook>
+                    )}
+
+                    <button
+                        onClick={handleSave}
+                        className="btn btn-circle btn-primary"
+                    >
+                        <Bookmark
+                            className={cn(
+                                "size-6 text-white",
+                                isSaved && "fill-white"
+                            )}
+                        />
+                    </button>
+
                     <button
                         onClick={toggleFullscreen}
                         className="btn btn-circle btn-primary"

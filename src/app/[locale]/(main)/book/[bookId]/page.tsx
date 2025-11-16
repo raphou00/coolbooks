@@ -70,7 +70,11 @@ const Page = async ({ params }: PageProps) => {
 
     return (
         <Main>
-            <Book book={book} isCreator={book.user.id === user?.user?.id} />
+            <Book
+                book={book}
+                user={user?.user || null}
+                isCreator={book.user.id === user?.user?.id}
+            />
         </Main>
     );
 };

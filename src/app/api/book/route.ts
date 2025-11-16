@@ -3,6 +3,7 @@ import { getTranslations } from "next-intl/server";
 import db from "@/lib/db";
 import { type localesTitle } from "@/lib/navigation";
 import { deleteObject } from "@/lib/file";
+import { getUser } from "@/lib/auth";
 
 export const GET = async (req: NextRequest) => {
     const locale = (req.cookies.get("NEXT_LOCALE")?.value ||
@@ -79,6 +80,15 @@ export const DELETE = async (req: NextRequest) => {
         const params = req.nextUrl.searchParams;
         const bookId = params.get("bookId");
 
+        const user = await getUser();
+
+        if (!user?.user) {
+            return NextResponse.json({
+                success: false,
+                message: t("messages.unauthorized"),
+            });
+        }
+
         if (!bookId) {
             return NextResponse.json({
                 success: false,
@@ -86,9 +96,37 @@ export const DELETE = async (req: NextRequest) => {
             });
         }
 
-        const book = await db.book.delete({
+        const book = await db.book.findUnique({
             where: {
                 id: bookId,
+            },
+            select: {
+                id: true,
+                user: {
+                    select: {
+                        id: true,
+                    },
+                },
+            },
+        });
+
+        if (!book) {
+            return NextResponse.json({
+                success: false,
+                message: t("messages.book-not-found"),
+            });
+        }
+
+        if (book.user.id !== user.user.id) {
+            return NextResponse.json({
+                success: false,
+                message: t("messages.unauthorized"),
+            });
+        }
+
+        await db.book.delete({
+            where: {
+                id: book.id,
             },
         });
 
