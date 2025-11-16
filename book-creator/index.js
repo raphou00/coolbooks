@@ -273,8 +273,8 @@ const lambda_handler = async (event) => {
 
     for (const page of plan.pages) {
         const key = bookId + "/" + crypto.randomUUID() + ".png";
-        createImage(page.image, topic.artStyle, key, getS3(coverKey));
-        createPage({
+        await createImage(page.image, topic.artStyle, key, getS3(coverKey));
+        await createPage({
             bookId: bookId,
             color: randomHex(),
             text: page.text,

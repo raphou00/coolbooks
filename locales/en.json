@@ -144,9 +144,8 @@
             "banner-pricing": "20% off all subscriptions until December 25",
             "banner-pricing-link": "See more!",
             "thanks": {
-                "title": "Welcome to Cool Books Premium!",
+                "title": "Welcome to Cool Books!",
                 "subtitle": "Your subscription is now active",
-                "message": "Thank you for joining! Your monthly credits are ready and waiting. Start creating amazing children's books with the power of AI.",
                 "feature1": "Monthly credits added to your account",
                 "feature2": "Create your own stories",
                 "feature3": "Access to all AI features",
@@ -200,7 +199,9 @@
             "description": "{title} by {author} generated with {app}",
             "next": "Next",
             "prev": "Previous",
-            "edit": "Edit"
+            "edit": "Edit",
+            "minimize": "Minimize",
+            "maximize": "Maximize"
         },
         "new-book": {
             "title": "New Book",
@@ -431,6 +432,7 @@
         "forbidden": "Forbidden",
         "bad-request": "Bad request",
         "home": "Home",
+        "search-placeholder": "Search a book...",
         "google-disconnected": "Google successfully disconnected",
         "message-sent": "Message successfully sent",
         "min-amount": "Minimum amount is {min}",
@@ -466,6 +468,7 @@
         "new-book": "New Book",
         "my-books": "My Books",
         "me": "Me",
+        "login-save": "Login to save to your favorites",
         "subscribe": "Subscribe",
         "current-plan": "Current Plan:",
         "credits": "Credits remaining",

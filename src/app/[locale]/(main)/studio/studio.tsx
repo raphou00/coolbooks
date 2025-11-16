@@ -101,7 +101,7 @@ const Studio: React.FC<StudioProps> = ({ books: allBooks }) => {
                                 </div>
                             </DeleteBook>
 
-                            <Link href={`/studio/${book.id}`}>
+                            <Link href={`/book/${book.id}`}>
                                 <div className="w-full aspect-square shadow-lg rounded-lg overflow-hidden">
                                     <NextImage
                                         className="group-hover:scale-105 transition-all"

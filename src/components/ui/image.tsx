@@ -16,22 +16,24 @@ const NextImage: React.FC<ImageProps> = ({
     const [isLoading, setLoading] = useState<boolean>(true);
 
     return (
-        <Image
-            className={cn(
-                "transition duration-300",
-                isLoading ? "blur-sm skeleton" : "blur-0",
-                className
-            )}
-            onLoad={() => setLoading(false)}
-            src={getImage(src as string)}
-            width={width}
-            height={height}
-            loading="lazy"
-            decoding="async"
-            blurDataURL={typeof src === "string" ? src : undefined}
-            alt={alt ? alt : ""}
-            {...rest}
-        />
+        <div className={cn("relative overflow-hidden", className)}>
+            <Image
+                className={cn(
+                    "z-20 transition duration-300 rounded-xl",
+                    isLoading ? "blur-sm skeleton" : "blur-0"
+                )}
+                onLoad={() => setLoading(false)}
+                src={getImage(src as string)}
+                width={width}
+                height={height}
+                loading="lazy"
+                decoding="async"
+                blurDataURL={typeof src === "string" ? src : undefined}
+                alt={alt ? alt : ""}
+                {...rest}
+            />
+            <div className="absolute inset-0 z-30 size-full" />
+        </div>
     );
 };
 

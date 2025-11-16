@@ -39,14 +39,30 @@ const Page = async () => {
         ]);
 
     return (
-        <Main className="flex" gradientVariant="floatingGradient">
+        <Main>
             <Home user={user?.user || null} />
             <VelocityText />
-            <Books title={"🎉 " + t("cartoon")} books={booksCartoon} />
-            <Books title={"🕵️‍♂️️ " + t("adventure")} books={booksAdventure} />
+            <Books
+                title={"🎉 " + t("cartoon")}
+                books={booksCartoon}
+                user={user?.user || null}
+            />
+            <Books
+                title={"🤠 " + t("adventure")}
+                books={booksAdventure}
+                user={user?.user || null}
+            />
             <Features />
-            <Books title={"💫 " + t("anime")} books={booksAnime} />
-            <Books title={"📚 " + t("education")} books={booksEducation} />
+            <Books
+                title={"💫 " + t("anime")}
+                books={booksAnime}
+                user={user?.user || null}
+            />
+            <Books
+                title={"📚 " + t("education")}
+                books={booksEducation}
+                user={user?.user || null}
+            />
             <HowItWorks />
         </Main>
     );

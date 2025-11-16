@@ -10,7 +10,6 @@ import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { useGetLinks } from "@/config/links";
-import useScroll from "@/hook/use-scroll";
 import Logo from "@/components/ui/logo";
 import Avatar from "@/components/ui/avatar";
 import Title from "@/components/ui/title";
@@ -28,7 +27,6 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
     const links = useGetLinks(user);
     const router = useRouter();
     const pathname = usePathname();
-    const scroll = useScroll(0);
     const { setTheme } = useTheme();
 
     const handleLogout = async () => {
@@ -46,14 +44,8 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                 <input id="drawer" type="checkbox" className="drawer-toggle" />
                 <div className="drawer-content">
                     {children}
-                    <div className={cn("fixed w-full top-0 z-60")}>
-                        <div
-                            className={cn(
-                                "w-full",
-                                (scroll || pathname == "/") &&
-                                    "backdrop-blur bg-base-100/10"
-                            )}
-                        >
+                    <div className="fixed w-full top-0 z-100">
+                        <div className="w-full bg-base-100">
                             <div className="navbar min-h-16 py-0 mx-auto transition max-w-8xl w-full px-4 md:px-6 lg:px-8 xl:px-12">
                                 <div className="navbar-start">
                                     <label
@@ -135,7 +127,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                             tabIndex={0}
                                             className="dropdown-content pt-4 !z-[1]"
                                         >
-                                            <div className="space-y-1 rounded-xl backdrop-blur-3xl bg-base-100 p-2 border border-black/90 shadow-xl w-72 z-100">
+                                            <div className="space-y-1 rounded-xl bg-base-100 p-2 border border-black/90 shadow-xl w-72 z-100">
                                                 {user ?
                                                     <>
                                                         <div className="my-4 flex flex-col items-center justify-center gap-y-2">

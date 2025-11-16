@@ -11,13 +11,13 @@ import {
 import { Lexend as Font } from "next/font/google";
 import { ArrowRight } from "lucide-react";
 import type { User } from "lucia";
+import { useSearchParams } from "next/navigation";
+import Link from "next/link";
+import confetti from "canvas-confetti";
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 import Title from "@/components/ui/title";
 import Modal from "@/components/ui/modal";
-import { useSearchParams } from "next/navigation";
-import Link from "next/link";
-import confetti from "canvas-confetti";
 
 type HomeProps = {
     user: User | null;
@@ -70,7 +70,7 @@ const Home: React.FC<HomeProps> = ({ user }) => {
             <div className="space-y-5 mt-6">
                 <div className="grid grid-cols-2 max-[780px]:grid-cols-1 place-items-center">
                     <div className="flex flex-col items-start">
-                        <span className="inline-block rounded-full glass bg-primary/20 border border-neutral px-3 py-1.5 mb-3">
+                        <span className="inline-block rounded-full bg-primary/10 border border-neutral/5 px-3 py-1.5 mb-3">
                             😍 {t("beta")}
                         </span>
                         <Title
@@ -99,7 +99,7 @@ const Home: React.FC<HomeProps> = ({ user }) => {
                                     "/login?redirect=/studio/new"
                                 )
                             }
-                            className="group text-white flex w-fit items-center gap-1.5 rounded-full bg-gray-950/90 backdrop-blur-3xl px-4 py-2 transition cursor-pointer hover:bg-gray-950/90"
+                            className="group text-white flex w-fit items-center gap-1.5 rounded-full bg-gray-950/90 px-4 py-2 transition cursor-pointer hover:bg-gray-950/90"
                         >
                             {t("create")}
                             <ArrowRight className="transition-transform group-hover:-rotate-45 group-active:-rotate-12" />
@@ -142,7 +142,7 @@ export const Features: React.FC = () => {
                                 <div>🌎</div>
                                 {t("cards.everywhere.title")}
                             </h3>
-                            <div className="absolute bottom-0 left-3 right-3 top-[5rem] translate-y-8 rounded-t-2xl bg-gradient-to-br from-violet-400 to-indigo-400 p-4 transition-transform duration-[250ms] group-hover:translate-y-4 group-hover:rotate-[2deg] sm:left-4 sm:right-4 sm:top-[7.5rem]">
+                            <div className="absolute bottom-0 left-3 right-3 top-[5.5rem] translate-y-8 rounded-t-2xl bg-gradient-to-br from-violet-400 to-indigo-400 p-4 transition-transform duration-[250ms] group-hover:translate-y-4 group-hover:rotate-[2deg] sm:left-4 sm:right-4 sm:top-[7.5rem]">
                                 <span className="block text-center font-semibold text-indigo-50">
                                     {t("cards.everywhere.body")}
                                 </span>
@@ -157,7 +157,7 @@ export const Features: React.FC = () => {
                                 <div>🚀</div>
                                 {t("cards.instant.title")}
                             </h3>
-                            <div className="absolute bottom-0 left-3 right-3 top-[5rem] translate-y-8 rounded-t-2xl bg-gradient-to-br from-amber-400 to-orange-400 p-4 transition-transform duration-[250ms] group-hover:translate-y-4 group-hover:rotate-[2deg] sm:left-4 sm:right-4 sm:top-[7.5rem]">
+                            <div className="absolute bottom-0 left-3 right-3 top-[5.5rem] translate-y-8 rounded-t-2xl bg-gradient-to-br from-amber-400 to-orange-400 p-4 transition-transform duration-[250ms] group-hover:translate-y-4 group-hover:rotate-[2deg] sm:left-4 sm:right-4 sm:top-[7.5rem]">
                                 <span className="block text-center font-semibold text-orange-50">
                                     {t("cards.instant.body")}
                                 </span>
@@ -174,7 +174,7 @@ export const Features: React.FC = () => {
                                 <div>🎨</div>
                                 {t("cards.customizable.title")}
                             </h3>
-                            <div className="absolute bottom-0 left-3 right-3 top-[5rem] translate-y-8 rounded-t-2xl bg-gradient-to-br from-green-400 to-emerald-400 p-4 transition-transform duration-[250ms] group-hover:translate-y-4 group-hover:rotate-[2deg] sm:left-4 sm:right-4 sm:top-[7.5rem]">
+                            <div className="absolute bottom-0 left-3 right-3 top-[5.5rem] translate-y-8 rounded-t-2xl bg-gradient-to-br from-green-400 to-emerald-400 p-4 transition-transform duration-[250ms] group-hover:translate-y-4 group-hover:rotate-[2deg] sm:left-4 sm:right-4 sm:top-[7.5rem]">
                                 <span className="block text-center font-semibold text-emerald-50">
                                     {t("cards.customizable.body")}
                                 </span>
@@ -189,7 +189,7 @@ export const Features: React.FC = () => {
                                 <div>🎓</div>
                                 {t("cards.educational.title")}
                             </h3>
-                            <div className="absolute bottom-0 left-3 right-3 top-[5rem] translate-y-8 rounded-t-2xl bg-gradient-to-br from-pink-400 to-red-400 p-4 transition-transform duration-[250ms] group-hover:translate-y-4 group-hover:rotate-[2deg] sm:left-4 sm:right-4 sm:top-[7.5rem]">
+                            <div className="absolute bottom-0 left-3 right-3 top-[5.5rem] translate-y-8 rounded-t-2xl bg-gradient-to-br from-pink-400 to-red-400 p-4 transition-transform duration-[250ms] group-hover:translate-y-4 group-hover:rotate-[2deg] sm:left-4 sm:right-4 sm:top-[7.5rem]">
                                 <span className="block text-center font-semibold text-red-50">
                                     {t("cards.educational.body")}
                                 </span>
@@ -204,7 +204,7 @@ export const Features: React.FC = () => {
                         width={683}
                         height={1024}
                         alt="a-kid-holding-a-book--looking-on-the-right"
-                        className="mx-auto my-0 w-auto max-h-[496px] rounded-2xl transition hover:scale-105"
+                        className="mx-auto my-0 w-auto max-h-[496px] rounded-2xl transition hover:scale-105 hover:rotate-1"
                         priority
                     />
                 </div>
@@ -271,7 +271,7 @@ export const VelocityText: React.FC = () => {
 
     return (
         <div className="grid place-content-center mt-12 mb-8">
-            <h1 className="max-w-2xl text-center leading-snug">
+            <h1 className="text-center rounded-full bg-secondary/20 border border-neutral/10 px-3 py-1.5 text-base md:text-xl lg:text-2xl">
                 {t("first-part")}{" "}
                 <span className="relative">
                     {t("surrounded")}
@@ -342,18 +342,16 @@ const Thanks: React.FC<ThanksProps> = ({ open, setOpen }) => {
     }, []);
 
     return (
-        <Modal isOpen={open} setIsOpen={setOpen}>
-            <div className="text-center px-6 py-8 mx-auto">
+        <Modal isOpen={open} setIsOpen={setOpen} className="w-full">
+            <div className="text-center mx-auto sm:p-8 w-full">
                 <div className="text-6xl mb-4">🎉</div>
                 <Title
                     text={t("title")}
                     underline
-                    className="text-2xl w-fit mx-auto"
+                    className="md:text-3xl text-xl w-fit mx-auto"
                 />
 
                 <p className="text-sm text-gray-600 my-6">{t("subtitle")}</p>
-
-                <p className="mb-8 leading-relaxed">{t("message")}</p>
 
                 <div className="space-y-4 mb-8 text-left">
                     <div className="flex items-start gap-3">
@@ -370,11 +368,17 @@ const Thanks: React.FC<ThanksProps> = ({ open, setOpen }) => {
                     </div>
                 </div>
 
-                <div className="flex gap-3">
-                    <Link href="/studio/new" className="btn btn-primary w-1/2">
+                <div className="flex max-md:flex-col gap-3">
+                    <Link
+                        href="/studio/new"
+                        className="btn btn-primary w-full md:w-1/2"
+                    >
                         {t("cta-primary")}
                     </Link>
-                    <Link href="/account/profile" className="btn w-1/2">
+                    <Link
+                        href="/account/profile"
+                        className="btn w-full md:w-1/2"
+                    >
                         {t("cta-secondary")}
                     </Link>
                 </div>
