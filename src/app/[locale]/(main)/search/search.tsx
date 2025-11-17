@@ -5,11 +5,14 @@ import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
-import { Paintbrush } from "lucide-react";
+import { Bookmark, Info, Paintbrush } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { artStyleOptions, themesOptions } from "@/schema/book";
 import NextImage from "@/components/ui/image";
 import Title from "@/components/ui/title";
+import useSave from "@/hook/use-save";
+import toast from "react-hot-toast";
+import { User } from "lucia";
 
 type Books = {
     id: string;
@@ -28,6 +31,7 @@ type Books = {
 }[];
 
 type SearchProps = {
+    user: User | null;
     books: Books;
 };
 
@@ -46,13 +50,49 @@ const artStyleImages: Record<string, string> = {
     anime: "/images/artstyles/anime.png",
 };
 
-const Search: React.FC<SearchProps> = ({ books: allBooks }) => {
+const Search: React.FC<SearchProps> = ({ user, books: allBooks }) => {
     const t = useTranslations("pages.search");
+    const tLoginSave = useTranslations("links");
     const q = useSearchParams().get("q");
     const [search] = useState(q || "");
     const [books, setBooks] = useState<Books>(allBooks);
     const [activeThemes, setActiveThemes] = useState<string[]>([]);
     const [activeArtStyle, setActiveArtStyle] = useState<string | null>(null);
+    const [allSavedBooks, setAllSavedBooks] = useState<string[]>(
+        user?.savedBooks || []
+    );
+    const toggleSave = useSave();
+
+    const handleSave = async (bookId: string) => {
+        if (!user) {
+            toast(tLoginSave("login-save"), {
+                icon: <Info className="text-info" />,
+            });
+            return;
+        }
+
+        const alreadySaved = allSavedBooks.includes(bookId);
+
+        if (alreadySaved) {
+            setAllSavedBooks(allSavedBooks.filter((id) => id !== bookId));
+        } else {
+            setAllSavedBooks([...allSavedBooks, bookId]);
+        }
+
+        setBooks(
+            books.map((book) => {
+                if (book.id === bookId) {
+                    return {
+                        ...book,
+                        saved: !alreadySaved,
+                    };
+                }
+                return book;
+            })
+        );
+
+        await toggleSave(alreadySaved ? "unsave" : "save", bookId);
+    };
 
     const handleSearch = () => {
         let filteredBooks = [...allBooks];
@@ -112,7 +152,7 @@ const Search: React.FC<SearchProps> = ({ books: allBooks }) => {
             <div className="text-center my-6 px-4">
                 <Title
                     text={search || t("title-save")}
-                    className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent"
+                    className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-primary"
                 />
                 <p className="text-neutral text-base md:text-lg max-w-2xl mx-auto">
                     {t("subtitle")}
@@ -204,37 +244,44 @@ const Search: React.FC<SearchProps> = ({ books: allBooks }) => {
                         text={t("no-books")}
                         className="text-2xl md:text-3xl text-center mb-4"
                     />
-                    <p className="text-neutral text-center max-w-md">
-                        {t("no-books")}
-                    </p>
                 </div>
             :   <div className="w-full grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6 md:gap-8 pb-8">
                     {books.map((book) => (
-                        <Link
-                            key={book.id}
-                            href={`/book/${book.id}`}
-                            className="relative w-full"
-                        >
-                            <div className="aspect-square shadow-lg rounded-lg overflow-hidden">
-                                <NextImage
-                                    className="hover:scale-105 transition-all"
-                                    src={book.cover}
-                                    width={1024}
-                                    height={1024}
-                                    alt={book.title}
+                        <div key={book.id} className="relative w-full">
+                            <button
+                                className="absolute right-0 bottom-15 z-60 bg-primary/95 rounded-l-full pl-2 pr-3 py-1 max-md:hidden cursor-pointer"
+                                onClick={() => handleSave(book.id)}
+                            >
+                                <Bookmark
+                                    className={cn(
+                                        "size-6 text-white",
+                                        allSavedBooks.includes(book.id) &&
+                                            "fill-white"
+                                    )}
                                 />
-                            </div>
-                            <div className="flex flex-col items-start text-sm font-bold mt-2">
-                                <h2 className="text-left truncate w-full">
-                                    {book.title}
-                                </h2>
-                                {book.user && (
-                                    <p className="text-neutral text-xs text-left truncate w-full">
-                                        {t("by")} {book.user.name}
-                                    </p>
-                                )}
-                            </div>
-                        </Link>
+                            </button>
+                            <Link href={`/book/${book.id}`}>
+                                <div className="aspect-square shadow-lg rounded-lg overflow-hidden">
+                                    <NextImage
+                                        className="hover:scale-105 transition-all"
+                                        src={book.cover}
+                                        width={1024}
+                                        height={1024}
+                                        alt={book.title}
+                                    />
+                                </div>
+                                <div className="flex flex-col items-start text-sm font-bold mt-2">
+                                    <h2 className="text-left truncate w-full">
+                                        {book.title}
+                                    </h2>
+                                    {book.user && (
+                                        <p className="text-neutral text-xs text-left truncate w-full">
+                                            {t("by")} {book.user.name}
+                                        </p>
+                                    )}
+                                </div>
+                            </Link>
+                        </div>
                     ))}
                 </div>
             }

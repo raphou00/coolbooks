@@ -31,8 +31,8 @@ const NextImage: React.FC<ImageProps> = ({
                         setError(true);
                     }}
                     src={getImage(src as string)}
-                    width={1024}
-                    height={1024}
+                    width={height}
+                    height={width}
                     loading="lazy"
                     decoding="async"
                     blurDataURL={undefined}

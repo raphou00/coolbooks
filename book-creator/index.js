@@ -251,13 +251,6 @@ const lambda_handler = async (event) => {
     const plan = await createPlan(topic);
 
     const coverKey = bookId + "/" + crypto.randomUUID() + ".png";
-    await createImage(
-        plan.cover,
-        topic.artStyle,
-        coverKey,
-        null,
-        plan.title
-    );
 
     await createBook({
         id: bookId,
@@ -267,21 +260,30 @@ const lambda_handler = async (event) => {
         age: topic.age,
         artStyle: topic.artStyle,
         themes: topic.themes,
-        public: topic.public,
         userId: userId,
     });
 
-    for (const page of plan.pages) {
+    const coverJob = createImage(
+        plan.cover,
+        topic.artStyle,
+        coverKey,
+        null,
+        plan.title
+    );
+
+    const pageJobs = plan.pages.map((page, i) => {
         const key = bookId + "/" + crypto.randomUUID() + ".png";
-        await createImage(page.image, topic.artStyle, key, getS3(coverKey));
-        await createPage({
-            bookId: bookId,
-            color: randomHex(),
-            text: page.text,
-            image: key,
-            number: plan.pages.indexOf(page)
-        });
-    }
+        return createImage(page.image, topic.artStyle, key, getS3(coverKey))
+            .then(() => createPage({
+                bookId,
+                color: randomHex(),
+                text: page.text,
+                image: key,
+                number: i
+            }));
+    });
+
+    await Promise.all([coverJob, ...pageJobs]);
 
     await updateBookGenerating(bookId, false);
 

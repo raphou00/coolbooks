@@ -20,6 +20,7 @@ import { redirect } from "next/navigation";
 import useSave from "@/hook/use-save";
 import toast from "react-hot-toast";
 import { User } from "lucia";
+import FullscreenError from "@/components/ui/fullscreen-error";
 
 type Page = {
     id: string;
@@ -69,6 +70,7 @@ const Book: React.FC<BookProps> = ({ book, user, isCreator }) => {
     const tLoginSave = useTranslations("links");
     const [imgIndex, setImgIndex] = useState(0);
     const [showFullscreen, setShowFullscreen] = useState(false);
+    const [fullscreenError, setFullscreenError] = useState(false);
     const containerRef = useRef<HTMLDivElement | null>(null);
     const [isSaved, setIsSaved] = useState<boolean>(
         user?.savedBooks.includes(book.id) ?? false
@@ -115,7 +117,7 @@ const Book: React.FC<BookProps> = ({ book, user, isCreator }) => {
             if (document.fullscreenElement) return;
             await el.requestFullscreen();
         } catch (e) {
-            alert("Failed to enter fullscreen:" + e);
+            setFullscreenError(true);
         }
     };
 
@@ -124,7 +126,7 @@ const Book: React.FC<BookProps> = ({ book, user, isCreator }) => {
             if (!document.fullscreenElement) return;
             await document.exitFullscreen();
         } catch (e) {
-            alert("Failed to exit fullscreen:" + e);
+            window.location.reload();
         }
     };
 
@@ -151,6 +153,10 @@ const Book: React.FC<BookProps> = ({ book, user, isCreator }) => {
 
     return (
         <>
+            <FullscreenError
+                open={fullscreenError}
+                setOpen={setFullscreenError}
+            />
             <div className="w-full max-w-[850px] flex items-center justify-between mt-4 mx-auto">
                 <div className="flex flex-col">
                     <Title text={book.title} className="font-bold text-xl" />

@@ -3,13 +3,11 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
-import { Bookmark, BookPlus, Info, SearchIcon, Trash2 } from "lucide-react";
+import { useState } from "react";
+import { Bookmark, Info } from "lucide-react";
 import NextImage from "@/components/ui/image";
 import Title from "@/components/ui/title";
-import Date from "@/components/ui/date";
-import DeleteBook from "@/components/ui/delete-book";
-import { User } from "lucia";
+import type { User } from "lucia";
 import toast from "react-hot-toast";
 import useSave from "@/hook/use-save";
 import { cn } from "@/lib/utils";
@@ -70,10 +68,10 @@ const Favorites: React.FC<FavoritesProps> = ({ user, books: allBooks }) => {
     };
 
     return (
-        <>
+        <div className="mt-4">
             <Title
                 text={"💘 " + t("title")}
-                className="text-2xl md:text-3xl mb-4 w-fit"
+                className="text-2xl md:text-3xl mb-4 w-fit mx-auto"
                 underline
             />
 
@@ -91,12 +89,9 @@ const Favorites: React.FC<FavoritesProps> = ({ user, books: allBooks }) => {
                         className="mx-auto w-fit text-center"
                     />
                 </div>
-            :   <div className="w-full grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-2 md:gap-8">
+            :   <div className="w-full grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6 md:gap-8 pb-8">
                     {books.map((book) => (
-                        <div
-                            key={book.id}
-                            className="relative flex-shrink-0 w-44 md:w-56 lg:w-60 xl:w-64"
-                        >
+                        <div key={book.id} className="relative w-full">
                             <button
                                 className="absolute right-0 bottom-15 z-60 bg-primary/95 rounded-l-full pl-2 pr-3 py-1 max-md:hidden cursor-pointer"
                                 onClick={() => handleSave(book.id)}
@@ -110,7 +105,7 @@ const Favorites: React.FC<FavoritesProps> = ({ user, books: allBooks }) => {
                                 />
                             </button>
                             <Link href={`/book/${book.id}`}>
-                                <div className="relative aspect-square shadow-lg rounded-2xl overflow-hidden">
+                                <div className="aspect-square shadow-lg rounded-lg overflow-hidden">
                                     <NextImage
                                         className="hover:scale-105 transition-all"
                                         src={book.cover}
@@ -134,7 +129,7 @@ const Favorites: React.FC<FavoritesProps> = ({ user, books: allBooks }) => {
                     ))}
                 </div>
             }
-        </>
+        </div>
     );
 };
 

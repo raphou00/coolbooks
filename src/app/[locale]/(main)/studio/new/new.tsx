@@ -142,7 +142,9 @@ const NewBook: React.FC<NewBookProps> = ({ user }) => {
         setState(res);
 
         if (res.success) {
-            redirect(`/book/${(res as unknown as { bookId: string }).bookId}`);
+            redirect(
+                `/generating/${(res as unknown as { bookId: string }).bookId}`
+            );
         }
     };
 

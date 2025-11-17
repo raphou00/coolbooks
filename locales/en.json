@@ -203,13 +203,22 @@
             "prev": "Previous",
             "edit": "Edit",
             "minimize": "Minimize",
-            "maximize": "Maximize"
+            "maximize": "Maximize",
+            "fullscreen-error": {
+                "title": "Fullscreen not supported",
+                "description": "Your browser does not support fullscreen mode. Please use a different browser or a desktop computer.",
+                "close": "Close"
+            }
         },
         "favorites": {
             "title": "Favorites",
             "description": "Browse your favorite books",
             "by": "By",
             "no-books": "No favorite books found"
+        },
+        "generating": {
+            "title": "Generating your book",
+            "description": "Please wait till the book is ready"
         },
         "new-book": {
             "title": "New Book",
@@ -268,30 +277,6 @@
             "create": "New Book",
             "modify": "Last modified ",
             "no-books": "No books found"
-        },
-        "edit-book": {
-            "title": "Edit your book",
-            "description": "Edit your own books",
-            "title-label": "Title",
-            "title-placeholder": "Title...",
-            "submit": "Save",
-            "public": "Public",
-            "public-tip": "If enable your book will be visible to everyone",
-            "page": "Page",
-            "text": "Text",
-            "age": "Age",
-            "themes": "Themes",
-            "anime": "Anime",
-            "hero": "Hero",
-            "adventure": "Adventure",
-            "education": "Education",
-            "friendship": "Friendship",
-            "magic": "Magic",
-            "bedtime": "Bedtime",
-            "read": "Read",
-            "delete": "Delete",
-            "generating": "Generating book...",
-            "generating-tip": "This can last up to 2 minutes"
         },
         "search": {
             "title": "{query}",

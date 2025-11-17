@@ -3,6 +3,7 @@ import Main from "@/components/layout/main";
 import { getTranslations } from "next-intl/server";
 import db from "@/lib/db";
 import Search from "./search";
+import { getUser } from "@/lib/auth";
 
 type PageProps = {
     searchParams: Promise<{
@@ -28,6 +29,8 @@ const generateMetadata = async ({
 };
 
 const Page = async () => {
+    const user = await getUser();
+
     const books = await db.book.findMany({
         select: {
             id: true,
@@ -58,7 +61,7 @@ const Page = async () => {
 
     return (
         <Main className="flex">
-            <Search books={books} />
+            <Search user={user?.user || null} books={books} />
         </Main>
     );
 };

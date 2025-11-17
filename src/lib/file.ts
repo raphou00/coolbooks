@@ -1,13 +1,11 @@
 import {
     S3Client,
     PutObjectCommand,
-    DeleteObjectCommand,
     ListObjectsV2Command,
     DeleteObjectsCommand,
 } from "@aws-sdk/client-s3";
 import type {
     PutObjectCommandInput,
-    DeleteObjectCommandInput,
     ListObjectsV2CommandOutput,
 } from "@aws-sdk/client-s3";
 import env from "@/lib/env";
