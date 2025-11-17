@@ -1,12 +1,12 @@
 import { type Metadata } from "next";
-import Main from "@/components/layout/main";
 import { getTranslations } from "next-intl/server";
-import Book from "@/components/ui/book";
-import db from "@/lib/db";
-import { selectBook } from "@/config/book";
 import { redirect } from "next/navigation";
-import { title } from "@/config/seo";
+import db from "@/lib/db";
 import { getUser } from "@/lib/auth";
+import { selectBook } from "@/config/book";
+import { title } from "@/config/seo";
+import Main from "@/components/layout/main";
+import Book from "./book";
 
 type PageProps = {
     params: Promise<{ bookId: string }>;

@@ -14,8 +14,8 @@ import {
 } from "lucide-react";
 import { cn, sortPages } from "@/lib/utils";
 import NextImage from "@/components/ui/image";
-import Title from "./title";
-import DeleteBook from "./delete-book";
+import Title from "../../../../../components/ui/title";
+import DeleteBook from "../../../../../components/ui/delete-book";
 import { redirect } from "next/navigation";
 import useSave from "@/hook/use-save";
 import toast from "react-hot-toast";
@@ -55,7 +55,7 @@ type NavigationProps = {
     setImgIndex: React.Dispatch<React.SetStateAction<number>>;
 };
 
-const DRAG_BUFFER = 50;
+const DRAG_BUFFER = 25;
 
 const SPRING_OPTIONS = {
     type: "spring",
@@ -115,7 +115,7 @@ const Book: React.FC<BookProps> = ({ book, user, isCreator }) => {
             if (document.fullscreenElement) return;
             await el.requestFullscreen();
         } catch (e) {
-            console.error("Failed to enter fullscreen:", e);
+            alert("Failed to enter fullscreen:" + e);
         }
     };
 
@@ -124,7 +124,7 @@ const Book: React.FC<BookProps> = ({ book, user, isCreator }) => {
             if (!document.fullscreenElement) return;
             await document.exitFullscreen();
         } catch (e) {
-            console.error("Failed to exit fullscreen:", e);
+            alert("Failed to exit fullscreen:" + e);
         }
     };
 
@@ -264,7 +264,7 @@ const Pages: React.FC<PagesProps> = ({ pages, fullscreen }) => {
                         )}
                     >
                         {fullscreen ?
-                            <div className="min-w-full h-screen snap-center flex justify-center">
+                            <div className="min-w-full h-screen flex items-center justify-center">
                                 <div className="w-1/2 h-full flex items-center justify-center">
                                     <div
                                         className="aspect-square"

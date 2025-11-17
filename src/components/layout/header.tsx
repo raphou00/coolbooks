@@ -233,7 +233,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                         aria-label="close sidebar"
                         className="drawer-overlay"
                     ></label>
-                    <ul className="menu bg-base-200 min-h-full w-80 space-y-3 p-4 z-[99999999]">
+                    <ul className="menu bg-base-200 min-h-dvh w-80 space-y-3 p-4 z-[99999999]">
                         <Link
                             href="/"
                             className="ml-2 mb-8 flex items-center text-sm relative z-20"
