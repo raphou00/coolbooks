@@ -12,6 +12,7 @@ import {
     LogOut,
     Menu,
     PenBox,
+    PhoneCall,
     UserIcon,
 } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
@@ -188,9 +189,19 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                                     </>
                                                 }
 
-                                                {/* <div className="divider mx-auto my-1 w-full px-2" />
+                                                <div className="divider mx-auto my-1 w-full px-2" />
 
-                                                <button
+                                                <a
+                                                    href="/contact"
+                                                    className="btn btn-ghost rounded-xl border-none m-0 w-full justify-start"
+                                                >
+                                                    <span className="flex items-center gap-2">
+                                                        <PhoneCall className="size-6" />
+                                                        {t("contact")}
+                                                    </span>
+                                                </a>
+
+                                                {/* <button
                                                     onClick={() =>
                                                         setLocaleOpen((e) => !e)
                                                     }

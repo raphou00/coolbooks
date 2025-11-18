@@ -47,6 +47,7 @@ const Generating: React.FC<GeneratingProps> = ({ bookId }) => {
     const isGenerating = useMemo(() => {
         if (isLoading) return true;
         if (!data) return true;
+        if (!data.book) return true;
         return Boolean(data.book.generating);
     }, [isLoading, data]);
 

@@ -1,5 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { getTranslations } from "next-intl/server";
+import { OpenAI } from "openai";
 import db from "@/lib/db";
 import { getUser } from "@/lib/auth";
 import { ratelimitBasePost } from "@/lib/rate-limiter";
@@ -9,6 +10,10 @@ import { LambdaClient, InvokeCommand } from "@aws-sdk/client-lambda";
 import env from "@/lib/env";
 
 const client = new LambdaClient({ region: "us-east-1" });
+
+const openai = new OpenAI({
+    apiKey: env.OPENAI_API_KEY,
+});
 
 export const POST = async (req: NextRequest) => {
     const locale = (req.cookies.get("NEXT_LOCALE")?.value ||
@@ -42,6 +47,18 @@ export const POST = async (req: NextRequest) => {
             return NextResponse.json({
                 success: false,
                 errors: error.flatten().fieldErrors,
+            });
+        }
+
+        const moderation = await openai.moderations.create({
+            model: "text-moderation-latest",
+            input: body.childName + " " + body.prompt,
+        });
+
+        if (moderation.results[0].flagged) {
+            return NextResponse.json({
+                success: false,
+                message: t("messages.prompt-inappropriate"),
             });
         }
 

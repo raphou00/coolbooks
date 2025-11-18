@@ -263,7 +263,7 @@ const lambda_handler = async (event) => {
         userId: userId,
     });
 
-    const coverJob = createImage(
+    await createImage(
         plan.cover,
         topic.artStyle,
         coverKey,
@@ -283,7 +283,7 @@ const lambda_handler = async (event) => {
             }));
     });
 
-    await Promise.all([coverJob, ...pageJobs]);
+    await Promise.all([...pageJobs]);
 
     await updateBookGenerating(bookId, false);
 

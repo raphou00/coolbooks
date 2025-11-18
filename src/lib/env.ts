@@ -72,6 +72,10 @@ export default createEnv({
         AI_GATEWAY_API_KEY: z
             .string()
             .min(1, { message: "AI Gateway API Key is missing" }),
+
+        OPENAI_API_KEY: z
+            .string()
+            .min(1, { message: "OpenAI API Key is missing" }),
     },
     client: {
         NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: z
@@ -123,5 +127,6 @@ export default createEnv({
         GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
         OPENROUTER_KEY: process.env.OPENROUTER_KEY,
         AI_GATEWAY_API_KEY: process.env.AI_GATEWAY_API_KEY,
+        OPENAI_API_KEY: process.env.OPENAI_API_KEY,
     },
 });

@@ -436,7 +436,8 @@
         "book-not-found": "Book not found",
         "book-updated": "Book details updated",
         "page-updated": "Page updated",
-        "book-deleted": "Book successfully deleted"
+        "book-deleted": "Book successfully deleted",
+        "prompt-inappropriate": "Story contains inappropriate content"
     },
     "links": {
         "login": "Login",
