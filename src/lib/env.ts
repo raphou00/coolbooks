@@ -65,14 +65,6 @@ export default createEnv({
             .string()
             .min(1, { message: "Google Client Secret is missing" }),
 
-        OPENROUTER_KEY: z
-            .string()
-            .min(1, { message: "OpenRouter Key is missing" }),
-
-        AI_GATEWAY_API_KEY: z
-            .string()
-            .min(1, { message: "AI Gateway API Key is missing" }),
-
         OPENAI_API_KEY: z
             .string()
             .min(1, { message: "OpenAI API Key is missing" }),
@@ -125,8 +117,6 @@ export default createEnv({
             process.env.NEXT_PUBLIC_STRIPE_PRODUCT_ID_PREMIUM,
         GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
         GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
-        OPENROUTER_KEY: process.env.OPENROUTER_KEY,
-        AI_GATEWAY_API_KEY: process.env.AI_GATEWAY_API_KEY,
         OPENAI_API_KEY: process.env.OPENAI_API_KEY,
     },
 });

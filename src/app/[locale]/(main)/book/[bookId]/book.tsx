@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
+import Image from "next/image";
 import { motion, useMotionValue } from "framer-motion";
 import {
     Bookmark,
@@ -16,11 +17,12 @@ import { cn, sortPages } from "@/lib/utils";
 import NextImage from "@/components/ui/image";
 import Title from "../../../../../components/ui/title";
 import DeleteBook from "../../../../../components/ui/delete-book";
-import { redirect } from "next/navigation";
+import { redirect, usePathname } from "next/navigation";
 import useSave from "@/hook/use-save";
 import toast from "react-hot-toast";
 import { User } from "lucia";
 import FullscreenError from "@/components/ui/fullscreen-error";
+import Link from "next/link";
 
 type Page = {
     id: string;
@@ -150,6 +152,10 @@ const Book: React.FC<BookProps> = ({ book, user, isCreator }) => {
 
         await toggleSave(isSaved ? "unsave" : "save", book.id);
     };
+
+    if (!user) {
+        return <MustLogin />;
+    }
 
     return (
         <>
@@ -402,6 +408,46 @@ const Navigation: React.FC<NavigationProps> = ({
                 <span className="max-md:hidden">{t("next")}</span>
                 <ChevronRight className="size-5" />
             </button>
+        </div>
+    );
+};
+
+const MustLogin: React.FC = () => {
+    const t = useTranslations("pages.book.must-login");
+    const pathname = usePathname();
+
+    return (
+        <div className="flex flex-col items-center justify-center mx-auto w-full max-w-lg">
+            <Image
+                src="/images/book-smiley.svg"
+                width={400}
+                height={400}
+                alt=""
+                className="mx-auto h-40"
+            />
+
+            <Title
+                text={t("title")}
+                className="text-2xl mb-6 text-center"
+                underline
+            />
+
+            <p className="text-center max-w-sm">{t("description")}</p>
+
+            <div className="w-full flex justify-center gap-2 mt-4">
+                <Link
+                    href={`/login?redirect=${pathname}`}
+                    className="btn btn-primary"
+                >
+                    <span>{t("login")}</span>
+                </Link>
+                <Link
+                    href={`/register?redirect=${pathname}`}
+                    className="btn btn-secondary"
+                >
+                    <span>{t("register")}</span>
+                </Link>
+            </div>
         </div>
     );
 };

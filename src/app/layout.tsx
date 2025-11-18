@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Poppins } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages, getTranslations } from "next-intl/server";
@@ -8,7 +9,6 @@ import env from "@/lib/env";
 import * as metadata from "@/config/seo";
 import RootProviders from "./providers";
 import "@/styles/globals.css";
-// import Script from "next/script";
 
 const poppins = Poppins({
     subsets: ["latin"],
@@ -37,7 +37,7 @@ const generateMetadata = async (): Promise<Metadata> => {
             description: t("description"),
             images: [
                 {
-                    url: "/images/og.png",
+                    url: "/images/og.jpg",
                 },
             ],
         },
@@ -57,7 +57,7 @@ const Root = async ({ children }: React.PropsWithChildren) => {
     return (
         <html lang={locale} suppressHydrationWarning>
             <head>
-                {/* <Script id="facebook" strategy="worker">
+                <Script id="facebook" strategy="worker">
                     {`
                     <!-- Meta Pixel Code -->
                     <script>
@@ -77,7 +77,7 @@ const Root = async ({ children }: React.PropsWithChildren) => {
                     /></noscript>
                     <!— End Meta Pixel Code —>
                     `}
-                </Script> */}
+                </Script>
             </head>
             <body className={cn("bg-base-100", poppins.className)}>
                 <RootProviders>

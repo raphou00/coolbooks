@@ -208,6 +208,12 @@
                 "title": "Fullscreen not supported",
                 "description": "Your browser does not support fullscreen mode. Please use a different browser or a desktop computer.",
                 "close": "Close"
+            },
+            "must-login": {
+                "title": "Read this book now",
+                "description": "Create your free account to keep reading. Enjoy instant access without entering any payment info",
+                "login": "Login",
+                "register": "Register"
             }
         },
         "favorites": {
