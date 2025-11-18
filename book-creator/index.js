@@ -76,6 +76,7 @@ Requirements:
 * Be very precise with the image prompts to ensure the visuals match the description.
 * Write the text in a kid-friendly style corresponding to the target age group.
 * Everything MUST be in English.
+* The cover prompt MUST include the description of the kid.
 
 Output:
 1. Title

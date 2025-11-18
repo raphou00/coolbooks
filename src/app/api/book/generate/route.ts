@@ -51,7 +51,7 @@ export const POST = async (req: NextRequest) => {
         }
 
         const moderation = await openai.moderations.create({
-            model: "text-moderation-latest",
+            model: "omni-moderation-latest",
             input: body.childName + " " + body.prompt,
         });
 
