@@ -8,7 +8,7 @@ import env from "@/lib/env";
 import * as metadata from "@/config/seo";
 import RootProviders from "./providers";
 import "@/styles/globals.css";
-import Script from "next/script";
+// import Script from "next/script";
 
 const poppins = Poppins({
     subsets: ["latin"],
@@ -57,7 +57,7 @@ const Root = async ({ children }: React.PropsWithChildren) => {
     return (
         <html lang={locale} suppressHydrationWarning>
             <head>
-                <Script id="facebook" strategy="worker">
+                {/* <Script id="facebook" strategy="worker">
                     {`
                     <!-- Meta Pixel Code -->
                     <script>
@@ -77,7 +77,7 @@ const Root = async ({ children }: React.PropsWithChildren) => {
                     /></noscript>
                     <!— End Meta Pixel Code —>
                     `}
-                </Script>
+                </Script> */}
             </head>
             <body className={cn("bg-base-100", poppins.className)}>
                 <RootProviders>
