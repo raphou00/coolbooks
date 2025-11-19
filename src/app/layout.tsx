@@ -57,7 +57,7 @@ const Root = async ({ children }: React.PropsWithChildren) => {
     return (
         <html lang={locale} suppressHydrationWarning>
             <head>
-                <Script id="facebook" strategy="worker">
+                <Script id="meta-pixel" strategy="lazyOnload">
                     {`
                     <!-- Meta Pixel Code -->
                     !function(f,b,e,v,n,t,s)
