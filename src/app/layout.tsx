@@ -73,6 +73,10 @@ const Root = async ({ children }: React.PropsWithChildren) => {
                     <!-- End Meta Pixel Code -->
                     `}
                 </Script>
+                <meta
+                    name="facebook-domain-verification"
+                    content="9b74938c9fvw5jp7f954gluawn5jqv"
+                />
             </head>
             <body className={cn("bg-base-100", poppins.className)}>
                 <RootProviders>
