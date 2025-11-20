@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
-import { Bookmark, Info } from "lucide-react";
+import { Bookmark, Info, SearchIcon } from "lucide-react";
 import NextImage from "@/components/ui/image";
 import Title from "@/components/ui/title";
 import type { User } from "lucia";
@@ -30,11 +30,23 @@ type FavoritesProps = {
 const Favorites: React.FC<FavoritesProps> = ({ user, books: allBooks }) => {
     const t = useTranslations("pages.favorites");
     const tLoginSave = useTranslations("links");
+    const [value, setValue] = useState("");
     const [books, setBooks] = useState<Books>(allBooks);
     const [allSavedBooks, setAllSavedBooks] = useState<string[]>(
         user.savedBooks || []
     );
     const toggleSave = useSave();
+
+    const onSubmit = () => {
+        const filteredBooks = allBooks.filter((book) =>
+            book.title.toLowerCase().includes(value.toLowerCase())
+        );
+        setBooks(filteredBooks);
+    };
+
+    const handleKeyDown = () => {
+        onSubmit();
+    };
 
     const handleSave = async (bookId: string) => {
         if (!user) {
@@ -69,11 +81,34 @@ const Favorites: React.FC<FavoritesProps> = ({ user, books: allBooks }) => {
 
     return (
         <div className="mt-4">
-            <Title
-                text={"💘 " + t("title")}
-                className="text-2xl md:text-3xl mb-4 w-fit mx-auto"
-                underline
-            />
+            <div className="flex items-center justify-between max-md:flex-col mb-8">
+                <Title
+                    text={"💘 " + t("title")}
+                    className="text-3xl w-fit"
+                    underline
+                />
+
+                <div className="max-md:mt-4 w-full md:max-w-md">
+                    <div className="w-full relative bg-black/70 h-12 mr-2 rounded-full overflow-hidden shadow transition duration-200">
+                        <input
+                            onChange={(e) => setValue(e.target.value)}
+                            onKeyDown={handleKeyDown}
+                            value={value}
+                            type="text"
+                            placeholder={t("search-placeholder")}
+                            className="w-full relative text-sm sm:text-base z-50 border-none bg-transparent text-white h-full rounded-full focus:outline-none focus:ring-0 pl-4 sm:pl-6 pr-12"
+                        />
+
+                        <button
+                            type="submit"
+                            onClick={onSubmit}
+                            className="absolute right-1.5 top-1/2 z-50 -translate-y-1/2 size-9 rounded-full bg-primary transition duration-200 flex items-center justify-center cursor-pointer"
+                        >
+                            <SearchIcon className="size-6 text-white" />
+                        </button>
+                    </div>
+                </div>
+            </div>
 
             {books.length === 0 ?
                 <div className="flex flex-col justify-between items-center">

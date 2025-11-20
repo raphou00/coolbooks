@@ -4,21 +4,22 @@ import Link from "next/link";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
-import { Bookmark, Info, Paintbrush } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { artStyleOptions, themesOptions } from "@/schema/book";
+import { useCallback, useEffect, useState } from "react";
+import { Baby, Bookmark, Info, Paintbrush } from "lucide-react";
+import toast from "react-hot-toast";
+import type { User } from "lucia";
+import { ageOptions, artStyleOptions, themesOptions } from "@/schema/book";
 import NextImage from "@/components/ui/image";
 import Title from "@/components/ui/title";
 import useSave from "@/hook/use-save";
-import toast from "react-hot-toast";
-import { User } from "lucia";
+import { cn } from "@/lib/utils";
 
 type Books = {
     id: string;
     title: string;
     cover: string;
     themes: string[];
+    age: string;
     artStyle: string;
     public: boolean;
     pages: {
@@ -57,6 +58,7 @@ const Search: React.FC<SearchProps> = ({ user, books: allBooks }) => {
     const [search] = useState(q || "");
     const [books, setBooks] = useState<Books>(allBooks);
     const [activeThemes, setActiveThemes] = useState<string[]>([]);
+    const [activeAge, setActiveAge] = useState<string | null>(null);
     const [activeArtStyle, setActiveArtStyle] = useState<string | null>(null);
     const [allSavedBooks, setAllSavedBooks] = useState<string[]>(
         user?.savedBooks || []
@@ -94,7 +96,7 @@ const Search: React.FC<SearchProps> = ({ user, books: allBooks }) => {
         await toggleSave(alreadySaved ? "unsave" : "save", bookId);
     };
 
-    const handleSearch = () => {
+    const handleSearch = useCallback(() => {
         let filteredBooks = [...allBooks];
 
         if (search) {
@@ -114,10 +116,16 @@ const Search: React.FC<SearchProps> = ({ user, books: allBooks }) => {
 
         if (activeThemes.length > 0) {
             filteredBooks = filteredBooks.filter((book) => {
-                return activeThemes.some((theme) =>
+                return activeThemes.every((theme) =>
                     book.themes.includes(theme)
                 );
             });
+        }
+
+        if (activeAge) {
+            filteredBooks = filteredBooks.filter(
+                (book) => book.age === activeAge
+            );
         }
 
         if (activeArtStyle) {
@@ -127,7 +135,7 @@ const Search: React.FC<SearchProps> = ({ user, books: allBooks }) => {
         }
 
         setBooks(filteredBooks);
-    };
+    }, [allBooks, search, activeThemes, activeAge, activeArtStyle]);
 
     const handleThemeToggle = (theme: string) => {
         setActiveThemes((prev) => {
@@ -139,13 +147,17 @@ const Search: React.FC<SearchProps> = ({ user, books: allBooks }) => {
         });
     };
 
+    const handleAge = (age: string) => {
+        setActiveAge((prev) => (prev === age ? null : age));
+    };
+
     const handleArtStyleSelect = (artStyle: string) => {
         setActiveArtStyle((prev) => (prev === artStyle ? null : artStyle));
     };
 
     useEffect(() => {
         handleSearch();
-    }, [activeThemes, activeArtStyle, search]);
+    }, [activeThemes, activeAge, activeArtStyle, search, handleSearch]);
 
     return (
         <>
@@ -160,8 +172,66 @@ const Search: React.FC<SearchProps> = ({ user, books: allBooks }) => {
             </div>
 
             <div className="w-full mb-4">
-                <div className="w-full flex items-center justify-between gap-4 flex-wrap md:flex-nowrap">
-                    <div className="overflow-x-scroll scrollbar-hide flex gap-2">
+                <div
+                    className="mx-auto overflow-x-scroll scrollbar- flex justify-center gap-2 lg:hidden"
+                    style={{ overscrollBehaviorY: "none" }}
+                >
+                    {themesOptions.map((theme) => (
+                        <button
+                            key={theme}
+                            onClick={() => handleThemeToggle(theme)}
+                            className={cn(
+                                "btn gap-2",
+                                activeThemes.includes(theme) ? "btn-secondary"
+                                :   ""
+                            )}
+                        >
+                            <span className="text-lg">
+                                {themeImages[theme]}
+                            </span>
+                            {t(theme)}
+                        </button>
+                    ))}
+                </div>
+
+                <div className="w-full flex items-center justify-between gap-4 flex-wrap md:flex-nowrap mt-4">
+                    <div className="dropdown dropdow">
+                        <div
+                            tabIndex={0}
+                            role="button"
+                            className="btn btn-soft bg-secondary/10"
+                        >
+                            <Baby className="size-5" />
+                            {t("age")}
+                        </div>
+                        <ul
+                            tabIndex={0}
+                            className="dropdown-content menu bg-base-200 rounded-box z-[1] w-40 p-2 shadow-xl border border-base-300 mt-2"
+                        >
+                            {ageOptions.map((age) => (
+                                <li key={age} className="my-1">
+                                    <button
+                                        onClick={() => handleAge(age)}
+                                        className={cn(
+                                            "rounded-xl flex items-center justify-start gap-3 transition-all duration-200",
+                                            activeAge === age ?
+                                                "bg-primary text-primary-content shadow-md"
+                                            :   "hover:bg-base-300"
+                                        )}
+                                    >
+                                        <span className="capitalize text-base font-medium">
+                                            {age}
+                                        </span>
+                                    </button>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+
+                    <div
+                        className="overflow-x-scroll scrollbar-hide gap-2 hidden lg:flex"
+                        style={{ overscrollBehaviorY: "none" }}
+                    >
                         {themesOptions.map((theme) => (
                             <button
                                 key={theme}
@@ -187,14 +257,12 @@ const Search: React.FC<SearchProps> = ({ user, books: allBooks }) => {
                             role="button"
                             className="btn btn-soft bg-secondary/10"
                         >
-                            <Paintbrush className="size-4" />
-                            <span className="hidden sm:inline">
-                                {t("art-style")}
-                            </span>
+                            <Paintbrush className="size-5" />
+                            {t("art-style")}
                         </div>
                         <ul
                             tabIndex={0}
-                            className="dropdown-content menu bg-base-200 rounded-box z-[1] w-64 p-3 shadow-xl border border-base-300 mt-2"
+                            className="dropdown-content menu bg-base-200 rounded-box z-[1] w-64 p-2 shadow-xl border border-base-300 mt-2"
                         >
                             {artStyleOptions.map((artStyle) => (
                                 <li key={artStyle} className="my-1">
@@ -203,7 +271,7 @@ const Search: React.FC<SearchProps> = ({ user, books: allBooks }) => {
                                             handleArtStyleSelect(artStyle)
                                         }
                                         className={cn(
-                                            "rounded-xl flex items-center justify-start gap-3 p-3 transition-all duration-200",
+                                            "rounded-xl flex items-center justify-start gap-3 px-3 py-2 transition-all duration-200",
                                             activeArtStyle === artStyle ?
                                                 "bg-primary text-primary-content shadow-md"
                                             :   "hover:bg-base-300"

@@ -6,7 +6,7 @@ const { Pool } = require("pg");
 
 const { BUCKET_NAME, DATABASE_URL, OPENROUTER_API_KEY } = process.env;
 
-const PLANNER_MODEL = "anthropic/claude-3-haiku";
+const PLANNER_MODEL = "anthropic/claude-3.5-haiku";
 const IMAGE_MODEL = "google/gemini-2.5-flash-image-preview";
 
 const pool = new Pool({
@@ -17,40 +17,23 @@ const pool = new Pool({
 const openai = new OpenAI({
     baseURL: "https://openrouter.ai/api/v1",
     apiKey: OPENROUTER_API_KEY,
+    defaultHeaders: {
+        "HTTP-Referer": "https://coolbooks.app",
+        "X-Title": "Cool Books",
+    }
 });
 
 const s3 = new S3Client();
 
-const colors = [
-    { hex: "#FFF5F5", name: "Light pink" },
-    { hex: "#FFF0F5", name: "Lavender blush" },
-    { hex: "#F0F8FF", name: "Alice blue" },
-    { hex: "#F5FFFA", name: "Mint cream" },
-    { hex: "#FFFACD", name: "Lemon chiffon" },
-    { hex: "#FFF8DC", name: "Cornsilk" },
-    { hex: "#F0FFF0", name: "Honeydew" },
-    { hex: "#F8F8FF", name: "Ghost white" },
-    { hex: "#FDF5E6", name: "Old lace" },
-    { hex: "#FAF0E6", name: "Linen" },
-    { hex: "#E6E6FA", name: "Lavender" },
-    { hex: "#F0E68C", name: "Khaki (light)" },
-    { hex: "#FFEFD5", name: "Papaya whip" },
-    { hex: "#FFE4E1", name: "Misty rose" },
-    { hex: "#E0FFFF", name: "Light cyan" },
-    { hex: "#F5F5DC", name: "Beige" },
-    { hex: "#FFF5EE", name: "Seashell" },
-    { hex: "#F0FFFF", name: "Azure" },
-    { hex: "#FFFAF0", name: "Floral white" },
-    { hex: "#F5F0FF", name: "Light lavender" },
-    { hex: "#FFF0F0", name: "Light rose" },
-    { hex: "#F0FFF8", name: "Light mint" },
-    { hex: "#FFFFF0", name: "Ivory" },
-    { hex: "#F8FFF8", name: "Light green" },
-    { hex: "#FFF8F0", name: "Light peach" },
+const colors = ["#FFF5F5", "#FFF0F5", "#F0F8FF", "#F5FFFA",
+    "#FFFACD", "#FFF8DC", "#F0FFF0", "#F8F8FF", "#FDF5E6",
+    "#E6E6FA", "#F0E68C", "#FFEFD5", "#FFE4E1", "#E0FFFF",
+    "#FFF5EE", "#F0FFFF", "#FFFAF0", "#F5F0FF", "#FFF0F0",
+    "#F0FFF8", "#FFFFF0", "#F8FFF8", "#FFF8F0", "#FAF0E6"
 ];
 
 const randomHex = () =>
-    colors[Math.floor(Math.random() * colors.length)].hex;
+    colors[Math.floor(Math.random() * colors.length)];
 
 const getS3 = (key) => {
     return `https://${BUCKET_NAME}.s3.us-east-1.amazonaws.com/${key}`;
@@ -82,6 +65,7 @@ Output:
 1. Title
 2. Page-by-page story text (10 pages)
 3. For each page (including the cover), a detailed image prompt reflecting all the above details.
+4. Output MUST be in JSON format.
 `;
 
 const promptImage = (topic, artStyle, title) => `
@@ -112,7 +96,8 @@ const createPlan = async (topic) => {
     const result = await generateObject({
         model: PLANNER_MODEL,
         prompt: promptPlan(topic),
-        maxRetries: 3,
+        mode: "json",
+        maxRetries: 5,
         schema: z.object({
             title: z.string(),
             cover: z.string(),

@@ -2,7 +2,9 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
+import Link from "next/link";
 import Image from "next/image";
+import { redirect, usePathname } from "next/navigation";
 import { motion, useMotionValue } from "framer-motion";
 import {
     Bookmark,
@@ -13,16 +15,14 @@ import {
     Minimize2,
     Trash2,
 } from "lucide-react";
-import { cn, sortPages } from "@/lib/utils";
-import NextImage from "@/components/ui/image";
-import Title from "../../../../../components/ui/title";
-import DeleteBook from "../../../../../components/ui/delete-book";
-import { redirect, usePathname } from "next/navigation";
-import useSave from "@/hook/use-save";
 import toast from "react-hot-toast";
-import { User } from "lucia";
+import type { User } from "lucia";
+import { cn, sortPages } from "@/lib/utils";
+import useSave from "@/hook/use-save";
+import NextImage from "@/components/ui/image";
+import Title from "@/components/ui/title";
+import DeleteBook from "@/components/ui/delete-book";
 import FullscreenError from "@/components/ui/fullscreen-error";
-import Link from "next/link";
 
 type Page = {
     id: string;
@@ -118,7 +118,7 @@ const Book: React.FC<BookProps> = ({ book, user, isCreator }) => {
             const el = containerRef.current ?? document.documentElement;
             if (document.fullscreenElement) return;
             await el.requestFullscreen();
-        } catch (e) {
+        } catch (_) {
             setFullscreenError(true);
         }
     };
@@ -127,7 +127,7 @@ const Book: React.FC<BookProps> = ({ book, user, isCreator }) => {
         try {
             if (!document.fullscreenElement) return;
             await document.exitFullscreen();
-        } catch (e) {
+        } catch (_) {
             window.location.reload();
         }
     };

@@ -21,7 +21,7 @@ const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
             <div className="flex">
                 <div
                     style={{
-                        backgroundImage: `url('/images/magical-forest-kid-reading-a-book-auth.svg')`,
+                        backgroundImage: `url('/images/group-of-kids-in-front-of-a-house-reading-books.jpg')`,
                         backgroundSize: "cover",
                         backgroundPosition: "center",
                     }}

@@ -1,14 +1,12 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { SearchIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 const Search: React.FC = () => {
     const t = useTranslations("messages");
     const [value, setValue] = useState("");
-
-    const inputRef = useRef<HTMLInputElement>(null);
 
     const onSubmit = () => {
         window.location.replace(`/search?q=${value}`);
@@ -25,7 +23,6 @@ const Search: React.FC = () => {
             <input
                 onChange={(e) => setValue(e.target.value)}
                 onKeyDown={handleKeyDown}
-                ref={inputRef}
                 value={value}
                 type="text"
                 placeholder={t("search-placeholder")}
@@ -33,7 +30,6 @@ const Search: React.FC = () => {
             />
 
             <button
-                disabled={!value}
                 type="submit"
                 onClick={onSubmit}
                 className="absolute right-1.5 top-1/2 z-50 -translate-y-1/2 size-9 rounded-full bg-primary transition duration-200 flex items-center justify-center cursor-pointer"

@@ -37,6 +37,7 @@ const Page = async () => {
             title: true,
             cover: true,
             themes: true,
+            age: true,
             artStyle: true,
             public: true,
             pages: {

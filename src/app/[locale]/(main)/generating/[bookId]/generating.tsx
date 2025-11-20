@@ -56,7 +56,7 @@ const Generating: React.FC<GeneratingProps> = ({ bookId }) => {
             router.replace(`/book/${bookId}`);
             return;
         }
-    }, [isGenerating, router]);
+    }, [isGenerating, router, bookId]);
 
     if (isGenerating) {
         return (

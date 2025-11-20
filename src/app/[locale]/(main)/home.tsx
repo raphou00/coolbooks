@@ -339,7 +339,7 @@ const Thanks: React.FC<ThanksProps> = ({ open, setOpen }) => {
         };
 
         shoot();
-    }, []);
+    }, [open]);
 
     return (
         <Modal isOpen={open} setIsOpen={setOpen} className="w-full">

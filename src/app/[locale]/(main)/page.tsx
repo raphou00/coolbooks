@@ -43,12 +43,12 @@ const Page = async () => {
             <Home user={user?.user || null} />
             <VelocityText />
             <Books
-                title={"🎉 " + t("cartoon")}
+                title={"🦄 " + t("cartoon")}
                 books={booksCartoon}
                 user={user?.user || null}
             />
             <Books
-                title={"🤠 " + t("adventure")}
+                title={"🧚🏻 " + t("adventure")}
                 books={booksAdventure}
                 user={user?.user || null}
             />
@@ -59,7 +59,7 @@ const Page = async () => {
                 user={user?.user || null}
             />
             <Books
-                title={"📚 " + t("education")}
+                title={"🧑‍🎓 " + t("education")}
                 books={booksEducation}
                 user={user?.user || null}
             />
