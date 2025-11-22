@@ -17,7 +17,6 @@ import {
     Maximize2,
     Minimize2,
     Settings,
-    Share2,
     Trash2,
     Unlock,
 } from "lucide-react";
@@ -307,9 +306,7 @@ const Book: React.FC<BookProps> = ({ book, user, isCreator }) => {
 
                                     <button
                                         className="btn rounded-xl justify-start btn-soft btn-error w-full"
-                                        onClick={(e) => {
-                                            setOpen(true);
-                                        }}
+                                        onClick={() => setOpen(true)}
                                     >
                                         <Trash2 className="size-6" />
                                         {t("delete")}
@@ -526,7 +523,7 @@ const Navigation: React.FC<NavigationProps> = ({
     );
 };
 
-const MustLogin: React.FC = () => {
+const _MustLogin: React.FC = () => {
     const t = useTranslations("pages.book.must-login");
     const pathname = usePathname();
 

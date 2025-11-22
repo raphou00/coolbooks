@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { BookPlus, SearchIcon, Trash2 } from "lucide-react";
 import NextImage from "@/components/ui/image";
 import Title from "@/components/ui/title";
@@ -26,6 +26,7 @@ type StudioProps = {
 
 const Studio: React.FC<StudioProps> = ({ books: allBooks }) => {
     const t = useTranslations("pages.studio");
+    const [open, setOpen] = useState<string | null>(null);
     const [search, setSearch] = useState("");
     const [books, setBooks] = useState<Books>(allBooks);
 
@@ -85,7 +86,7 @@ const Studio: React.FC<StudioProps> = ({ books: allBooks }) => {
                 </div>
             :   <div className="w-full grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-2 md:gap-8">
                     {books.map((book) => (
-                        <div key={book.id} className="group relative size-full">
+                        <Fragment key={book.id}>
                             <DeleteBook
                                 bookId={book.id}
                                 callback={() =>
@@ -93,35 +94,43 @@ const Studio: React.FC<StudioProps> = ({ books: allBooks }) => {
                                         books.filter((b) => b.id !== book.id)
                                     )
                                 }
-                            >
+                                open={open === book.id}
+                                setOpen={(isOpen) =>
+                                    setOpen(isOpen ? book.id : null)
+                                }
+                            />
+                            <div className="group relative size-full">
                                 <div className="absolute z-50 top-2 right-2 transition opacity-0 group-hover:opacity-100">
-                                    <button className="btn btn-sm btn-circle btn-soft btn-error">
+                                    <button
+                                        className="btn btn-sm btn-circle btn-soft btn-error"
+                                        onClick={() => setOpen(book.id)}
+                                    >
                                         <Trash2 className="size-5" />
                                     </button>
                                 </div>
-                            </DeleteBook>
 
-                            <Link href={`/book/${book.id}`}>
-                                <div className="w-full aspect-square shadow-lg rounded-lg overflow-hidden">
-                                    <NextImage
-                                        className="group-hover:scale-105 transition-all"
-                                        src={book.cover}
-                                        width={1024}
-                                        height={1024}
-                                        alt={book.title}
-                                    />
-                                </div>
-                                <div className="flex flex-col items-start text-sm font-bold mt-2">
-                                    <h2 className="text-left truncate w-full">
-                                        {book.title}
-                                    </h2>
-                                    <p className="text-neutral text-xs text-left truncate w-full">
-                                        {t("modify")}{" "}
-                                        <Date date={book.updatedAt} />
-                                    </p>
-                                </div>
-                            </Link>
-                        </div>
+                                <Link href={`/book/${book.id}`}>
+                                    <div className="w-full aspect-square shadow-lg rounded-lg overflow-hidden">
+                                        <NextImage
+                                            className="group-hover:scale-105 transition-all"
+                                            src={book.cover}
+                                            width={1024}
+                                            height={1024}
+                                            alt={book.title}
+                                        />
+                                    </div>
+                                    <div className="flex flex-col items-start text-sm font-bold mt-2">
+                                        <h2 className="text-left truncate w-full">
+                                            {book.title}
+                                        </h2>
+                                        <p className="text-neutral text-xs text-left truncate w-full">
+                                            {t("modify")}{" "}
+                                            <Date date={book.updatedAt} />
+                                        </p>
+                                    </div>
+                                </Link>
+                            </div>
+                        </Fragment>
                     ))}
                 </div>
             }

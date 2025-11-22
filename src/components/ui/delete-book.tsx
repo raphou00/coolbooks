@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { AlertTriangle } from "lucide-react";
 import Modal from "@/components/ui/modal";
