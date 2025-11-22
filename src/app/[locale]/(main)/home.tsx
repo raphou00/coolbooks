@@ -52,7 +52,7 @@ const Home: React.FC<HomeProps> = ({ user }) => {
     }, [color]);
 
     const border = useMotionTemplate`1px solid ${color}`;
-    const boxShadow = useMotionTemplate`0px 4px 24px ${color}`;
+    const boxShadow = useMotionTemplate`0px 8px 24px ${color}`;
 
     return (
         <>
@@ -88,18 +88,12 @@ const Home: React.FC<HomeProps> = ({ user }) => {
                                 border,
                                 boxShadow,
                             }}
-                            whileHover={{
-                                scale: 1.015,
-                            }}
-                            whileTap={{
-                                scale: 0.985,
-                            }}
                             href={
                                 user ? "/studio/new" : (
                                     "/login?redirect=/studio/new"
                                 )
                             }
-                            className="group text-white flex w-fit items-center gap-1.5 rounded-full bg-gray-950/90 px-4 py-2 transition cursor-pointer hover:bg-gray-950/90"
+                            className="group text-white text-lg flex w-fit items-center gap-1.5 rounded-full px-6 py-3 transition cursor-pointer bg-slate-800/90  hover:bg-slate-800/90"
                         >
                             {t("create")}
                             <ArrowRight className="transition-transform group-hover:-rotate-45 group-active:-rotate-12" />
