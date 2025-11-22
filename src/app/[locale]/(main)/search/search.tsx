@@ -53,7 +53,7 @@ const artStyleImages: Record<string, string> = {
 
 const Search: React.FC<SearchProps> = ({ user, books: allBooks }) => {
     const t = useTranslations("pages.search");
-    const tLoginSave = useTranslations("links");
+    const tMessages = useTranslations("messages");
     const q = useSearchParams().get("q");
     const [search] = useState(q || "");
     const [books, setBooks] = useState<Books>(allBooks);
@@ -67,7 +67,7 @@ const Search: React.FC<SearchProps> = ({ user, books: allBooks }) => {
 
     const handleSave = async (bookId: string) => {
         if (!user) {
-            toast(tLoginSave("login-save"), {
+            toast(tMessages("login-save"), {
                 icon: <Info className="text-info" />,
             });
             return;

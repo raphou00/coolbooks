@@ -138,7 +138,7 @@
             "hero": "Hero",
             "adventure": "Adventure",
             "weekly-update": {
-                "first-part": "🧑‍💻 In the 7 days  ",
+                "first-part": "In the 7 days  ",
                 "second-part": " joined CoolBooks",
                 "surrounded": "58 parents"
             },
@@ -204,6 +204,14 @@
             "edit": "Edit",
             "minimize": "Minimize",
             "maximize": "Maximize",
+            "public": "Public",
+            "save": "Save",
+            "unsave": "Unsave",
+            "share": "Share",
+            "download-pdf": "Download PDF",
+            "download-epub": "Download EPUB",
+            "coming-soon": "Coming soon",
+            "delete": "Delete",
             "fullscreen-error": {
                 "title": "Fullscreen not supported",
                 "description": "Your browser does not support fullscreen mode. Please use a different browser or a desktop computer.",
@@ -445,7 +453,8 @@
         "book-updated": "Book details updated",
         "page-updated": "Page updated",
         "book-deleted": "Book successfully deleted",
-        "prompt-inappropriate": "Story contains inappropriate content"
+        "prompt-inappropriate": "Story contains inappropriate content",
+        "login-save": "Login to save to your favorites"
     },
     "links": {
         "login": "Login",
@@ -470,7 +479,6 @@
         "new-book": "New Book",
         "my-books": "My Books",
         "me": "Me",
-        "login-save": "Login to save to your favorites",
         "subscribe": "Subscribe",
         "current-plan": "Current Plan:",
         "credits": "Credits remaining",

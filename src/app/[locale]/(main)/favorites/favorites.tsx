@@ -29,7 +29,7 @@ type FavoritesProps = {
 
 const Favorites: React.FC<FavoritesProps> = ({ user, books: allBooks }) => {
     const t = useTranslations("pages.favorites");
-    const tLoginSave = useTranslations("links");
+    const tMessages = useTranslations("messages");
     const [value, setValue] = useState("");
     const [books, setBooks] = useState<Books>(allBooks);
     const [allSavedBooks, setAllSavedBooks] = useState<string[]>(
@@ -50,7 +50,7 @@ const Favorites: React.FC<FavoritesProps> = ({ user, books: allBooks }) => {
 
     const handleSave = async (bookId: string) => {
         if (!user) {
-            toast(tLoginSave("login-save"), {
+            toast(tMessages("login-save"), {
                 icon: <Info className="text-info" />,
             });
             return;

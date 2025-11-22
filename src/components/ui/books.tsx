@@ -31,7 +31,7 @@ type BooksProps = {
 
 const Books: React.FC<BooksProps> = ({ title, books, user }) => {
     const t = useTranslations("pages.home");
-    const tLoginSave = useTranslations("links");
+    const tMessages = useTranslations("messages");
     const [allSavedBooks, setAllSavedBooks] = useState<string[]>(
         user?.savedBooks || []
     );
@@ -69,7 +69,7 @@ const Books: React.FC<BooksProps> = ({ title, books, user }) => {
 
     const handleSave = async (bookId: string) => {
         if (!user) {
-            toast(tLoginSave("login-save"), {
+            toast(tMessages("login-save"), {
                 icon: <Info className="text-info" />,
             });
             return;

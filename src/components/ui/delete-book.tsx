@@ -7,16 +7,17 @@ import toast from "react-hot-toast";
 type DeleteBookProps = {
     bookId: string;
     callback: () => void;
-    children: React.ReactNode;
+    open: boolean;
+    setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const DeleteBook: React.FC<DeleteBookProps> = ({
     bookId,
     callback,
-    children,
+    open,
+    setOpen,
 }) => {
     const t = useTranslations("pages.delete-book");
-    const [open, setOpen] = useState<boolean>(false);
 
     const handleDelete = async () => {
         const res = await fetch(`/api/book?bookId=${bookId}`, {
@@ -36,8 +37,6 @@ const DeleteBook: React.FC<DeleteBookProps> = ({
 
     return (
         <>
-            <div onClick={() => setOpen(true)}>{children}</div>
-
             <Modal
                 isOpen={open}
                 setIsOpen={setOpen}
@@ -63,18 +62,18 @@ const DeleteBook: React.FC<DeleteBookProps> = ({
                     </div>
                 </div>
 
-                <div className="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse gap-3">
+                <div className="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse gap-3 space-y-2">
                     <button
                         type="button"
                         onClick={handleDelete}
-                        className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:w-auto"
+                        className="btn btn-error text-white max-sm:w-full"
                     >
                         {t("delete")}
                     </button>
                     <button
                         type="button"
                         onClick={() => setOpen(false)}
-                        className="inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:w-auto"
+                        className="btn btn-outline max-sm:w-full"
                     >
                         {t("cancel")}
                     </button>

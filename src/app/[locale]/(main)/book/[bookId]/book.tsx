@@ -7,13 +7,19 @@ import Image from "next/image";
 import { redirect, usePathname } from "next/navigation";
 import { motion, useMotionValue } from "framer-motion";
 import {
+    BookImage,
     Bookmark,
     ChevronLeft,
     ChevronRight,
+    FileImage,
     Info,
+    Lock,
     Maximize2,
     Minimize2,
+    Settings,
+    Share2,
     Trash2,
+    Unlock,
 } from "lucide-react";
 import toast from "react-hot-toast";
 import type { User } from "lucia";
@@ -38,6 +44,7 @@ type BookProps = {
         title: string;
         cover: string;
         pages: Page[];
+        public: boolean;
         user: {
             name: string;
         };
@@ -69,15 +76,51 @@ const SPRING_OPTIONS = {
 
 const Book: React.FC<BookProps> = ({ book, user, isCreator }) => {
     const t = useTranslations("pages.book");
-    const tLoginSave = useTranslations("links");
+    const tMessages = useTranslations("messages");
     const [imgIndex, setImgIndex] = useState(0);
+    const [loadingPublic, setLoadingPublic] = useState(false);
+    const [bookPublic, setBookPublic] = useState<boolean>(book.public);
     const [showFullscreen, setShowFullscreen] = useState(false);
     const [fullscreenError, setFullscreenError] = useState(false);
+    const [open, setOpen] = useState<boolean>(false);
     const containerRef = useRef<HTMLDivElement | null>(null);
     const [isSaved, setIsSaved] = useState<boolean>(
         user?.savedBooks.includes(book.id) ?? false
     );
+
     const toggleSave = useSave();
+
+    const togglePublic: React.MouseEventHandler<HTMLLabelElement> = async (
+        e
+    ) => {
+        e.stopPropagation();
+        if (loadingPublic) {
+            return;
+        }
+        if (!user) {
+            toast(tMessages("login-save"), {
+                icon: <Info className="text-info" />,
+            });
+            return;
+        }
+        if (!isCreator) {
+            toast(tMessages("unauthorized"), {
+                icon: <Info className="text-info" />,
+            });
+            return;
+        }
+
+        setLoadingPublic(true);
+        setBookPublic((e) => !e);
+        await fetch("/api/book/update", {
+            method: "POST",
+            body: JSON.stringify({
+                id: book.id,
+                public: !bookPublic,
+            }),
+        });
+        setLoadingPublic(false);
+    };
 
     const allPages = [
         {
@@ -142,7 +185,7 @@ const Book: React.FC<BookProps> = ({ book, user, isCreator }) => {
 
     const handleSave = async () => {
         if (!user) {
-            toast(tLoginSave("login-save"), {
+            toast(tMessages("login-save"), {
                 icon: <Info className="text-info" />,
             });
             return;
@@ -153,12 +196,14 @@ const Book: React.FC<BookProps> = ({ book, user, isCreator }) => {
         await toggleSave(isSaved ? "unsave" : "save", book.id);
     };
 
-    if (!user) {
-        return <MustLogin />;
-    }
-
     return (
         <>
+            <DeleteBook
+                bookId={book.id}
+                callback={() => redirect("/")}
+                open={open}
+                setOpen={setOpen}
+            />
             <FullscreenError
                 open={fullscreenError}
                 setOpen={setFullscreenError}
@@ -172,29 +217,6 @@ const Book: React.FC<BookProps> = ({ book, user, isCreator }) => {
                 </div>
 
                 <div className="flex gap-2">
-                    {isCreator && (
-                        <DeleteBook
-                            bookId={book.id}
-                            callback={() => redirect("/")}
-                        >
-                            <button className="btn btn-circle btn-soft btn-error">
-                                <Trash2 className="size-6" />
-                            </button>
-                        </DeleteBook>
-                    )}
-
-                    <button
-                        onClick={handleSave}
-                        className="btn btn-circle btn-primary"
-                    >
-                        <Bookmark
-                            className={cn(
-                                "size-6 text-white",
-                                isSaved && "fill-white"
-                            )}
-                        />
-                    </button>
-
                     <button
                         onClick={toggleFullscreen}
                         className="btn btn-circle btn-primary"
@@ -204,6 +226,98 @@ const Book: React.FC<BookProps> = ({ book, user, isCreator }) => {
                             <Minimize2 className="size-6" />
                         :   <Maximize2 className="size-6" />}
                     </button>
+
+                    <div className="dropdown dropdown-end">
+                        <div
+                            tabIndex={0}
+                            role="button"
+                            className="btn btn-circle btn-soft bg-secondary text-white"
+                        >
+                            <Settings className="size-6" />
+                        </div>
+                        <ul
+                            tabIndex={-1}
+                            className="dropdown-content menu bg-base-200 !z-1 rounded-box w-64 p-2 shadow-xl border border-base-300 gap-y-2 mt-2"
+                        >
+                            {isCreator && (
+                                <li>
+                                    <label
+                                        className={cn(
+                                            "btn rounded-xl justify-between",
+                                            loadingPublic && "contrast-50"
+                                        )}
+                                        onClick={togglePublic}
+                                    >
+                                        <span className="flex items-center gap-x-2">
+                                            {bookPublic ?
+                                                <Unlock className="size-6" />
+                                            :   <Lock className="size-6" />}
+                                            {t("public")}
+                                        </span>
+                                        <input
+                                            type="checkbox"
+                                            className="toggle toggle-primary"
+                                            checked={bookPublic}
+                                            readOnly
+                                        />
+                                    </label>
+                                </li>
+                            )}
+
+                            <li>
+                                <button
+                                    onClick={handleSave}
+                                    className="btn rounded-xl justify-start"
+                                >
+                                    <Bookmark
+                                        className={cn(
+                                            "size-6 text-primary",
+                                            isSaved && "fill-primary"
+                                        )}
+                                    />
+                                    {isSaved ? t("unsave") : t("save")}
+                                </button>
+                            </li>
+
+                            <div className="divider mx-auto -my-1 w-full px-2" />
+
+                            <li>
+                                <button
+                                    onClick={() => toast(t("coming-soon"))}
+                                    className="btn rounded-xl justify-start"
+                                >
+                                    <FileImage className="size-6" />
+                                    {t("download-pdf")}
+                                </button>
+                            </li>
+
+                            <li>
+                                <button
+                                    onClick={() => toast(t("coming-soon"))}
+                                    className="btn rounded-xl justify-start"
+                                >
+                                    <BookImage className="size-6" />
+                                    {t("download-epub")}
+                                </button>
+                            </li>
+
+                            {isCreator && (
+                                <>
+                                    <div className="divider mx-auto -my-1 w-full px-2" />
+
+                                    <button
+                                        className="btn rounded-xl justify-start btn-soft btn-error w-full"
+                                        onClick={(e) => {
+                                            setOpen(true);
+                                        }}
+                                    >
+                                        <Trash2 className="size-6" />
+                                        {t("delete")}
+                                    </button>
+                                </>
+                            )}
+                        </ul>
+                    </div>
                 </div>
             </div>
 
