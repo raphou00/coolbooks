@@ -61,7 +61,7 @@ const Home: React.FC<HomeProps> = ({ user }) => {
                     <span className="mr-2 text-lg">🎄</span>
                     <p className="max-sm:text-sm text-gray-800">
                         {t("banner-pricing")}{" "}
-                        <Link href="/pricing" className="link">
+                        <Link href="/pricing" className="link font-extrabold">
                             {t("banner-pricing-link")}
                         </Link>
                     </p>
