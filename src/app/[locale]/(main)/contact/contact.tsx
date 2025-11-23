@@ -36,7 +36,7 @@ const Page: React.FC = () => {
                     <Form
                         title={t("title")}
                         logo={false}
-                        className="bg-secondary/10 px-2 md:px-5 lg:px-8 py-6 rounded-2xl max-w-lg"
+                        className="bg-secondary/20 px-2 md:px-5 lg:px-8 py-6 rounded-2xl max-w-lg"
                     >
                         <form
                             onSubmit={handleSubmit(submit)}

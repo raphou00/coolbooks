@@ -493,7 +493,7 @@ const Pages: React.FC<PagesProps> = ({ pages, fullscreen }) => {
                                             }}
                                         >
                                             <div className="h-full w-full p-8 overflow-auto flex items-center justify-center">
-                                                <div className="text-lg md:text-xl leading-relaxed text-justify">
+                                                <div className="text-xl md:text-2xl leading-relaxed text-justify">
                                                     {page.text}
                                                 </div>
                                             </div>
@@ -525,7 +525,7 @@ const Pages: React.FC<PagesProps> = ({ pages, fullscreen }) => {
                                         className="relative flex flex-col justify-center rounded-2xl w-full max-w-[450px] md:aspect-square text-gray-800 max-md:mx-auto"
                                         style={{ background: page.color }}
                                     >
-                                        <div className="text-base md:text-xl leading-relaxed text-justify p-8">
+                                        <div className="text-xl md:text-2xl leading-relaxed text-justify p-8">
                                             {page.text}
                                         </div>
                                         <p className="absolute bottom-2 left-1/2 -translate-x-1/2 text-sm text-gray-600">

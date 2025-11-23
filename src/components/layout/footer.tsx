@@ -22,13 +22,54 @@ const Footer: React.FC = () => {
                             <Link href="/" className="flex items-center gap-2">
                                 <Logo className="w-auto h-16" />
                             </Link>
-                            <div className="flex items-center gap-3">
-                                {/* <Link href="https://instagram.com/">
-                                    <Instagram />
-                                </Link> */}
-                                {/* <Link href="https://www.tiktok.com/">
-                                    <Tiktok />
-                                </Link> */}
+                            <div className="flex flex-col items-start gap-3">
+                                <div className="flex items-center">
+                                    <p></p>
+                                    <Link
+                                        href="mailto:coolbooks.app@gmail.com"
+                                        className="link text-xs truncate"
+                                    >
+                                        coolbooks.app@gmail.com
+                                    </Link>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                    <Link
+                                        href="https://www.facebook.com/profile.php?viewas=100000686899395&id=61584008510579&locale=fr_FR"
+                                        target="_blank"
+                                    >
+                                        <Image
+                                            src="/images/icons/facebook.png"
+                                            alt=""
+                                            width={256}
+                                            height={256}
+                                            className="size-8"
+                                        />
+                                    </Link>
+                                    <Link
+                                        href="https://www.instagram.com/"
+                                        target="_blank"
+                                    >
+                                        <Image
+                                            src="/images/icons/instagram.png"
+                                            alt=""
+                                            width={256}
+                                            height={256}
+                                            className="size-8"
+                                        />
+                                    </Link>
+                                    <Link
+                                        href="https://www.tiktok.com/"
+                                        target="_blank"
+                                    >
+                                        <Image
+                                            src="/images/icons/tiktok.png"
+                                            alt=""
+                                            width={256}
+                                            height={256}
+                                            className="size-8"
+                                        />
+                                    </Link>
+                                </div>
                             </div>
                         </div>
 
@@ -85,7 +126,7 @@ const Footer: React.FC = () => {
     );
 };
 
-const _Instagram: React.FC = () => {
+const Instagram: React.FC = () => {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -100,7 +141,7 @@ const _Instagram: React.FC = () => {
     );
 };
 
-const _Tiktok: React.FC = () => {
+const Tiktok: React.FC = () => {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
