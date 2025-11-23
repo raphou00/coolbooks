@@ -54,7 +54,7 @@ Create a kid book using the following details:
 
 Requirements:
 * The title must be short and concise.
-* Each page's text should be long enough to be interesting for the target age group.
+* Each page's text should contain 3~4 sentences
 * Describe the cover and each page's image in a detailed prompt, matching the specified art style, character appearance, theme.
 * Be very precise with the image prompts to ensure the visuals match the description.
 * Write the text in a kid-friendly style corresponding to the target age group.

@@ -51,6 +51,11 @@ const provision = () => {
                 cachedMethods: ["GET", "HEAD"],
                 targetOriginId: s3Origin,
                 forwardedValues: {
+                    headers: [
+                        "Origin",
+                        "Access-Control-Request-Method",
+                        "Access-Control-Request-Headers",
+                    ],
                     queryString: false,
                     cookies: {
                         forward: "none",

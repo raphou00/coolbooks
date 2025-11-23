@@ -24,10 +24,11 @@ import toast from "react-hot-toast";
 import type { User } from "lucia";
 import { cn, sortPages } from "@/lib/utils";
 import useSave from "@/hook/use-save";
-import NextImage from "@/components/ui/image";
 import Title from "@/components/ui/title";
+import NextImage from "@/components/ui/image";
 import DeleteBook from "@/components/ui/delete-book";
 import FullscreenError from "@/components/ui/fullscreen-error";
+import saveAs from "file-saver";
 
 type Page = {
     id: string;
@@ -37,7 +38,7 @@ type Page = {
     image: string;
 };
 
-type BookProps = {
+export type BookProps = {
     book: {
         id: string;
         title: string;
@@ -195,6 +196,42 @@ const Book: React.FC<BookProps> = ({ book, user, isCreator }) => {
         await toggleSave(isSaved ? "unsave" : "save", book.id);
     };
 
+    const exportEPUB = async () => {
+        try {
+            const response = await fetch(
+                `/api/book/export?format=epub&bookId=${book.id}`
+            );
+
+            if (!response.ok) {
+                throw new Error("Failed to fetch file");
+            }
+
+            const blob = await response.blob();
+
+            saveAs(blob, `${book.title}.epub`);
+        } catch (error) {
+            toast.error(tMessages("server-error"));
+        }
+    };
+
+    const exportPDF = async (orientation: "portrait" | "landscape") => {
+        try {
+            const response = await fetch(
+                `/api/book/export?format=pdf&orientation=${orientation}&bookId=${book.id}`
+            );
+
+            if (!response.ok) {
+                throw new Error("Failed to fetch file");
+            }
+
+            const blob = await response.blob();
+
+            saveAs(blob, `${book.title}.pdf`);
+        } catch (error) {
+            toast.error(tMessages("server-error"));
+        }
+    };
+
     return (
         <>
             <DeleteBook
@@ -207,7 +244,7 @@ const Book: React.FC<BookProps> = ({ book, user, isCreator }) => {
                 open={fullscreenError}
                 setOpen={setFullscreenError}
             />
-            <div className="w-full max-w-[850px] flex items-center justify-between mt-4 mx-auto">
+            <div className="w-full max-w-[850px] px-2 flex items-center justify-between mt-4 mx-auto">
                 <div className="flex flex-col">
                     <Title text={book.title} className="font-bold text-xl" />
                     <p className="text-neutral">
@@ -236,7 +273,7 @@ const Book: React.FC<BookProps> = ({ book, user, isCreator }) => {
                         </div>
                         <ul
                             tabIndex={-1}
-                            className="dropdown-content menu bg-base-200 !z-1 rounded-box w-64 p-2 shadow-xl border border-base-300 gap-y-2 mt-2"
+                            className="dropdown-content menu bg-base-200 !z-40 rounded-box w-64 p-2 shadow-xl border border-base-300 gap-y-2 mt-2"
                         >
                             {isCreator && (
                                 <li>
@@ -278,21 +315,55 @@ const Book: React.FC<BookProps> = ({ book, user, isCreator }) => {
                                 </button>
                             </li>
 
-                            <div className="divider mx-auto -my-1 w-full px-2" />
+                            <div className="divider mx-auto -my-2 w-full px-2" />
+
+                            <>
+                                <div className="dropdown md:dropdown-left">
+                                    <div
+                                        tabIndex={0}
+                                        role="button"
+                                        className="btn rounded-xl justify-start w-full"
+                                    >
+                                        <FileImage className="size-6" />
+                                        {t("download-pdf")}
+                                    </div>
+                                    <ul
+                                        tabIndex={-1}
+                                        className="dropdown-content menu space-y-2 !mt-0 bg-base-100 rounded-box z-1 w-52 !mr-3 shadow-sm"
+                                    >
+                                        <li>
+                                            <button
+                                                onClick={() =>
+                                                    exportPDF("landscape")
+                                                }
+                                                className="btn rounded-xl justify-start"
+                                            >
+                                                <div className="badge badge-primary">
+                                                    16:9
+                                                </div>
+                                                {t("landscape")}
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button
+                                                onClick={() =>
+                                                    exportPDF("portrait")
+                                                }
+                                                className="btn rounded-xl justify-start"
+                                            >
+                                                <div className="badge badge-primary">
+                                                    9:16
+                                                </div>
+                                                {t("portrait")}
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </>
 
                             <li>
                                 <button
-                                    onClick={() => toast(t("coming-soon"))}
-                                    className="btn rounded-xl justify-start"
-                                >
-                                    <FileImage className="size-6" />
-                                    {t("download-pdf")}
-                                </button>
-                            </li>
-
-                            <li>
-                                <button
-                                    onClick={() => toast(t("coming-soon"))}
+                                    onClick={() => exportEPUB()}
                                     className="btn rounded-xl justify-start"
                                 >
                                     <BookImage className="size-6" />
@@ -302,7 +373,7 @@ const Book: React.FC<BookProps> = ({ book, user, isCreator }) => {
 
                             {isCreator && (
                                 <>
-                                    <div className="divider mx-auto -my-1 w-full px-2" />
+                                    <div className="divider mx-auto -my-2 w-full px-2" />
 
                                     <button
                                         className="btn rounded-xl justify-start btn-soft btn-error w-full"

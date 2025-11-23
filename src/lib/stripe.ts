@@ -108,13 +108,13 @@ export const handleInvoicePayment = async (
 
     switch (priceId) {
         case priceBasic.data[0].id:
-            creditsToAdd = 5;
+            creditsToAdd = 3;
             break;
         case priceFamily.data[0].id:
-            creditsToAdd = 10;
+            creditsToAdd = 8;
             break;
         case pricePremium.data[0].id:
-            creditsToAdd = 20;
+            creditsToAdd = 12;
             break;
     }
 

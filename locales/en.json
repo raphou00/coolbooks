@@ -212,6 +212,8 @@
             "download-epub": "Download EPUB",
             "coming-soon": "Coming soon",
             "delete": "Delete",
+            "portrait": "Portrait",
+            "landscape": "Landscape",
             "fullscreen-error": {
                 "title": "Fullscreen not supported",
                 "description": "Your browser does not support fullscreen mode. Please use a different browser or a desktop computer.",
@@ -328,7 +330,7 @@
                     "title": "Basic",
                     "description": "Get Started with Story Magic",
                     "features": [
-                        "5 AI book creation",
+                        "3 AI book creation",
                         "Standard illustrations",
                         "Basic customization"
                     ]
@@ -337,7 +339,7 @@
                     "title": "Family",
                     "description": "Stories for the Whole Family",
                     "features": [
-                        "10 AI books creation",
+                        "8 AI books creation",
                         "Premium illustrations",
                         "Better personalization"
                     ]
@@ -346,7 +348,7 @@
                     "title": "Premium",
                     "description": "Endless Stories, Endless Smiles",
                     "features": [
-                        "20 AI books creation",
+                        "12 AI books creation",
                         "All premium features",
                         "Priority generation (faster processing)"
                     ]
@@ -466,7 +468,7 @@
         "sessions": "Sessions",
         "socials": "Socials",
         "delete-account": "Delete Account",
-        "contact": "Contact us",
+        "contact": "Contact",
         "legal": "Legal",
         "privacy": "Privacy Policy",
         "terms": "Terms of Service",
