@@ -45,7 +45,7 @@ const Footer: React.FC = () => {
                                             className="size-8"
                                         />
                                     </Link>
-                                    <Link
+                                    {/* <Link
                                         href="https://www.instagram.com/"
                                         target="_blank"
                                     >
@@ -68,7 +68,7 @@ const Footer: React.FC = () => {
                                             height={256}
                                             className="size-8"
                                         />
-                                    </Link>
+                                    </Link> */}
                                 </div>
                             </div>
                         </div>
