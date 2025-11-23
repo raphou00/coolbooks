@@ -1,11 +1,10 @@
 import { type Metadata } from "next";
+import Script from "next/script";
 import Main from "@/components/layout/main";
 import { getTranslations } from "next-intl/server";
 import Pricing from "./pricing";
 import { getSubscription } from "@/lib/stripe";
 import { getUser } from "@/lib/auth";
-import Script from "next/script";
-import Head from "next/head";
 
 const generateMetadata = async (): Promise<Metadata> => {
     const t = await getTranslations();

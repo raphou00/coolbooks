@@ -47,3 +47,6 @@ DATABASE_URL
 
 # backup SQL
 backup.sql
+
+# venv
+.venv

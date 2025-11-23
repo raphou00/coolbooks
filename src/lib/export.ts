@@ -2,6 +2,7 @@ import jsPDF from "jspdf";
 import JSZip from "jszip";
 import env from "@/lib/env";
 import type { BookProps } from "@/app/[locale]/(main)/book/[bookId]/book";
+import { sortPages } from "./utils";
 
 export const exportEPUB = async (book: BookProps["book"]) => {
     try {
@@ -31,7 +32,7 @@ export const exportEPUB = async (book: BookProps["book"]) => {
         const coverExt = book.cover.split(".").pop()?.split("?")[0] || "jpg";
         images?.file(`cover.${coverExt}`, coverBuffer);
 
-        const imagePromises = book.pages.map(async (page, i) => {
+        const imagePromises = sortPages(book.pages).map(async (page, i) => {
             const response = await fetch(env.CLOUDFRONT_URL + "/" + page.image);
             const blob = await response.blob();
             const arrayBuffer = await blob.arrayBuffer();
@@ -72,7 +73,7 @@ ${downloadedImages
         return `    <item id="img${img.index}" href="images/${img.imageName}" media-type="${mediaType}"/>`;
     })
     .join("\n")}
-${book.pages
+${sortPages(book.pages)
     .map(
         (_, i) =>
             `    <item id="page${i}" href="page${i}.xhtml" media-type="application/xhtml+xml"/>`
@@ -83,7 +84,9 @@ ${book.pages
   </manifest>
   <spine toc="ncx">
     <itemref idref="cover" linear="no"/>
-${book.pages.map((_, i) => `    <itemref idref="page${i}"/>`).join("\n")}
+${sortPages(book.pages)
+    .map((_, i) => `    <itemref idref="page${i}"/>`)
+    .join("\n")}
   </spine>
   <guide>
     <reference type="cover" title="Cover" href="cover.xhtml"/>
@@ -99,8 +102,8 @@ ${book.pages.map((_, i) => `    <itemref idref="page${i}"/>`).join("\n")}
   <head>
     <meta name="dtb:uid" content="urn:uuid:${Date.now()}"/>
     <meta name="dtb:depth" content="1"/>
-    <meta name="dtb:totalPageCount" content="${book.pages.length}"/>
-    <meta name="dtb:maxPageNumber" content="${book.pages.length}"/>
+    <meta name="dtb:totalPageCount" content="${sortPages(book.pages).length}"/>
+    <meta name="dtb:maxPageNumber" content="${sortPages(book.pages).length}"/>
   </head>
   <docTitle>
     <text>${book.title}</text>
@@ -110,7 +113,7 @@ ${book.pages.map((_, i) => `    <itemref idref="page${i}"/>`).join("\n")}
       <navLabel><text>Cover</text></navLabel>
       <content src="cover.xhtml"/>
     </navPoint>
-${book.pages
+${sortPages(book.pages)
     .map(
         (_, i) => `    <navPoint id="page${i}" playOrder="${i + 2}">
       <navLabel><text>Page ${i + 1}</text></navLabel>
@@ -160,7 +163,7 @@ img {
 </html>`
         );
 
-        book.pages.forEach((page, i) => {
+        sortPages(book.pages).forEach((page, i) => {
             const imageInfo = downloadedImages.find((img) => img.index === i);
 
             oebps?.file(
@@ -288,8 +291,8 @@ export const exportPDF = async (
             "FAST"
         );
 
-        for (let i = 0; i < book.pages.length; i++) {
-            const page = book.pages[i];
+        for (let i = 0; i < sortPages(book.pages).length; i++) {
+            const page = sortPages(book.pages)[i];
             pdf.addPage();
 
             const rgb = hexToRgb(page.color);
