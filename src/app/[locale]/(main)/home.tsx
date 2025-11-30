@@ -108,7 +108,7 @@ export const Hero: React.FC<HomeProps> = () => {
                                 boxShadow,
                             }}
                             href="/studio/new"
-                            className="group text-lg flex w-fit items-center gap-1.5 rounded-full px-6 py-2 transition cursor-pointer bg-base-300 hover:bg-base-300/90 max-md:mx-auto"
+                            className="group text-lg flex w-fit items-center gap-1.5 rounded-full px-6 py-2 transition cursor-pointer bg-accent/80 text-white hover:bg-base-300/90 max-md:mx-auto"
                         >
                             {t("create")}
                             <ArrowRight className="transition-transform group-hover:-rotate-45 group-active:-rotate-12" />
