@@ -2,9 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
-import Link from "next/link";
-import Image from "next/image";
-import { redirect, usePathname } from "next/navigation";
+import { redirect } from "next/navigation";
 import { motion, useMotionValue } from "framer-motion";
 import {
     BookImage,
@@ -22,13 +20,13 @@ import {
 } from "lucide-react";
 import toast from "react-hot-toast";
 import type { User } from "lucia";
-import { cn, sortPages } from "@/lib/utils";
+import saveAs from "file-saver";
+import { cn, requestAPI, sortPages } from "@/lib/utils";
 import useSave from "@/hook/use-save";
 import Title from "@/components/ui/title";
 import NextImage from "@/components/ui/image";
 import DeleteBook from "@/components/ui/delete-book";
 import FullscreenError from "@/components/ui/fullscreen-error";
-import saveAs from "file-saver";
 
 type Page = {
     id: string;
@@ -78,6 +76,8 @@ const Book: React.FC<BookProps> = ({ book, user, isCreator }) => {
     const t = useTranslations("pages.book");
     const tMessages = useTranslations("messages");
     const [imgIndex, setImgIndex] = useState(0);
+    const [loadingPdf, setLoadingPdf] = useState(false);
+    const [loadingEpub, setLoadingEpub] = useState(false);
     const [loadingPublic, setLoadingPublic] = useState(false);
     const [bookPublic, setBookPublic] = useState<boolean>(book.public);
     const [showFullscreen, setShowFullscreen] = useState(false);
@@ -112,13 +112,14 @@ const Book: React.FC<BookProps> = ({ book, user, isCreator }) => {
 
         setLoadingPublic(true);
         setBookPublic((e) => !e);
-        await fetch("/api/book/update", {
-            method: "POST",
-            body: JSON.stringify({
+        await requestAPI(
+            "POST",
+            "/api/book/update",
+            JSON.stringify({
                 id: book.id,
                 public: !bookPublic,
-            }),
-        });
+            })
+        );
         setLoadingPublic(false);
     };
 
@@ -197,37 +198,41 @@ const Book: React.FC<BookProps> = ({ book, user, isCreator }) => {
     };
 
     const exportEPUB = async () => {
+        if (loadingEpub) return;
         try {
-            const response = await fetch(
-                `/api/book/export?format=epub&bookId=${book.id}`
+            setLoadingEpub(true);
+
+            const blob = await requestAPI(
+                "GET",
+                `/api/book/export?format=epub&bookId=${book.id}`,
+                null,
+                {},
+                "blob"
             );
 
-            if (!response.ok) {
-                throw new Error("Failed to fetch file");
-            }
-
-            const blob = await response.blob();
-
-            saveAs(blob, `${book.title}.epub`);
-        } catch (error) {
+            saveAs(blob as unknown as Blob, `${book.title}.epub`);
+            setLoadingEpub(false);
+        } catch (_) {
             toast.error(tMessages("server-error"));
         }
     };
 
     const exportPDF = async (orientation: "portrait" | "landscape") => {
+        if (loadingPdf) return;
         try {
-            const response = await fetch(
-                `/api/book/export?format=pdf&orientation=${orientation}&bookId=${book.id}`
+            setLoadingPdf(true);
+
+            const blob = await requestAPI(
+                "GET",
+                `/api/book/export?format=pdf&orientation=${orientation}&bookId=${book.id}`,
+                null,
+                {},
+                "blob"
             );
 
-            if (!response.ok) {
-                throw new Error("Failed to fetch file");
-            }
-
-            const blob = await response.blob();
-
-            saveAs(blob, `${book.title}.pdf`);
-        } catch (error) {
+            saveAs(blob as unknown as Blob, `${book.title}.pdf`);
+            setLoadingPdf(false);
+        } catch (_) {
             toast.error(tMessages("server-error"));
         }
     };
@@ -319,14 +324,20 @@ const Book: React.FC<BookProps> = ({ book, user, isCreator }) => {
 
                             <>
                                 <div className="dropdown md:dropdown-left">
-                                    <div
+                                    <button
                                         tabIndex={0}
                                         role="button"
                                         className="btn rounded-xl justify-start w-full"
+                                        disabled={loadingPdf}
                                     >
-                                        <FileImage className="size-6" />
-                                        {t("download-pdf")}
-                                    </div>
+                                        {loadingPdf ?
+                                            <div className="loading mx-auto" />
+                                        :   <>
+                                                <FileImage className="size-6" />
+                                                {t("download-pdf")}
+                                            </>
+                                        }
+                                    </button>
                                     <ul
                                         tabIndex={-1}
                                         className="dropdown-content menu space-y-2 !mt-0 bg-base-100 rounded-box z-1 w-52 !mr-3 shadow-sm"
@@ -337,11 +348,17 @@ const Book: React.FC<BookProps> = ({ book, user, isCreator }) => {
                                                     exportPDF("landscape")
                                                 }
                                                 className="btn rounded-xl justify-start"
+                                                disabled={loadingPdf}
                                             >
-                                                <div className="badge badge-primary">
-                                                    16:9
-                                                </div>
-                                                {t("landscape")}
+                                                {loadingPdf ?
+                                                    <div className="loading mx-auto" />
+                                                :   <>
+                                                        <div className="badge badge-primary">
+                                                            16:9
+                                                        </div>
+                                                        {t("landscape")}
+                                                    </>
+                                                }
                                             </button>
                                         </li>
                                         <li>
@@ -350,11 +367,17 @@ const Book: React.FC<BookProps> = ({ book, user, isCreator }) => {
                                                     exportPDF("portrait")
                                                 }
                                                 className="btn rounded-xl justify-start"
+                                                disabled={loadingPdf}
                                             >
-                                                <div className="badge badge-primary">
-                                                    9:16
-                                                </div>
-                                                {t("portrait")}
+                                                {loadingPdf ?
+                                                    <div className="loading mx-auto" />
+                                                :   <>
+                                                        <div className="badge badge-primary">
+                                                            9:16
+                                                        </div>
+                                                        {t("portrait")}
+                                                    </>
+                                                }
                                             </button>
                                         </li>
                                     </ul>
@@ -365,9 +388,15 @@ const Book: React.FC<BookProps> = ({ book, user, isCreator }) => {
                                 <button
                                     onClick={() => exportEPUB()}
                                     className="btn rounded-xl justify-start"
+                                    disabled={loadingEpub}
                                 >
-                                    <BookImage className="size-6" />
-                                    {t("download-epub")}
+                                    {loadingEpub ?
+                                        <div className="loading mx-auto" />
+                                    :   <>
+                                            <BookImage className="size-6" />
+                                            {t("download-epub")}
+                                        </>
+                                    }
                                 </button>
                             </li>
 
@@ -478,6 +507,7 @@ const Pages: React.FC<PagesProps> = ({ pages, fullscreen }) => {
                                                 alt={page.text}
                                                 width={1024}
                                                 height={1024}
+                                                isCover={idx == 0}
                                             />
                                         )}
                                     </div>
@@ -517,6 +547,7 @@ const Pages: React.FC<PagesProps> = ({ pages, fullscreen }) => {
                                             alt={page.text}
                                             width={1024}
                                             height={1024}
+                                            isCover={idx == 0}
                                         />
                                     )}
                                 </div>
@@ -590,46 +621,6 @@ const Navigation: React.FC<NavigationProps> = ({
                 <span className="max-md:hidden">{t("next")}</span>
                 <ChevronRight className="size-5" />
             </button>
-        </div>
-    );
-};
-
-const _MustLogin: React.FC = () => {
-    const t = useTranslations("pages.book.must-login");
-    const pathname = usePathname();
-
-    return (
-        <div className="flex flex-col items-center justify-center mx-auto w-full max-w-lg">
-            <Image
-                src="/images/book-smiley.svg"
-                width={400}
-                height={400}
-                alt=""
-                className="mx-auto h-40"
-            />
-
-            <Title
-                text={t("title")}
-                className="text-2xl mb-6 text-center"
-                underline
-            />
-
-            <p className="text-center max-w-sm">{t("description")}</p>
-
-            <div className="w-full flex justify-center gap-2 mt-4">
-                <Link
-                    href={`/login?redirect=${pathname}`}
-                    className="btn btn-primary"
-                >
-                    <span>{t("login")}</span>
-                </Link>
-                <Link
-                    href={`/register?redirect=${pathname}`}
-                    className="btn btn-secondary"
-                >
-                    <span>{t("register")}</span>
-                </Link>
-            </div>
         </div>
     );
 };

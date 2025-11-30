@@ -1,10 +1,11 @@
-import axios from "axios";
+import axios, { type ResponseType } from "axios";
 import clsx, { type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { type Stripe, loadStripe } from "@stripe/stripe-js";
+import { currency } from "@/config/stripe";
+import toast from "react-hot-toast";
 import env from "./env";
 import type { ActionsState } from "./types";
-import { currency } from "@/config/stripe";
 
 let stripePromise: Promise<Stripe | null>;
 
@@ -22,18 +23,33 @@ export const cn = (...args: ClassValue[]): string | undefined =>
 
 export const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
-export const handleFormPost = async <T>(
+export const requestAPI = async <T>(
+    method: string,
     url: string,
-    data: unknown,
-    headers?: Record<string, string>
+    data: unknown = null,
+    headers: Record<string, string> = {},
+    responseType: ResponseType = "json"
 ): Promise<ActionsState<T>> => {
-    const res = await axios.post<ActionsState<T>>(`${url}`, data, {
-        headers: headers || {
+    const res = await axios.request<ActionsState<T>>({
+        method,
+        url,
+        data: data || null,
+        headers: {
             "Content-Type": "application/json",
+            ...headers,
         },
+        responseType: responseType || "json",
     });
 
     const resData = res.data;
+
+    if (responseType !== "json") {
+        return resData;
+    }
+
+    if (!resData.success && resData.message) {
+        toast.error(resData.message!);
+    }
 
     if (resData.redirect) {
         window.location.href = resData.redirect;

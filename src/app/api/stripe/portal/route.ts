@@ -4,24 +4,38 @@ import type Stripe from "stripe";
 import { getUser } from "@/lib/auth";
 import { stripe } from "@/lib/stripe";
 import env from "@/lib/env";
+import { checkRateLimit, ratelimitPost } from "@/lib/rate-limiter";
 
 export const GET = async (req: NextRequest) => {
     const t = await getTranslations({
         locale: req.cookies.get("NEXT_LOCALE")?.value || "en",
     });
     try {
+        const identifier = req.headers.get("x-forwarded-for");
+
+        if (!identifier) {
+            return NextResponse.json({
+                redirect: new URL("/error?error=403", req.url),
+            });
+        }
+
+        const { allowed } = await checkRateLimit(identifier, ratelimitPost);
+        if (!allowed) {
+            return NextResponse.json({
+                redirect: new URL("/error?error=429", req.url),
+            });
+        }
+
         const user = await getUser();
 
         if (!user?.user) {
             return NextResponse.json({
-                success: true,
                 redirect: "/login",
             });
         }
 
         if (!user.user.stripeCustomerId || !user.user.stripeProductId) {
             return NextResponse.json({
-                success: true,
                 redirect: "/pricing",
             });
         }
@@ -32,27 +46,6 @@ export const GET = async (req: NextRequest) => {
         if (configurations.data.length > 0) {
             configuration = configurations.data[0];
         } else {
-            const product = await stripe.products.retrieve(
-                user.user.stripeProductId
-            );
-            if (!product.active) {
-                return NextResponse.json({
-                    success: false,
-                    message: t("messages.server-error"),
-                });
-            }
-
-            const prices = await stripe.prices.list({
-                product: product.id,
-                active: true,
-            });
-            if (prices.data.length === 0) {
-                return NextResponse.json({
-                    success: false,
-                    message: t("messages.server-error"),
-                });
-            }
-
             configuration = await stripe.billingPortal.configurations.create({
                 business_profile: {
                     headline: t("messages.billing"),
@@ -87,7 +80,6 @@ export const GET = async (req: NextRequest) => {
         });
 
         return NextResponse.json({
-            success: true,
             redirect: portal.url,
         });
     } catch (err) {

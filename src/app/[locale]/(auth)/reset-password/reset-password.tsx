@@ -9,7 +9,7 @@ import FormReponse from "@/components/ui/form-response";
 import { type ActionsState } from "@/lib/types";
 import { type ResetPasswordSchema } from "@/schema/reset-password";
 import { useTranslations } from "next-intl";
-import { handleFormPost } from "@/lib/utils";
+import { requestAPI } from "@/lib/utils";
 import { useSearchParams } from "next/navigation";
 
 const ResetPassword: React.FC = () => {
@@ -28,7 +28,8 @@ const ResetPassword: React.FC = () => {
     const code = searchParams?.get("code");
 
     const submit = async (data: ResetPasswordSchema) => {
-        const res = await handleFormPost<ResetPasswordSchema>(
+        const res = await requestAPI<ResetPasswordSchema>(
+            "POST",
             "/api/auth/reset-password",
             data
         );

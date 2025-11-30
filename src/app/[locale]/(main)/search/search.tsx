@@ -4,8 +4,16 @@ import Link from "next/link";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { useCallback, useEffect, useState } from "react";
-import { Baby, Bookmark, Info, Paintbrush } from "lucide-react";
+import { useCallback, useEffect, useState, useRef } from "react";
+import {
+    Baby,
+    Bookmark,
+    ChevronLeft,
+    ChevronRight,
+    Info,
+    Paintbrush,
+    SearchIcon,
+} from "lucide-react";
 import toast from "react-hot-toast";
 import type { User } from "lucia";
 import { ageOptions, artStyleOptions, themesOptions } from "@/schema/book";
@@ -36,6 +44,11 @@ type SearchProps = {
     books: Books;
 };
 
+type ThemesScrollerProps = {
+    activeThemes: string[];
+    handleThemeToggle: (theme: string) => void;
+};
+
 const themeImages: Record<string, string> = {
     hero: "🦸",
     adventure: "🕵️‍♂️",
@@ -55,7 +68,7 @@ const Search: React.FC<SearchProps> = ({ user, books: allBooks }) => {
     const t = useTranslations("pages.search");
     const tMessages = useTranslations("messages");
     const q = useSearchParams().get("q");
-    const [search] = useState(q || "");
+    const [search, setSearch] = useState(q || "");
     const [books, setBooks] = useState<Books>(allBooks);
     const [activeThemes, setActiveThemes] = useState<string[]>([]);
     const [activeAge, setActiveAge] = useState<string | null>(null);
@@ -161,41 +174,40 @@ const Search: React.FC<SearchProps> = ({ user, books: allBooks }) => {
 
     return (
         <>
-            <div className="text-center my-6 px-4">
+            <div className="text-center mb-6">
                 <Title
                     text={search || t("title-save")}
-                    className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-primary"
+                    className="text-5xl md:text-6xl lg:text-7xl font-bold mb-4 w-min mx-auto"
+                    underline
                 />
                 <p className="text-neutral text-base md:text-lg max-w-2xl mx-auto">
                     {t("subtitle")}
                 </p>
             </div>
 
-            <div className="w-full mb-4">
-                <div
-                    className="mx-auto overflow-x-scroll scrollbar- flex justify-center gap-2 lg:hidden"
-                    style={{ overscrollBehaviorY: "none" }}
-                >
-                    {themesOptions.map((theme) => (
-                        <button
-                            key={theme}
-                            onClick={() => handleThemeToggle(theme)}
-                            className={cn(
-                                "btn gap-2",
-                                activeThemes.includes(theme) ? "btn-secondary"
-                                :   ""
-                            )}
-                        >
-                            <span className="text-lg">
-                                {themeImages[theme]}
-                            </span>
-                            {t(theme)}
-                        </button>
-                    ))}
+            <div className="w-full max-w-md mb-4 mx-auto">
+                <div className="w-full relative bg-black/70 h-10 sm:h-12 mr-2 rounded-full overflow-hidden shadow transition duration-200">
+                    <div className="absolute left-1.5 sm:left-2 top-1/2 z-50 -translate-y-1/2 size-9 flex items-center justify-center">
+                        <SearchIcon className="size-6 text-white" />
+                    </div>
+                    <input
+                        onChange={(e) => setSearch(e.target.value)}
+                        value={search}
+                        type="text"
+                        placeholder={t("search-placeholder")}
+                        className="w-full relative text-sm sm:text-base z-50 border-none bg-transparent text-white h-full rounded-full focus:outline-none focus:ring-0 pl-10 sm:pl-12"
+                    />
                 </div>
+            </div>
+
+            <div className="w-full mb-4">
+                <ThemesScroller
+                    activeThemes={activeThemes}
+                    handleThemeToggle={handleThemeToggle}
+                />
 
                 <div className="w-full flex items-center justify-between gap-4 flex-wrap md:flex-nowrap mt-4">
-                    <div className="dropdown dropdow">
+                    <div className="dropdown">
                         <div
                             tabIndex={0}
                             role="button"
@@ -213,10 +225,10 @@ const Search: React.FC<SearchProps> = ({ user, books: allBooks }) => {
                                     <button
                                         onClick={() => handleAge(age)}
                                         className={cn(
-                                            "rounded-xl flex items-center justify-start gap-3 transition-all duration-200",
+                                            "rounded-xl flex items-center justify-start gap-3 transition-all duration-200 active:!bg-secondary/75",
                                             activeAge === age ?
-                                                "bg-primary text-primary-content shadow-md"
-                                            :   "hover:bg-base-300"
+                                                "bg-secondary text-primary-content shadow-md"
+                                            :   "hover:bg-secondary/50"
                                         )}
                                     >
                                         <span className="capitalize text-base font-medium">
@@ -229,7 +241,7 @@ const Search: React.FC<SearchProps> = ({ user, books: allBooks }) => {
                     </div>
 
                     <div
-                        className="overflow-x-scroll scrollbar-hide gap-2 hidden lg:flex"
+                        className="mx-auto overflow-x-scroll justify-center gap-2 flex max-[1150px]:hidden"
                         style={{ overscrollBehaviorY: "none" }}
                     >
                         {themesOptions.map((theme) => (
@@ -271,10 +283,10 @@ const Search: React.FC<SearchProps> = ({ user, books: allBooks }) => {
                                             handleArtStyleSelect(artStyle)
                                         }
                                         className={cn(
-                                            "rounded-xl flex items-center justify-start gap-3 px-3 py-2 transition-all duration-200",
+                                            "rounded-xl flex items-center justify-start gap-3 px-3 py-2 transition-all duration-200 active:!bg-secondary/75",
                                             activeArtStyle === artStyle ?
-                                                "bg-primary text-primary-content shadow-md"
-                                            :   "hover:bg-base-300"
+                                                "bg-secondary text-primary-content shadow-md"
+                                            :   "hover:bg-secondary/50"
                                         )}
                                     >
                                         <div className="relative w-10 h-10 flex-shrink-0">
@@ -336,6 +348,7 @@ const Search: React.FC<SearchProps> = ({ user, books: allBooks }) => {
                                         width={1024}
                                         height={1024}
                                         alt={book.title}
+                                        isCover
                                     />
                                 </div>
                                 <div className="flex flex-col items-start text-sm font-bold mt-2">
@@ -354,6 +367,70 @@ const Search: React.FC<SearchProps> = ({ user, books: allBooks }) => {
                 </div>
             }
         </>
+    );
+};
+
+const ThemesScroller: React.FC<ThemesScrollerProps> = ({
+    activeThemes,
+    handleThemeToggle,
+}) => {
+    const t = useTranslations("pages.search");
+    const scrollerRef = useRef<HTMLDivElement | null>(null);
+
+    const scrollBy = (delta: number) => {
+        const el = scrollerRef.current;
+        if (!el) return;
+        el.scrollBy({ left: delta, behavior: "smooth" });
+    };
+
+    const STEP = 240;
+
+    return (
+        <div className="relative hidden max-[1150px]:block w-min mx-auto">
+            <button
+                type="button"
+                aria-label="Scroll left"
+                onClick={() => scrollBy(-STEP)}
+                className={cn(
+                    "absolute left-0 top-1/2 -translate-y-1/2 z-10 h-full pr-4",
+                    "from-base-100 from-30% to-transparent bg-gradient-to-r"
+                )}
+            >
+                <ChevronLeft className="size-8 text-neutral" />
+            </button>
+
+            <button
+                type="button"
+                aria-label="Scroll right"
+                onClick={() => scrollBy(STEP)}
+                className={cn(
+                    "absolute right-0 top-1/2 -translate-y-1/2 z-10 h-full pl-4",
+                    "from-base-100 from-30% to-transparent bg-gradient-to-l"
+                )}
+            >
+                <ChevronRight className="size-8 text-neutral" />
+            </button>
+
+            <div
+                ref={scrollerRef}
+                className="overflow-x-scroll max-w-[calc(100vw-32px)] flex px-6"
+                style={{ overscrollBehaviorY: "none" }}
+            >
+                {themesOptions.map((theme) => (
+                    <button
+                        key={theme}
+                        onClick={() => handleThemeToggle(theme)}
+                        className={cn(
+                            "btn gap-2 mx-0.5",
+                            activeThemes.includes(theme) ? "btn-secondary" : ""
+                        )}
+                    >
+                        <span className="text-lg">{themeImages[theme]}</span>
+                        {t(theme)}
+                    </button>
+                ))}
+            </div>
+        </div>
     );
 };
 

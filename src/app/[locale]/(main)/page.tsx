@@ -2,10 +2,10 @@ import { getTranslations } from "next-intl/server";
 import db from "@/lib/db";
 import { getUser } from "@/lib/auth";
 import Main from "@/components/layout/main";
-import Books from "@/components/ui/books";
-import Home, { Features, HowItWorks, VelocityText } from "./home";
+import { Hero, Books, Bento } from "./home";
 
 type Filter = {
+    id?: { in: string[] };
     artStyle?: string;
     themes?: { has: string };
 };
@@ -26,8 +26,8 @@ const Page = async () => {
                 cover: true,
                 user: { select: { name: true } },
             },
-            orderBy: { createdAt: "desc" },
             take: 10,
+            orderBy: { createdAt: "desc" },
         });
 
     const [booksCartoon, booksAdventure, booksAnime, booksEducation] =
@@ -40,8 +40,8 @@ const Page = async () => {
 
     return (
         <Main>
-            <Home user={user?.user || null} />
-            <VelocityText />
+            <Hero user={user?.user || null} />
+            <Bento />
             <Books
                 title={"🦄 " + t("cartoon")}
                 books={booksCartoon}
@@ -52,7 +52,6 @@ const Page = async () => {
                 books={booksAdventure}
                 user={user?.user || null}
             />
-            <Features />
             <Books
                 title={"💫 " + t("anime")}
                 books={booksAnime}
@@ -63,7 +62,6 @@ const Page = async () => {
                 books={booksEducation}
                 user={user?.user || null}
             />
-            <HowItWorks />
         </Main>
     );
 };

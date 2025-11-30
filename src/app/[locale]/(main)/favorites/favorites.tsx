@@ -80,32 +80,29 @@ const Favorites: React.FC<FavoritesProps> = ({ user, books: allBooks }) => {
     };
 
     return (
-        <div className="mt-4">
-            <div className="flex items-center justify-between max-md:flex-col mb-8">
-                <Title
-                    text={"💘 " + t("title")}
-                    className="text-3xl w-fit"
-                    underline
-                />
+        <>
+            <div className="flex items-center justify-between max-md:flex-col mb-8 gap-4">
+                <div className="text-center w-fit">
+                    <Title
+                        text={t("title")}
+                        className="text-3xl lg:text-4xl font-bold w-fit"
+                        underline
+                    />
+                </div>
 
-                <div className="max-md:mt-4 w-full md:max-w-md">
-                    <div className="w-full relative bg-black/70 h-12 mr-2 rounded-full overflow-hidden shadow transition duration-200">
+                <div className="w-full max-w-sm">
+                    <div className="w-full relative bg-black/70 h-10 sm:h-12 mr-2 rounded-full overflow-hidden shadow transition duration-200">
+                        <div className="absolute left-1.5 sm:left-2 top-1/2 z-50 -translate-y-1/2 size-9 flex items-center justify-center">
+                            <SearchIcon className="size-6 text-white" />
+                        </div>
                         <input
                             onChange={(e) => setValue(e.target.value)}
                             onKeyDown={handleKeyDown}
                             value={value}
                             type="text"
                             placeholder={t("search-placeholder")}
-                            className="w-full relative text-sm sm:text-base z-50 border-none bg-transparent text-white h-full rounded-full focus:outline-none focus:ring-0 pl-4 sm:pl-6 pr-12"
+                            className="w-full relative text-sm sm:text-base z-50 border-none bg-transparent text-white h-full rounded-full focus:outline-none focus:ring-0 pl-10 sm:pl-12"
                         />
-
-                        <button
-                            type="submit"
-                            onClick={onSubmit}
-                            className="absolute right-1.5 top-1/2 z-50 -translate-y-1/2 size-9 rounded-full bg-primary transition duration-200 flex items-center justify-center cursor-pointer"
-                        >
-                            <SearchIcon className="size-6 text-white" />
-                        </button>
                     </div>
                 </div>
             </div>
@@ -147,6 +144,7 @@ const Favorites: React.FC<FavoritesProps> = ({ user, books: allBooks }) => {
                                         width={1024}
                                         height={1024}
                                         alt={book.title}
+                                        isCover
                                     />
                                 </div>
                                 <div className="flex flex-col items-start text-sm font-bold mt-2">
@@ -164,7 +162,7 @@ const Favorites: React.FC<FavoritesProps> = ({ user, books: allBooks }) => {
                     ))}
                 </div>
             }
-        </div>
+        </>
     );
 };
 

@@ -4,6 +4,7 @@ import { stripe } from "@/lib/stripe";
 import { getUser } from "@/lib/auth";
 import env from "@/lib/env";
 import type { Locale } from "@/lib/types";
+import { checkRateLimit, ratelimitPost } from "@/lib/rate-limiter";
 
 export const GET = async (req: NextRequest) => {
     const locale = req.cookies.get("NEXT_LOCALE")?.value || ("en" as Locale);
@@ -11,19 +12,32 @@ export const GET = async (req: NextRequest) => {
         locale,
     });
     try {
+        const identifier = req.headers.get("x-forwarded-for");
+
+        if (!identifier) {
+            return NextResponse.json({
+                redirect: new URL("/error?error=403", req.url),
+            });
+        }
+
+        const { allowed } = await checkRateLimit(identifier, ratelimitPost);
+        if (!allowed) {
+            return NextResponse.json({
+                redirect: new URL("/error?error=429", req.url),
+            });
+        }
+
         const priceId = req.nextUrl.searchParams.get("priceId");
         const user = await getUser();
 
         if (!user || !user.user) {
             return NextResponse.json({
-                success: true,
                 redirect: "/login?redirect=/pricing",
             });
         }
 
         if (!priceId) {
             return NextResponse.json({
-                success: true,
                 redirect: "/pricing",
             });
         }
@@ -53,7 +67,6 @@ export const GET = async (req: NextRequest) => {
         });
 
         return NextResponse.json({
-            success: true,
             redirect: session.url,
         });
     } catch (err) {

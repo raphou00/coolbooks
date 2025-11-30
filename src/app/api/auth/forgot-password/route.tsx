@@ -6,7 +6,7 @@ import forgotPasswordSchema, {
     type ForgotPasswordSchema,
 } from "@/schema/forgot-password";
 import ResetPasswordEmail from "@/components/emails/reset-password";
-import { ratelimitForgotPassword } from "@/lib/rate-limiter";
+import { checkRateLimit, ratelimitForgotPassword } from "@/lib/rate-limiter";
 import env from "@/lib/env";
 
 export const POST = async (req: NextRequest) => {
@@ -17,12 +17,19 @@ export const POST = async (req: NextRequest) => {
         const identifier = req.headers.get("x-forwarded-for");
 
         if (!identifier) {
-            return NextResponse.redirect(new URL("/error?error=403", req.url));
+            return NextResponse.json({
+                redirect: new URL("/error?error=403", req.url),
+            });
         }
 
-        const { success } = await ratelimitForgotPassword.limit(identifier);
-        if (!success) {
-            return NextResponse.redirect(new URL("/error?error=429", req.url));
+        const { allowed } = await checkRateLimit(
+            identifier,
+            ratelimitForgotPassword
+        );
+        if (!allowed) {
+            return NextResponse.json({
+                redirect: new URL("/error?error=429", req.url),
+            });
         }
 
         const body = (await req.json()) as ForgotPasswordSchema;

@@ -2,7 +2,7 @@ import { createEnv } from "@t3-oss/env-nextjs";
 import { z } from "zod";
 
 export default createEnv({
-    skipValidation: !!process.env.SKIP_ENV_VALIDATION,
+    skipValidation: false,
     server: {
         NODE_ENV: z
             .enum(["development", "preview", "production"])
@@ -35,13 +35,9 @@ export default createEnv({
             .string()
             .min(1, { message: "Book Creator Lambda ARN is missing" }),
 
-        UPSTASH_REDIS_REST_URL: z
+        RATE_LIMITS_DYNAMODB_TABLE: z
             .string()
-            .min(1, { message: "Upstash Redis REST URL is missing" }),
-
-        UPSTASH_REDIS_REST_TOKEN: z
-            .string()
-            .min(1, { message: "Upstash Redis REST Token is missing" }),
+            .min(1, { message: "Rate limits DynamoDB table is missing" }),
 
         RESEND_API_KEY: z
             .string()
@@ -57,6 +53,10 @@ export default createEnv({
             .string()
             .min(1, { message: "Stripe Webhook Secret is missing" }),
 
+        OPENAI_API_KEY: z
+            .string()
+            .min(1, { message: "OpenAI API Key is missing" }),
+
         GOOGLE_CLIENT_ID: z
             .string()
             .min(1, { message: "Google Client ID is missing" }),
@@ -65,9 +65,13 @@ export default createEnv({
             .string()
             .min(1, { message: "Google Client Secret is missing" }),
 
-        OPENAI_API_KEY: z
+        FACEBOOK_CLIENT_ID: z
             .string()
-            .min(1, { message: "OpenAI API Key is missing" }),
+            .min(1, { message: "Facebook Client ID is missing" }),
+
+        FACEBOOK_CLIENT_SECRET: z
+            .string()
+            .min(1, { message: "Facebook Client Secret is missing" }),
     },
     client: {
         NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: z
@@ -101,8 +105,7 @@ export default createEnv({
         CLOUDFRONT_URL: process.env.CLOUDFRONT_URL,
         NEXT_PUBLIC_CLOUDFRONT_URL: process.env.NEXT_PUBLIC_CLOUDFRONT_URL,
         BOOK_CREATOR_LAMBDA_ARN: process.env.BOOK_CREATOR_LAMBDA_ARN,
-        UPSTASH_REDIS_REST_URL: process.env.UPSTASH_REDIS_REST_URL,
-        UPSTASH_REDIS_REST_TOKEN: process.env.UPSTASH_REDIS_REST_TOKEN,
+        RATE_LIMITS_DYNAMODB_TABLE: process.env.RATE_LIMITS_DYNAMODB_TABLE,
         RESEND_API_KEY: process.env.RESEND_API_KEY,
         SENDER_EMAIL: process.env.SENDER_EMAIL,
         NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY:
@@ -115,8 +118,10 @@ export default createEnv({
             process.env.NEXT_PUBLIC_STRIPE_PRODUCT_ID_FAMILY,
         NEXT_PUBLIC_STRIPE_PRODUCT_ID_PREMIUM:
             process.env.NEXT_PUBLIC_STRIPE_PRODUCT_ID_PREMIUM,
+        OPENAI_API_KEY: process.env.OPENAI_API_KEY,
         GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
         GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
-        OPENAI_API_KEY: process.env.OPENAI_API_KEY,
+        FACEBOOK_CLIENT_ID: process.env.FACEBOOK_CLIENT_ID,
+        FACEBOOK_CLIENT_SECRET: process.env.FACEBOOK_CLIENT_SECRET,
     },
 });

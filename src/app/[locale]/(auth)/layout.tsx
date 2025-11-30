@@ -25,7 +25,7 @@ const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
                         backgroundSize: "cover",
                         backgroundPosition: "center",
                     }}
-                    className="h-screen w-2/5 relative max-lg:hidden border-r border-neutral"
+                    className="h-screen w-4/6 relative max-lg:hidden border-r border-neutral"
                 />
                 <div className="relative w-full">
                     <div className="flex items-center justify-between z-50 absolute p-2 w-full">

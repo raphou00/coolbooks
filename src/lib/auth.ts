@@ -4,9 +4,9 @@ import { cookies, headers } from "next/headers";
 import type { Role } from "@prisma/client";
 import { PrismaAdapter } from "@lucia-auth/adapter-prisma";
 import { Lucia, TimeSpan } from "lucia";
+import { Facebook, Google } from "arctic";
 import db from "./db";
 import env from "./env";
-import { Google } from "arctic";
 
 const adapter = new PrismaAdapter(db.session, db.user);
 
@@ -28,6 +28,7 @@ export const lucia = new Lucia(adapter, {
             savedBooks: user.savedBooks,
             role: user.role,
             googleId: user.googleId,
+            facebookId: user.facebookId,
             stripeCustomerId: user.stripeCustomerId,
             stripeProductId: user.stripeProductId,
             stripeSubscriptionId: user.stripeSubscriptionId,
@@ -92,6 +93,12 @@ export const google = new Google(
     env.APP_URL + "/api/auth/google/callback"
 );
 
+export const facebook = new Facebook(
+    env.FACEBOOK_CLIENT_ID,
+    env.FACEBOOK_CLIENT_SECRET,
+    env.APP_URL + "/api/auth/facebook/callback"
+);
+
 declare module "lucia" {
     interface Register {
         Lucia: typeof lucia;
@@ -114,6 +121,7 @@ type DatabaseUserAttributes = {
     savedBooks: string[];
     role: Role;
     googleId?: string;
+    facebookId?: string;
     stripeCustomerId?: string;
     stripeSubscriptionId?: string;
     stripeProductId?: string;

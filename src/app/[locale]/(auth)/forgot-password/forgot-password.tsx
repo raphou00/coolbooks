@@ -9,7 +9,7 @@ import FormButton from "@/components/ui/form-button";
 import FormReponse from "@/components/ui/form-response";
 import { type ActionsState } from "@/lib/types";
 import { type ForgotPasswordSchema } from "@/schema/forgot-password";
-import { handleFormPost } from "@/lib/utils";
+import { requestAPI } from "@/lib/utils";
 
 const ForgotPassword: React.FC = () => {
     const t = useTranslations("pages.forgot-password");
@@ -25,7 +25,8 @@ const ForgotPassword: React.FC = () => {
     } = useForm<ForgotPasswordSchema>();
 
     const submit = async (data: ForgotPasswordSchema) => {
-        const res = await handleFormPost<ForgotPasswordSchema>(
+        const res = await requestAPI<ForgotPasswordSchema>(
+            "POST",
             "/api/auth/forgot-password",
             data
         );

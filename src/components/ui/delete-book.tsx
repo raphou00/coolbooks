@@ -1,7 +1,8 @@
 import { useTranslations } from "next-intl";
 import { AlertTriangle } from "lucide-react";
-import Modal from "@/components/ui/modal";
 import toast from "react-hot-toast";
+import Modal from "@/components/ui/modal";
+import { requestAPI } from "@/lib/utils";
 
 type DeleteBookProps = {
     bookId: string;
@@ -19,16 +20,11 @@ const DeleteBook: React.FC<DeleteBookProps> = ({
     const t = useTranslations("pages.delete-book");
 
     const handleDelete = async () => {
-        const res = await fetch(`/api/book?bookId=${bookId}`, {
-            method: "DELETE",
-        });
-        const data = await res.json();
+        const data = await requestAPI("DELETE", `/api/book?bookId=${bookId}`);
 
         if (data.success) {
-            toast.success(data.message);
+            toast.success(data.message!);
             callback();
-        } else {
-            toast.error(data.message);
         }
 
         setOpen(false);

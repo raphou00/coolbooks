@@ -51,13 +51,6 @@ export const GET = async (req: NextRequest) => {
             },
         });
 
-        if (!book) {
-            return NextResponse.json({
-                success: false,
-                message: t("messages.book-not-found"),
-            });
-        }
-
         return NextResponse.json({
             success: true,
             message: t("messages.done"),

@@ -4,12 +4,28 @@ import { stripe } from "@/lib/stripe";
 import type Stripe from "stripe";
 import { getUser } from "@/lib/auth";
 import db from "@/lib/db";
+import { checkRateLimit, ratelimitPost } from "@/lib/rate-limiter";
 
 export const GET = async (req: NextRequest) => {
     const t = await getTranslations({
         locale: req.cookies.get("NEXT_LOCALE")?.value || "en",
     });
     try {
+        const identifier = req.headers.get("x-forwarded-for");
+
+        if (!identifier) {
+            return NextResponse.json({
+                redirect: new URL("/error?error=403", req.url),
+            });
+        }
+
+        const { allowed } = await checkRateLimit(identifier, ratelimitPost);
+        if (!allowed) {
+            return NextResponse.json({
+                redirect: new URL("/error?error=429", req.url),
+            });
+        }
+
         const searchParams = req.nextUrl.searchParams;
         const sessionId = searchParams.get("session_id");
 

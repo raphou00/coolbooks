@@ -10,7 +10,7 @@ import FormReponse from "@/components/ui/form-response";
 import { type ActionsState } from "@/lib/types";
 import { type SocialExistsSchema } from "@/schema/social-exists";
 import { useTranslations } from "next-intl";
-import { handleFormPost } from "@/lib/utils";
+import { requestAPI } from "@/lib/utils";
 import { useSearchParams } from "next/navigation";
 import { redirect } from "next/navigation";
 
@@ -39,7 +39,8 @@ const ResetPassword: React.FC = () => {
     }
 
     const submit = async (data: SocialExistsSchema) => {
-        const res = await handleFormPost<SocialExistsSchema>(
+        const res = await requestAPI<SocialExistsSchema>(
+            "POST",
             "/api/auth/social-exists",
             data
         );

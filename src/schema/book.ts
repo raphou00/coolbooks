@@ -7,7 +7,7 @@ import {
     minUsernameLength,
 } from "@/config/char";
 
-export const ageOptions = ["2-3", "4-5", "6-7", "8-9", "10-12", "13+"] as const;
+export const ageOptions = ["2-3", "4-7", "8-12", "13+"] as const;
 export const genderOptions = ["boy", "girl"] as const;
 export const hairColorOptions = [
     "black",

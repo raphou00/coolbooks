@@ -2,7 +2,7 @@ import { type NextRequest, NextResponse } from "next/server";
 import { getTranslations } from "next-intl/server";
 import { getUser } from "@/lib/auth";
 import db from "@/lib/db";
-import { ratelimitBasePost } from "@/lib/rate-limiter";
+import { checkRateLimit, ratelimitPost } from "@/lib/rate-limiter";
 
 export async function GET(req: NextRequest) {
     const t = await getTranslations({
@@ -13,12 +13,16 @@ export async function GET(req: NextRequest) {
         const identifier = req.headers.get("x-forwarded-for");
 
         if (!identifier) {
-            return NextResponse.redirect(new URL("/error?error=403", req.url));
+            return NextResponse.json({
+                redirect: new URL("/error?error=403", req.url),
+            });
         }
 
-        const { success } = await ratelimitBasePost.limit(identifier);
-        if (!success) {
-            return NextResponse.redirect(new URL("/error?error=429", req.url));
+        const { allowed } = await checkRateLimit(identifier, ratelimitPost);
+        if (!allowed) {
+            return NextResponse.json({
+                redirect: new URL("/error?error=429", req.url),
+            });
         }
 
         if (!user?.user) {

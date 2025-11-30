@@ -6,6 +6,8 @@ export type ActionsState<T> = {
     message?: string;
     errors?: { [K in keyof T]?: string[] | undefined };
     redirect?: string;
+} & {
+    [key: string]: any;
 };
 
 const _getT = async () => await getTranslations({ locale: "en" });
