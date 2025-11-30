@@ -64,14 +64,6 @@ export default createEnv({
         GOOGLE_CLIENT_SECRET: z
             .string()
             .min(1, { message: "Google Client Secret is missing" }),
-
-        FACEBOOK_CLIENT_ID: z
-            .string()
-            .min(1, { message: "Facebook Client ID is missing" }),
-
-        FACEBOOK_CLIENT_SECRET: z
-            .string()
-            .min(1, { message: "Facebook Client Secret is missing" }),
     },
     client: {
         NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: z
@@ -121,7 +113,5 @@ export default createEnv({
         OPENAI_API_KEY: process.env.OPENAI_API_KEY,
         GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
         GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
-        FACEBOOK_CLIENT_ID: process.env.FACEBOOK_CLIENT_ID,
-        FACEBOOK_CLIENT_SECRET: process.env.FACEBOOK_CLIENT_SECRET,
     },
 });

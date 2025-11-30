@@ -44,10 +44,6 @@ const Login: React.FC = () => {
         await requestAPI("GET", "/api/auth/google");
     };
 
-    const facebook = async () => {
-        await requestAPI("GET", "/api/auth/facebook");
-    };
-
     return (
         <Form
             title={t("title")}
@@ -72,21 +68,6 @@ const Login: React.FC = () => {
                             height={100}
                         />
                         Google
-                    </button>
-
-                    <button
-                        type="button"
-                        onClick={facebook}
-                        className="btn btn-lg w-full"
-                    >
-                        <Image
-                            src="/images/icons/facebook.png"
-                            alt="Facebook"
-                            className="size-6"
-                            width={100}
-                            height={100}
-                        />
-                        Facebook
                     </button>
                 </div>
 
