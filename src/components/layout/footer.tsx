@@ -4,14 +4,13 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { title } from "@/config/seo";
-import { useGetCardsLinks, useGetFooterLinks } from "@/config/links";
-import Logo from "@/components/ui/logo";
+import { useGetFooterLinks } from "@/config/links";
+import LogoText from "@/components/ui/logo-text";
 
 const Footer: React.FC = () => {
     const t = useTranslations();
 
     const footerLinks = useGetFooterLinks();
-    const cards = useGetCardsLinks();
 
     return (
         <>
@@ -19,15 +18,15 @@ const Footer: React.FC = () => {
                 <div className="mx-auto w-full text-sm max-w-8xl px-4 md:px-6 lg:px-8 xl:px-12">
                     <div className="grid grid-cols-[repeat(auto-fill,minmax(160px,1fr))] items-stretch justify-between gap-y-10 sm:gap-x-6 md:flex md:flex-wrap">
                         <div className="flex items-start justify-start flex-col gap-4">
-                            <Link href="/" className="flex items-center gap-2">
-                                <Logo className="w-auto h-16" />
+                            <Link href="/" className="">
+                                <LogoText className="h-12 m-0 w-min" />
                             </Link>
                             <div className="flex flex-col items-start gap-3">
                                 <div className="flex items-center">
                                     <p></p>
                                     <Link
                                         href="mailto:coolbooks.app@gmail.com"
-                                        className="link text-xs truncate"
+                                        className="link text-sm truncate"
                                     >
                                         coolbooks.app@gmail.com
                                     </Link>
@@ -97,20 +96,7 @@ const Footer: React.FC = () => {
                         ))}
                     </div>
 
-                    <div className="flex-col mt-10 p-0 max-md:py-1 border-t border-b border-neutral/20 flex justify-between items-center">
-                        <div className="navbar-center flex justify-center items-center gap-x-2">
-                            {cards.map((card) => (
-                                <Image
-                                    key={card.icon}
-                                    src={card.icon}
-                                    alt={card.title}
-                                    width={256}
-                                    height={256}
-                                    className="size-10"
-                                />
-                            ))}
-                        </div>
-                    </div>
+                    <div className="divider" />
 
                     <div className="my-4 flex items-center justify-center">
                         <p className="text-muted-foreground">
@@ -126,7 +112,7 @@ const Footer: React.FC = () => {
     );
 };
 
-const Instagram: React.FC = () => {
+const _Instagram: React.FC = () => {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -141,7 +127,7 @@ const Instagram: React.FC = () => {
     );
 };
 
-const Tiktok: React.FC = () => {
+const _Tiktok: React.FC = () => {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"

@@ -2,7 +2,7 @@ import { type NextRequest, NextResponse } from "next/server";
 import { getTranslations } from "next-intl/server";
 import db from "@/lib/db";
 import { getUser } from "@/lib/auth";
-import { ratelimitBase } from "@/lib/rate-limiter";
+import { checkRateLimit, ratelimitPost } from "@/lib/rate-limiter";
 
 export async function POST(req: NextRequest) {
     const t = await getTranslations({
@@ -12,12 +12,19 @@ export async function POST(req: NextRequest) {
         const identifier = req.headers.get("x-forwarded-for");
 
         if (!identifier) {
-            return NextResponse.redirect(new URL("/error?error=403", req.url));
+            return NextResponse.json({
+                redirect: new URL("/error?error=403", req.url),
+            });
         }
 
-        const { success } = await ratelimitBase.limit(identifier);
-        if (!success) {
-            return NextResponse.redirect(new URL("/error?error=429", req.url));
+        const { allowed, resetAt } = await checkRateLimit(
+            identifier,
+            ratelimitPost
+        );
+        if (!allowed) {
+            return NextResponse.json({
+                redirect: new URL("/error?error=429", req.url),
+            });
         }
 
         const user = await getUser();
@@ -57,8 +64,6 @@ export async function POST(req: NextRequest) {
         }
 
         const isCurrentlySaved = user.user.savedBooks.includes(bookId);
-
-        console.log(isCurrentlySaved, bookId, action);
 
         if (action === "save" && !isCurrentlySaved) {
             await db.user.update({

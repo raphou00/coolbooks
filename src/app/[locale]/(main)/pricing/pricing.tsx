@@ -1,13 +1,11 @@
 "use client";
 
-import Title from "@/components/ui/title";
-import { cn, formatAmountForDisplay } from "@/lib/utils";
 import { useTranslations } from "next-intl";
-import axios from "axios";
-import toast from "react-hot-toast";
-import type { getSubscription } from "@/lib/stripe";
 import type { User } from "lucia";
-import { CheckCircleIcon } from "lucide-react";
+import { CheckIcon } from "lucide-react";
+import type { getSubscription } from "@/lib/stripe";
+import { cn, formatAmountForDisplay, requestAPI } from "@/lib/utils";
+import Title from "@/components/ui/title";
 
 type Subscriptions = Awaited<ReturnType<typeof getSubscription>>;
 
@@ -25,25 +23,22 @@ const Pricing: React.FC<PricingProps> = ({ subs, user }) => {
     };
 
     const createCheckout = async (priceId: string) => {
-        const res = await axios.get(
+        await requestAPI(
+            "GET",
             `/api/stripe/create-checkout?priceId=${priceId}`
         );
-        if (!res.data.success) toast.error(res.data.message);
-        else window.location.replace(res.data.redirect);
     };
 
     const openPortal = async () => {
-        const res = await axios.get("/api/stripe/portal");
-        if (!res.data.success) toast.error(res.data.message);
-        else window.location.replace(res.data.redirect);
+        await requestAPI("GET", "/api/stripe/portal");
     };
 
     return (
-        <div className="mt-4">
-            <div className="mx-auto max-w-4xl text-center">
+        <div className="">
+            <div className="mx-auto max-w-4xl text-center mb-6">
                 <Title
                     text={t("title")}
-                    className="text-6xl mx-auto w-fit text-center"
+                    className="text-5xl md:text-6xl lg:text-7xl font-bold mb-4 w-min mx-auto"
                     underline
                 />
             </div>
@@ -51,36 +46,29 @@ const Pricing: React.FC<PricingProps> = ({ subs, user }) => {
                 {t("description")}
             </p>
 
-            <div className="isolate mx-auto mt-8 grid max-w-md grid-cols-1 gap-y-8 sm:mt-12 lg:mx-0 lg:max-w-none lg:grid-cols-3">
-                {subs.map((tier, tierIdx) => {
+            <div className="isolate mx-auto mt-8 grid max-w-md grid-cols-1 gap-x-8 gap-y-8 sm:mt-12 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+                {subs.map((tier, _) => {
                     const original = tier.price * 1.2;
 
                     return (
                         <div
                             key={tier.name}
                             className={cn(
-                                tier.popular ?
-                                    "lg:z-10 lg:rounded-b-none"
-                                :   "lg:mt-8",
-                                tierIdx === 0 ? "-mr-px lg:rounded-r-none" : "",
-                                tierIdx === subs.length - 1 ?
-                                    "-ml-px lg:rounded-l-none"
-                                :   "",
-                                "flex flex-col justify-between rounded-3xl bg-white p-8 inset-ring inset-ring-neutral xl:p-10"
+                                "flex flex-col justify-between2 rounded-3xl bg-base-100/50 p-8 inset-ring inset-ring-neutral xl:p-8",
+                                tier.popular && "scale-110"
                             )}
                         >
                             <div>
                                 <div className="flex items-center justify-between gap-x-4">
-                                    <h3
+                                    <Title
                                         className={cn(
                                             tier.popular ? "text-primary" : (
                                                 "text-base-content"
                                             ),
                                             "text-2xl"
                                         )}
-                                    >
-                                        {tier.name}
-                                    </h3>
+                                        text={tier.name}
+                                    />
                                     {tier.popular ?
                                         <p className="rounded-full px-3 py-1 bg-secondary/20 text-secondary">
                                             {t("popular")}
@@ -121,7 +109,7 @@ const Pricing: React.FC<PricingProps> = ({ subs, user }) => {
                                             key={feature}
                                             className="flex gap-x-3"
                                         >
-                                            <CheckCircleIcon
+                                            <CheckIcon
                                                 aria-hidden="true"
                                                 className="h-6 w-5 flex-none text-primary"
                                             />

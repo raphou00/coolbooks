@@ -18,7 +18,7 @@ const FormButton: React.FC<FormButtonProps> = ({
             type="submit"
             disabled={loading}
             className={cn(
-                "btn btn-lg btn-accent mt-4 w-full border-4",
+                "btn btn-lg btn-secondary mt-4 w-full border-4",
                 className
             )}
         >

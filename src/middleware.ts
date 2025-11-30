@@ -12,7 +12,7 @@ const intlMiddleware = createMiddleware({
     localePrefix: routing.localePrefix,
 });
 
-const allowedPaths = ["/api/stripe/webhook", "api/pdf"];
+const allowedPaths = ["/api/stripe/webhook"];
 
 export const middleware = async (req: NextRequest) => {
     const { pathname } = req.nextUrl;

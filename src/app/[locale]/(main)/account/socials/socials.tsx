@@ -3,9 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
-import { cn } from "@/lib/utils";
-import axios from "axios";
-import toast from "react-hot-toast";
+import { cn, requestAPI } from "@/lib/utils";
 
 type SocialsProps = {
     googleId?: string | null;
@@ -17,13 +15,10 @@ export const Socials: React.FC<SocialsProps> = ({ googleId }) => {
 
     const connectGoogle = async () => {
         if (google) {
-            const res = await axios.get("/api/auth/google/disconnect");
-            if (res.data.success) toast.success(res.data.message);
-            else toast.error(res.data.message);
+            await requestAPI("GET", "/api/auth/google/disconnect");
             setGoogle(null);
         } else {
-            const res = await axios.get("/api/auth/google");
-            window.location.href = res.data.url;
+            await requestAPI("GET", "/api/auth/google");
         }
     };
 
@@ -34,7 +29,7 @@ export const Socials: React.FC<SocialsProps> = ({ googleId }) => {
                     <li className="flex justify-between gap-x-2 py-5">
                         <div className="flex min-w-0 gap-x-4">
                             <Image
-                                src="/images/icons/google.svg"
+                                src="/images/icons/google.png"
                                 alt="Google"
                                 width={256}
                                 height={256}

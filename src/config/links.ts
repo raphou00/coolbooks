@@ -1,5 +1,5 @@
 import { useTranslations } from "next-intl";
-import { Lock, Settings2, Coins, BookHeart, Home } from "lucide-react";
+import { Lock, Settings2, Coins, BookHeart, Home, Compass } from "lucide-react";
 import type { User } from "lucia";
 
 export const useGetLinks = (user: User | null) => {
@@ -14,6 +14,11 @@ export const useGetLinks = (user: User | null) => {
             title: t("my-books"),
             path: user ? "/studio" : "/login?redirect=/studio",
             icon: BookHeart,
+        },
+        {
+            title: t("explore"),
+            path: "/search",
+            icon: Compass,
         },
     ];
 };
@@ -130,31 +135,6 @@ export const useGetFooterLinks = () => {
                     path: "/contact",
                 },
             ],
-        },
-    ];
-};
-
-export const useGetCardsLinks = () => {
-    return [
-        {
-            title: "Visa",
-            icon: "/images/cards/visa.svg",
-        },
-        {
-            title: "MasterCard",
-            icon: "/images/cards/mastercard.svg",
-        },
-        {
-            title: "JCB",
-            icon: "/images/cards/jcb.svg",
-        },
-        {
-            title: "Diners Club",
-            icon: "/images/cards/diners.svg",
-        },
-        {
-            title: "American Express",
-            icon: "/images/cards/amex.svg",
         },
     ];
 };

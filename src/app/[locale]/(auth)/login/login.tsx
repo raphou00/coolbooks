@@ -4,14 +4,13 @@ import Image from "next/image";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
-import axios from "axios";
 import Form from "@/components/ui/form";
 import FormInput from "@/components/ui/form-input";
 import FormButton from "@/components/ui/form-button";
 import FormReponse from "@/components/ui/form-response";
 import Link from "next/link";
 import { type ActionsState } from "@/lib/types";
-import { handleFormPost } from "@/lib/utils";
+import { requestAPI } from "@/lib/utils";
 import { type LoginSchema } from "@/schema/login";
 import { useSearchParams } from "next/navigation";
 
@@ -31,15 +30,22 @@ const Login: React.FC = () => {
     const redirect = searchParams?.get("redirect");
 
     const submit = async (data: LoginSchema) => {
-        const res = await handleFormPost<LoginSchema>(`/api/auth/login`, data);
+        const res = await requestAPI<LoginSchema>(
+            "POST",
+            `/api/auth/login`,
+            data
+        );
         setState(res);
 
         if (res.success) window.location.replace(redirect || "/");
     };
 
     const google = async () => {
-        const res = await axios.get(`/api/auth/google`);
-        window.location.href = res.data.url;
+        await requestAPI("GET", "/api/auth/google");
+    };
+
+    const facebook = async () => {
+        await requestAPI("GET", "/api/auth/facebook");
     };
 
     return (
@@ -52,20 +58,35 @@ const Login: React.FC = () => {
                 onSubmit={handleSubmit(submit)}
                 className="w-full max-w-md space-y-2"
             >
-                <div className="flex justify-between gap-x-2 pt-2">
+                <div className="flex flex-col justify-between gap-2 pt-2">
                     <button
                         type="button"
                         onClick={google}
                         className="btn btn-lg w-full"
                     >
                         <Image
-                            src="/images/icons/google.svg"
+                            src="/images/icons/google.png"
                             alt="Google"
                             className="size-6"
                             width={100}
                             height={100}
                         />
                         Google
+                    </button>
+
+                    <button
+                        type="button"
+                        onClick={facebook}
+                        className="btn btn-lg w-full"
+                    >
+                        <Image
+                            src="/images/icons/facebook.png"
+                            alt="Facebook"
+                            className="size-6"
+                            width={100}
+                            height={100}
+                        />
+                        Facebook
                     </button>
                 </div>
 

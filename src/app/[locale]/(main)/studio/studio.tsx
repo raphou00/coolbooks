@@ -45,29 +45,29 @@ const Studio: React.FC<StudioProps> = ({ books: allBooks }) => {
 
     return (
         <>
-            <div className="relative w-full flex gap-y-6 space-x-2 mb-6 rounded-2xl overflow-hidden">
-                <div className="w-full">
-                    <div className="relative w-full">
-                        <div className="cursor-pointer z-20 size-10 rounded-full flex items-center justify-center absolute left-0 top-1/2 mx-1.5 -translate-y-1/2">
+            <div className="flex items-center justify-between max-md:flex-col mb-8 gap-4">
+                <div className="text-center w-fit">
+                    <Title
+                        text={t("title")}
+                        className="text-3xl lg:text-4xl font-bold w-fit"
+                        underline
+                    />
+                </div>
+
+                <div className="w-full max-w-sm">
+                    <div className="w-full relative bg-black/70 h-10 sm:h-12 mr-2 rounded-full overflow-hidden shadow transition duration-200">
+                        <div className="absolute left-1.5 sm:left-2 top-1/2 z-50 -translate-y-1/2 size-9 flex items-center justify-center">
                             <SearchIcon className="size-6 text-white" />
                         </div>
                         <input
-                            type="text"
-                            className="input input-lg input-bordered bg-black/70 text-white w-full border-2 tracking-wide transition placeholder:text-neutral-300 focus:border-neutral focus:outline-none focus:bg-black/80 pl-12 pr-9"
-                            placeholder={t("search-placeholder")}
-                            spellCheck={false}
-                            autoComplete="off"
-                            autoCapitalize="off"
-                            autoCorrect="off"
-                            value={search}
                             onChange={(e) => setSearch(e.target.value)}
+                            value={search}
+                            type="text"
+                            placeholder={t("search-placeholder")}
+                            className="w-full relative text-sm sm:text-base z-50 border-none bg-transparent text-white h-full rounded-full focus:outline-none focus:ring-0 pl-10 sm:pl-12"
                         />
                     </div>
                 </div>
-                <Link href="/studio/new" className="btn btn-lg btn-primary">
-                    <BookPlus className="size-6 text-white" />
-                    <span className="max-md:hidden">{t("create")}</span>
-                </Link>
             </div>
 
             {books.length === 0 ?
@@ -85,6 +85,18 @@ const Studio: React.FC<StudioProps> = ({ books: allBooks }) => {
                     />
                 </div>
             :   <div className="w-full grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-2 md:gap-8">
+                    <div className="group relative size-full">
+                        <Link href="/studio/new">
+                            <div className="w-full bg-base-300 aspect-square shadow-lg rounded-lg group-hover:rounded-xl border-4 border-neutral border-dashed flex justify-center items-center">
+                                <BookPlus className="size-10 md:size-16 group-hover:scale-125 transition-all text-black/80" />
+                            </div>
+                            <div className="text-center font-bold mt-2">
+                                <h2 className="truncate w-full">
+                                    {t("create")}
+                                </h2>
+                            </div>
+                        </Link>
+                    </div>
                     {books.map((book) => (
                         <Fragment key={book.id}>
                             <DeleteBook
@@ -112,11 +124,12 @@ const Studio: React.FC<StudioProps> = ({ books: allBooks }) => {
                                 <Link href={`/book/${book.id}`}>
                                     <div className="w-full aspect-square shadow-lg rounded-lg overflow-hidden">
                                         <NextImage
-                                            className="group-hover:scale-105 transition-all"
+                                            className=""
                                             src={book.cover}
                                             width={1024}
                                             height={1024}
                                             alt={book.title}
+                                            isCover
                                         />
                                     </div>
                                     <div className="flex flex-col items-start text-sm font-bold mt-2">

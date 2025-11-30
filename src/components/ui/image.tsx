@@ -5,7 +5,12 @@ import Image, { type ImageProps } from "next/image";
 import { cn, getImage } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 
-const NextImage: React.FC<ImageProps> = ({
+type NextImageProps = ImageProps & {
+    isCover?: boolean;
+};
+
+const NextImage: React.FC<NextImageProps> = ({
+    isCover = false,
     height,
     width,
     src,
@@ -20,25 +25,36 @@ const NextImage: React.FC<ImageProps> = ({
     return (
         <div className={cn("relative overflow-hidden size-full", className)}>
             {!error ?
-                <Image
-                    className={cn(
-                        "z-20 transition duration-300",
-                        isLoading ? "blur-sm skeleton" : "blur-0"
+                <>
+                    {isCover && (
+                        <Image
+                            className="absolute inset-0 z-0"
+                            src="/images/3d_effect_cover.png"
+                            width={height}
+                            height={width}
+                            alt="cover effect"
+                        />
                     )}
-                    onLoad={() => setLoading(false)}
-                    onError={() => {
-                        setLoading(false);
-                        setError(true);
-                    }}
-                    src={getImage(src as string)}
-                    width={height}
-                    height={width}
-                    loading="lazy"
-                    decoding="async"
-                    blurDataURL={undefined}
-                    alt={alt}
-                    {...rest}
-                />
+                    <Image
+                        className={cn(
+                            "z-20 transition duration-300",
+                            isLoading ? "blur-sm skeleton" : "blur-0"
+                        )}
+                        onLoad={() => setLoading(false)}
+                        onError={() => {
+                            setLoading(false);
+                            setError(true);
+                        }}
+                        src={getImage(src as string)}
+                        width={height}
+                        height={width}
+                        loading="lazy"
+                        decoding="async"
+                        blurDataURL={undefined}
+                        alt={alt}
+                        {...rest}
+                    />
+                </>
             :   <div className="absolute inset-0 z-30 size-full bg-base-300 flex flex-col items-center justify-center gap-y-2 skeleton">
                     <div className="loading loading-lg loading-spinner" />
                     <p>{t("generating")}</p>

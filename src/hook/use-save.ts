@@ -1,4 +1,5 @@
 import { useCallback } from "react";
+import { requestAPI } from "@/lib/utils";
 
 type UseSaveReturn = (
     action: "save" | "unsave",
@@ -9,19 +10,11 @@ const useSave = (): UseSaveReturn => {
     const toggleSave = useCallback(
         async (action: "save" | "unsave", bookId: string): Promise<boolean> => {
             try {
-                const response = await fetch(`/api/book/save`, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({ action, bookId }),
-                });
-
-                if (!response.ok) {
-                    throw new Error("Failed to toggle Save");
-                }
-
-                const data = await response.json();
+                const data = await requestAPI(
+                    "POST",
+                    "/api/book/save",
+                    JSON.stringify({ action, bookId })
+                );
 
                 return data.saved;
             } catch (error) {

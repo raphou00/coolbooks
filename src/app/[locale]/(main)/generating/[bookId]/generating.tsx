@@ -6,36 +6,22 @@ import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Title from "@/components/ui/title";
+import { requestAPI } from "@/lib/utils";
+import { ActionsState } from "@/lib/types";
 
 type GeneratingProps = {
     bookId: string;
 };
 
-type Book = {
-    book: {
-        generating: boolean;
-    };
-};
-
 const fetcher = async (url: string) => {
-    const res = await fetch(url, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-        },
-    });
-    if (!res.ok) {
-        const text = await res.text().catch(() => "");
-        throw new Error(`${res.status} ${res.statusText} ${text}`);
-    }
-    return res.json();
+    return await requestAPI<object>("GET", url);
 };
 
 const Generating: React.FC<GeneratingProps> = ({ bookId }) => {
     const t = useTranslations("pages.generating");
     const router = useRouter();
 
-    const { data, isLoading } = useSWR<Book | undefined>(
+    const { data, isLoading } = useSWR<ActionsState<object> | undefined>(
         bookId ? `/api/book?bookId=${bookId}` : null,
         fetcher,
         {

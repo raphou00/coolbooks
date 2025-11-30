@@ -17,7 +17,7 @@ import {
 } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { cn, handleFormPost } from "@/lib/utils";
+import { cn, requestAPI } from "@/lib/utils";
 import Form from "@/components/ui/form";
 import FormInput from "@/components/ui/form-input";
 import FormButton from "@/components/ui/form-button";
@@ -38,7 +38,7 @@ import bookSchema, {
 } from "@/schema/book";
 
 type NewBookProps = {
-    user: User;
+    user?: User | null;
 };
 
 type NoCreditsModalProps = {
@@ -135,21 +135,25 @@ const NewBook: React.FC<NewBookProps> = ({ user }) => {
     };
 
     const submit = async (data: BookSchema) => {
-        const res = await handleFormPost<BookSchema>(
-            "/api/book/generate",
-            data
-        );
-        setState(res);
+        console.log(data);
 
-        if (res.success) {
-            redirect(
-                `/generating/${(res as unknown as { bookId: string }).bookId}`
-            );
-        }
+        return;
+        // const res = await requestAPI<BookSchema>(
+        //     "POST",
+        //     "/api/book/generate",
+        //     data
+        // );
+        // setState(res);
+
+        // if (res.success) {
+        //     redirect(
+        //         `/generating/${(res as unknown as { bookId: string }).bookId}`
+        //     );
+        // }
     };
 
     useEffect(() => {
-        if (user.credits == 0) {
+        if (user?.credits == 0) {
             setOpen(true);
         }
     }, [user]);

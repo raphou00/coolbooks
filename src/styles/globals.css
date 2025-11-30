@@ -14,10 +14,10 @@ html[data-theme="light"] {
     --color-accent-content: #ffffff;
     --color-base-100: #ffffff;
     --color-base-200: #fffdff;
-    --color-base-300: #f0f0f0;
+    --color-base-300: #f3fffd;
     --color-base-content: #111111;
     --color-info: #227db2;
-    --color-success: #008000;
+    --color-success: #00d900;
     --color-warning: #ff8c00;
     --color-error: #dc143c;
 
@@ -84,33 +84,4 @@ html {
 
 .max-w-8xl {
     max-width: 90rem;
-}
-
-.home-container {
-	display: flex;
-	align-content: center;
-	align-items: center;
-	justify-content: center;
-	margin: auto;
-	border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
-	box-shadow: 15px 15px 50px rgba(0,0,0,0.2);
-	animation: morphing 10s infinite;
-	overflow: hidden;
-}
-
-@keyframes morphing {
-	0% {
-		border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
-		box-shadow: 15px 15px 50px rgba(0,0,0,0.2);
-	}
-	25% {
-		border-radius: 58% 42% 75% 25% / 76% 46% 54% 24%;
-	}
-	50% {
-		border-radius: 50% 50% 33% 67% / 55% 27% 73% 45%;
-		box-shadow: -10px -5px 50px rgba(0,0,0,0.2);
-	}
-	75% {
-		border-radius: 33% 67% 58% 42% / 63% 68% 32% 37%;
-	}
 }

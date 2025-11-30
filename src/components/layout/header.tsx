@@ -4,10 +4,10 @@ import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useTheme } from "next-themes";
 import type { User } from "lucia";
-import axios from "axios";
 import {
     BookMarked,
     Coins,
+    DollarSign,
     LogIn,
     LogOut,
     Menu,
@@ -17,9 +17,9 @@ import {
 } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
-import { cn } from "@/lib/utils";
+import { cn, requestAPI } from "@/lib/utils";
 import { useGetLinks } from "@/config/links";
-import Logo from "@/components/ui/logo";
+import LogoText from "@/components/ui/logo-text";
 import Avatar from "@/components/ui/avatar";
 import Title from "@/components/ui/title";
 import LocaleModal from "@/components/ui/locale-modal";
@@ -39,7 +39,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
     const { setTheme } = useTheme();
 
     const handleLogout = async () => {
-        await axios.post("/api/auth/logout");
+        await requestAPI("GET", "/api/auth/logout");
         router.refresh();
     };
 
@@ -60,19 +60,11 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                     <label
                                         htmlFor="drawer"
                                         role="button"
-                                        className="items-center justify-center cursor-pointer hidden max-[950px]:flex"
+                                        className="items-center justify-center cursor-pointer hidden max-[1200px]:flex"
                                     >
                                         <Menu className="size-11 text-base-content/90" />
                                     </label>
-                                    <div className="flex items-center ml-2 mr-3">
-                                        <Link
-                                            href="/"
-                                            className="flex items-center text-sm relative z-20 focus:scale-95"
-                                        >
-                                            <Logo className="size-12" />
-                                        </Link>
-                                    </div>
-                                    <ul className="menu menu-horizontal space-x-2 max-[950px]:hidden">
+                                    <ul className="menu menu-horizontal space-x-2 max-[1200px]:hidden">
                                         {links.map((item) => (
                                             <li key={item.title}>
                                                 <Link
@@ -80,7 +72,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                                     className={cn(
                                                         "btn text-white",
                                                         item.path === pathname ?
-                                                            "btn-secondary"
+                                                            "btn-primary"
                                                         :   "bg-black/70"
                                                     )}
                                                 >
@@ -93,33 +85,18 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                         ))}
                                     </ul>
                                 </div>
+                                <div className="navbar-center">
+                                    <Link
+                                        href="/"
+                                        className="flex items-center text-sm relative z-20 focus:scale-95"
+                                    >
+                                        <LogoText className="h-14 w-min" />
+                                    </Link>
+                                </div>
                                 <div className="navbar-end space-x-2">
-                                    <div className="w-full max-[950px]:hidden">
+                                    <div className="w-full max-w-[300px] max-[1200px]:hidden">
                                         <Search />
                                     </div>
-                                    <Link
-                                        href="/pricing"
-                                        className="bg-black/70 no-underline group cursor-pointer relative rounded-full p-px font-semibold leading-6 inline-block"
-                                    >
-                                        <span className="absolute inset-0 overflow-hidden rounded-full">
-                                            <span className="absolute inset-0 rounded-full bg-[image:radial-gradient(75%_100%_at_50%_0%,rgba(251,191,36,0.6)_0%,rgba(251,191,36,0)_75%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-                                        </span>
-                                        <div className="relative flex space-x-3 items-center z-10 rounded-full py-2 px-4 ring-1 ring-white/10 text-lg text-white">
-                                            <Coins className="size-6 text-yellow-300" />
-                                            {user ?
-                                                <span
-                                                    className={cn(
-                                                        user?.credits > 0 ?
-                                                            ""
-                                                        :   "text-red-300"
-                                                    )}
-                                                >
-                                                    {user?.credits}
-                                                </span>
-                                            :   <span>{t("pricing")}</span>}
-                                        </div>
-                                        <span className="absolute -bottom-0 left-[1.125rem] h-px w-[calc(100%-2.25rem)] bg-gradient-to-r from-yellow-400/0 via-yellow-400/90 to-yellow-400/0 transition-opacity duration-500 group-hover:opacity-40" />
-                                    </Link>
 
                                     <div className="dropdown dropdown-end dropdown-bottom dropdown-hover flex items-center size-12 z-100">
                                         <div
@@ -129,7 +106,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                         >
                                             <Avatar
                                                 userName={user?.name}
-                                                className="size-12 p-3"
+                                                className="size-11 p-3"
                                             />
                                         </div>
                                         <div
@@ -165,6 +142,29 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                                                 {t("favorites")}
                                                             </span>
                                                         </a>
+
+                                                        <a
+                                                            href="/account/billing"
+                                                            className="btn btn-ghost rounded-xl border-none m-0 w-full justify-between"
+                                                        >
+                                                            <span className="flex items-center gap-2">
+                                                                <Coins className="size-6" />
+                                                                {t("credits")}
+                                                            </span>
+                                                            <span
+                                                                className={cn(
+                                                                    "badge badge-secondary badge-xl rounded-full",
+                                                                    (
+                                                                        user?.credits >
+                                                                            0
+                                                                    ) ?
+                                                                        "text-white"
+                                                                    :   "text-red-300"
+                                                                )}
+                                                            >
+                                                                {user?.credits}
+                                                            </span>
+                                                        </a>
                                                     </>
                                                 :   <>
                                                         <a
@@ -190,6 +190,16 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                                 }
 
                                                 <div className="divider mx-auto my-1 w-full px-2" />
+
+                                                <a
+                                                    href="/pricing"
+                                                    className="btn btn-ghost rounded-xl border-none m-0 w-full justify-start"
+                                                >
+                                                    <span className="flex items-center gap-2">
+                                                        <DollarSign className="size-6" />
+                                                        {t("pricing")}
+                                                    </span>
+                                                </a>
 
                                                 <a
                                                     href="/contact"
@@ -245,18 +255,18 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                         className="drawer-overlay"
                     ></label>
                     <ul className="menu bg-base-200 min-h-dvh w-80 space-y-3 p-4 z-[99999999]">
-                        <Link
+                        <a
                             href="/"
-                            className="ml-2 mb-8 flex items-center text-sm relative z-20"
+                            className="ml-2 mt-4 mb-8 flex items-center text-sm relative z-20"
                         >
-                            <Logo className="h-16 w-auto ml-2 mb-2" />
-                        </Link>
+                            <LogoText className="h-14 w-min" />
+                        </a>
                         <Search />
                         {links.map((item) => (
                             <li key={item.title}>
                                 <a
                                     href={item.path}
-                                    className="btn btn-ghost btn-lg w-full justify-between"
+                                    className="btn btn-lg justify-between w-[288px]"
                                 >
                                     <span className="flex items-center gap-2">
                                         <item.icon className="size-6" />

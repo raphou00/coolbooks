@@ -2,9 +2,25 @@ import { selectBook } from "@/config/book";
 import db from "@/lib/db";
 import { exportEPUB, exportPDF } from "@/lib/export";
 import { type NextRequest, NextResponse } from "next/server";
+import { checkRateLimit, ratelimitPost } from "@/lib/rate-limiter";
 
 export async function GET(req: NextRequest) {
     try {
+        const identifier = req.headers.get("x-forwarded-for");
+
+        if (!identifier) {
+            return NextResponse.json({
+                redirect: new URL("/error?error=403", req.url),
+            });
+        }
+
+        const { allowed } = await checkRateLimit(identifier, ratelimitPost);
+        if (!allowed) {
+            return NextResponse.json({
+                redirect: new URL("/error?error=429", req.url),
+            });
+        }
+
         const bookId = req.nextUrl.searchParams.get("bookId");
         const format = req.nextUrl.searchParams.get("format");
         const orientation = req.nextUrl.searchParams.get("orientation");

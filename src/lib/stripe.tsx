@@ -9,6 +9,9 @@ import {
     productIdFamily,
     productIdPremium,
 } from "@/config/stripe";
+import sendEmail from "./email";
+import { getTranslations } from "next-intl/server";
+import Invoice from "@/components/emails/invoice";
 
 export const stripe = new Stripe(env.STRIPE_SECRET_KEY, {
     apiVersion: "2025-10-29.clover",
@@ -85,6 +88,7 @@ export const handleInvoicePayment = async (
     invoice: Stripe.Invoice,
     user: User
 ) => {
+    const t = await getTranslations({ locale: "en" });
     let creditsToAdd = 0;
 
     const subscriptionId =
@@ -128,6 +132,19 @@ export const handleInvoicePayment = async (
             },
         },
     });
+
+    await sendEmail(
+        user.email,
+        env.SENDER_EMAIL,
+        t("emails.invoice.title"),
+        t("emails.invoice.body", { credits: creditsToAdd }),
+        <Invoice
+            t={t}
+            name={user.name}
+            credits={creditsToAdd}
+            invoicePdfUrl={invoice.invoice_pdf!}
+        />
+    );
 
     console.log(`Added ${creditsToAdd} credits to user ${user.email}`);
 };

@@ -47,7 +47,7 @@ export const AccoutMenu: React.FC<AccoutProps> = ({ user, children }) => {
                     </div>
                 </div>
 
-                <div className="w-full hidden max-md:block mt-2">
+                <div className="w-full hidden max-md:block my-4">
                     <Select
                         defaultValue={pathname ?? ""}
                         value={pathname ?? ""}

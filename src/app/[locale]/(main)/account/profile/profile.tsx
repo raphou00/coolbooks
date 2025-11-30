@@ -8,7 +8,7 @@ import FormInput from "@/components/ui/form-input";
 import FormButton from "@/components/ui/form-button";
 import { type ActionsState } from "@/lib/types";
 import { type UpdateProfileSchema } from "@/schema/update-profile";
-import { handleFormPost } from "@/lib/utils";
+import { requestAPI } from "@/lib/utils";
 
 type UpdateProfileProps = {
     email: string;
@@ -37,7 +37,8 @@ export const UpdateProfile: React.FC<UpdateProfileProps> = ({
     });
 
     const submit = async (data: UpdateProfileSchema) => {
-        const res = await handleFormPost<UpdateProfileSchema>(
+        const res = await requestAPI<UpdateProfileSchema>(
+            "POST",
             "/api/account/update-profile",
             data
         );

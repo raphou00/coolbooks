@@ -38,10 +38,10 @@ const TemplateEmail: React.FC<TemplateEmailProps> = async ({
                     <Container className="mx-auto my-0 max-w-2xl">
                         <Section className="mt-8">
                             <Img
-                                src={`${domain}/favicon-96x96.png`}
-                                width="96"
-                                height="96"
-                                alt=""
+                                src={`${domain}/cool-books.png`}
+                                width="125"
+                                height="65"
+                                alt="Cool Books Logo Text"
                             />
                         </Section>
 
@@ -53,12 +53,12 @@ const TemplateEmail: React.FC<TemplateEmailProps> = async ({
 
                         <Section>
                             <Row className="mb-8 w-full px-2">
-                                <Column className="h-full flex justify-start">
+                                <Column className="h-full flex justify-start gap-x-4">
                                     <Img
-                                        src={`${domain}/favicon-96x96.png`}
+                                        src={`${domain}/cool-books.png`}
                                         width="40"
                                         height="40"
-                                        alt=""
+                                        alt="Cool Books Logo"
                                     />
                                 </Column>
                                 <Column>

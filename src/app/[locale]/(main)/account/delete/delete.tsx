@@ -8,7 +8,7 @@ import FormInput from "@/components/ui/form-input";
 import FormButton from "@/components/ui/form-button";
 import { type ActionsState } from "@/lib/types";
 import { type DeleteAccountSchema } from "@/schema/delete-account";
-import { handleFormPost } from "@/lib/utils";
+import { requestAPI } from "@/lib/utils";
 
 export const DeleteAccount: React.FC = () => {
     const t = useTranslations("pages.account-delete");
@@ -24,7 +24,8 @@ export const DeleteAccount: React.FC = () => {
     } = useForm<DeleteAccountSchema>();
 
     const submit = async (data: DeleteAccountSchema) => {
-        const res = await handleFormPost<DeleteAccountSchema>(
+        const res = await requestAPI<DeleteAccountSchema>(
+            "POST",
             "/api/account/delete-account",
             data
         );

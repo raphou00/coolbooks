@@ -28,7 +28,7 @@ const Form: React.FC<FormProps> = ({
                         {title && (
                             <Title
                                 text={title}
-                                className="text-center text-5xl"
+                                className="text-center text-4xl md:text-5xl lg:text-6xl font-bold w-fit"
                                 underline
                             />
                         )}

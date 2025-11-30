@@ -1,12 +1,12 @@
 "use client";
 
+import Link from "next/link";
+import Image from "next/image";
+import { useSearchParams } from "next/navigation";
+import { useTranslations } from "next-intl";
+import { useEffect, useState } from "react";
 import Main from "@/components/layout/main";
 import Title from "@/components/ui/title";
-import Link from "next/link";
-import { HeartCrack } from "lucide-react";
-import { useTranslations } from "next-intl";
-import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
 
 const Page = () => {
     const t = useTranslations("messages");
@@ -28,12 +28,15 @@ const Page = () => {
     }, [searchParams, t]);
 
     return (
-        <Main
-            className="flex flex-col justify-center items-center w-full gap-2"
-            gradientVariant="floatingGradient"
-        >
+        <Main className="mt-40">
             <div className="flex flex-col items-center gap-2">
-                <HeartCrack className="text-accent mx-auto h-16 w-auto" />
+                <Image
+                    src="/images/book-sad.svg"
+                    width={400}
+                    height={400}
+                    alt="404"
+                    className="mx-auto h-44 grayscale"
+                />
                 <Title
                     text="Oops !"
                     className="text-4xl mx-auto text-center w-fit"

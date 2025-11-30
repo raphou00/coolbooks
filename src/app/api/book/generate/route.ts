@@ -3,11 +3,11 @@ import { getTranslations } from "next-intl/server";
 import { OpenAI } from "openai";
 import db from "@/lib/db";
 import { getUser } from "@/lib/auth";
-import { ratelimitBasePost } from "@/lib/rate-limiter";
 import { type localesTitle } from "@/lib/navigation";
 import bookSchema, { type BookSchema } from "@/schema/book";
 import { LambdaClient, InvokeCommand } from "@aws-sdk/client-lambda";
 import env from "@/lib/env";
+import { checkRateLimit, ratelimitPost } from "@/lib/rate-limiter";
 
 const client = new LambdaClient({ region: "us-east-1" });
 
@@ -23,12 +23,16 @@ export const POST = async (req: NextRequest) => {
         const identifier = req.headers.get("x-forwarded-for");
 
         if (!identifier) {
-            return NextResponse.redirect(new URL("/error?error=403", req.url));
+            return NextResponse.json({
+                redirect: new URL("/error?error=403", req.url),
+            });
         }
 
-        const { success } = await ratelimitBasePost.limit(identifier);
-        if (!success) {
-            return NextResponse.redirect(new URL("/error?error=429", req.url));
+        const { allowed } = await checkRateLimit(identifier, ratelimitPost);
+        if (!allowed) {
+            return NextResponse.json({
+                redirect: new URL("/error?error=429", req.url),
+            });
         }
 
         const user = await getUser();

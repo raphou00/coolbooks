@@ -9,7 +9,7 @@ import { useTranslations } from "next-intl";
 import { type ActionsState } from "@/lib/types";
 import { type UpdatePasswordSchema } from "@/schema/update-password";
 import { type CreatePasswordSchema } from "@/schema/create-password";
-import { handleFormPost } from "@/lib/utils";
+import { requestAPI } from "@/lib/utils";
 
 export const UpdatePassword: React.FC = () => {
     const t = useTranslations("pages.account-password");
@@ -25,7 +25,8 @@ export const UpdatePassword: React.FC = () => {
     } = useForm<UpdatePasswordSchema>();
 
     const submit = async (data: UpdatePasswordSchema) => {
-        const res = await handleFormPost<UpdatePasswordSchema>(
+        const res = await requestAPI<UpdatePasswordSchema>(
+            "POST",
             "/api/account/update-password",
             data
         );
@@ -92,7 +93,8 @@ export const CreatePassword: React.FC = () => {
     } = useForm<CreatePasswordSchema>();
 
     const submit = async (data: CreatePasswordSchema) => {
-        const res = await handleFormPost<CreatePasswordSchema>(
+        const res = await requestAPI<CreatePasswordSchema>(
+            "POST",
             "/api/account/create-password",
             data
         );

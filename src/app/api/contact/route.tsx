@@ -1,7 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { getTranslations } from "next-intl/server";
 import contactSchema, { type ContactSchema } from "@/schema/contact";
-import { ratelimitContact } from "@/lib/rate-limiter";
+import { checkRateLimit, ratelimitContact } from "@/lib/rate-limiter";
 import sendEmail from "@/lib/email";
 import env from "@/lib/env";
 
@@ -13,12 +13,16 @@ export const POST = async (req: NextRequest) => {
         const identifier = req.headers.get("x-forwarded-for");
 
         if (!identifier) {
-            return NextResponse.redirect(new URL("/error?error=403", req.url));
+            return NextResponse.json({
+                redirect: new URL("/error?error=403", req.url),
+            });
         }
 
-        const { success } = await ratelimitContact.limit(identifier);
-        if (!success) {
-            return NextResponse.redirect(new URL("/error?error=429", req.url));
+        const { allowed } = await checkRateLimit(identifier, ratelimitContact);
+        if (!allowed) {
+            return NextResponse.json({
+                redirect: new URL("/error?error=429", req.url),
+            });
         }
 
         const body = (await req.json()) as ContactSchema;

@@ -1,25 +1,51 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
+import toast from "react-hot-toast";
+import type { User } from "lucia";
+import confetti from "canvas-confetti";
+import { useTranslations } from "next-intl";
 import {
     useMotionTemplate,
     useMotionValue,
     motion,
     animate,
 } from "framer-motion";
-import { Lexend as Font } from "next/font/google";
-import { ArrowRight } from "lucide-react";
-import type { User } from "lucia";
-import { useSearchParams } from "next/navigation";
-import Link from "next/link";
-import confetti from "canvas-confetti";
-import { useTranslations } from "next-intl";
+import {
+    ArrowRight,
+    Bookmark,
+    BookOpenText,
+    ChevronLeftIcon,
+    ChevronRightIcon,
+    Info,
+    Palette,
+    Star,
+    TvIcon,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
+import useSave from "@/hook/use-save";
 import Title from "@/components/ui/title";
 import Modal from "@/components/ui/modal";
+import NextImage from "@/components/ui/image";
+import { BentoGrid, BentoGridItem } from "@/components/ui/bento-grid";
 
 type HomeProps = {
+    user: User | null;
+};
+
+type BooksProps = {
+    title: string;
+    books: {
+        id: string;
+        title: string;
+        cover: string;
+        user: {
+            name: string;
+        };
+    }[];
     user: User | null;
 };
 
@@ -28,14 +54,9 @@ type ThanksProps = {
     setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const font = Font({
-    subsets: ["latin"],
-    weight: "900",
-});
-
 const COLORS_TOP = ["#6bc4d9", "#e89fdf"];
 
-const Home: React.FC<HomeProps> = ({ user }) => {
+export const Hero: React.FC<HomeProps> = () => {
     const t = useTranslations("pages.home");
     const color = useMotionValue(COLORS_TOP[0]);
     const searchParams = useSearchParams();
@@ -51,15 +72,15 @@ const Home: React.FC<HomeProps> = ({ user }) => {
         });
     }, [color]);
 
-    const border = useMotionTemplate`1px solid ${color}`;
-    const boxShadow = useMotionTemplate`0px 8px 24px ${color}`;
+    const border = useMotionTemplate`3px solid ${color}`;
+    const boxShadow = useMotionTemplate`0px 4px 12px ${color}`;
 
     return (
         <>
             <div className="w-full bg-gradient-to-r from-green-100 via-primary/20 to-secondary/20 px-4 py-2 rounded-2xl">
                 <div className="flex items-center justify-center text-center">
                     <span className="mr-2 text-lg">🎄</span>
-                    <p className="max-sm:text-sm text-gray-800">
+                    <p className="max-sm:text-base text-gray-800">
                         {t("banner-pricing")}{" "}
                         <Link href="/pricing" className="link font-extrabold">
                             {t("banner-pricing-link")}
@@ -68,17 +89,15 @@ const Home: React.FC<HomeProps> = ({ user }) => {
                 </div>
             </div>
             <div className="space-y-5 mt-6">
-                <div className="grid grid-cols-2 max-[780px]:grid-cols-1 place-items-center">
-                    <div className="flex flex-col items-start">
-                        <span className="inline-block rounded-full bg-primary/10 border border-neutral/5 px-3 py-1.5 mb-3">
-                            😍 {t("beta")}
+                <div className="flex items-center justify- max-[780px]:flex-col-reverse">
+                    <div className="flex flex-col items-start md:w-1/2">
+                        <span className="inline-flex items-center gap-x-1 rounded-full bg-primary/10 border border-neutral/5 px-3 py-1.5 mb-3 max-md:text-sm">
+                            <Star className="inline fill-yellow-400 stroke-yellow-500 max-md:size-5" />{" "}
+                            {t("info")}
                         </span>
                         <Title
                             text={t("title")}
-                            className={cn(
-                                "text-2xl lg:text-5xl mx-auto w-fit m-0 font-bold",
-                                font.className
-                            )}
+                            className="text-2xl lg:text-5xl mx-auto w-fit m-0 font-bold"
                         />
                         <p className="my-6 max-w-xl text-left text-base leading-relaxed lg:text-xl lg:leading-relaxed">
                             {t("description")}
@@ -88,23 +107,21 @@ const Home: React.FC<HomeProps> = ({ user }) => {
                                 border,
                                 boxShadow,
                             }}
-                            href={
-                                user ? "/studio/new" : (
-                                    "/login?redirect=/studio/new"
-                                )
-                            }
-                            className="group text-white text-lg flex w-fit items-center gap-1.5 rounded-full px-6 py-3 transition cursor-pointer bg-slate-800/90  hover:bg-slate-800/90"
+                            href="/studio/new"
+                            className="group text-lg flex w-fit items-center gap-1.5 rounded-full px-6 py-2 transition cursor-pointer bg-base-300 hover:bg-base-300/90 max-md:mx-auto"
                         >
                             {t("create")}
                             <ArrowRight className="transition-transform group-hover:-rotate-45 group-active:-rotate-12" />
                         </motion.a>
                     </div>
-                    <div className="home-container size-[400px] max-lg:size-[250px] max-[780px]:!hidden">
+                    <div className="md:w-1/2 flex justify-center size-[400px] max-lg:size-[250px]">
                         <Image
-                            src="/images/2-kid-reading-a-book.jpg"
+                            className="size-[400px] max-lg:size-[250px]"
+                            src="/images/home.png"
                             alt=""
                             width={1080}
                             height={1080}
+                            priority
                         />
                     </div>
                 </div>
@@ -114,182 +131,186 @@ const Home: React.FC<HomeProps> = ({ user }) => {
     );
 };
 
-export const Features: React.FC = () => {
+export const Bento: React.FC = () => {
     const t = useTranslations("pages.home.features");
+    const items = [
+        {
+            title: t("read.title"),
+            description: t("read.description"),
+            header: "/images/artstyles/cartoon.png",
+            icon: <TvIcon className="size-5 text-neutral" />,
+            className: "bg-green-100",
+        },
+        {
+            title: t("child.title"),
+            description: t("child.description"),
+            header: "/images/artstyles/anime.png",
+            icon: <BookOpenText className="size-5 text-neutral" />,
+            className: "bg-blue-50",
+        },
+        {
+            title: t("endless.title"),
+            description: t("endless.description"),
+            header: "/images/artstyles/comics.png",
+            icon: <Palette className="size-5 text-neutral" />,
+            className: "bg-red-50",
+        },
+    ];
+
     return (
-        <section className="mt-10 md:mt-16">
-            <div className="mb-8 flex flex-col items-start justify-between gap-4 md:flex-row md:items-end">
-                <h2 className="max-w-lg text-3xl font-bold sm:text-4xl md:text-5xl">
-                    {t("title")}
-                    <div className="text-slate-400">{t("titleHighlight")}</div>
-                </h2>
-            </div>
-
-            <div className="flex flex-col-reverse items-stretch gap-6 md:flex-row md:items-start">
-                <div className="flex-1">
-                    <div className="mb-4 grid w-full [90rem]:max-w-4xl grid-cols-12 gap-4 px-2 sm:px-0">
-                        <motion.div
-                            whileHover={{ scale: 0.98, rotate: "-1deg" }}
-                            className="group relative col-span-12 min-h-[220px] overflow-hidden rounded-2xl bg-slate-100 p-6 sm:min-h-[240px] md:col-span-4 md:p-8"
-                        >
-                            <h3 className="mx-auto text-center text-2xl font-semibold sm:text-3xl">
-                                <div>🌎</div>
-                                {t("cards.everywhere.title")}
-                            </h3>
-                            <div className="absolute bottom-0 left-3 right-3 top-[5.5rem] translate-y-8 rounded-t-2xl bg-gradient-to-br from-violet-400 to-indigo-400 p-4 transition-transform duration-[250ms] group-hover:translate-y-4 group-hover:rotate-[2deg] sm:left-4 sm:right-4 sm:top-[7.5rem]">
-                                <span className="block text-center font-semibold text-indigo-50">
-                                    {t("cards.everywhere.body")}
-                                </span>
-                            </div>
-                        </motion.div>
-
-                        <motion.div
-                            whileHover={{ scale: 0.98, rotate: "-1deg" }}
-                            className="group relative col-span-12 min-h-[220px] overflow-hidden rounded-2xl bg-slate-100 p-6 sm:min-h-[240px] md:col-span-8 md:p-8"
-                        >
-                            <h3 className="mx-auto text-center text-2xl font-semibold sm:text-3xl">
-                                <div>🚀</div>
-                                {t("cards.instant.title")}
-                            </h3>
-                            <div className="absolute bottom-0 left-3 right-3 top-[5.5rem] translate-y-8 rounded-t-2xl bg-gradient-to-br from-amber-400 to-orange-400 p-4 transition-transform duration-[250ms] group-hover:translate-y-4 group-hover:rotate-[2deg] sm:left-4 sm:right-4 sm:top-[7.5rem]">
-                                <span className="block text-center font-semibold text-orange-50">
-                                    {t("cards.instant.body")}
-                                </span>
-                            </div>
-                        </motion.div>
-                    </div>
-
-                    <div className="grid w-full [90rem]:max-w-4xl grid-cols-12 gap-4 px-2 sm:px-0">
-                        <motion.div
-                            whileHover={{ scale: 0.98, rotate: "-1deg" }}
-                            className="group relative col-span-12 min-h-[220px] overflow-hidden rounded-2xl bg-slate-100 p-6 sm:min-h-[240px] md:col-span-8 md:p-8"
-                        >
-                            <h3 className="mx-auto text-center text-2xl font-semibold sm:text-3xl">
-                                <div>🎨</div>
-                                {t("cards.customizable.title")}
-                            </h3>
-                            <div className="absolute bottom-0 left-3 right-3 top-[5.5rem] translate-y-8 rounded-t-2xl bg-gradient-to-br from-green-400 to-emerald-400 p-4 transition-transform duration-[250ms] group-hover:translate-y-4 group-hover:rotate-[2deg] sm:left-4 sm:right-4 sm:top-[7.5rem]">
-                                <span className="block text-center font-semibold text-emerald-50">
-                                    {t("cards.customizable.body")}
-                                </span>
-                            </div>
-                        </motion.div>
-
-                        <motion.div
-                            whileHover={{ scale: 0.98, rotate: "-1deg" }}
-                            className="group relative col-span-12 min-h-[220px] overflow-hidden rounded-2xl bg-slate-100 p-6 sm:min-h-[240px] md:col-span-4 md:p-8"
-                        >
-                            <h3 className="mx-auto text-center text-2xl font-semibold sm:text-3xl">
-                                <div>🎓</div>
-                                {t("cards.educational.title")}
-                            </h3>
-                            <div className="absolute bottom-0 left-3 right-3 top-[5.5rem] translate-y-8 rounded-t-2xl bg-gradient-to-br from-pink-400 to-red-400 p-4 transition-transform duration-[250ms] group-hover:translate-y-4 group-hover:rotate-[2deg] sm:left-4 sm:right-4 sm:top-[7.5rem]">
-                                <span className="block text-center font-semibold text-red-50">
-                                    {t("cards.educational.body")}
-                                </span>
-                            </div>
-                        </motion.div>
-                    </div>
-                </div>
-
-                <div className="w-full max-[90rem]:hidden md:w-auto md:ml-4 rounded-2xl overflow-hidden">
-                    <Image
-                        src="/images/a-kid-holding-a-book--looking-on-the-right.jpg"
-                        width={683}
-                        height={1024}
-                        alt="a-kid-holding-a-book--looking-on-the-right"
-                        className="mx-auto my-0 w-auto max-h-[496px] rounded-2xl transition hover:scale-105 hover:rotate-1"
-                        priority
-                    />
-                </div>
-            </div>
-        </section>
+        <BentoGrid>
+            {items.map((item, i) => (
+                <BentoGridItem key={i} {...item} />
+            ))}
+        </BentoGrid>
     );
 };
 
-export const HowItWorks: React.FC = () => {
-    const t = useTranslations("pages.home.how-it-works");
+export const Books: React.FC<BooksProps> = ({ title, books, user }) => {
+    const t = useTranslations("pages.home");
+    const tMessages = useTranslations("messages");
+    const [allSavedBooks, setAllSavedBooks] = useState<string[]>(
+        user?.savedBooks || []
+    );
+    const [canScrollLeft, setCanScrollLeft] = useState(false);
+    const [canScrollRight, setCanScrollRight] = useState(true);
+    const scrollRef = useRef<HTMLDivElement | null>(null);
+    const toggleSave = useSave();
+
+    const scrollContainer = (direction: "left" | "right") => {
+        const container = scrollRef.current;
+        if (!container) return;
+
+        const scrollAmount = container.clientWidth * 0.8;
+
+        if (direction === "left") {
+            container.scrollBy({ left: -scrollAmount, behavior: "smooth" });
+        } else {
+            container.scrollBy({ left: scrollAmount, behavior: "smooth" });
+        }
+    };
+
+    const handleScroll = () => {
+        const container = scrollRef.current;
+        if (!container) return;
+
+        const { scrollLeft, scrollWidth, clientWidth } = container;
+
+        setCanScrollLeft(scrollLeft > 0);
+        setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 1);
+    };
+
+    useEffect(() => {
+        handleScroll();
+    }, [books]);
+
+    const handleSave = async (bookId: string) => {
+        if (!user) {
+            toast(tMessages("login-save"), {
+                icon: <Info className="text-info" />,
+            });
+            return;
+        }
+
+        const alreadySaved = allSavedBooks.includes(bookId);
+
+        if (alreadySaved) {
+            setAllSavedBooks(allSavedBooks.filter((id) => id !== bookId));
+        } else {
+            setAllSavedBooks([...allSavedBooks, bookId]);
+        }
+
+        await toggleSave(alreadySaved ? "unsave" : "save", bookId);
+    };
+
     return (
-        <section className="w-full py-12 sm:py-16 lg:py-20">
-            <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <section className="mt-12">
+            <div className="mb-4">
                 <Title
-                    text={t("title")}
-                    className="mx-auto w-fit text-2xl font-bold sm:text-3xl md:text-4xl"
-                    underline
+                    text={title}
+                    className="text-left w-fit text-2xl font-bold sm:text-3xl md:text-4xl"
                 />
+            </div>
+            <div className="relative group">
+                <button
+                    onClick={() => scrollContainer("left")}
+                    disabled={!canScrollLeft}
+                    className={`
+                        absolute left-0 top-2/5 -translate-y-1/2 z-50
+                        bg-black/90 hover:from-black/95
+                        text-white p-4 rounded-full ml-3 cursor-pointer
+                        transition-all duration-200
+                        ${canScrollLeft ? "hidden group-hover:block" : "hidden cursor-not-allowed"}
+                        disabled:hidden
+                    `}
+                >
+                    <ChevronLeftIcon className="size-6" />
+                </button>
+                <button
+                    onClick={() => scrollContainer("right")}
+                    disabled={!canScrollRight}
+                    className={`
+                        absolute right-0 top-2/5 -translate-y-1/2 z-50
+                        bg-black/90 hover:from-black/95
+                        text-white p-4 rounded-full mr-3 cursor-pointer
+                        transition-all duration-200
+                        ${canScrollRight ? "hidden group-hover:block" : "hidden cursor-not-allowed"}
+                        disabled:hidden
+                    `}
+                >
+                    <ChevronRightIcon className="size-6" />
+                </button>
 
-                <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-                    <article className="group rounded-2xl bg-slate-100 p-6 shadow-md ring-1 ring-neutral/20 transition-transform duration-200 ease-out hover:-translate-y-0.5 hover:shadow-lg">
-                        <div className="mb-3 text-center text-3xl font-serif text-slate-800">
-                            {t("card1.roman")}
+                <div
+                    ref={scrollRef}
+                    onScroll={handleScroll}
+                    className="w-full flex gap-4 overflow-x-auto scrollbar-hide scroll-smooth"
+                    style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+                >
+                    {books.map((book) => (
+                        <div
+                            key={book.id}
+                            className="relative flex-shrink-0 w-44 md:w-56 lg:w-60 xl:w-64"
+                        >
+                            <button
+                                className="absolute right-0 bottom-15 z-60 bg-primary/95 rounded-l-full pl-2 pr-3 py-1 max-md:hidden cursor-pointer"
+                                onClick={() => handleSave(book.id)}
+                            >
+                                <Bookmark
+                                    className={cn(
+                                        "size-6 text-white",
+                                        allSavedBooks.includes(book.id) &&
+                                            "fill-white"
+                                    )}
+                                />
+                            </button>
+                            <Link href={`/book/${book.id}`}>
+                                <div className="relative aspect-square shadow-lg rounded-lg overflow-hidden">
+                                    <NextImage
+                                        className=""
+                                        src={book.cover}
+                                        width={1024}
+                                        height={1024}
+                                        alt={book.title}
+                                        isCover
+                                    />
+                                </div>
+                                <div className="flex flex-col items-start text-sm font-bold mt-2">
+                                    <h2 className="text-left truncate w-full">
+                                        {book.title}
+                                    </h2>
+                                    {book.user && (
+                                        <p className="text-neutral text-xs text-left truncate w-full">
+                                            {t("by")} {book.user.name}
+                                        </p>
+                                    )}
+                                </div>
+                            </Link>
                         </div>
-                        <h3 className="text-center text-xl font-semibold text-slate-900">
-                            {t("card1.heading")}
-                        </h3>
-                        <p className="mt-2 text-center text-slate-600">
-                            {t("card1.text")}
-                        </p>
-                    </article>
-
-                    <article className="group rounded-2xl bg-slate-100 p-6 shadow-md ring-1 ring-neutral/20 transition-transform duration-200 ease-out hover:-translate-y-0.5 hover:shadow-lg">
-                        <div className="mb-3 text-center text-3xl font-serif text-slate-800">
-                            {t("card2.roman")}
-                        </div>
-                        <h3 className="text-center text-xl font-semibold text-slate-900">
-                            {t("card2.heading")}
-                        </h3>
-                        <p className="mt-2 text-center text-slate-600">
-                            {t("card2.text")}
-                        </p>
-                    </article>
-
-                    <article className="group rounded-2xl bg-slate-100 p-6 shadow-md ring-1 ring-neutral/20 transition-transform duration-200 ease-out hover:-translate-y-0.5 hover:shadow-lg">
-                        <div className="mb-3 text-center text-3xl font-serif text-slate-800">
-                            {t("card3.roman")}
-                        </div>
-                        <h3 className="text-center text-xl font-semibold text-slate-900">
-                            {t("card3.heading")}
-                        </h3>
-                        <p className="mt-2 text-center text-slate-600">
-                            {t("card3.text")}
-                        </p>
-                    </article>
+                    ))}
                 </div>
             </div>
         </section>
-    );
-};
-
-export const VelocityText: React.FC = () => {
-    const t = useTranslations("pages.home.weekly-update");
-
-    return (
-        <div className="grid place-content-center mt-12 mb-8">
-            <h1 className="text-center rounded-full bg-primary/20 border border-neutral/10 px-4 py-1.5 text-base md:text-xl lg:text-2xl">
-                {t("first-part")}{" "}
-                <span className="relative">
-                    {t("surrounded")}
-                    <svg
-                        viewBox="0 0 286 73"
-                        fill="none"
-                        className="absolute -left-2 -right-2 -top-2 bottom-0 translate-y-1"
-                    >
-                        <motion.path
-                            initial={{ pathLength: 0 }}
-                            whileInView={{ pathLength: 1 }}
-                            transition={{
-                                duration: 1.25,
-                                ease: "easeInOut",
-                            }}
-                            d="M142.293 1C106.854 16.8908 6.08202 7.17705 1.23654 43.3756C-2.10604 68.3466 29.5633 73.2652 122.688 71.7518C215.814 70.2384 316.298 70.689 275.761 38.0785C230.14 1.37835 97.0503 24.4575 52.9384 1"
-                            stroke="#6bc4d9"
-                            strokeWidth="5"
-                        />
-                    </svg>
-                </span>{" "}
-                {t("second-part")}
-            </h1>
-        </div>
     );
 };
 
@@ -380,5 +401,3 @@ const Thanks: React.FC<ThanksProps> = ({ open, setOpen }) => {
         </Modal>
     );
 };
-
-export default Home;

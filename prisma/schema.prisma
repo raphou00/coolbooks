@@ -21,6 +21,7 @@ model User {
   savedBooks           String[]
   role                 Role       @default(USER)
   googleId             String?    @unique
+  facebookId           String?    @unique
   stripeCustomerId     String?    @unique
   stripeSubscriptionId String?
   stripeProductId      String?

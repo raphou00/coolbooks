@@ -4,7 +4,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { useTranslations } from "next-intl";
 import { type Session } from "@prisma/client";
-import { handleFormPost } from "@/lib/utils";
+import { requestAPI } from "@/lib/utils";
 import Date from "@/components/ui/date";
 import Title from "@/components/ui/title";
 import { NoSessionResults } from "@/components/ui/no-results";
@@ -22,7 +22,8 @@ export const LogoutSessions: React.FC<SessionsProps> = ({
     const [sessions, setSessions] = useState<Session[]>(_sessions);
 
     const logoutSession = async (sessionId: string) => {
-        const res = await handleFormPost<string>(
+        const res = await requestAPI<string>(
+            "POST",
             "/api/account/logout-session",
             { sessionId }
         );
