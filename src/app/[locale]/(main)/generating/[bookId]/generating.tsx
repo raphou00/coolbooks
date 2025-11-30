@@ -14,14 +14,14 @@ type GeneratingProps = {
 };
 
 const fetcher = async (url: string) => {
-    return await requestAPI<{}>("GET", url);
+    return await requestAPI<object>("GET", url);
 };
 
 const Generating: React.FC<GeneratingProps> = ({ bookId }) => {
     const t = useTranslations("pages.generating");
     const router = useRouter();
 
-    const { data, isLoading } = useSWR<ActionsState<{}> | undefined>(
+    const { data, isLoading } = useSWR<ActionsState<object> | undefined>(
         bookId ? `/api/book?bookId=${bookId}` : null,
         fetcher,
         {

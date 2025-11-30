@@ -7,6 +7,7 @@ export type ActionsState<T> = {
     errors?: { [K in keyof T]?: string[] | undefined };
     redirect?: string;
 } & {
+    /* eslint-disable  @typescript-eslint/no-explicit-any */
     [key: string]: any;
 };
 
