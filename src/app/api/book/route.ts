@@ -28,9 +28,8 @@ export const GET = async (req: NextRequest) => {
                 id: true,
                 title: true,
                 cover: true,
-                public: true,
-                themes: true,
                 age: true,
+                artStyle: true,
                 generating: true,
                 user: {
                     select: {
@@ -107,13 +106,6 @@ export const DELETE = async (req: NextRequest) => {
             return NextResponse.json({
                 success: false,
                 message: t("messages.book-not-found"),
-            });
-        }
-
-        if (book.user.id !== user.user.id) {
-            return NextResponse.json({
-                success: false,
-                message: t("messages.unauthorized"),
             });
         }
 
