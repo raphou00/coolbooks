@@ -1,0 +1,392 @@
+{
+    "common": {
+        "description": "Create magical, personalized storybooks for you child. Every story is unique and filled with adventure.",
+        "copyright": "All Rights Reserved",
+        "no-sessions-results": "No sessions found",
+        "no-books-results": "No books found",
+        "error": "An error occurred, please try again later",
+        "not-found": "Page Not Found",
+        "back-home": "Back to Home",
+        "by": "By",
+        "author": "Brainrot Stories Team",
+        "reviews": "{count, plural, =0 {No reviews} =1 {1 review} other {# reviews}}"
+    },
+    "pages": {
+        "login": {
+            "title": "Login",
+            "description": "Login to your account",
+            "email": "E-Mail",
+            "email-placeholder": "Enter your e-mail...",
+            "password": "Password",
+            "password-placeholder": "Enter your password...",
+            "forgot": "Forgot Password?",
+            "submit": "Login",
+            "register": "Don't have an account?",
+            "or": "or"
+        },
+        "register": {
+            "title": "Register",
+            "description": "Create an account",
+            "name": "Name",
+            "name-placeholder": "Enter your name...",
+            "email": "E-Mail",
+            "email-placeholder": "Enter your e-mail...",
+            "password": "Password",
+            "password-placeholder": "Enter your password...",
+            "submit": "Register",
+            "login": "Already have an account?",
+            "legal": "By creating an account, you agree to the <terms>Terms of Service</terms> and <privacy>Privacy Policy</privacy>",
+            "or": "or"
+        },
+        "logout": {
+            "title": "Logout",
+            "description": "Logged Out"
+        },
+        "reset-password": {
+            "title": "Reset Password",
+            "description": "Create a new password",
+            "password": "Password",
+            "password-placeholder": "Enter your password...",
+            "confirm-password": "Confirm Password",
+            "confirm-password-placeholder": "Confirm your password...",
+            "submit": "Reset Password"
+        },
+        "forgot-password": {
+            "title": "Forgot Password",
+            "description": "Reset your forgotten password",
+            "email": "E-Mail",
+            "email-placeholder": "Enter your e-mail...",
+            "submit": "Send",
+            "info": "An E-Mail will be sent with a link to create a new password"
+        },
+        "social-exists": {
+            "title": "Create Account",
+            "description": "Information already in use",
+            "info": "Some of your information are already associated with an account, use different ones, or <login>login</login> to your account",
+            "name": "Name",
+            "name-placeholder": "Enter your name...",
+            "email": "E-Mail",
+            "email-placeholder": "Enter your e-mail...",
+            "submit": "Submit"
+        },
+        "account": {
+            "title": "Account",
+            "description": "Manage your account settings",
+            "profile": "Profile",
+            "password": "Password",
+            "sessions": "Sessions",
+            "billing": "Billing",
+            "socials": "Socials",
+            "delete": "Delete Account"
+        },
+        "account-profile": {
+            "title": "Profile",
+            "description": "Edit your profile",
+            "name": "Name",
+            "name-placeholder": "Enter your name...",
+            "email": "E-Mail",
+            "email-placeholder": "Enter your e-mail...",
+            "password": "Password",
+            "password-placeholder": "Enter your password...",
+            "submit": "Update"
+        },
+        "account-password": {
+            "title": "Password",
+            "description": "Change your password",
+            "current": "Current Password",
+            "current-placeholder": "Enter your current password...",
+            "new": "New Password",
+            "new-placeholder": "Enter your new password...",
+            "confirm": "Confirm Password",
+            "confirm-placeholder": "Confirm your new password...",
+            "change": "Change",
+            "create": "Create"
+        },
+        "account-sessions": {
+            "title": "Sessions",
+            "description": "View your sessions",
+            "current": "Current",
+            "last-seen": "Last Seen:",
+            "expires": "Expires:",
+            "delete": "Delete"
+        },
+        "account-billing": {
+            "title": "Billing",
+            "description": "Manage your billing information",
+            "free": "Free",
+            "basic": "Basic",
+            "family": "Family",
+            "premium": "Premium",
+            "plan": "{plan} Plan",
+            "credits": "Credits",
+            "payment-failed": "⚠️ Payment failed. Please update your payment method.",
+            "free-trial": "Free trial",
+            "manage": "Manage Subscription",
+            "upgrade": "Upgrade plan",
+            "manage-tip": "Click \"Manage Subscription\" to view invoices, update payment method, or cancel your plan."
+        },
+        "account-socials": {
+            "title": "Socials",
+            "description": "Link your socials providers to your account",
+            "connect": "Connect",
+            "disconnect": "Disconnect",
+            "google": "Use google to login to your account"
+        },
+        "account-delete": {
+            "title": "Delete Account",
+            "description": "Delete your account",
+            "sure": "Are you sure ?",
+            "confirm": "Permanently delete your account, history, sessions, and any linked integrations. This action cannot be undone.",
+            "cancel": "Cancel",
+            "submit": "Delete"
+        },
+        "home": {
+            "hero": {
+                "title": "Make your child the hero of their own story !",
+                "description": "Create magical, personalized storybooks for you child. Every story is unique and filled with adventure.",
+                "chip": "⭐️ Only 1 minute to create your book !",
+                "create": "Create Your Story"
+            },
+            "examples": {
+                "badge": "Examples",
+                "title": "See some examples"
+            },
+            "createBook": {
+                "badge": "Create Book",
+                "title": "Create your own book"
+            },
+            "howItWorks": {
+                "badge": "How It Works",
+                "title": "Create magic in 3 simple steps",
+                "step1": {
+                    "title": "Tell us about your child",
+                    "description": "Share their name, age, interests, and what kind of adventure they love"
+                },
+                "step2": {
+                    "title": "AI creates the story",
+                    "description": "Our AI crafts a unique tale with beautiful illustrations in minutes"
+                },
+                "step3": {
+                    "title": "Read and enjoy",
+                    "description": "Download instantly or order a printed book to treasure forever"
+                }
+            },
+            "features": {
+                "badge": "Features",
+                "title": "Why parents love coolbooks",
+                "subtitle": "Every story is crafted with care, combining AI magic with educational value",
+                "feature1": {
+                    "title": "Personalized Stories",
+                    "description": "Include your child's name, interests, and favorite characters in every tale"
+                },
+                "feature2": {
+                    "title": "Educational Content",
+                    "description": "Stories that teach values, vocabulary, and important life lessons"
+                },
+                "feature3": {
+                    "title": "Beautifully Illustrated",
+                    "description": "AI-generated artwork that brings each story to life in vivid color"
+                },
+                "feature4": {
+                    "title": "Age-Appropriate",
+                    "description": "Content tailored to your child's developmental stage and interests"
+                },
+                "feature5": {
+                    "title": "Family Memories",
+                    "description": "Create lasting memories with stories you can read together"
+                },
+                "feature6": {
+                    "title": "Print or Digital",
+                    "description": "Download PDFs or order beautiful printed hardcover books"
+                }
+            },
+            "cta": {
+                "title": "Start creating magical stories today",
+                "description": "Join thousands of families creating personalized bedtime stories that spark imagination and create lasting memories"
+            },
+            "payment-status": {
+                "success": "Payment Successful",
+                "success-message": "Your book is being generated and will be sent to your email shortly (wait about 1 minutes).",
+                "failed": "Payment Failed",
+                "failed-message": "Unfortunately, your payment could not be processed. Please try again.",
+                "email": "Your personalized book will be sent to",
+                "check-email": "Check your email for the download link",
+                "close": "Close"
+            }
+        },
+        "new-book": {
+            "title": "New Book",
+            "description": "Create a new book with only one prompt",
+            "submit": "Generate",
+            "child-details": "📖 Tell us about your child",
+            "story-style": "🎨 Describe your story style",
+            "story-idea": "📝 Describe your story idea",
+            "child-name": "Child Name",
+            "child-name-placeholder": "Your child's name...",
+            "age": "Age",
+            "hair-color": "Hair Color",
+            "eye-color": "Eye Color",
+            "gender": "Gender",
+            "skin-tone": "Skin Tone",
+            "themes": "Themes",
+            "art-style": "Art Style",
+            "prompt": "Describe your story",
+            "prompt-placeholder": "Toto is playing football, in the park with his friends, warm colors, fun...",
+            "generate": "Generate",
+            "boy": "Boy",
+            "girl": "Girl",
+            "black": "Black",
+            "brown": "Brown",
+            "blonde": "Blonde",
+            "red": "Red",
+            "gray": "Gray",
+            "blue": "Blue",
+            "green": "Green",
+            "hazel": "Hazel",
+            "light": "Light",
+            "medium": "Medium",
+            "dark": "Dark",
+            "olive": "Olive",
+            "cartoon": "Cartoon",
+            "comics": "comics",
+            "anime": "Anime",
+            "price": "Price",
+            "delivery": "Delivery",
+            "time": "Time",
+            "by-email": "📧 By Email",
+            "instant": "⚡️ 1 minute"
+        },
+        "my-books": {
+            "title": "📚 My Books",
+            "description": "Create, read & edit your own books",
+            "search-placeholder": "Search your books...",
+            "create": "New Book",
+            "modify": "Last modified ",
+            "no-books": "No books found"
+        },
+        "delete-book": {
+            "delete-book": "Delete book",
+            "delete-book-text": "Are you sure you want to delete this book? This action cannot be undone.",
+            "delete": "Delete",
+            "cancel": "Cancel"
+        },
+        "auth": {
+            "must-login": "Sign in",
+            "must-login-text": "Please authenticate to continue",
+            "login": "Login",
+            "register": "Register"
+        },
+        "contact": {
+            "title": "Contact",
+            "description": "Contact us",
+            "name": "Name",
+            "name-placeholder": "Enter your name...",
+            "email": "E-Mail",
+            "email-placeholder": "Enter your e-mail...",
+            "subject": "Subject",
+            "subject-placeholder": "Enter a subject...",
+            "message": "Message",
+            "message-placeholder": "Enter your message...",
+            "submit": "Send"
+        },
+        "terms": {
+            "title": "Terms of Service",
+            "description": "View our terms of service",
+            "date": "Effective Date: ",
+            "content": "By accessing or using Coolbooks, you agree to these Terms of Service. If you do not agree, do not use the Service.<return></return><return></return><title>1. About Coolbooks</title>Coolbooks is a platform that allows users to read children's books and create their own books using artificial intelligence technology.<return></return><return></return><title>2. Eligibility and Account</title>- The Service is available to users of all ages<return></return>- Users under the age of 13 (or 16 in certain jurisdictions) should have parental or guardian supervision when using the Service<return></return>- You are responsible for maintaining the security of your account credentials<return></return>- You must provide accurate information when creating an account<return></return><return></return><title>3. Service Features</title>Free Tier:<return></return>- One (1) free AI-generated book creation per account<return></return><return></return>Subscription Tier:<return></return>- Monthly subscription provides regular credits for creating additional books<return></return>- Credits are allocated monthly and do not roll over to subsequent months unless otherwise specified<return></return><return></return><title>4. Payment Terms</title>- Subscriptions are billed monthly<return></return>- You may cancel your subscription at any time, but no refunds will be provided for partial months<return></return>- Payment information is processed through third-party payment providers<return></return>- All sales are final and non-refundable<return></return><return></return><title>5. Content Creation and AI</title>- All book content is generated by artificial intelligence<return></return>- Users provide themes, preferences, and character information to guide the AI<return></return>- Users cannot manually edit generated story text<return></return>- The AI may occasionally produce unexpected results. You are responsible for reviewing generated content before making it public<return></return><return></return><title>6. Content Ownership</title>Your Created Content:<return></return>- You retain ownership rights to books you create using the Service<return></return>- You may publish, distribute, or sell your AI-created books on other platforms<return></return>- By making your books public on Coolbooks, you grant us a non-exclusive, worldwide, royalty-free license to display and distribute your content on the Platform<return></return><return></return>Other Users' Content:<return></return>- Books created by other users and shared publicly may be read but not copied, reproduced, or distributed outside the Platform<return></return><return></return><title>7. Privacy Settings</title>- Books can be set as public (visible to all users) or private (visible only to you)<return></return>- You may edit privacy settings at any time<return></return>- You may delete your books at any time<return></return>- Account deletion will remove your private books but may retain public books already shared on the Platform<return></return><return></return><title>8. User Conduct and Content Guidelines</title>Users agree NOT to:<return></return>- Use inappropriate, offensive, or illegal usernames or display names<return></return>- Submit inappropriate prompts or character names to the AI<return></return>- Attempt to manipulate the AI to generate inappropriate content<return></return>- Share or distribute books containing inappropriate or illegal content<return></return>- Upload or create content that infringes on others' intellectual property rights<return></return>- Attempt to abuse, exploit, or hack the Service<return></return>- Share account credentials with others<return></return><return></return>Coolbooks reserves the right to remove content or terminate accounts that violate these guidelines without notice or refund.<return></return><return></return><title>9. Intellectual Property</title>- The Coolbooks platform, including its AI technology, design, and features, is owned by Coolbooks<return></return>- The Coolbooks name, logo, and branding are trademarks of Coolbooks<return></return>- User-generated content belongs to users as described in Section 6<return></return><return></return><title>10. Parental Responsibility</title>Parents and guardians are responsible for monitoring their children's use of the Service. Coolbooks does not actively monitor user age or require parental consent. Parents should review content created by or accessed by their children.<return></return><return></return><title>11. Disclaimer and Limitation of Liability</title>TO THE MAXIMUM EXTENT PERMITTED BY SWISS LAW:<return></return>- The Service is provided \"AS IS\" without warranties of any kind<return></return>- Coolbooks is not liable for any content created or shared by users<return></return>- Coolbooks does not guarantee the accuracy, quality, or appropriateness of AI-generated content<return></return>- Coolbooks is not responsible for any damages, losses, or harm resulting from use of the Service<return></return>- Coolbooks does not guarantee continuous, error-free, or secure operation of the Service<return></return>- Total liability shall not exceed the amount you paid for the Service in the past 12 months<return></return><return></return><title>12. Third-Party Services</title>The Service may integrate with third-party services including payment processors and AI providers. Your use of such services is subject to their respective terms and policies. Coolbooks is not responsible for third-party services.<return></return><return></return><title>13. Termination</title>- You may terminate your account at any time through account settings<return></return>- We may suspend or terminate accounts that violate these Terms<return></return>- Upon termination, your right to use the Service ceases immediately<return></return>- No refunds will be provided upon termination<return></return>- We reserve the right to delete inactive accounts after prolonged periods of inactivity<return></return><return></return><title>14. Modifications to Terms</title>- We may update these Terms at any time without prior notice<return></return>- Continued use of the Service after changes constitutes acceptance of the new Terms<return></return>- Material changes will be notified through the App or via email when possible<return></return>- It is your responsibility to review the Terms periodically<return></return><return></return><title>15. Dispute Resolution and Governing Law</title>- These Terms are governed by the laws of Switzerland<return></return>- Any disputes shall be resolved in the courts of Valais, Switzerland<return></return>- You agree to attempt good-faith resolution before pursuing legal action<return></return><return></return><title>16. Severability</title>If any provision of these Terms is found unenforceable or invalid, the remaining provisions remain in full effect.<return></return><return></return><title>17. No Endorsement</title>Coolbooks does not endorse, verify, or guarantee the accuracy of user-generated content. Views expressed in user-created books do not represent Coolbooks' opinions or beliefs.<return></return><return></return><title>18. Language</title>These Terms are provided in multiple languages for your convenience. In case of conflicts between translations, the English version shall prevail. By using the Service, you confirm you understand the Terms in at least one provided language.<return></return><return></return><title>19. Contact</title>For questions, concerns, or support:<return></return>Email: coolbooks.app@gmail.com<return></return>Website: https://coolbooks.app"
+        },
+        "privacy": {
+            "title": "Privacy Policy",
+            "description": "View our privacy policy",
+            "date": "Effective Date: ",
+            "content": "This Privacy Policy explains how Coolbooks (\"we\", \"us\", or \"our\") collects, uses, and protects your information when you use our Service.<return></return><return></return><title>1. Information We Collect</title>Account Information:<return></return>- Email address (for account creation and communication)<return></return>- Username or display name<return></return>- Password (encrypted)<return></return>- Account creation date<return></return><return></return>Payment Information:<return></return>- Payment information is processed by third-party payment providers<return></return>- We do not store full credit card or banking details<return></return>- We may store transaction history and subscription status<return></return><return></return>Content Data:<return></return>- Books you create (text, images, metadata)<return></return>- AI prompts and preferences you submit<return></return>- Privacy settings for your books (public or private)<return></return>- Books you read or interact with<return></return><return></return>Technical Information:<return></return>- Device type and operating system<return></return>- App version<return></return>- IP address<return></return>- Usage statistics and crash reports<return></return>- Log files and error messages<return></return><return></return><title>2. How We Use Your Information</title>We use collected information to:<return></return>- Provide and maintain the Service<return></return>- Process your subscription and payments<return></return>- Generate AI-powered books based on your inputs<return></return>- Store and display your created books<return></return>- Communicate with you about your account and the Service<return></return>- Improve and optimize the Service<return></return>- Detect and prevent fraud or abuse<return></return>- Comply with legal obligations<return></return><return></return><title>3. AI and Data Processing</title>- Your prompts and inputs are processed by artificial intelligence systems<return></return>- AI providers may process your data according to their own privacy policies<return></return>- We do not use your personal information to train AI models without consent<return></return>- Generated content is stored on our servers<return></return><return></return><title>4. Information Sharing</title>We do not sell your personal information. We may share your information with:<return></return><return></return>Third-Party Service Providers:<return></return>- Payment processors (for subscription billing)<return></return>- AI service providers (for book generation)<return></return>- Cloud hosting services (for data storage)<return></return>- Analytics providers (for Service improvement)<return></return><return></return>Public Content:<return></return>- Books you set as \"public\" are visible to all users<return></return>- Your username may be displayed with public books<return></return><return></return>Legal Requirements:<return></return>- We may disclose information if required by law<return></return>- To protect our rights, safety, or property<return></return>- To investigate fraud or violations of our Terms<return></return><return></return><title>5. Data Storage and Security</title>- Your data is stored on secure servers<return></return>- We use industry-standard encryption for sensitive data<return></return>- Passwords are encrypted and not accessible to us<return></return>- We cannot guarantee absolute security but take reasonable measures to protect your information<return></return><return></return><title>6. Children's Privacy</title>- The Service is available to users of all ages<return></return>- We do not knowingly collect more information from children than necessary to provide the Service<return></return>- Parents and guardians are responsible for monitoring their children's use<return></return>- Parents may request access to or deletion of their child's data by contacting us<return></return><return></return><title>7. Your Rights</title>Under Swiss and European data protection law, you have the right to:<return></return>- Access your personal information<return></return>- Correct inaccurate information<return></return>- Delete your account and associated data<return></return>- Export your data in a portable format<return></return>- Withdraw consent for data processing<return></return>- Object to certain types of processing<return></return>- Lodge a complaint with data protection authorities<return></return><return></return>To exercise these rights, contact us at coolbooks.app@gmail.com<return></return><return></return><title>8. Data Retention</title>- We retain your information for as long as your account is active<return></return>- After account deletion, we delete your personal information within 30 days<return></return>- Public books may be retained after account deletion unless specifically requested for removal<return></return>- Some information may be retained longer for legal or security purposes<return></return>- Anonymized data may be retained for analytics<return></return><return></return><title>9. Cookies and Tracking</title>- We may use cookies and similar technologies to improve the Service<return></return>- Cookies help us remember your preferences and login status<return></return>- You can disable cookies in your browser settings, but this may affect functionality<return></return>- We do not use advertising or tracking cookies<return></return><return></return><title>10. Third-Party Links</title>- The Service may contain links to third-party websites or services<return></return>- We are not responsible for the privacy practices of third parties<return></return>- We encourage you to review their privacy policies<return></return><return></return><title>11. International Data Transfers</title>- Your information may be transferred to and processed in countries outside Switzerland<return></return>- We ensure appropriate safeguards are in place for such transfers<return></return>- By using the Service, you consent to such transfers<return></return><return></return><title>12. Marketing Communications</title>- We may send you service-related emails (account updates, changes to Terms, etc.)<return></return>- You cannot opt out of service-related communications<return></return>- We do not send marketing emails unless you opt in<return></return>- You can unsubscribe from marketing emails at any time<return></return><return></return><title>13. Changes to This Privacy Policy</title>- We may update this Privacy Policy at any time<return></return>- Material changes will be notified through the App or via email<return></return>- Continued use after changes constitutes acceptance<return></return>- The \"Last Updated\" date will reflect when changes were made<return></return><return></return><title>14. Data Controller</title>The data controller responsible for your information is:<return></return>Coolbooks<return></return>https://coolbooks.app<return></return><return></return><title>15. Contact Us</title>For questions, concerns, or requests regarding your privacy or this Privacy Policy:<return></return>Email: https://coolbooks.app<return></return>Website: coolbooks.app@gmail.com<return></return><return></return>For data protection inquiries in Switzerland, you may also contact:<return></return>Federal Data Protection and Information Commissioner (FDPIC)<return></return>Website: www.edoeb.admin.ch"
+        }
+    },
+    "emails": {
+        "register": {
+            "title": "Welcome to Coolbooks!",
+            "hello": "Hello {name}!",
+            "body": "Thank you for joining Coolbooks! You can now create your first book for free using our AI-powered tools. Explore our library of children's books or start creating your own magical stories. Click the link below to get started.",
+            "get-started": "Get started",
+            "best": "Best regards,\nThe Coolbooks Team"
+        },
+        "forgot-password": {
+            "title": "Reset your Coolbooks password",
+            "hello": "Hello {name}!",
+            "body": "We received a request to reset your password. Please click on the link below to create a new password.",
+            "click": "Click here to reset your password",
+            "warning": "If you did not request a password reset, please ignore this email. Your account remains secure.",
+            "link": "You can also copy and paste this link into your browser:"
+        },
+        "receipt": {
+            "title": "Your book is ready!",
+            "hello": "Hello {name}!",
+            "body": "Congratulations on purchasing your first book on Coolbooks : {title}.",
+            "link": "Download book"
+        }
+    },
+    "messages": {
+        "done": "Done",
+        "required": "Required",
+        "invalid-email": "Invalid E-Mail",
+        "taken-email": "E-Mail already taken",
+        "invalid-password": "Invalid password",
+        "passwords-dont-match": "Passwords don't match",
+        "min": "Min {min} characters required",
+        "max": "Max {max} characters allowed",
+        "unauthorized": "Unauthorized",
+        "server-error": "Something went wrong",
+        "profile-updated": "Profile successfully updated",
+        "already-have-password": "You already have a password",
+        "password-created": "Password successfully created",
+        "book-creating": "Creating book",
+        "account-deleted": "Account successfully deleted",
+        "session-deleted": "Session successfully deleted",
+        "set-password-first": "You need to set a password first",
+        "current-password-wrong": "Current password is wrong",
+        "password-updated": "Password successfully updated",
+        "email-sent": "E-Mail successfully sent",
+        "invalid-credentials": "Invalid credentials",
+        "logged-out": "Logged out",
+        "code-invalid": "Code invalid or expired",
+        "too-many-requests": "Too many requests, please try again later",
+        "forbidden": "Forbidden",
+        "bad-request": "Bad request",
+        "home": "Home",
+        "google-disconnected": "Google successfully disconnected",
+        "message-sent": "Message successfully sent",
+        "loginLike": "You need to login first",
+        "book-not-found": "Book not found",
+        "rate-limit": "Too many requests, please try again later",
+        "book-deleted": "Book successfully deleted",
+        "login-success": "Login successful",
+        "register-success": "Registration successful",
+        "prompt-inappropriate": "Your story description contain inappropriate content"
+    },
+    "links": {
+        "get-started": "Get started",
+        "login": "Login",
+        "register": "Register",
+        "logout": "Logout",
+        "account": "Account",
+        "profile": "Profile",
+        "password": "Password",
+        "sessions": "Sessions",
+        "socials": "Socials",
+        "delete-account": "Delete Account",
+        "contact": "Contact",
+        "legal": "Legal",
+        "privacy": "Privacy Policy",
+        "terms": "Terms of Service",
+        "cookies": "Cookies Policy",
+        "home": "Home",
+        "examples": "Examples",
+        "create-book": "Create Book",
+        "how-it-works": "How It Works",
+        "features": "Features",
+        "my-books": "My Books",
+        "create-first-book": "Create my first book",
+        "theme": "Theme",
+        "language": "Language"
+    }
+}

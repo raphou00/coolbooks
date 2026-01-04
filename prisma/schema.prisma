@@ -1,0 +1,77 @@
+generator client {
+    provider = "prisma-client"
+    output   = "../src/generated/prisma"
+}
+
+datasource db {
+    provider = "postgresql"
+}
+
+enum Role {
+    USER
+    ADMIN
+}
+
+model User {
+    id               String    @id @default(uuid())
+    name             String
+    email            String    @unique
+    password         String?
+    role             Role      @default(USER)
+    locale           String    @default("en")
+    googleId         String?   @unique
+    stripeCustomerId String?   @unique
+    createdAt        DateTime  @default(now())
+    updatedAt        DateTime  @updatedAt
+    sessions         Session[]
+    tokens           Token[]
+    books            Book[]
+}
+
+model Session {
+    id        String   @id @default(uuid())
+    ip        String?
+    browser   String?
+    os        String?
+    userId    String
+    expiresAt DateTime
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Token {
+    id        String   @id @default(uuid())
+    token     String
+    userId    String
+    expiresAt DateTime
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Book {
+    id         String   @id @default(uuid())
+    title      String
+    cover      String
+    pages      Page[]
+    age        String   @default("")
+    artStyle   String   @default("")
+    generating Boolean  @default(true)
+    userId     String?
+    user       User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+    createdAt  DateTime @default(now())
+    updatedAt  DateTime @updatedAt
+}
+
+model Page {
+    id        String   @id @default(uuid())
+    image     String
+    text      String
+    color     String
+    number    Int      @default(1)
+    bookId    String
+    book      Book     @relation(fields: [bookId], references: [id], onDelete: Cascade)
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}

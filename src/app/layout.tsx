@@ -1,0 +1,78 @@
+import type { Metadata } from "next";
+import { Poppins } from "next/font/google";
+import { NextIntlClientProvider } from "next-intl";
+import { getLocale, getMessages, getTranslations } from "next-intl/server";
+import { routing } from "@/lib/navigation";
+import { cn } from "@/lib/utils";
+import env from "@/lib/env";
+import * as metadata from "@/config/seo";
+import RootProviders from "./providers";
+import "@/styles/globals.css";
+
+const poppins = Poppins({
+    subsets: ["latin"],
+    weight: ["500"],
+});
+
+const generateMetadata = async (): Promise<Metadata> => {
+    const t = await getTranslations("common");
+    return {
+        title: {
+            default: metadata.title,
+            template: `%s ${String.fromCharCode(183)} ${metadata.title}`,
+        },
+        description: t("description"),
+        abstract: t("description"),
+        keywords: metadata.keywords,
+        applicationName: metadata.title,
+        category: metadata.category,
+        classification: metadata.category,
+        metadataBase: new URL(env.APP_URL),
+        referrer: "origin",
+        openGraph: {
+            type: "website",
+            title: metadata.title,
+            siteName: metadata.title,
+            description: t("description"),
+            images: [
+                {
+                    url: "/images/og.jpg",
+                },
+            ],
+        },
+        alternates: {
+            canonical: "/",
+            languages: Object.fromEntries(
+                routing.locales.map((l) => [l, `/${l}`])
+            ),
+        },
+        verification: {
+            other: {
+                "facebook-domain-verification":
+                    "9b74938c9fvw5jp7f954gluawn5jqv",
+            },
+        },
+    };
+};
+
+const Root = async ({ children }: React.PropsWithChildren) => {
+    const locale = await getLocale();
+    const messages = await getMessages({ locale });
+
+    return (
+        <html
+            lang={locale}
+            data-scroll-behavior="smooth"
+            suppressHydrationWarning
+        >
+            <body className={cn("bg-base-100", poppins.className)}>
+                <NextIntlClientProvider messages={messages}>
+                    <RootProviders>{children}</RootProviders>
+                </NextIntlClientProvider>
+            </body>
+        </html>
+    );
+};
+
+export { generateMetadata };
+export default Root;
