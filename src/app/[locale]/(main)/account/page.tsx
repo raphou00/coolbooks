@@ -22,7 +22,7 @@ const generateMetadata = async (): Promise<Metadata> => {
     };
 };
 
-const Page = async () => {
+const Page: React.FC = async () => {
     const t = await getTranslations("pages.account");
     const user = await getUser();
 

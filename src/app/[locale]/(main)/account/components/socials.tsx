@@ -47,7 +47,7 @@ const Socials: React.FC<SocialsProps> = ({ googleId }) => {
                                 <button
                                     className={cn(
                                         "btn",
-                                        google ? "btn-error" : "btn-accent"
+                                        google ? "btn-error" : "btn-primary"
                                     )}
                                     onClick={connectGoogle}
                                 >
