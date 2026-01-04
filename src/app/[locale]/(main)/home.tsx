@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Gluten as Font } from "next/font/google";
+import { Gamja_Flower as Font } from "next/font/google";
 import { useTranslations } from "next-intl";
 import {
     AlertCircle,
@@ -25,7 +25,7 @@ import { useState } from "react";
 
 const font = Font({
     subsets: ["latin"],
-    weight: "500",
+    weight: "400",
 });
 
 type BooksProps = {
