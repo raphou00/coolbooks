@@ -116,3 +116,14 @@ export const getExtension = (filename: string) => {
     const parts = filename.split(".");
     return parts[parts.length - 1];
 };
+
+export const sortPages = (
+    pages: {
+        text: string;
+        image: string;
+        color: string;
+        number: number;
+    }[]
+) => {
+    return [...pages].sort((a, b) => a.number - b.number);
+};

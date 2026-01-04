@@ -217,12 +217,12 @@ const NewBook: React.FC = () => {
                                 <label
                                     key={style}
                                     className={cn(
-                                        "cursor-pointer flex flex-col items-center bg-base-100 border-2 border-neutral/30 rounded-xl p-2 transition",
+                                        "cursor-pointer flex flex-col items-center bg-base-100 border-2 border-neutral/30 rounded-box p-2 transition",
                                         "hover:shadow-md relative group",
                                         artStyle === style && "border-primary"
                                     )}
                                 >
-                                    <div className="absolute top-0 right-0 m-px">
+                                    <div className="absolute top-0 right-0 m-1">
                                         {artStyle === style ?
                                             <div className="size-6 border-2 border-primary inset-ring-4 inset-ring-base-100 bg-primary rounded-full" />
                                         :   <div className="size-6 border-2 border-neutral/30 rounded-full" />

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Poppins } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages, getTranslations } from "next-intl/server";
@@ -65,6 +66,24 @@ const Root = async ({ children }: React.PropsWithChildren) => {
             data-scroll-behavior="smooth"
             suppressHydrationWarning
         >
+            <head>
+                <Script id="meta-pixel" strategy="lazyOnload">
+                    {`
+                    <!-- Meta Pixel Code -->
+                    !function(f,b,e,v,n,t,s)
+                    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+                    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+                    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+                    n.queue=[];t=b.createElement(e);t.async=!0;
+                    t.src=v;s=b.getElementsByTagName(e)[0];
+                    s.parentNode.insertBefore(t,s)}(window, document,'script',
+                    'https://connect.facebook.net/en_US/fbevents.js');
+                    fbq('init', '1427772682038969');
+                    fbq('track', 'PageView');
+                    <!-- End Meta Pixel Code -->
+                    `}
+                </Script>
+            </head>
             <body className={cn("bg-base-100", poppins.className)}>
                 <NextIntlClientProvider messages={messages}>
                     <RootProviders>{children}</RootProviders>

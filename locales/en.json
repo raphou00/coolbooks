@@ -270,6 +270,12 @@
             "delete": "Delete",
             "cancel": "Cancel"
         },
+        "book": {
+            "title": "{title}",
+            "description": "{title} generated with {app}",
+            "download-pdf": "Download PDF",
+            "delete": "Delete"
+        },
         "auth": {
             "must-login": "Sign in",
             "must-login-text": "Please authenticate to continue",

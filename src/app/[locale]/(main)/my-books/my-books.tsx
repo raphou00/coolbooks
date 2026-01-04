@@ -110,8 +110,8 @@ const MyBooks: React.FC<MyBooksProps> = ({ books: allBooks }) => {
             :   <div className="w-full grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-2 md:gap-8">
                     <div className="group relative size-full">
                         <Link href="/new">
-                            <div className="w-full bg-base-300 aspect-square shadow-lg rounded-lg group-hover:rounded-xl border-4 border-neutral border-dashed flex justify-center items-center">
-                                <BookPlus className="size-8 md:size-16 group-hover:scale-125 transition-all text-black/80" />
+                            <div className="w-full bg-base-300 aspect-square shadow-lg rounded-lg group-hover:rounded-xl border-4 border-neutral/20 border-dashed flex justify-center items-center">
+                                <BookPlus className="size-8 md:size-16 group-hover:scale-125 transition-all text-neutral" />
                             </div>
                             <div className="text-center font-bold mt-2">
                                 <h2 className="truncate w-full">

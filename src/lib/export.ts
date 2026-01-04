@@ -1,7 +1,8 @@
 import jsPDF from "jspdf";
-import env from "@/lib/env";
 import fetch from "node-fetch";
+import env from "@/lib/env";
 import { domain } from "@/config/seo";
+import { sortPages } from "./utils";
 
 export type Book = {
     title: string;
@@ -153,17 +154,6 @@ const fetchFont = async (url: string): Promise<string> => {
         console.error(`Error fetching font ${url}:`, error);
         throw error;
     }
-};
-
-const sortPages = (
-    pages: {
-        text: string;
-        image: string;
-        color: string;
-        number: number;
-    }[]
-) => {
-    return [...pages].sort((a, b) => a.number - b.number);
 };
 
 const hexToRgb = (hex: string): { r: number; g: number; b: number } => {
