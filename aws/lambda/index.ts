@@ -6,7 +6,6 @@ const provision = (bucketName: pulumi.Output<string>) => {
     const config = new pulumi.Config();
     const DATABASE_URL = config.requireSecret("DATABASE_URL");
     const OPENROUTER_API_KEY = config.requireSecret("OPENROUTER_API_KEY");
-    const AI_GATEWAY_API_KEY = config.requireSecret("AI_GATEWAY_API_KEY");
 
     const lambdaRole = new aws.iam.Role(
         `coolbooks-book-creator-lambda-role-${stack}`,
@@ -69,7 +68,6 @@ const provision = (bucketName: pulumi.Output<string>) => {
                     BUCKET_NAME: bucketName,
                     DATABASE_URL: DATABASE_URL,
                     OPENROUTER_API_KEY: OPENROUTER_API_KEY,
-                    AI_GATEWAY_API_KEY: AI_GATEWAY_API_KEY,
                 },
             },
         }

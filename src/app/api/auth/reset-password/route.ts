@@ -1,5 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { getTranslations } from "next-intl/server";
+import { hash } from "bcrypt";
 import db from "@/lib/db";
 import resetPasswordSchema, {
     type ResetPasswordSchema,
@@ -59,6 +60,12 @@ export const POST = async (req: NextRequest) => {
         }
 
         if (token.expiresAt < new Date()) {
+            await db.token.delete({
+                where: {
+                    id: token.id,
+                },
+            });
+
             return NextResponse.json({
                 success: false,
                 message: t("messages.code-invalid"),
@@ -71,12 +78,13 @@ export const POST = async (req: NextRequest) => {
             },
         });
 
+        const hashedPassword = await hash(password, 10);
         await db.user.update({
             where: {
                 id: token.userId,
             },
             data: {
-                password: password,
+                password: hashedPassword,
             },
         });
 
@@ -85,7 +93,8 @@ export const POST = async (req: NextRequest) => {
             message: t("messages.password-updated"),
             redirect: "/login",
         });
-    } catch (_) {
+    } catch (err) {
+        console.error(err);
         return NextResponse.json({
             success: false,
             message: t("messages.server-error"),

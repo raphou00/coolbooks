@@ -20,17 +20,12 @@ const Avatar: React.FC<AvatarProps> = ({ userName, className }) => {
 
     return (
         <div className="avatar">
-            <div
-                className={cn(
-                    "rounded-full ring ring-white/10 shadow from-primary/80 to-secondary/80 bg-gradient-to-br",
-                    className
-                )}
-            >
+            <div className={cn("rounded-full shadow-xl bg-primary", className)}>
                 {userName ?
-                    <span className="text-white size-full flex items-center justify-center">
+                    <span className="text-primary-content size-full flex items-center justify-center">
                         {getInitials(userName)}
                     </span>
-                :   <User className="size-full text-white" />}
+                :   <User className="size-full text-primary-content" />}
             </div>
         </div>
     );

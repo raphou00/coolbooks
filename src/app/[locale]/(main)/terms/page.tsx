@@ -19,7 +19,6 @@ const Page = async () => {
             <Title
                 text={t("title")}
                 className="text-4xl mx-auto w-fit text-center"
-                underline
             />
             <p className="mt-4 text-center">
                 {t("date")} <DateEl date={new Date("2025-06-03")} />

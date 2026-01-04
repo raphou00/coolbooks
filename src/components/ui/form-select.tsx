@@ -12,11 +12,9 @@ type FormSelectProps = {
     name: string;
     label: string;
     values: string[];
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     control: Control<any>;
     error?: FieldError | string | null;
     defaultValue?: string;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     t?: any;
 };
 

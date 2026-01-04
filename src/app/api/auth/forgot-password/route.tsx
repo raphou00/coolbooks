@@ -9,6 +9,8 @@ import ResetPasswordEmail from "@/components/emails/reset-password";
 import { checkRateLimit, ratelimitForgotPassword } from "@/lib/rate-limiter";
 import env from "@/lib/env";
 
+export const dynamic = "force-dynamic";
+
 export const POST = async (req: NextRequest) => {
     const t = await getTranslations({
         locale: req.cookies.get("NEXT_LOCALE")?.value || "en",
@@ -78,7 +80,8 @@ export const POST = async (req: NextRequest) => {
             success: true,
             message: t("messages.email-sent"),
         });
-    } catch (_) {
+    } catch (err) {
+        console.error(err);
         return NextResponse.json({
             success: false,
             message: t("messages.server-error"),

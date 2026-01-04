@@ -32,7 +32,7 @@ const Login: React.FC = () => {
     const submit = async (data: LoginSchema) => {
         const res = await requestAPI<LoginSchema>(
             "POST",
-            `/api/auth/login`,
+            "/api/auth/login",
             data
         );
         setState(res);
@@ -58,7 +58,7 @@ const Login: React.FC = () => {
                     <button
                         type="button"
                         onClick={google}
-                        className="btn btn-lg w-full"
+                        className="btn w-full"
                     >
                         <Image
                             src="/images/icons/google.png"
@@ -97,7 +97,7 @@ const Login: React.FC = () => {
                     <span className="floating-label">
                         <Link
                             href="/forgot-password"
-                            className="link link-primary"
+                            className="link link-neutral"
                         >
                             {t("forgot")}
                         </Link>
@@ -105,7 +105,7 @@ const Login: React.FC = () => {
                     <span className="floating-label">
                         <Link
                             href={`/register?redirect=${redirect}`}
-                            className="link link-primary"
+                            className="link link-neutral"
                         >
                             {t("register")}
                         </Link>

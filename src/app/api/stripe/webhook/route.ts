@@ -1,15 +1,9 @@
 import { type NextRequest, NextResponse } from "next/server";
-import {
-    handleInvoicePayment,
-    handlePaymentFailed,
-    handleSubscriptionChange,
-    handleSubscriptionDeleted,
-    stripe,
-} from "@/lib/stripe";
+import { headers } from "next/headers";
 import type Stripe from "stripe";
 import env from "@/lib/env";
 import db from "@/lib/db";
-import { headers } from "next/headers";
+import { handleCheckout, stripe } from "@/lib/stripe";
 
 export const POST = async (req: NextRequest) => {
     try {
@@ -31,59 +25,27 @@ export const POST = async (req: NextRequest) => {
                 { status: 400 }
             );
         }
-        const eventData = event.data.object as
-            | Stripe.Subscription
-            | Stripe.Invoice;
 
-        let customerId = eventData.metadata?.userId;
+        const eventData = event.data.object as Stripe.Checkout.Session;
 
-        if (!customerId) {
-            customerId = (eventData as Stripe.Invoice).parent
-                ?.subscription_details?.metadata?.userId;
+        const customerId = eventData.metadata?.userId;
 
-            if (!customerId) {
-                console.error("Missing user id");
-                return NextResponse.json(
-                    { error: "Missing user id" },
-                    { status: 400 }
-                );
-            }
-        }
-
-        const user = await db.user.findUnique({
-            where: {
-                id: customerId.toString(),
-            },
-        });
-
-        if (!user) {
-            console.error("Missing user in db");
-            return NextResponse.json(
-                { error: "Missing user in db" },
-                { status: 400 }
-            );
+        let user = null;
+        if (customerId) {
+            user = await db.user.findUnique({
+                where: {
+                    id: customerId.toString(),
+                },
+            });
         }
 
         switch (event.type) {
-            case "customer.subscription.created":
-            case "customer.subscription.updated":
-                await handleSubscriptionChange(
-                    eventData as Stripe.Subscription,
-                    user
-                );
+            case "checkout.session.completed":
+                if (eventData.payment_status === "paid") {
+                    await handleCheckout(eventData, user);
+                }
                 break;
-            case "customer.subscription.deleted":
-                await handleSubscriptionDeleted(
-                    eventData as Stripe.Subscription,
-                    user
-                );
-                break;
-            case "invoice.payment_succeeded":
-                await handleInvoicePayment(eventData as Stripe.Invoice, user);
-                break;
-            case "invoice.payment_failed":
-                await handlePaymentFailed(eventData as Stripe.Invoice, user);
-                break;
+
             default:
                 console.log(`Unhandled event type ${event.type}`);
         }

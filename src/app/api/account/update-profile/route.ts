@@ -63,7 +63,8 @@ export const POST = async (req: NextRequest) => {
             success: true,
             message: t("messages.profile-updated"),
         });
-    } catch (_) {
+    } catch (err) {
+        console.error(err);
         return NextResponse.json({
             success: false,
             message: t("messages.server-error"),

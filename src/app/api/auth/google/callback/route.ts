@@ -52,9 +52,7 @@ export async function GET(req: NextRequest) {
                     googleId,
                 },
             });
-            return NextResponse.redirect(
-                new URL("/account/socials", env.APP_URL)
-            );
+            return NextResponse.redirect(new URL("/account", env.APP_URL));
         }
 
         const existingUser = await db.user.findFirst({
@@ -94,8 +92,8 @@ export async function GET(req: NextRequest) {
         await createSession(newUser.id);
 
         return NextResponse.redirect(new URL("/", env.APP_URL));
-    } catch (e) {
-        console.error(e);
+    } catch (err) {
+        console.error(err);
         return NextResponse.redirect(new URL("/error?error=500", req.url));
     }
 }

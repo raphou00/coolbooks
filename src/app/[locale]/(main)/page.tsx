@@ -1,67 +1,33 @@
-import { getTranslations } from "next-intl/server";
 import db from "@/lib/db";
-import { getUser } from "@/lib/auth";
 import Main from "@/components/layout/main";
-import { Hero, Books, Bento } from "./home";
-
-type Filter = {
-    id?: { in: string[] };
-    artStyle?: string;
-    themes?: { has: string };
-};
+import Home from "./home";
 
 const Page = async () => {
-    const t = await getTranslations("pages.home");
-    const user = await getUser();
-
-    const getBooksByFilter = (filter: Filter) =>
-        db.book.findMany({
-            where: {
-                ...filter,
-                public: true,
+    const books = await db.book.findMany({
+        where: {
+            id: {
+                in: [
+                    "4a323aaf-4147-450e-ba37-241fbbf41363",
+                    "83a7dc9e-f3ca-44d4-8d8b-65ed61b27d0d",
+                    "60fcc0bf-8d83-47f2-916b-3de8eaba8738",
+                    "879ae571-6882-4e78-b32e-abb9964fcf3f",
+                    "3795c5ed-37cc-4b0e-8623-d8f2d15bbcb2",
+                    "f7d0cbd5-0155-4858-8313-94c3bc06245c",
+                    "fb03f998-cde2-4995-b143-af90c9d85891",
+                    "339ac7a8-1340-41f1-a6f9-5642c8e079b9",
+                ],
             },
-            select: {
-                id: true,
-                title: true,
-                cover: true,
-                user: { select: { name: true } },
-            },
-            take: 10,
-            orderBy: { createdAt: "desc" },
-        });
-
-    const [booksCartoon, booksAdventure, booksAnime, booksEducation] =
-        await Promise.all([
-            getBooksByFilter({ artStyle: "cartoon" }),
-            getBooksByFilter({ themes: { has: "adventure" } }),
-            getBooksByFilter({ artStyle: "anime" }),
-            getBooksByFilter({ themes: { has: "education" } }),
-        ]);
+        },
+        select: {
+            id: true,
+            title: true,
+            cover: true,
+        },
+    });
 
     return (
         <Main>
-            <Hero user={user?.user || null} />
-            <Bento />
-            <Books
-                title={"🦄 " + t("cartoon")}
-                books={booksCartoon}
-                user={user?.user || null}
-            />
-            <Books
-                title={"🧚🏻 " + t("adventure")}
-                books={booksAdventure}
-                user={user?.user || null}
-            />
-            <Books
-                title={"💫 " + t("anime")}
-                books={booksAnime}
-                user={user?.user || null}
-            />
-            <Books
-                title={"🧑‍🎓 " + t("education")}
-                books={booksEducation}
-                user={user?.user || null}
-            />
+            <Home books={books} />
         </Main>
     );
 };

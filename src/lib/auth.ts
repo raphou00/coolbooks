@@ -1,7 +1,7 @@
 import { cache } from "react";
 import { userAgent } from "next/server";
 import { cookies, headers } from "next/headers";
-import type { Role } from "@prisma/client";
+import type { Role } from "@/lib/types";
 import { PrismaAdapter } from "@lucia-auth/adapter-prisma";
 import { Lucia, TimeSpan } from "lucia";
 import { Google } from "arctic";
@@ -24,14 +24,10 @@ export const lucia = new Lucia(adapter, {
             id: user.id,
             name: user.name,
             email: user.email,
-            credits: user.credits,
-            savedBooks: user.savedBooks,
+            locale: user.locale,
             role: user.role,
             googleId: user.googleId,
             stripeCustomerId: user.stripeCustomerId,
-            stripeProductId: user.stripeProductId,
-            stripeSubscriptionId: user.stripeSubscriptionId,
-            subscriptionStatus: user.subscriptionStatus,
         };
     },
 });
@@ -110,12 +106,8 @@ type DatabaseUserAttributes = {
     id: string;
     name: string;
     email: string;
-    credits: number;
-    savedBooks: string[];
+    locale: string;
     role: Role;
     googleId?: string;
     stripeCustomerId?: string;
-    stripeSubscriptionId?: string;
-    stripeProductId?: string;
-    subscriptionStatus?: string;
 };

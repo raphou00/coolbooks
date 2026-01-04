@@ -1,4 +1,3 @@
-// index.ts
 import * as pulumi from "@pulumi/pulumi";
 import * as aws from "@pulumi/aws";
 
@@ -7,7 +6,7 @@ const provision = () => {
     const rateLimitTable = new aws.dynamodb.Table(
         `coolbooks-rate-limits-table-${stack}`,
         {
-            name: "rate-limits",
+            name: `coolbooks-rate-limits-${stack}`,
             billingMode: "PAY_PER_REQUEST",
             hashKey: "id",
             attributes: [

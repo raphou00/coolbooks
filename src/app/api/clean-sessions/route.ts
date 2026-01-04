@@ -1,6 +1,6 @@
 import db from "@/lib/db";
 
-export async function GET() {
+export const GET = async () => {
     try {
         console.log("Starting weekly session cleanup...");
 
@@ -20,16 +20,16 @@ export async function GET() {
             deletedCount: result.count,
             timestamp: new Date().toISOString(),
         });
-    } catch (error) {
-        console.error("Session cleanup failed:", error);
+    } catch (err) {
+        console.error(err);
         return Response.json(
             {
                 error: "Session cleanup failed",
-                message: error,
+                message: err,
             },
             { status: 500 }
         );
     } finally {
         db.$disconnect();
     }
-}
+};

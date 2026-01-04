@@ -10,7 +10,7 @@ export const localesTitle = {
 };
 
 export const routing = defineRouting({
-    locales: ["en"],
+    locales: ["en", "fr", "de", "es", "pt", "it"],
     defaultLocale: "en",
     localePrefix: {
         mode: "never",

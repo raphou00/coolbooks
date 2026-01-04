@@ -1,12 +1,13 @@
-const { generateObject } = require("ai");
-const { OpenAI } = require("openai");
-const { z } = require("zod");
+/* eslint-disable @typescript-eslint/no-require-imports */
 const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
 const { Pool } = require("pg");
+const { z } = require("zod");
+const { OpenAI } = require("openai");
+const { zodTextFormat } = require("openai/helpers/zod");
 
 const { BUCKET_NAME, DATABASE_URL, OPENROUTER_API_KEY } = process.env;
 
-const PLANNER_MODEL = "anthropic/claude-3.5-haiku";
+const PLANNER_MODEL = "openai/gpt-5.2";
 const IMAGE_MODEL = "google/gemini-2.5-flash-image-preview";
 
 const pool = new Pool({
@@ -63,7 +64,7 @@ Requirements:
 
 Output:
 1. Title
-2. Page-by-page story text (10 pages)
+2. Page-by-page story text (12 pages)
 3. For each page (including the cover), a detailed image prompt reflecting all the above details.
 4. Output MUST be in JSON format.
 `;
@@ -93,24 +94,27 @@ const putObject = async (file, key) => {
 };
 
 const createPlan = async (topic) => {
-    const result = await generateObject({
+    const result = await openai.responses.parse({
         model: PLANNER_MODEL,
-        prompt: promptPlan(topic),
-        mode: "json",
-        maxRetries: 5,
-        schema: z.object({
-            title: z.string(),
-            cover: z.string(),
-            pages: z.array(
+        input: [{ role: "developer", content: promptPlan(topic) }],
+        text: {
+            format: zodTextFormat(
                 z.object({
-                    text: z.string(),
-                    image: z.string(),
-                })
+                    title: z.string(),
+                    cover: z.string(),
+                    pages: z.array(
+                        z.object({
+                            text: z.string(),
+                            image: z.string(),
+                        })
+                    ),
+                }),
+                "event"
             ),
-        }),
+        },
     });
 
-    return result.object;
+    return result.output_parsed;
 };
 
 const createImage = async (
@@ -160,8 +164,8 @@ const createBook = async (bookData) => {
     const client = await pool.connect();
     try {
         const query = `
-            INSERT INTO "Book" (id, title, cover, public, age, "artStyle", themes, "userId", "createdAt", "updatedAt")
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, NOW(), NOW())
+            INSERT INTO "Book" (id, title, cover, age, "artStyle", "userId", "createdAt", "updatedAt")
+            VALUES ($1, $2, $3, $4, $5, $6, NOW(), NOW())
             RETURNING *
         `;
 
@@ -169,11 +173,9 @@ const createBook = async (bookData) => {
             bookData.id,
             bookData.title,
             bookData.cover,
-            bookData.public,
             bookData.age,
             bookData.artStyle,
-            bookData.themes,
-            bookData.userId
+            bookData.userId || "64488f3a-0beb-40cc-882b-c458d0725a7e"
         ];
 
         const result = await client.query(query, values);
@@ -232,8 +234,9 @@ const updateBookGenerating = async (bookId, generating) => {
 
 
 const lambda_handler = async (event) => {
-    const { bookId, userId, topic } = event;
+    const { userId, topic } = event;
 
+    const bookId = crypto.randomUUID();
     const plan = await createPlan(topic);
 
     const coverKey = bookId + "/" + crypto.randomUUID() + ".png";
@@ -257,15 +260,24 @@ const lambda_handler = async (event) => {
         plan.title
     );
 
-    const pageJobs = plan.pages.map((page, i) => {
+    const pages = plan.pages.map((page, i) => {
         const key = bookId + "/" + crypto.randomUUID() + ".png";
-        return createImage(page.image, topic.artStyle, key, getS3(coverKey))
+        return {
+            color: randomHex(),
+            text: page.text,
+            image: key,
+            number: i
+        };
+    });
+
+    const pageJobs = pages.map((page, i) => {
+        return createImage(plan.pages[i].image, topic.artStyle, page.image, getS3(coverKey))
             .then(() => createPage({
                 bookId,
-                color: randomHex(),
+                color: page.color,
                 text: page.text,
-                image: key,
-                number: i
+                image: page.image,
+                number: page.number
             }));
     });
 
@@ -275,7 +287,12 @@ const lambda_handler = async (event) => {
 
     return {
         statusCode: 201,
-        body: "done"
+        body: JSON.stringify({
+            bookId,
+            title: plan.title,
+            cover: coverKey,
+            pages: pages
+        })
     };
 };
 

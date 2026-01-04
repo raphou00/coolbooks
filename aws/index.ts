@@ -1,10 +1,10 @@
-import bucket from "./s3";
-import lambda from "./lambda";
-import rateLimit from "./dynamodb";
+import filesBucket from "./s3";
+import bookCreatorFunction from "./lambda";
+import rateLimitTable from "./dynamodb";
 
-const { files, cloudfront } = bucket();
-const bookCreator = lambda(files.bucket);
-const rateLimits = rateLimit();
+const { files, cloudfront } = filesBucket();
+const bookCreator = bookCreatorFunction(files.bucket);
+const rateLimits = rateLimitTable();
 
 export const bookCreatorArn = bookCreator.invokeArn;
 export const bucketName = files.bucket;

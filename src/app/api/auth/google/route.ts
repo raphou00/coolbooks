@@ -50,7 +50,8 @@ export async function GET(req: NextRequest) {
         });
 
         return NextResponse.json({ redirect: url });
-    } catch (_) {
+    } catch (err) {
+        console.error(err);
         return NextResponse.json({
             success: false,
             message: t("messages.server-error"),

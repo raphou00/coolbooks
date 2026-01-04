@@ -1,7 +1,6 @@
-import { selectBook } from "@/config/book";
-import db from "@/lib/db";
-import { exportEPUB, exportPDF } from "@/lib/export";
 import { type NextRequest, NextResponse } from "next/server";
+import db from "@/lib/db";
+import { exportPDF } from "@/lib/export";
 import { checkRateLimit, ratelimitPost } from "@/lib/rate-limiter";
 
 export async function GET(req: NextRequest) {
@@ -22,10 +21,8 @@ export async function GET(req: NextRequest) {
         }
 
         const bookId = req.nextUrl.searchParams.get("bookId");
-        const format = req.nextUrl.searchParams.get("format");
-        const orientation = req.nextUrl.searchParams.get("orientation");
 
-        if (!bookId || !format || (format == "pdf" && !orientation)) {
+        if (!bookId) {
             return NextResponse.json({
                 success: false,
                 message: "Missing required parameters",
@@ -36,7 +33,20 @@ export async function GET(req: NextRequest) {
             where: {
                 id: bookId,
             },
-            select: selectBook,
+            select: {
+                id: true,
+                title: true,
+                cover: true,
+                pages: {
+                    select: {
+                        id: true,
+                        text: true,
+                        image: true,
+                        color: true,
+                        number: true,
+                    },
+                },
+            },
         });
 
         if (!book) {
@@ -46,20 +56,12 @@ export async function GET(req: NextRequest) {
             });
         }
 
-        let blob;
-        if (format == "pdf") {
-            blob = await exportPDF(
-                book,
-                orientation as "portrait" | "landscape"
-            );
-        } else if (format == "epub") {
-            blob = await exportEPUB(book);
-        }
+        const blob = await exportPDF(book);
 
         if (!blob) {
             return NextResponse.json({
                 success: false,
-                message: "Failed to generate EPUB",
+                message: "Failed to generate PDF",
             });
         }
 
@@ -71,15 +73,10 @@ export async function GET(req: NextRequest) {
             },
         });
     } catch (error) {
-        console.error("EPUB generation error:", error);
-        return NextResponse.json(
-            {
-                success: false,
-                error: "Failed to generate EPUB",
-                details:
-                    error instanceof Error ? error.message : "Unknown error",
-            },
-            { status: 500 }
-        );
+        console.error("PDF generation error:", error);
+        return NextResponse.json({
+            success: false,
+            message: "Failed to generate PDF",
+        });
     }
 }

@@ -2,13 +2,9 @@ import { type NextRequest, NextResponse } from "next/server";
 import { getTranslations } from "next-intl/server";
 import db from "@/lib/db";
 import { getUser } from "@/lib/auth";
-import deleteAccountSchema, {
-    type DeleteAccountSchema,
-} from "@/schema/delete-account";
 import { checkRateLimit, ratelimitPost } from "@/lib/rate-limiter";
-import { stripe } from "@/lib/stripe";
 
-export const POST = async (req: NextRequest) => {
+export const DELETE = async (req: NextRequest) => {
     const t = await getTranslations({
         locale: req.cookies.get("NEXT_LOCALE")?.value || "en",
     });
@@ -29,46 +25,25 @@ export const POST = async (req: NextRequest) => {
         }
 
         const user = await getUser();
-        const body = (await req.json()) as DeleteAccountSchema;
 
         if (!user?.user) {
             return NextResponse.json({
-                success: false,
-                message: t("messages.unauthorized"),
+                redirect: new URL("/login", req.url),
             });
         }
 
-        const { error } = deleteAccountSchema(t).safeParse(body);
-
-        if (error) {
-            return NextResponse.json({
-                success: false,
-                errors: error.flatten().fieldErrors,
-            });
-        }
-
-        if (body.email !== user.user?.email) {
-            return NextResponse.json({
-                success: false,
-                message: t("messages.wrong-email"),
-            });
-        }
-
-        await db.user.deleteMany({
+        await db.user.delete({
             where: {
                 id: user.user.id,
             },
         });
 
-        if (user.user.stripeSubscriptionId) {
-            await stripe.subscriptions.cancel(user.user.stripeSubscriptionId);
-        }
-
         return NextResponse.json({
             success: true,
             message: t("messages.account-deleted"),
         });
-    } catch (_) {
+    } catch (err) {
+        console.error(err);
         return NextResponse.json({
             success: false,
             message: t("messages.server-error"),

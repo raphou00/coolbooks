@@ -41,7 +41,7 @@ const DeleteBook: React.FC<DeleteBookProps> = ({
                     <div className="mx-auto flex size-12 shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:size-10">
                         <AlertTriangle
                             aria-hidden="true"
-                            className="size-6 text-red-600"
+                            className="size-6 text-error"
                         />
                     </div>
 

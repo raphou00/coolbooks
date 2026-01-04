@@ -1,3 +1,6 @@
+/* eslint-disable react-hooks/set-state-in-effect */
+"use client";
+
 import { useCallback, useEffect, useState } from "react";
 
 const useScroll = (threshold: number) => {

@@ -11,9 +11,9 @@ const LogoText: React.FC<LogoTextProps> = ({ className }) => {
         <Image
             src="/cool-books.svg"
             alt={`Logo Text ${title}`}
-            className={cn("h-16", className)}
-            width={1400}
-            height={800}
+            className={cn("h-20 w-auto", className)}
+            width={851}
+            height={492}
             priority
         />
     );

@@ -8,6 +8,7 @@ jobs:
         runs-on: ubuntu-latest
 
         env:
+            DATABASE_URL: postgres
             SKIP_ENV_VALIDATION: true
 
         steps:

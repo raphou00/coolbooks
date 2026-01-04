@@ -1,9 +1,9 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
-import { cn } from "@/lib/utils";
 import { useEffect } from "react";
 import { X } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import { cn } from "@/lib/utils";
 
 type ModalProps = {
     isOpen: boolean;
@@ -21,7 +21,7 @@ const Modal: React.FC<ModalProps> = ({
     className,
 }) => {
     const handleKeyDown = (event: KeyboardEvent) => {
-        if (event.key === "Escape") {
+        if (event.key === "Escape" && closeButton) {
             setIsOpen(false);
         }
     };
@@ -35,9 +35,9 @@ const Modal: React.FC<ModalProps> = ({
 
     useEffect(() => {
         if (isOpen) {
-            document.body.style.overflow = "hidden";
+            document.documentElement.style.overflow = "hidden";
         } else {
-            document.body.style.overflow = "auto";
+            document.documentElement.style.overflow = "auto";
         }
     }, [isOpen]);
 
@@ -49,7 +49,7 @@ const Modal: React.FC<ModalProps> = ({
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     onClick={() => setIsOpen(!closeButton)}
-                    className="fixed inset-0 h-screen w-full flex items-center justify-center z-70 cursor-pointer bg-base-300/20 backdrop-blur sm:p-2"
+                    className="fixed inset-0 h-screen w-full flex items-center justify-center z-100 cursor-pointer bg-base-300/20 backdrop-blur sm:p-2"
                 >
                     <motion.div
                         initial={{ scale: 0, rotate: "12.5deg" }}
@@ -57,19 +57,21 @@ const Modal: React.FC<ModalProps> = ({
                         exit={{ scale: 0, rotate: "0deg" }}
                         onClick={(e) => e.stopPropagation()}
                         className={cn(
-                            "relative z-[9999] w-fit max-w-2xl max-sm:w-[calc(100%-1.5rem)] cursor-default rounded-2xl bg-base-100 p-6 shadow-xl",
+                            "w-fit max-w-2xl max-sm:w-[calc(100%-1.5rem)] cursor-default rounded-2xl bg-base-100 shadow-xl p-4 pb-8",
                             className
                         )}
                     >
                         {closeButton && (
-                            <button
-                                className="absolute right-0 top-0 m-2 btn btn-ghost btn-square btn-sm z-50"
-                                onClick={() => setIsOpen(false)}
-                            >
-                                <X />
-                            </button>
+                            <div className="w-full flex justify-end">
+                                <button
+                                    className="btn btn-ghost btn-square btn-sm"
+                                    onClick={() => setIsOpen(false)}
+                                >
+                                    <X />
+                                </button>
+                            </div>
                         )}
-                        <div className="relative z-[999]">{children}</div>
+                        <div className="h-full relative">{children}</div>
                     </motion.div>
                 </motion.div>
             )}

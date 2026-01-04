@@ -32,7 +32,7 @@ const Register: React.FC = () => {
     const submit = async (data: RegisterSchema) => {
         const res = await requestAPI<RegisterSchema>(
             "POST",
-            `/api/auth/register`,
+            "/api/auth/register",
             data
         );
         setState(res);
@@ -58,7 +58,7 @@ const Register: React.FC = () => {
                     <button
                         type="button"
                         onClick={google}
-                        className="btn btn-lg w-full"
+                        className="btn w-full"
                     >
                         <Image
                             src="/images/icons/google.png"
@@ -105,7 +105,7 @@ const Register: React.FC = () => {
                     <span className="floating-label">
                         <Link
                             href={`/login?redirect=${redirect}`}
-                            className="link link-primary"
+                            className="link link-neutral"
                         >
                             {t("login")}
                         </Link>
@@ -115,12 +115,12 @@ const Register: React.FC = () => {
                 <p className="mt-5 text-center text-xs">
                     {t.rich("legal", {
                         terms: (chunk) => (
-                            <Link href="/terms" className="link link-primary">
+                            <Link href="/terms" className="link link-neutral">
                                 {chunk}
                             </Link>
                         ),
                         privacy: (chunk) => (
-                            <Link href="/privacy" className="link link-primary">
+                            <Link href="/privacy" className="link link-neutral">
                                 {chunk}
                             </Link>
                         ),

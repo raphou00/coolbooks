@@ -1,31 +1,25 @@
 "use client";
 
-import { useTranslations } from "next-intl";
-import { useState } from "react";
-import { useTheme } from "next-themes";
-import { Home } from "lucide-react";
 import Link from "next/link";
+import { useState } from "react";
+import { useTranslations } from "next-intl";
+import { Home, Languages } from "lucide-react";
 import LocaleModal from "@/components/ui/locale-modal";
 
 const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
     const t = useTranslations("links");
     const [localeOpen, setLocaleOpen] = useState<boolean>(false);
-    const { setTheme } = useTheme();
-
-    const _toggleTheme = () => {
-        setTheme((e) => (e === "dark" ? "light" : "dark"));
-    };
 
     return (
         <>
             <div className="flex">
                 <div
                     style={{
-                        backgroundImage: `url('/images/group-of-kids-in-front-of-a-house-reading-books.jpg')`,
+                        backgroundImage: "url('/images/auth.png')",
                         backgroundSize: "cover",
                         backgroundPosition: "center",
                     }}
-                    className="h-screen w-4/6 relative max-lg:hidden border-r border-neutral"
+                    className="h-screen w-full max-w-lg relative max-lg:hidden border-r border-neutral/20"
                 />
                 <div className="relative w-full">
                     <div className="flex items-center justify-between z-50 absolute p-2 w-full">
@@ -33,7 +27,7 @@ const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
                             <Home className="size-5" />
                             <span className="hidden sm:block">{t("home")}</span>
                         </Link>
-                        {/* <button
+                        <button
                             onClick={() => setLocaleOpen((e) => !e)}
                             className="btn max-sm:btn-circle"
                         >
@@ -41,7 +35,7 @@ const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
                             <span className="hidden sm:block">
                                 {t("language")}
                             </span>
-                        </button> */}
+                        </button>
                     </div>
                     {children}
                 </div>

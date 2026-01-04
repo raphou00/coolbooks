@@ -1,26 +1,20 @@
-import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import Title from "@/components/ui/title";
-
-const dynamic = "force-dynamic";
 
 const RootNotFound: React.FC = () => {
     const t = useTranslations("common");
     return (
-        <div className="text-center h-screen w-screen flex flex-col items-center justify-center">
+        <div className="h-screen w-screen flex flex-col items-center justify-center gap-y-4">
             <Image
-                src="/images/book-sad.svg"
-                width={400}
+                src="/images/error.svg"
+                width={475}
                 height={400}
                 alt="404"
-                className="mx-auto h-44"
+                className="h-44 w-auto animate-bounce"
             />
-            <Title
-                text={t("not-found")}
-                className="mx-auto w-max my-2"
-                underline
-            />
+            <Title text={t("not-found")} className="w-max" />
             <Link href="/" className="btn btn-primary">
                 {t("back-home")}
             </Link>
@@ -28,5 +22,5 @@ const RootNotFound: React.FC = () => {
     );
 };
 
-export { dynamic };
+export const dynamic = "force-dynamic";
 export default RootNotFound;

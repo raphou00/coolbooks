@@ -3,7 +3,6 @@
 import { useState } from "react";
 import Image, { type ImageProps } from "next/image";
 import { cn, getImage } from "@/lib/utils";
-import { useTranslations } from "next-intl";
 
 type NextImageProps = ImageProps & {
     isCover?: boolean;
@@ -18,7 +17,6 @@ const NextImage: React.FC<NextImageProps> = ({
     alt,
     ...rest
 }) => {
-    const t = useTranslations("common");
     const [isLoading, setLoading] = useState(true);
     const [error, setError] = useState(false);
 
@@ -57,7 +55,6 @@ const NextImage: React.FC<NextImageProps> = ({
                 </>
             :   <div className="absolute inset-0 z-30 size-full bg-base-300 flex flex-col items-center justify-center gap-y-2 skeleton">
                     <div className="loading loading-lg loading-spinner" />
-                    <p>{t("generating")}</p>
                 </div>
             }
             <div className="absolute inset-0 z-30 size-full" />

@@ -48,7 +48,8 @@ export const GET = async (req: NextRequest) => {
             success: true,
             message: t("messages.logged-out"),
         });
-    } catch (_) {
+    } catch (err) {
+        console.error(err);
         return NextResponse.json({
             success: false,
             message: t("messages.server-error"),

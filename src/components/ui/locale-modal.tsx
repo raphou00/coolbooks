@@ -4,14 +4,6 @@ import useSwitchLocale from "@/hook/use-switch-locale";
 import { routing, localesTitle } from "@/lib/navigation";
 import Modal from "@/components/ui/modal";
 import Title from "@/components/ui/title";
-import {
-    Select,
-    SelectContent,
-    SelectGroup,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select";
 
 type LocaleModalProps = {
     open: boolean;
@@ -24,47 +16,33 @@ const LocaleModal: React.FC<LocaleModalProps> = ({ open, setOpen }) => {
     const locale = useLocale();
 
     return (
-        <Modal isOpen={open} setIsOpen={setOpen} className="z-100 w-full">
-            <div className="flex flex-col items-center justify-center mx-auto gap-y-6 w-full max-w-lg p-6">
+        <Modal isOpen={open} setIsOpen={setOpen} className="max-w-lg w-full">
+            <div className="flex flex-col items-center justify-center mx-auto gap-y-6 w-full max-w-md">
                 <Title
                     text={t("language")}
                     className="text-5xl mb-6 text-center"
-                    underline
                 />
 
-                <div className="w-full">
-                    <p className="mb-1 ml-1">{t("language")}</p>
-                    <Select
-                        defaultValue={locale}
-                        value={locale}
-                        onValueChange={(l) => switchLocale(l)}
-                    >
-                        <SelectTrigger className="w-full">
-                            <SelectValue placeholder={t("language")} />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectGroup>
-                                {routing.locales.map((l) => (
-                                    <SelectItem key={l} value={l}>
-                                        <div className="flex items-center gap-2">
-                                            <Image
-                                                src={`/images/locales/${l}.png`}
-                                                alt={l}
-                                                width={32}
-                                                height={32}
-                                                className="size-6"
-                                            />
-                                            {
-                                                localesTitle[
-                                                    l as keyof typeof localesTitle
-                                                ]
-                                            }
-                                        </div>
-                                    </SelectItem>
-                                ))}
-                            </SelectGroup>
-                        </SelectContent>
-                    </Select>
+                <div className="space-y-3">
+                    {routing.locales.map((l) => (
+                        <div key={l} className="flex items-center gap-2">
+                            <input
+                                type="radio"
+                                name="locale"
+                                className="radio radio-lg radio-secondary border-none checked:bg-secondary/30 mr-2"
+                                defaultChecked={locale === l}
+                                onChange={() => switchLocale(l)}
+                            />
+                            <Image
+                                src={`/images/locales/${l}.png`}
+                                alt={l}
+                                width={32}
+                                height={32}
+                                className="size-6"
+                            />
+                            {localesTitle[l as keyof typeof localesTitle]}
+                        </div>
+                    ))}
                 </div>
             </div>
         </Modal>

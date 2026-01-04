@@ -1,9 +1,9 @@
 import axios, { type ResponseType } from "axios";
 import clsx, { type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import toast from "react-hot-toast";
 import { type Stripe, loadStripe } from "@stripe/stripe-js";
 import { currency } from "@/config/stripe";
-import toast from "react-hot-toast";
 import env from "./env";
 import type { ActionsState } from "./types";
 
@@ -26,14 +26,14 @@ export const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 export const requestAPI = async <T>(
     method: string,
     url: string,
-    data: unknown = null,
+    body: unknown = null,
     headers: Record<string, string> = {},
     responseType: ResponseType = "json"
 ): Promise<ActionsState<T>> => {
     const res = await axios.request<ActionsState<T>>({
         method,
         url,
-        data: data || null,
+        data: body || null,
         headers: {
             "Content-Type": "application/json",
             ...headers,
@@ -41,21 +41,21 @@ export const requestAPI = async <T>(
         responseType: responseType || "json",
     });
 
-    const resData = res.data;
+    const data = res.data;
 
     if (responseType !== "json") {
-        return resData;
+        return data;
     }
 
-    if (!resData.success && resData.message) {
-        toast.error(resData.message!);
+    if (!data.success && data.message) {
+        toast.error(data.message!);
     }
 
-    if (resData.redirect) {
-        window.location.href = resData.redirect;
+    if (data.redirect) {
+        window.location.href = data.redirect;
     }
 
-    return resData;
+    return data;
 };
 
 export const formatAmountForDisplay = (amount: number): string => {
@@ -112,41 +112,7 @@ export const getImage = (key: string) => {
     return `${env.NEXT_PUBLIC_CLOUDFRONT_URL}/${key}`;
 };
 
-export const calculateTrialEndUnixTimestamp = (
-    trialPeriodDays: number | null | undefined
-) => {
-    if (
-        trialPeriodDays === null ||
-        trialPeriodDays === undefined ||
-        trialPeriodDays < 2
-    ) {
-        return undefined;
-    }
-
-    const currentDate = new Date();
-    const trialEnd = new Date(
-        currentDate.getTime() + (trialPeriodDays + 1) * 24 * 60 * 60 * 1000
-    );
-    return Math.floor(trialEnd.getTime() / 1000);
-};
-
-export const getS3 = (key: string) => {
-    return `https://${env.BUCKET_NAME}.s3.${env.AWS_REGION}.amazonaws.com/${key}`;
-};
-
 export const getExtension = (filename: string) => {
     const parts = filename.split(".");
     return parts[parts.length - 1];
-};
-
-export const sortPages = (
-    pages: {
-        id: string;
-        text: string;
-        image: string;
-        color: string;
-        number: number;
-    }[]
-) => {
-    return [...pages].sort((a, b) => a.number - b.number);
 };

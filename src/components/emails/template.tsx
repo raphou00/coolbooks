@@ -10,42 +10,54 @@ import {
     Preview,
     Row,
     Section,
-    Tailwind,
     Text,
+    Tailwind,
+    pixelBasedPreset,
 } from "@react-email/components";
 import { domain, title as siteTitle } from "@/config/seo";
 import type { T } from "@/lib/types";
 
-type TemplateEmailProps = {
+type TemplateProps = {
     t: T;
     title: string;
     body: string;
     children: React.ReactNode;
 };
 
-const TemplateEmail: React.FC<TemplateEmailProps> = async ({
+const Template: React.FC<TemplateProps> = async ({
     t,
     title,
     body,
     children,
 }) => {
     return (
-        <Tailwind>
+        <Tailwind
+            config={{
+                presets: [pixelBasedPreset],
+                theme: {
+                    extend: {
+                        colors: {
+                            primary: "#2a2a3b",
+                        },
+                    },
+                },
+            }}
+        >
             <Html>
                 <Head />
                 <Preview>{body}</Preview>
                 <Body className="mx-auto my-0 bg-stone-50 p-4">
-                    <Container className="mx-auto my-0 max-w-2xl">
-                        <Section className="mt-8">
+                    <Container className="mx-auto my-0 max-w-xl">
+                        <Section className="mt-4">
                             <Img
-                                src={`${domain}/cool-books.png`}
-                                width="125"
-                                height="65"
-                                alt="Cool Books Logo Text"
+                                src={`${domain}/favicon-96x96.png`}
+                                width="70"
+                                height="70"
+                                alt="Coolbooks Logo"
                             />
                         </Section>
 
-                        <Heading className="mx-0 my-8 p-0 text-3xl font-bold text-gray-700">
+                        <Heading className="mx-0 my-4 p-0 text-3xl font-bold text-primary">
                             {title}
                         </Heading>
 
@@ -53,12 +65,12 @@ const TemplateEmail: React.FC<TemplateEmailProps> = async ({
 
                         <Section>
                             <Row className="mb-8 w-full px-2">
-                                <Column className="h-full flex justify-start gap-x-4">
+                                <Column className="space-x-4">
                                     <Img
-                                        src={`${domain}/cool-books.png`}
+                                        src={`${domain}/favicon-96x96.png`}
                                         width="40"
                                         height="40"
-                                        alt="Cool Books Logo"
+                                        alt="Coolbooks Logo"
                                     />
                                 </Column>
                                 <Column>
@@ -66,7 +78,6 @@ const TemplateEmail: React.FC<TemplateEmailProps> = async ({
                                         <Link
                                             className="text-underline text-gray-500"
                                             href={domain}
-                                            target="_blank"
                                             rel="noopener noreferrer"
                                         >
                                             {siteTitle}
@@ -75,7 +86,6 @@ const TemplateEmail: React.FC<TemplateEmailProps> = async ({
                                         <Link
                                             className="text-underline text-gray-500"
                                             href={domain + "/terms"}
-                                            target="_blank"
                                             rel="noopener noreferrer"
                                         >
                                             {t("links.terms")}
@@ -84,7 +94,6 @@ const TemplateEmail: React.FC<TemplateEmailProps> = async ({
                                         <Link
                                             className="text-underline text-gray-500"
                                             href={domain + "/privacy"}
-                                            target="_blank"
                                             rel="noopener noreferrer"
                                         >
                                             {t("links.privacy")}
@@ -93,7 +102,6 @@ const TemplateEmail: React.FC<TemplateEmailProps> = async ({
                                         <Link
                                             className="text-underline text-gray-500"
                                             href={domain + "/contact"}
-                                            target="_blank"
                                             rel="noopener noreferrer"
                                         >
                                             {t("links.contact")}
@@ -113,4 +121,4 @@ const TemplateEmail: React.FC<TemplateEmailProps> = async ({
     );
 };
 
-export default TemplateEmail;
+export default Template;

@@ -11,9 +11,9 @@ const Logo: React.FC<LogoProps> = ({ className }) => {
         <Image
             src="/favicon.svg"
             alt={`Logo ${title}`}
-            className={cn("size-16", className)}
-            width={256}
-            height={256}
+            className={cn("h-20 w-auto", className)}
+            width={380}
+            height={380}
             priority
         />
     );

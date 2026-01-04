@@ -56,7 +56,7 @@ export const POST = async (req: NextRequest) => {
 
         return NextResponse.json({
             success: true,
-            redirect: "/",
+            message: t("messages.login-success"),
         });
     } catch (err) {
         console.error(err);

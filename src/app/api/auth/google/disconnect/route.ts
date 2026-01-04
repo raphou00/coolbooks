@@ -45,7 +45,8 @@ export async function GET(req: NextRequest) {
             success: true,
             message: t("messages.google-disconnected"),
         });
-    } catch (_) {
+    } catch (err) {
+        console.error(err);
         return NextResponse.json({
             success: false,
             message: t("messages.server-error"),

@@ -33,7 +33,7 @@ export default createEnv({
 
         BOOK_CREATOR_LAMBDA_ARN: z
             .string()
-            .min(1, { message: "Book Creator Lambda ARN is missing" }),
+            .min(1, { message: "Book creator lambda ARN is missing" }),
 
         RATE_LIMITS_DYNAMODB_TABLE: z
             .string()
@@ -53,10 +53,6 @@ export default createEnv({
             .string()
             .min(1, { message: "Stripe Webhook Secret is missing" }),
 
-        OPENAI_API_KEY: z
-            .string()
-            .min(1, { message: "OpenAI API Key is missing" }),
-
         GOOGLE_CLIENT_ID: z
             .string()
             .min(1, { message: "Google Client ID is missing" }),
@@ -73,18 +69,6 @@ export default createEnv({
         NEXT_PUBLIC_CLOUDFRONT_URL: z
             .string()
             .min(1, { message: "Cloudinary URL is missing" }),
-
-        NEXT_PUBLIC_STRIPE_PRODUCT_ID_BASIC: z
-            .string()
-            .min(1, { message: "Stripe Product ID Basic is missing" }),
-
-        NEXT_PUBLIC_STRIPE_PRODUCT_ID_FAMILY: z
-            .string()
-            .min(1, { message: "Stripe Product ID Family is missing" }),
-
-        NEXT_PUBLIC_STRIPE_PRODUCT_ID_PREMIUM: z
-            .string()
-            .min(1, { message: "Stripe Product ID Premium is missing" }),
     },
     runtimeEnv: {
         NODE_ENV: process.env.VERCEL_ENV,
@@ -104,13 +88,6 @@ export default createEnv({
             process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
         STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
         STRIPE_WEBHOOK_SECRET: process.env.STRIPE_WEBHOOK_SECRET,
-        NEXT_PUBLIC_STRIPE_PRODUCT_ID_BASIC:
-            process.env.NEXT_PUBLIC_STRIPE_PRODUCT_ID_BASIC,
-        NEXT_PUBLIC_STRIPE_PRODUCT_ID_FAMILY:
-            process.env.NEXT_PUBLIC_STRIPE_PRODUCT_ID_FAMILY,
-        NEXT_PUBLIC_STRIPE_PRODUCT_ID_PREMIUM:
-            process.env.NEXT_PUBLIC_STRIPE_PRODUCT_ID_PREMIUM,
-        OPENAI_API_KEY: process.env.OPENAI_API_KEY,
         GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
         GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
     },

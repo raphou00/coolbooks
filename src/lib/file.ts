@@ -7,6 +7,7 @@ import {
 import type {
     PutObjectCommandInput,
     ListObjectsV2CommandOutput,
+    PutObjectCommandOutput,
 } from "@aws-sdk/client-s3";
 import env from "@/lib/env";
 
@@ -22,21 +23,36 @@ export const getObject = (key: string) => {
     return `${env.CLOUDFRONT_URL}/${key}`;
 };
 
-export const putObject = async (file: File | Buffer, key: string) => {
-    const body =
-        file instanceof File ? Buffer.from(await file.arrayBuffer()) : file;
+export const putObject = async (
+    file: File | Buffer | Blob,
+    key: string
+): Promise<PutObjectCommandOutput> => {
+    let body: Buffer;
+    let contentType = "application/octet-stream";
+
+    if (file instanceof File) {
+        body = Buffer.from(await file.arrayBuffer());
+        contentType = file.type;
+    } else if (file instanceof Blob) {
+        body = Buffer.from(await file.arrayBuffer());
+        contentType = "application/pdf";
+    } else {
+        body = file;
+    }
+
     const params: PutObjectCommandInput = {
         Bucket: env.BUCKET_NAME,
         Key: key,
         Body: body,
+        ContentType: contentType,
     };
 
     try {
         const res = await s3.send(new PutObjectCommand(params));
-
         return res;
     } catch (err) {
-        console.error("Error", err);
+        console.error("Error uploading to S3:", err);
+        throw err;
     }
 };
 

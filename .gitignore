@@ -36,17 +36,5 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# sst
-.sst
-
-# open-next
-.open-next
-
-# n
-DATABASE_URL
-
-# backup SQL
-backup.sql
-
-# venv
-.venv
+# prisma
+src/generated/prisma

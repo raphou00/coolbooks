@@ -31,15 +31,6 @@ export const skinToneOptions = [
     "brown",
 ] as const;
 export const artStyleOptions = ["cartoon", "comics", "anime"] as const;
-export const themesOptions = [
-    "hero",
-    "adventure",
-    "education",
-    "friendship",
-    "magic",
-    "bedtime",
-] as const;
-export const themesEnum = z.enum(themesOptions);
 
 const bookSchema = (t: T) =>
     z.object({
@@ -61,12 +52,6 @@ const bookSchema = (t: T) =>
         eyeColor: z.enum(eyeColorOptions, { message: t("messages.required") }),
         skinTone: z.enum(skinToneOptions, { message: t("messages.required") }),
         artStyle: z.enum(artStyleOptions, { message: t("messages.required") }),
-        themes: z
-            .array(themesEnum, {
-                message: t("messages.required"),
-            })
-            .min(1, { message: t("messages.required") }),
-        public: z.boolean(),
         prompt: z
             .string()
             .trim()

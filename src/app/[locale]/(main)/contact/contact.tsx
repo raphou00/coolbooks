@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 import { type ActionsState } from "@/lib/types";
@@ -38,8 +39,14 @@ const Page: React.FC = () => {
             <Form
                 title={t("title")}
                 logo={false}
-                className="px-2 md:px-5 lg:px-8 py-6 rounded-2xl max-w-lg"
+                className="md:px-5 lg:px-8 py-6 rounded-2xl max-w-lg"
             >
+                <Link
+                    href="mailto:coolbooks.app@gmail.com"
+                    className="link mx-auto"
+                >
+                    coolbooks.app@gmail.com
+                </Link>
                 <form
                     onSubmit={handleSubmit(submit)}
                     className="w-full space-y-2"

@@ -2,8 +2,8 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
     return {
-        name: "Cool Books",
-        short_name: "Cool Books",
+        name: "Coolbooks",
+        short_name: "Coolbooks",
         icons: [
             {
                 src: "/web-app-manifest-192x192.png",

@@ -1,83 +1,27 @@
 import { useTranslations } from "next-intl";
-import { Lock, Settings2, Coins, BookHeart, Home, Compass } from "lucide-react";
-import type { User } from "lucia";
 
-export const useGetLinks = (user: User | null) => {
+export const useGetLinks = () => {
     const t = useTranslations("links");
     return [
         {
             title: t("home"),
             path: "/",
-            icon: Home,
         },
         {
-            title: t("my-books"),
-            path: user ? "/studio" : "/login?redirect=/studio",
-            icon: BookHeart,
+            title: t("examples"),
+            path: "/#examples",
         },
         {
-            title: t("explore"),
-            path: "/search",
-            icon: Compass,
-        },
-    ];
-};
-
-export const useGetPlaceholders = () => {
-    const t = useTranslations("pages.home");
-    return [t("education"), t("hero"), t("adventure")];
-};
-
-export const useGetSorts = () => {
-    const t = useTranslations("links");
-    return [
-        {
-            title: t("latest"),
-            path: "latest",
+            title: t("create-book"),
+            path: "/#create-book",
         },
         {
-            title: t("oldest"),
-            path: "oldest",
+            title: t("how-it-works"),
+            path: "/#how-it-works",
         },
         {
-            title: t("popular"),
-            path: "popular",
-        },
-    ];
-};
-
-export const useGetAccountLinks = () => {
-    const t = useTranslations("links");
-    return [
-        {
-            title: t("profile"),
-            path: "/account/profile",
-            icon: Settings2,
-        },
-        {
-            title: t("password"),
-            path: "/account/password",
-            icon: Lock,
-        },
-        {
-            title: t("sessions"),
-            path: "/account/sessions",
-            icon: Lock,
-        },
-        {
-            title: t("billing"),
-            path: "/account/billing",
-            icon: Coins,
-        },
-        {
-            title: t("socials"),
-            path: "/account/socials",
-            icon: Coins,
-        },
-        {
-            title: t("delete-account"),
-            path: "/account/delete",
-            icon: Lock,
+            title: t("features"),
+            path: "/#features",
         },
     ];
 };
@@ -86,55 +30,20 @@ export const useGetFooterLinks = () => {
     const t = useTranslations("links");
     return [
         {
-            title: "Cool Books",
-            links: [
-                {
-                    title: t("home"),
-                    path: "/",
-                },
-                {
-                    title: t("my-books"),
-                    path: "/studio",
-                },
-                {
-                    title: t("pricing"),
-                    path: "/pricing",
-                },
-            ],
+            title: t("home"),
+            path: "/",
         },
         {
-            title: t("me"),
-            links: [
-                {
-                    title: t("profile"),
-                    path: "/account/profile",
-                },
-                {
-                    title: t("billing"),
-                    path: "/account/billing",
-                },
-                {
-                    title: t("favorites"),
-                    path: "/favorites",
-                },
-            ],
+            title: t("contact"),
+            path: "/contact",
         },
         {
-            title: t("legal"),
-            links: [
-                {
-                    title: t("privacy"),
-                    path: "/privacy",
-                },
-                {
-                    title: t("terms"),
-                    path: "/terms",
-                },
-                {
-                    title: t("contact"),
-                    path: "/contact",
-                },
-            ],
+            title: t("privacy"),
+            path: "/privacy",
+        },
+        {
+            title: t("terms"),
+            path: "/terms",
         },
     ];
 };

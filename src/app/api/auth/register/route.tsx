@@ -62,9 +62,10 @@ export const POST = async (req: NextRequest) => {
 
         return NextResponse.json({
             success: true,
-            redirect: "/",
+            message: t("messages.register-success"),
         });
-    } catch (_) {
+    } catch (err) {
+        console.error(err);
         return NextResponse.json({
             success: false,
             message: t("messages.server-error"),

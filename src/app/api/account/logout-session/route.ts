@@ -42,13 +42,14 @@ export const POST = async (req: NextRequest) => {
             },
         });
 
-        revalidatePath("/account/sessions");
+        revalidatePath("/account");
 
         return NextResponse.json({
             success: true,
             message: t("messages.session-deleted"),
         });
-    } catch (_) {
+    } catch (err) {
+        console.error(err);
         return NextResponse.json({
             success: false,
             message: t("messages.server-error"),
