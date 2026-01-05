@@ -61,5 +61,6 @@ export const handleCheckout = async (
         );
     } catch (err) {
         console.error(err);
+        throw err;
     }
 };

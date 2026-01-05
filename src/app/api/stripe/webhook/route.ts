@@ -42,7 +42,9 @@ export const POST = async (req: NextRequest) => {
         switch (event.type) {
             case "checkout.session.completed":
                 if (eventData.payment_status === "paid") {
-                    await handleCheckout(eventData, user);
+                    handleCheckout(eventData, user).catch((err) => {
+                        console.error("Checkout processing failed:", err);
+                    });
                 }
                 break;
 
