@@ -287,6 +287,7 @@ const lambda_handler = async (event) => {
 
     const body = JSON.stringify({
         bookId,
+        email: topic.email,
         title: plan.title,
         cover: coverKey,
         pages: pages

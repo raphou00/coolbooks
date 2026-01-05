@@ -10,20 +10,15 @@ import Receipt from "@/components/emails/receipt";
 
 export const POST = async (req: NextRequest) => {
     try {
-        const { session, user } = (await req.json()) as {
-            session: Stripe.Checkout.Session;
-            user: User | null;
-        };
-
-        const t = await getTranslations({ locale: user?.locale || "en" });
-
         const result = (await req.json()) as Book;
+
+        const t = await getTranslations({ locale: "en" });
 
         const blob = await exportPDF(result);
         const key = result.bookId + "/" + result.bookId + ".pdf";
         await putObject(blob, key);
 
-        const email = session.metadata!.email!;
+        const email = result.email;
         await sendEmail(
             email,
             env.SENDER_EMAIL,
