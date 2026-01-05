@@ -46,7 +46,7 @@ export const handleCheckout = async (
             ".pdf";
         await putObject(blob, key);
 
-        const email = user ? user.email : session.metadata?.email!;
+        const email = user ? user.email : session.metadata!.email!;
         await sendEmail(
             email,
             env.SENDER_EMAIL,
