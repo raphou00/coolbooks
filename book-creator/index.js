@@ -124,38 +124,38 @@ const createImage = async (
     base,
     title
 ) => {
-    // const content = [
-    //     {
-    //         type: "text",
-    //         text: promptImage(topic, artStyle, title),
-    //     },
-    // ];
+    const content = [
+        {
+            type: "text",
+            text: promptImage(topic, artStyle, title),
+        },
+    ];
 
-    // if (base) {
-    //     content.push({
-    //         type: "image_url",
-    //         image_url: {
-    //             url: base,
-    //         },
-    //     });
-    // }
+    if (base) {
+        content.push({
+            type: "image_url",
+            image_url: {
+                url: base,
+            },
+        });
+    }
 
-    // const completion = (await openai.chat.completions.create({
-    //     model: IMAGE_MODEL,
-    //     messages: [
-    //         {
-    //             role: "user",
-    //             content: content,
-    //         },
-    //     ],
-    // }));
+    const completion = (await openai.chat.completions.create({
+        model: IMAGE_MODEL,
+        messages: [
+            {
+                role: "user",
+                content: content,
+            },
+        ],
+    }));
 
-    // const image = completion.choices[0].message.images[0].image_url.url;
+    const image = completion.choices[0].message.images[0].image_url.url;
 
-    // const base64Data = image.replace(/^data:image\/\w+;base64,/, "");
-    // const buffer = Buffer.from(base64Data, "base64");
+    const base64Data = image.replace(/^data:image\/\w+;base64,/, "");
+    const buffer = Buffer.from(base64Data, "base64");
 
-    // await putObject(buffer, key);
+    await putObject(buffer, key);
 
     return key;
 };

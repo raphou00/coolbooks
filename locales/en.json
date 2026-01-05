@@ -338,10 +338,12 @@
             "link": "You can also copy and paste this link into your browser:"
         },
         "receipt": {
-            "title": "Your book is ready!",
-            "hello": "Hello {name}!",
-            "body": "Congratulations on purchasing your first book on Coolbooks : {title}.",
-            "link": "Download book"
+            "title": "Your book \"{title}\" is ready!",
+            "hello": "Hello!",
+            "body": "Congratulations on purchasing your first book : {title}.",
+            "link": "Download My Book",
+            "thanks": "Thank you for your trust 🩵.",
+            "best": "Best regards,\nThe Coolbooks Team"
         }
     },
     "messages": {

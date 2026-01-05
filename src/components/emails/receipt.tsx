@@ -4,28 +4,22 @@ import type { T } from "@/lib/types";
 
 type ReceiptEmailProps = {
     t: T;
-    name: string;
     title: string;
     pdf: string;
 };
 
-const Receipt: React.FC<ReceiptEmailProps> = async ({
-    t,
-    name,
-    title,
-    pdf,
-}) => {
+const Receipt: React.FC<ReceiptEmailProps> = async ({ t, title, pdf }) => {
     return (
         <Template
             t={t}
-            title={t("emails.receipt.title")}
+            title={t("emails.receipt.title", { title })}
             body={t("emails.receipt.body", { title })}
         >
             <Section>
                 <Container>
                     <Row className="my-6">
                         <Text className="text-xl font-bold">
-                            {t("emails.receipt.hello", { name })}
+                            {t("emails.receipt.hello")}
                         </Text>
                         <Text>{t("emails.receipt.body", { title })}</Text>
                     </Row>
@@ -36,6 +30,12 @@ const Receipt: React.FC<ReceiptEmailProps> = async ({
                         >
                             {t("emails.receipt.link")}
                         </Link>
+                    </Row>
+                    <Row className="my-6">
+                        <Text className="font-bold">
+                            {t("emails.receipt.thanks")}
+                        </Text>
+                        <Text>{t("emails.receipt.best")}</Text>
                     </Row>
                 </Container>
             </Section>

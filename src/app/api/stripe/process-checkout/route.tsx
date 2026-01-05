@@ -1,7 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server";
-import type Stripe from "stripe";
 import { getTranslations } from "next-intl/server";
-import type { User } from "@/lib/types";
 import env from "@/lib/env";
 import { putObject } from "@/lib/file";
 import sendEmail from "@/lib/email";
@@ -22,11 +20,10 @@ export const POST = async (req: NextRequest) => {
         await sendEmail(
             email,
             env.SENDER_EMAIL,
-            t("emails.receipt.title"),
+            t("emails.receipt.title", { title: result.title }),
             t("emails.receipt.body", { title: result.title }),
             <Receipt
                 t={t}
-                name={email}
                 title={result.title}
                 pdf={env.CLOUDFRONT_URL + "/" + key}
             />

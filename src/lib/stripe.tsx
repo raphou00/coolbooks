@@ -4,10 +4,6 @@ import Stripe from "stripe";
 import type { User } from "@/lib/types";
 import { title } from "@/config/seo";
 import env from "./env";
-import sendEmail from "./email";
-import { putObject } from "./file";
-import { exportPDF, type Book } from "./export";
-import Receipt from "@/components/emails/receipt";
 
 const client = new LambdaClient();
 

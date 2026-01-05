@@ -37,7 +37,7 @@ const Template: React.FC<TemplateProps> = async ({
                 theme: {
                     extend: {
                         colors: {
-                            primary: "#2a2a3b",
+                            primary: "#6bc4d9",
                         },
                     },
                 },
