@@ -1,7 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server";
-import db from "@/lib/db";
-import { exportPDF } from "@/lib/export";
 import { checkRateLimit, ratelimitPost } from "@/lib/rate-limiter";
+import env from "@/lib/env";
 
 export async function GET(req: NextRequest) {
     try {
@@ -29,34 +28,11 @@ export async function GET(req: NextRequest) {
             });
         }
 
-        const book = await db.book.findUnique({
-            where: {
-                id: bookId,
-            },
-            select: {
-                id: true,
-                title: true,
-                cover: true,
-                pages: {
-                    select: {
-                        id: true,
-                        text: true,
-                        image: true,
-                        color: true,
-                        number: true,
-                    },
-                },
-            },
-        });
-
-        if (!book) {
-            return NextResponse.json({
-                success: false,
-                message: "Book not found",
-            });
-        }
-
-        const blob = await exportPDF(book);
+        const response = await fetch(
+            `${env.NEXT_PUBLIC_CLOUDFRONT_URL}/${bookId}/${bookId}.pdf`
+        );
+        const buffer = await response.arrayBuffer();
+        const blob = new Blob([buffer], { type: "application/pdf" });
 
         if (!blob) {
             return NextResponse.json({

@@ -30,6 +30,7 @@ import bookSchema, {
     skinToneOptions,
     type BookSchema,
 } from "@/schema/book";
+import { Lock, Mail, Paintbrush, PenLine, User } from "lucide-react";
 
 const draggableCards = [
     {
@@ -38,7 +39,7 @@ const draggableCards = [
     },
     {
         image: "879ae571-6882-4e78-b32e-abb9964fcf3f/5cae381f-122d-4281-84ed-28878ff3da9a.png",
-        className: "absolute top-90 left-[7%] rotate-[-5deg]",
+        className: "absolute top-90 left-[3%] rotate-[-5deg]",
     },
     {
         image: "60fcc0bf-8d83-47f2-916b-3de8eaba8738/774abb4a-0c7d-47be-9251-688704e570b9.png",
@@ -50,7 +51,7 @@ const draggableCards = [
     },
     {
         image: "3795c5ed-37cc-4b0e-8623-d8f2d15bbcb2/97079ac2-4353-4c21-8c09-88de40b10e1f.png",
-        className: "absolute top-90 right-[5%] -rotate-[-8deg]",
+        className: "absolute top-90 right-[2%] -rotate-[-8deg]",
     },
     {
         image: "4a323aaf-4147-450e-ba37-241fbbf41363/16f954d2-b172-488f-aada-2f534df65f94.png",
@@ -64,9 +65,10 @@ const genderImages: Record<string, string> = {
 };
 
 const artStyleImages: Record<string, string> = {
-    cartoon: "/images/artstyles/cartoon.png",
-    comics: "/images/artstyles/comics.png",
-    anime: "/images/artstyles/anime.png",
+    cartoon: "🎨",
+    comics: "✨",
+    anime: "💥",
+    watercolor: "🎭",
 };
 
 const NewBook: React.FC = () => {
@@ -108,11 +110,18 @@ const NewBook: React.FC = () => {
         <>
             <form
                 onSubmit={handleSubmit(submit)}
-                className="w-full max-w-md mx-auto flex flex-col gap-y-6"
+                className="w-full max-w-x mx-auto flex flex-col gap-y-6"
             >
                 <FormReponse success={state.success} message={state.message} />
 
                 <div className="space-y-2">
+                    <span className="flex items-center gap-x-2 text-2xl px-1 font-bold mb-2">
+                        <div className="flex items-center justify-center size-12 bg-primary/20 rounded-field">
+                            <User className="size-7 text-primary" />
+                        </div>
+                        {t("child-details")}
+                    </span>
+
                     <FormInput
                         type="text"
                         label={t("child-name")}
@@ -137,7 +146,8 @@ const NewBook: React.FC = () => {
                                     className={cn(
                                         "cursor-pointer flex flex-col items-center bg-base-100 border-2 border-neutral/30 rounded-2xl p-2 transition",
                                         "hover:shadow-md relative group",
-                                        gender == g && "border-primary"
+                                        gender == g &&
+                                            "border-primary bg-primary/20"
                                     )}
                                 >
                                     <div className="absolute top-0 right-0 m-0.5">
@@ -205,21 +215,25 @@ const NewBook: React.FC = () => {
                 <div>
                     <div className="w-full text-sm">
                         <div className="w-full flex justify-between pb-1">
-                            <span className="label-text px-1 font-bold">
+                            <span className="flex items-center gap-x-2 text-2xl px-1 font-bold mb-2">
+                                <div className="flex items-center justify-center size-12 bg-secondary/20 rounded-field">
+                                    <Paintbrush className="size-7 text-secondary" />
+                                </div>
                                 {t("art-style")}
                             </span>
                             <span className="label-text-alt text-error">
                                 {errors.artStyle?.message}
                             </span>
                         </div>
-                        <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                        <div className="grid grid-cols-2 gap-3">
                             {artStyleOptions.map((style) => (
                                 <label
                                     key={style}
                                     className={cn(
                                         "cursor-pointer flex flex-col items-center bg-base-100 border-2 border-neutral/30 rounded-box p-2 transition",
                                         "hover:shadow-md relative group",
-                                        artStyle === style && "border-primary"
+                                        artStyle === style &&
+                                            "border-primary bg-primary/20"
                                     )}
                                 >
                                     <div className="absolute top-0 right-0 m-1">
@@ -234,15 +248,14 @@ const NewBook: React.FC = () => {
                                         className="absolute left-2 top-2 opacity-0"
                                         {...register("artStyle")}
                                     />
-                                    <Image
-                                        src={artStyleImages[style]}
-                                        alt={style}
-                                        width={256}
-                                        height={256}
-                                        className="size-16 object-cover mb-2 rounded-lg"
-                                    />
-                                    <span className="capitalize text-sm text-center">
+                                    <span className="text-lg">
+                                        {artStyleImages[style]}
+                                    </span>
+                                    <span className="capitalize text-base text-center">
                                         {t(style)}
+                                    </span>
+                                    <span className="text-sm text-center">
+                                        {t(`${style}-description`)}
                                     </span>
                                 </label>
                             ))}
@@ -251,6 +264,12 @@ const NewBook: React.FC = () => {
                 </div>
 
                 <div>
+                    <span className="flex items-center gap-x-2 text-2xl px-1 font-bold mb-2">
+                        <div className="flex items-center justify-center size-12 bg-green-500/20 rounded-field">
+                            <PenLine className="size-7 text-green-500" />
+                        </div>
+                        {t("story-idea")}
+                    </span>
                     <label className="w-full text-sm">
                         <div className="w-full flex justify-between pb-1">
                             <span className="label-text px-1 font-bold">
@@ -267,6 +286,28 @@ const NewBook: React.FC = () => {
                             {...register("prompt")}
                         />
                     </label>
+                </div>
+
+                <div>
+                    <span className="flex items-center gap-x-2 text-2xl px-1 font-bold mb-2">
+                        <div className="flex items-center justify-center size-12 bg-info/20 rounded-field">
+                            <Mail className="size-7 text-info" />
+                        </div>
+                        {t("email")}
+                    </span>
+                    <FormInput
+                        type="text"
+                        label=""
+                        placeholder={t("email-placeholder")}
+                        error={errors.email?.message}
+                        {...register("email")}
+                    />
+                    <div className="flex items-center justify-left gap-x-2 mt-2">
+                        <Lock className="size-5 text-neutral" />
+                        <span className="text-sm text-neutral/80">
+                            {t("email-info")}
+                        </span>
+                    </div>
                 </div>
 
                 <div className="bg-info/20 border border-info/20 rounded-box p-6 divide-x">

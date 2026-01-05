@@ -30,10 +30,6 @@ export const useGetFooterLinks = () => {
     const t = useTranslations("links");
     return [
         {
-            title: t("home"),
-            path: "/",
-        },
-        {
             title: t("contact"),
             path: "/contact",
         },

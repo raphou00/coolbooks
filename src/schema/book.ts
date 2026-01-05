@@ -30,7 +30,12 @@ export const skinToneOptions = [
     "olive",
     "brown",
 ] as const;
-export const artStyleOptions = ["cartoon", "comics", "anime"] as const;
+export const artStyleOptions = [
+    "cartoon",
+    "comics",
+    "anime",
+    "watercolor",
+] as const;
 
 const bookSchema = (t: T) =>
     z.object({
@@ -61,6 +66,11 @@ const bookSchema = (t: T) =>
             .min(minPromptLength, {
                 message: t("messages.min", { min: minPromptLength }),
             })
+            .min(1, { message: t("messages.required") }),
+        email: z
+            .string()
+            .trim()
+            .email({ message: t("messages.invalid-email") })
             .min(1, { message: t("messages.required") }),
     });
 

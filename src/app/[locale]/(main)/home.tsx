@@ -2,8 +2,10 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Gamja_Flower as Font } from "next/font/google";
+import { useSearchParams } from "next/navigation";
+import { DynaPuff as Font } from "next/font/google";
 import { useTranslations } from "next-intl";
+import { useState } from "react";
 import {
     AlertCircle,
     BookOpen,
@@ -15,17 +17,16 @@ import {
     Users,
     Wand2,
 } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { price } from "@/config/stripe";
+import { cn, formatAmountForDisplay } from "@/lib/utils";
 import Title from "@/components/ui/title";
 import NewBook from "@/components/ui/new";
 import NextImage from "@/components/ui/image";
 import Modal from "@/components/ui/modal";
-import { useSearchParams } from "next/navigation";
-import { useState } from "react";
 
 const font = Font({
     subsets: ["latin"],
-    weight: "400",
+    weight: "500",
 });
 
 type BooksProps = {
@@ -45,35 +46,75 @@ const Home: React.FC<BooksProps> = ({ books }) => {
             <Image
                 src="/images/home.png"
                 alt=""
-                className="absolute inset-0 h-screen w-screen object-cover z-0 brightness-90"
+                className="absolute inset-0 h-[calc(100vh/1.3)] w-screen object-cover z-0 brightness-90"
                 width={1920}
                 height={960}
             />
             <section
                 id="home"
-                className="relative h-[calc(100vh-56px)] pt-6 flex flex-col justify-censter items-center gap-y-2 z-10 mb-6! text-black"
+                className="relative h-[calc(100vh/1.5)] flex flex-col justify-between pt-6 z-10 mb-6! text-black"
             >
-                <div className="px-2 py-0.5 bg-secondary/20 glass border-2 border-neutral/10 rounded-full text-center">
-                    {t("hero.chip")}
+                <div className="flex flex-col justify-censter items-center gap-y-2">
+                    <div className="px-2 py-0.5 bg-secondary/20 glass border-2 border-neutral/10 rounded-full text-center">
+                        {t("hero.chip")}
+                    </div>
+                    <Title
+                        className={cn(
+                            "text-4xl md:text-5xl lg:text-6xl my-2 tracking-tight text-center text-balance",
+                            font.className
+                        )}
+                        text={t("hero.title")}
+                    />
+                    <p className="text-lg md:text-xl text-center leading-relaxed max-w-xl">
+                        {t("hero.description")}
+                    </p>
+                    <div className="flex flex-col sm:flex-row gap-4">
+                        <Link
+                            href="/#create-book"
+                            className="btn btn-xl h-12 rounded-full border-4 border-secondary bg-white text-black flex items-center group"
+                        >
+                            <span className="text-lg">
+                                {t("hero.create")}{" "}
+                                {formatAmountForDisplay(price)}
+                            </span>
+                            <ChevronRightIcon className="transition group-hover:translate-x-2" />
+                        </Link>
+                    </div>
                 </div>
-                <Title
-                    className={cn(
-                        "text-4xl md:text-5xl lg:text-6xl my-2 tracking-tight text-center text-balance",
-                        font.className
-                    )}
-                    text={t("hero.title")}
-                />
-                <p className="text-lg md:text-xl text-center leading-relaxed max-w-xl">
-                    {t("hero.description")}
-                </p>
-                <div className="flex flex-col sm:flex-row gap-4">
-                    <Link
-                        href="/#create-book"
-                        className="btn btn-xl h-12 rounded-full border-4 border-secondary bg-white text-black flex items-center group"
-                    >
-                        <span className="text-lg">{t("hero.create")}</span>
-                        <ChevronRightIcon className="transition group-hover:translate-x-2" />
-                    </Link>
+
+                <div className="flex flex-col justify-center gap-4 p-4 text-sm text-neutral rounded-field border border-neutral/20 bg-base-100/80 w-fit mx-auto">
+                    <div className="flex items-center justify-center gap-x-px lg:gap-x-2">
+                        <div className="rating rating-lg rating-half">
+                            <div className="mask mask-star-2 mask-half-1 bg-yellow-500" />
+                            <div className="mask mask-star-2 mask-half-2 bg-yellow-500" />
+                            <div className="mask mask-star-2 mask-half-1 bg-yellow-500" />
+                            <div className="mask mask-star-2 mask-half-2 bg-yellow-500" />
+                            <div className="mask mask-star-2 mask-half-1 bg-yellow-500" />
+                            <div className="mask mask-star-2 mask-half-2 bg-yellow-500" />
+                            <div className="mask mask-star-2 mask-half-1 bg-yellow-500" />
+                            <div className="mask mask-star-2 mask-half-2 bg-yellow-500" />
+                            <div
+                                className="mask mask-star-2 mask-half-1 bg-yellow-500"
+                                aria-current="true"
+                            />
+                            <div className="mask mask-star-2 mask-half-2 bg-yellow-500" />
+                        </div>
+                        {t("hero.rating")}
+                    </div>
+                    <div className="flex justify-center gap-x-px lg:gap-x-4">
+                        <div className="flex items-center gap-x-2">
+                            <span className="status status-success" />
+                            <span>{t("hero.pdf")}</span>
+                        </div>
+                        <div className="flex items-center gap-x-2">
+                            <span className="status status-secondary" />
+                            <span>{t("hero.style")}</span>
+                        </div>
+                        <div className="flex items-center gap-x-2">
+                            <span className="status status-primary" />
+                            <span>{t("hero.personalized")}</span>
+                        </div>
+                    </div>
                 </div>
             </section>
 
@@ -125,7 +166,7 @@ const Home: React.FC<BooksProps> = ({ books }) => {
                     className="text-3xl lg:text-4xl"
                 />
 
-                <div className="bg-secondary/5 rounded-3xl px-2 sm:px-6 md:px-12 py-8 m-2 w-full max-w-xl mx-auto">
+                <div className="bg-secondary/5 rounded-3xl px-2 sm:px-6 md:px-12 py-8 m-2 w-full max-w-2xl mx-auto">
                     <NewBook />
                 </div>
             </section>

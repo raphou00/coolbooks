@@ -1,6 +1,7 @@
 {
     "common": {
         "description": "Create magical, personalized storybooks for you child. Every story is unique and filled with adventure.",
+        "made-with": "Made with 🩵 for your kids",
         "copyright": "All Rights Reserved",
         "no-sessions-results": "No sessions found",
         "no-books-results": "No books found",
@@ -145,7 +146,11 @@
                 "title": "Make your child the hero of their own story !",
                 "description": "Create magical, personalized storybooks for you child. Every story is unique and filled with adventure.",
                 "chip": "⭐️ Only 1 minute to create your book !",
-                "create": "Create Your Story"
+                "create": "Create My Story",
+                "rating": "4.7/5 • More than 1000 trust our product",
+                "pdf": "PDF in 1 minute",
+                "style": "4 styles uniques",
+                "personalized": "100% personnalisé"
             },
             "examples": {
                 "badge": "Examples",
@@ -168,7 +173,7 @@
                 },
                 "step3": {
                     "title": "Read and enjoy",
-                    "description": "Download instantly or order a printed book to treasure forever"
+                    "description": "Receive directly the book to your email to treasure forever"
                 }
             },
             "features": {
@@ -218,9 +223,12 @@
             "title": "New Book",
             "description": "Create a new book with only one prompt",
             "submit": "Generate",
-            "child-details": "📖 Tell us about your child",
-            "story-style": "🎨 Describe your story style",
-            "story-idea": "📝 Describe your story idea",
+            "child-details": "Tell us about your child",
+            "story-style": " Describe your story style",
+            "story-idea": "Describe your story idea",
+            "email": "Your email",
+            "email-placeholder": "Enter your e-mail...",
+            "email-info": "Your book will be sent to you by email after it has been generated.",
             "child-name": "Child Name",
             "child-name-placeholder": "Your child's name...",
             "age": "Age",
@@ -230,8 +238,8 @@
             "skin-tone": "Skin Tone",
             "themes": "Themes",
             "art-style": "Art Style",
-            "prompt": "Describe your story",
-            "prompt-placeholder": "Toto is playing football, in the park with his friends, warm colors, fun...",
+            "prompt": "Describe the adventure in 1-2 sentences.",
+            "prompt-placeholder": "Ex: Toto is playing football, in the park with his friends, warm colors, fun...",
             "generate": "Generate",
             "boy": "Boy",
             "girl": "Girl",
@@ -250,6 +258,11 @@
             "cartoon": "Cartoon",
             "comics": "comics",
             "anime": "Anime",
+            "watercolor": "Watercolor",
+            "cartoon-description": "Colorful and cheerful",
+            "comics-description": "Dynamic superhero",
+            "anime-description": "Japanese manga style",
+            "watercolor-description": "Gentle and poetic",
             "price": "Price",
             "delivery": "Delivery",
             "time": "Time",

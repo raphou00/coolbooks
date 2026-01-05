@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { redirect } from "next/navigation";
 import { motion, useMotionValue } from "framer-motion";
-import { Download, Trash2 } from "lucide-react";
+import { ChevronLeft, ChevronRight, Download, Trash2 } from "lucide-react";
 import toast from "react-hot-toast";
 import saveAs from "file-saver";
 import { cn, requestAPI, sortPages } from "@/lib/utils";
@@ -90,6 +90,14 @@ const Book: React.FC<BookProps> = ({ book }) => {
         }
     };
 
+    const handlePrev = () => {
+        setImgIndex((pv) => Math.max(0, pv - 1));
+    };
+
+    const handleNext = () => {
+        setImgIndex((pv) => Math.min(pages.length - 1, pv + 1));
+    };
+
     return (
         <>
             <DeleteBook
@@ -115,8 +123,11 @@ const Book: React.FC<BookProps> = ({ book }) => {
                         onClick={exportPDF}
                         className="btn btn-circle btn-primary"
                         title={t("download-pdf")}
+                        disabled={loadingPdf}
                     >
-                        <Download className="size-6" />
+                        {loadingPdf ?
+                            <div className="loading" />
+                        :   <Download className="size-6" />}
                     </button>
                 </div>
             </div>
@@ -143,6 +154,40 @@ const Book: React.FC<BookProps> = ({ book }) => {
                 >
                     <Pages pages={pages} imgIndex={imgIndex} />
                 </motion.div>
+            </div>
+
+            <div className="mx-auto w-fit flex items-center justify-between gap-x-4 mt-6">
+                <button
+                    className="btn btn-circle flex items-center gap-1"
+                    onClick={handlePrev}
+                    disabled={imgIndex === 0}
+                >
+                    <ChevronLeft className="size-5" />
+                </button>
+                <div className="flex w-full justify-center gap-2">
+                    {Array.from({ length: pages.length }).map((_, idx) => {
+                        return (
+                            <button
+                                key={idx}
+                                onClick={() => setImgIndex(idx)}
+                                className={cn(
+                                    "h-3 w-3 rounded-full transition-colors",
+                                    idx === imgIndex ? "bg-primary" : (
+                                        "bg-accent"
+                                    )
+                                )}
+                                aria-label={`Go to page ${idx + 1}`}
+                            />
+                        );
+                    })}
+                </div>
+                <button
+                    className="btn btn-circle flex items-center gap-1"
+                    onClick={handleNext}
+                    disabled={imgIndex === pages.length - 1}
+                >
+                    <ChevronRight className="size-5" />
+                </button>
             </div>
         </>
     );
