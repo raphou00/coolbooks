@@ -17,6 +17,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { type ActionsState } from "@/lib/types";
 import { cn, formatAmountForDisplay, getImage, requestAPI } from "@/lib/utils";
+import { price } from "@/config/stripe";
 import FormReponse from "@/components/ui/form-response";
 import FormInput from "@/components/ui/form-input";
 import FormSelect from "@/components/ui/form-select";
@@ -317,7 +318,7 @@ const NewBook: React.FC = () => {
                                 {t("price")}
                             </span>
                             <span className="text-base">
-                                {formatAmountForDisplay(14.99)}
+                                {formatAmountForDisplay(price)}
                             </span>
                         </div>
 

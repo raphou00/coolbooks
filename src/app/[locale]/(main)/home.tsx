@@ -83,7 +83,7 @@ const Home: React.FC<BooksProps> = ({ books }) => {
                 </div>
 
                 <div className="flex flex-col justify-center gap-4 p-4 text-sm text-neutral rounded-field border border-neutral/20 bg-base-100/80 w-fit mx-auto">
-                    <div className="flex items-center justify-center gap-x-px lg:gap-x-2">
+                    <div className="flex items-center justify-center gap-x-2 lg:gap-x-2">
                         <div className="rating rating-lg rating-half">
                             <div className="mask mask-star-2 mask-half-1 bg-yellow-500" />
                             <div className="mask mask-star-2 mask-half-2 bg-yellow-500" />
