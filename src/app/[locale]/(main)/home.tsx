@@ -46,7 +46,7 @@ const Home: React.FC<BooksProps> = ({ books }) => {
             <Image
                 src="/images/home.png"
                 alt=""
-                className="absolute inset-0 h-[calc(100vh/1.3)] w-screen object-cover z-0 brightness-90"
+                className="absolute inset-0 h-[calc(100vh/1.3)] w-screen object-cover z-0 blur-sm"
                 width={1920}
                 height={960}
             />
@@ -84,7 +84,7 @@ const Home: React.FC<BooksProps> = ({ books }) => {
 
                 <div className="flex flex-col justify-center gap-4 p-4 text-sm text-neutral rounded-field border border-neutral/20 bg-base-100/80 w-fit mx-auto">
                     <div className="flex items-center justify-center gap-x-2 lg:gap-x-2">
-                        <div className="rating rating-lg rating-half">
+                        <div className="rating rating-md rating-half">
                             <div className="mask mask-star-2 mask-half-1 bg-yellow-500" />
                             <div className="mask mask-star-2 mask-half-2 bg-yellow-500" />
                             <div className="mask mask-star-2 mask-half-1 bg-yellow-500" />
