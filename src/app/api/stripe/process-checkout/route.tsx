@@ -1,15 +1,12 @@
 import { type NextRequest, NextResponse } from "next/server";
 import type Stripe from "stripe";
-import type { User } from "@/lib/types";
 import { getTranslations } from "next-intl/server";
-import { LambdaClient, InvokeCommand } from "@aws-sdk/client-lambda";
+import type { User } from "@/lib/types";
 import env from "@/lib/env";
-import { exportPDF, type Book } from "@/lib/export";
 import { putObject } from "@/lib/file";
 import sendEmail from "@/lib/email";
+import { exportPDF, type Book } from "@/lib/export";
 import Receipt from "@/components/emails/receipt";
-
-const client = new LambdaClient();
 
 export const POST = async (req: NextRequest) => {
     try {
@@ -20,27 +17,13 @@ export const POST = async (req: NextRequest) => {
 
         const t = await getTranslations({ locale: user?.locale || "en" });
 
-        const command = new InvokeCommand({
-            FunctionName: env.BOOK_CREATOR_LAMBDA_ARN,
-            InvocationType: "RequestResponse",
-            Payload: Buffer.from(
-                JSON.stringify({ userId: user?.id, topic: session.metadata })
-            ),
-        });
-
-        const response = await client.send(command);
-        const payload = JSON.parse(new TextDecoder().decode(response.Payload));
-        const result = JSON.parse(payload.body) as Book;
+        const result = (await req.json()) as Book;
 
         const blob = await exportPDF(result);
-        const key =
-            (result as unknown as { bookId: string }).bookId +
-            "/" +
-            crypto.randomUUID() +
-            ".pdf";
+        const key = result.bookId + "/" + result.bookId + ".pdf";
         await putObject(blob, key);
 
-        const email = user ? user.email : session.metadata!.email!;
+        const email = session.metadata!.email!;
         await sendEmail(
             email,
             env.SENDER_EMAIL,

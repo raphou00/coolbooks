@@ -24,13 +24,21 @@ export const handleCheckout = async (
     user: User | null
 ) => {
     try {
-        fetch(`${env.APP_URL}/api/stripe/process-checkout`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ session: session, user }),
-        }).catch((err) => {
-            console.error("Failed to invoke process-checkout:", err);
+        const t = await getTranslations({ locale: user?.locale || "en" });
+
+        const command = new InvokeCommand({
+            FunctionName: env.BOOK_CREATOR_LAMBDA_ARN,
+            InvocationType: "Event",
+            Payload: Buffer.from(
+                JSON.stringify({
+                    appUrl: env.APP_URL + "/api/stripe/process-checkout",
+                    userId: user?.id,
+                    topic: session.metadata,
+                })
+            ),
         });
+
+        await client.send(command);
     } catch (err) {
         console.error(err);
         throw err;

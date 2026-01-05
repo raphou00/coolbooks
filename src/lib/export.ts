@@ -5,6 +5,7 @@ import { domain } from "@/config/seo";
 import { sortPages } from "./utils";
 
 export type Book = {
+    bookId: string;
     title: string;
     cover: string;
     pages: {

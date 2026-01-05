@@ -234,7 +234,7 @@ const updateBookGenerating = async (bookId, generating) => {
 
 
 const lambda_handler = async (event) => {
-    const { userId, topic } = event;
+    const { appUrl, userId, topic } = event;
 
     const bookId = crypto.randomUUID();
     const plan = await createPlan(topic);
@@ -285,14 +285,21 @@ const lambda_handler = async (event) => {
 
     await updateBookGenerating(bookId, false);
 
+    const body = JSON.stringify({
+        bookId,
+        title: plan.title,
+        cover: coverKey,
+        pages: pages
+    });
+
+    await fetch(appUrl, {
+        method: "POST",
+        body,
+    });
+
     return {
         statusCode: 201,
-        body: JSON.stringify({
-            bookId,
-            title: plan.title,
-            cover: coverKey,
-            pages: pages
-        })
+        body,
     };
 };
 
