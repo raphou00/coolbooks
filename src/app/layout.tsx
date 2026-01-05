@@ -37,7 +37,7 @@ const generateMetadata = async (): Promise<Metadata> => {
             description: t("description"),
             images: [
                 {
-                    url: "/images/og.jpg",
+                    url: "/og.png",
                 },
             ],
         },

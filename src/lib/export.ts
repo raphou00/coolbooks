@@ -7,6 +7,7 @@ import { sortPages } from "./utils";
 export type Book = {
     bookId: string;
     email: string;
+    locale: string;
     title: string;
     cover: string;
     pages: {

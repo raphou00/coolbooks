@@ -10,7 +10,7 @@ export const POST = async (req: NextRequest) => {
     try {
         const result = (await req.json()) as Book;
 
-        const t = await getTranslations({ locale: "en" });
+        const t = await getTranslations({ locale: result.locale });
 
         const blob = await exportPDF(result);
         const key = result.bookId + "/" + result.bookId + ".pdf";

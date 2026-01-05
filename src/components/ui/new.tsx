@@ -298,7 +298,7 @@ const NewBook: React.FC = () => {
                     </span>
                     <FormInput
                         type="text"
-                        label=""
+                        label={t("email")}
                         placeholder={t("email-placeholder")}
                         error={errors.email?.message}
                         {...register("email")}

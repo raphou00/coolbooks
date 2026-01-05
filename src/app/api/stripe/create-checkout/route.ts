@@ -62,6 +62,7 @@ export const POST = async (req: NextRequest) => {
 
         const metadata = {
             userId: user?.user?.id || null,
+            locale: locale,
             ...body,
         };
 
@@ -70,7 +71,9 @@ export const POST = async (req: NextRequest) => {
                 {
                     price_data: {
                         product_data: {
-                            name: "Create Your Own Personalized Book",
+                            name: t("common.name"),
+                            description: t("common.description"),
+                            images: [env.APP_URL + "/og.png"],
                         },
                         currency: currency,
                         unit_amount: formatAmountForStripe(price),
