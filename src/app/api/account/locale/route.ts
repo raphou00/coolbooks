@@ -31,7 +31,6 @@ export const POST = async (req: NextRequest) => {
         if (!user?.user) {
             return NextResponse.json({
                 success: false,
-                message: t("messages.unauthorized"),
             });
         }
 

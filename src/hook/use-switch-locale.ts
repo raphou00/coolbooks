@@ -12,6 +12,7 @@ const useSwitchLocale = () => {
             "/api/account/locale",
             JSON.stringify({ locale })
         );
+        router.refresh();
     };
 
     return switchLocale;

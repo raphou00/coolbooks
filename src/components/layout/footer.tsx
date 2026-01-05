@@ -13,10 +13,10 @@ const Footer: React.FC = () => {
     const footerLinks = useGetFooterLinks();
 
     return (
-        <footer className="w-full max-w-8xl mx-auto my-10 space-y-8">
-            <div className="w-full grid grid-cols-1 lg:grid-cols-3">
-                <div className="w-full flex items-center justify-center gap-2">
-                    <Logo className="h-14" />
+        <footer className="w-full mx-auto max-w-8xl px-4 md:px-6 lg:px-8 xl:px-12 my-10 space-y-8">
+            <div className="w-full grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div className="flex items-center justify-start max-lg:justify-center">
+                    <Logo className="h-14 mr-2" />
                     <LogoText className="h-12" />
                 </div>
 
@@ -34,7 +34,7 @@ const Footer: React.FC = () => {
                     ))}
                 </div>
 
-                <div className="flex items-center justify-center">
+                <div className="flex items-center justify-end max-lg:justify-center">
                     {t("common.made-with")}
                 </div>
             </div>

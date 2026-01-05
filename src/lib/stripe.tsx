@@ -1,4 +1,3 @@
-import { getTranslations } from "next-intl/server";
 import { LambdaClient, InvokeCommand } from "@aws-sdk/client-lambda";
 import Stripe from "stripe";
 import type { User } from "@/lib/types";
@@ -20,8 +19,6 @@ export const handleCheckout = async (
     user: User | null
 ) => {
     try {
-        const t = await getTranslations({ locale: user?.locale || "en" });
-
         const command = new InvokeCommand({
             FunctionName: env.BOOK_CREATOR_LAMBDA_ARN,
             InvocationType: "Event",

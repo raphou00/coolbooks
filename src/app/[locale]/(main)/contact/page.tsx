@@ -1,7 +1,8 @@
 import { type Metadata } from "next";
+import { getTranslations } from "next-intl/server";
+import env from "@/lib/env";
 import Main from "@/components/layout/main";
 import Contact from "./contact";
-import { getTranslations } from "next-intl/server";
 
 const generateMetadata = async (): Promise<Metadata> => {
     const t = await getTranslations("pages");
@@ -14,7 +15,7 @@ const generateMetadata = async (): Promise<Metadata> => {
 const Page = async () => {
     return (
         <Main>
-            <Contact />
+            <Contact senderEmail={env.SENDER_EMAIL} />
         </Main>
     );
 };

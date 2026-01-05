@@ -12,7 +12,11 @@ import FormButton from "@/components/ui/form-button";
 import FormReponse from "@/components/ui/form-response";
 import { type ContactSchema } from "@/schema/contact";
 
-const Page: React.FC = () => {
+type ContactProps = {
+    senderEmail: string;
+};
+
+const Page: React.FC<ContactProps> = ({ senderEmail }) => {
     const t = useTranslations("pages.contact");
     const [state, setState] = useState<ActionsState<ContactSchema>>({
         success: false,
@@ -41,11 +45,8 @@ const Page: React.FC = () => {
                 logo={false}
                 className="md:px-5 lg:px-8 py-6 rounded-2xl max-w-lg"
             >
-                <Link
-                    href="mailto:coolbooks.app@gmail.com"
-                    className="link mx-auto"
-                >
-                    coolbooks.app@gmail.com
+                <Link href={"mailto:" + senderEmail} className="link mx-auto">
+                    {senderEmail}
                 </Link>
                 <form
                     onSubmit={handleSubmit(submit)}
