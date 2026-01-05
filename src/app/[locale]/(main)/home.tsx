@@ -18,9 +18,9 @@ import {
     Wand2,
 } from "lucide-react";
 import { price } from "@/config/stripe";
-import { cn, formatAmountForDisplay } from "@/lib/utils";
+import { capitalize, cn, formatAmountForDisplay } from "@/lib/utils";
 import Title from "@/components/ui/title";
-import NewBook from "@/components/ui/new";
+import NewBook, { artStyleImages } from "@/components/ui/new";
 import NextImage from "@/components/ui/image";
 import Modal from "@/components/ui/modal";
 
@@ -34,6 +34,7 @@ type BooksProps = {
         id: string;
         title: string;
         cover: string;
+        artStyle: string;
     }[];
 };
 
@@ -46,7 +47,7 @@ const Home: React.FC<BooksProps> = ({ books }) => {
             <Image
                 src="/images/home.png"
                 alt=""
-                className="absolute inset-0 h-[calc(100vh/1.3)] w-screen object-cover z-0 blur-sm"
+                className="absolute inset-0 h-[calc(100vh/1.3)] w-screen object-cover z-0 brightness-90 blur-xs"
                 width={1920}
                 height={960}
             />
@@ -58,14 +59,15 @@ const Home: React.FC<BooksProps> = ({ books }) => {
                     <div className="px-2 py-0.5 bg-secondary/20 glass border-2 border-neutral/10 rounded-full text-center">
                         {t("hero.chip")}
                     </div>
-                    <Title
+                    <h1
                         className={cn(
                             "text-4xl md:text-5xl lg:text-6xl my-2 tracking-tight text-center text-balance",
                             font.className
                         )}
-                        text={t("hero.title")}
-                    />
-                    <p className="text-lg md:text-xl text-center leading-relaxed max-w-xl">
+                    >
+                        {t("hero.title")}
+                    </h1>
+                    <p className="text-lg md:text-xl text-center max-w-xl">
                         {t("hero.description")}
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4">
@@ -142,6 +144,10 @@ const Home: React.FC<BooksProps> = ({ books }) => {
                                         alt={book.title}
                                         isCover
                                     />
+                                    <div className="absolute right-0 bottom-0 badge badge-secondary badge-lg gap-x-1">
+                                        {artStyleImages[book.artStyle]}{" "}
+                                        {capitalize(book.artStyle)}
+                                    </div>
                                 </div>
                                 <div className="flex justify-center items-center text-sm lg:text-base font-bold mt-2">
                                     <h2 className="text-left truncate w-full">

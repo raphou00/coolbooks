@@ -65,9 +65,9 @@ const genderImages: Record<string, string> = {
     girl: "👧",
 };
 
-const artStyleImages: Record<string, string> = {
+export const artStyleImages: Record<string, string> = {
     cartoon: "🎨",
-    comics: "✨",
+    comics: "🧚🏻",
     anime: "💥",
     watercolor: "🎭",
 };
@@ -252,7 +252,7 @@ const NewBook: React.FC = () => {
                                     <span className="text-lg">
                                         {artStyleImages[style]}
                                     </span>
-                                    <span className="capitalize text-base text-center">
+                                    <span className="capitalize text-base text-center font-bold">
                                         {t(style)}
                                     </span>
                                     <span className="text-sm text-center">

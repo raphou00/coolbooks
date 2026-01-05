@@ -115,7 +115,7 @@ export const DELETE = async (req: NextRequest) => {
             },
         });
 
-        await deleteObject("/" + book.id);
+        await deleteObject(book.id);
 
         return NextResponse.json({
             success: true,

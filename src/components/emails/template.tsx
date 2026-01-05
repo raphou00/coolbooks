@@ -57,7 +57,7 @@ const Template: React.FC<TemplateProps> = async ({
                             />
                         </Section>
 
-                        <Heading className="mx-0 my-4 p-0 text-3xl font-bold text-primary">
+                        <Heading className="mx-0 my-4 p-0 text-3xl font-bold">
                             {title}
                         </Heading>
 
