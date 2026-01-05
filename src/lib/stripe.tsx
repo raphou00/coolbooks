@@ -24,41 +24,13 @@ export const handleCheckout = async (
     user: User | null
 ) => {
     try {
-        const t = await getTranslations({ locale: user?.locale || "en" });
-
-        const command = new InvokeCommand({
-            FunctionName: env.BOOK_CREATOR_LAMBDA_ARN,
-            InvocationType: "RequestResponse",
-            Payload: Buffer.from(
-                JSON.stringify({ userId: user?.id, topic: session.metadata })
-            ),
+        fetch(`${env.APP_URL}/api/stripe/process-checkout`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ session: session, user }),
+        }).catch((err) => {
+            console.error("Failed to invoke process-checkout:", err);
         });
-
-        const response = await client.send(command);
-        const payload = JSON.parse(new TextDecoder().decode(response.Payload));
-        const result = JSON.parse(payload.body) as Book;
-
-        const blob = await exportPDF(result);
-        const key =
-            (result as unknown as { bookId: string }).bookId +
-            "/" +
-            crypto.randomUUID() +
-            ".pdf";
-        await putObject(blob, key);
-
-        const email = user ? user.email : session.metadata!.email!;
-        await sendEmail(
-            email,
-            env.SENDER_EMAIL,
-            t("emails.receipt.title"),
-            t("emails.receipt.body", { title: result.title }),
-            <Receipt
-                t={t}
-                name={email}
-                title={result.title}
-                pdf={env.CLOUDFRONT_URL + "/" + key}
-            />
-        );
     } catch (err) {
         console.error(err);
         throw err;
