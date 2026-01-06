@@ -91,14 +91,14 @@ const Home: React.FC<BooksProps> = ({ books }) => {
                         <motion.div
                             className="absolute -z-10 right-0 top-0"
                             animate={{ y: [0, -20, 0] }}
-                            transition={{ duration: 3, repeat: Infinity }}
+                            transition={{ duration: 9, repeat: Infinity }}
                         >
                             <Star className="w-12 h-12 text-yellow-300 fill-yellow-100 rotate-12 drop-shadow-lg" />
                         </motion.div>
                         <motion.div
                             className="absolute -z-10 left-0 bottom-0"
                             animate={{ y: [0, -30, 0] }}
-                            transition={{ duration: 4, repeat: Infinity }}
+                            transition={{ duration: 8, repeat: Infinity }}
                         >
                             <Sparkles className="w-12 h-12 text-indigo-300 fill-indigo-100 rotate-12 drop-shadow-lg" />
                         </motion.div>
@@ -128,7 +128,7 @@ const Home: React.FC<BooksProps> = ({ books }) => {
                         height={560}
                         className="w-full aspect-video max-w-md"
                         animate={{ y: [0, -30, 0] }}
-                        transition={{ duration: 4, repeat: Infinity }}
+                        transition={{ duration: 9, repeat: Infinity }}
                     />
                     <Image
                         src="/images/book-bed.png"
@@ -140,21 +140,21 @@ const Home: React.FC<BooksProps> = ({ books }) => {
                     <motion.div
                         className="absolute -z-10 -left-16 top-0"
                         animate={{ y: [0, -35, 0] }}
-                        transition={{ duration: 5, repeat: Infinity }}
+                        transition={{ duration: 7, repeat: Infinity }}
                     >
                         <Zap className="w-12 h-12 text-blue-300 fill-blue-100 -rotate-12 drop-shadow-lg" />
                     </motion.div>
                     <motion.div
                         className="absolute -z-10 right-0 -bottom-4"
                         animate={{ y: [0, -30, 0] }}
-                        transition={{ duration: 6, repeat: Infinity }}
+                        transition={{ duration: 8, repeat: Infinity }}
                     >
                         <Rocket className="w-12 h-12 text-green-300 fill-green-100 -rotate-12 drop-shadow-lg" />
                     </motion.div>
                 </div>
 
                 <div className="relative flex flex-col justify-center gap-4 p-4 text-sm text-neutral rounded-field border border-neutral/20 bg-base-100/50 w-fit mx-auto">
-                    <div className="flex items-center justify-center gap-x-2 lg:gap-x-2">
+                    <div className="flex max-sm:flex-col items-center justify-center gap-x-2 lg:gap-x-2 text-center">
                         <div className="rating rating-md rating-half">
                             <div className="mask mask-star-2 mask-half-1 bg-yellow-500" />
                             <div className="mask mask-star-2 mask-half-2 bg-yellow-500" />
