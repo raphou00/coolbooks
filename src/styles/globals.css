@@ -89,3 +89,24 @@ html {
     width: 100%;
     max-width: 85rem;
 }
+
+.custom-shape-divider-bottom-1767706513 {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    overflow: hidden;
+    line-height: 0;
+    transform: rotate(180deg);
+}
+
+.custom-shape-divider-bottom-1767706513 svg {
+    position: relative;
+    display: block;
+    width: calc(100% + 1.3px);
+    height: 71px;
+}
+
+.custom-shape-divider-bottom-1767706513 .shape-fill {
+    fill: var(--color-base-100);
+}

@@ -11,11 +11,13 @@ import {
     BookOpen,
     ChevronRightIcon,
     Heart,
+    Rocket,
     Sparkles,
     Star,
     ThumbsUp,
     Users,
     Wand2,
+    Zap,
 } from "lucide-react";
 import { price } from "@/config/stripe";
 import { capitalize, cn, formatAmountForDisplay } from "@/lib/utils";
@@ -23,6 +25,7 @@ import Title from "@/components/ui/title";
 import NewBook, { artStyleImages } from "@/components/ui/new";
 import NextImage from "@/components/ui/image";
 import Modal from "@/components/ui/modal";
+import { motion } from "framer-motion";
 
 const font = Font({
     subsets: ["latin"],
@@ -44,28 +47,61 @@ const Home: React.FC<BooksProps> = ({ books }) => {
     return (
         <>
             <PaymentStatus />
-            <Image
-                src="/images/home.png"
-                alt=""
-                className="absolute inset-0 h-screen w-screen object-cover z-0 brightness-90 blur-xs"
-                width={1920}
-                height={960}
-            />
+            <div className="absolute inset-0 w-screen h-[calc(100vh+71px)] object-cover z-0 bg-secondary/30 [background-image:radial-gradient(88%_100%_at_top,var(--color-primary),rgba(255,255,255,0))]">
+                <div className="custom-shape-divider-bottom-1767706513">
+                    <svg
+                        data-name="Layer 1"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 1200 120"
+                        preserveAspectRatio="none"
+                    >
+                        <path
+                            d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z"
+                            opacity=".25"
+                            className="shape-fill"
+                        ></path>
+                        <path
+                            d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z"
+                            opacity=".5"
+                            className="shape-fill"
+                        ></path>
+                        <path
+                            d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z"
+                            className="shape-fill"
+                        ></path>
+                    </svg>
+                </div>
+            </div>
+
             <section
                 id="home"
-                className="relative h-[calc(100vh-56px)] flex flex-col justify-between py-6 z-10 text-black"
+                className="relative h-[calc(100vh-71px)] w-full max-w-4xl mx-auto flex flex-col justify-between items-center py-6 z-10 text-black"
             >
-                <div className="flex flex-col justify-censter items-center gap-y-2">
+                <div className="flex flex-col justify-center items-center gap-y-2">
                     <div className="px-2 py-0.5 bg-secondary/20 glass border-2 border-neutral/10 rounded-full text-center">
                         {t("hero.chip")}
                     </div>
                     <h1
                         className={cn(
-                            "text-4xl md:text-5xl lg:text-6xl my-2 tracking-tight text-center text-balance",
+                            "relative text-3xl md:text-4xl lg:text-5xl my-2 tracking-tight text-center text-balance",
                             font.className
                         )}
                     >
                         {t("hero.title")}
+                        <motion.div
+                            className="absolute -z-10 right-0 top-0"
+                            animate={{ y: [0, -20, 0] }}
+                            transition={{ duration: 3, repeat: Infinity }}
+                        >
+                            <Star className="w-12 h-12 text-yellow-300 fill-yellow-100 rotate-12 drop-shadow-lg" />
+                        </motion.div>
+                        <motion.div
+                            className="absolute -z-10 left-0 bottom-0"
+                            animate={{ y: [0, -30, 0] }}
+                            transition={{ duration: 4, repeat: Infinity }}
+                        >
+                            <Sparkles className="w-12 h-12 text-indigo-300 fill-indigo-100 rotate-12 drop-shadow-lg" />
+                        </motion.div>
                     </h1>
                     <p className="text-lg md:text-xl text-center max-w-xl">
                         {t("hero.description")}
@@ -84,7 +120,40 @@ const Home: React.FC<BooksProps> = ({ books }) => {
                     </div>
                 </div>
 
-                <div className="flex flex-col justify-center gap-4 p-4 text-sm text-neutral rounded-field border border-neutral/20 bg-base-100/80 w-fit mx-auto">
+                <div className="relative">
+                    <motion.img
+                        src="/images/book.png"
+                        alt=""
+                        width={1000}
+                        height={560}
+                        className="w-full aspect-video max-w-md"
+                        animate={{ y: [0, -30, 0] }}
+                        transition={{ duration: 4, repeat: Infinity }}
+                    />
+                    <Image
+                        src="/images/book-bed.png"
+                        alt=""
+                        width={1000}
+                        height={600}
+                        className="absolute -z-10 top-0 left-0 w-full aspect-video max-w-lg"
+                    />
+                    <motion.div
+                        className="absolute -z-10 -left-16 top-0"
+                        animate={{ y: [0, -35, 0] }}
+                        transition={{ duration: 5, repeat: Infinity }}
+                    >
+                        <Zap className="w-12 h-12 text-blue-300 fill-blue-100 -rotate-12 drop-shadow-lg" />
+                    </motion.div>
+                    <motion.div
+                        className="absolute -z-10 right-0 -bottom-4"
+                        animate={{ y: [0, -30, 0] }}
+                        transition={{ duration: 6, repeat: Infinity }}
+                    >
+                        <Rocket className="w-12 h-12 text-green-300 fill-green-100 -rotate-12 drop-shadow-lg" />
+                    </motion.div>
+                </div>
+
+                <div className="relative flex flex-col justify-center gap-4 p-4 text-sm text-neutral rounded-field border border-neutral/20 bg-base-100/50 w-fit mx-auto">
                     <div className="flex items-center justify-center gap-x-2 lg:gap-x-2">
                         <div className="rating rating-md rating-half">
                             <div className="mask mask-star-2 mask-half-1 bg-yellow-500" />
@@ -122,7 +191,7 @@ const Home: React.FC<BooksProps> = ({ books }) => {
 
             <section
                 id="examples"
-                className="flex flex-col justify-center items-center gap-y-4 pt-14"
+                className="flex flex-col justify-center items-center gap-y-4 pt-28"
             >
                 <div className="badge badge-xl badge-secondary rounded-4xl">
                     {t("examples.badge")}
