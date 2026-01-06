@@ -140,6 +140,7 @@
             "submit": "Delete"
         },
         "home": {
+            "banner": "❄️ -20% Until January 31, 2025",
             "hero": {
                 "title": "Turn your child into the hero of their own story",
                 "description": "A personalized storybook made with AI - ready in 2 minutes. Your child's name, look, and imagination in one magical book.",
@@ -238,7 +239,7 @@
             "art-style": "Art Style",
             "prompt": "Describe the adventure in 1-2 sentences.",
             "prompt-placeholder": "Ex: Toto is playing football, in the park with his friends, warm colors, fun...",
-            "generate": "Generate",
+            "generate": "Pay and generate",
             "boy": "Boy",
             "girl": "Girl",
             "black": "Black",

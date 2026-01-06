@@ -20,7 +20,7 @@ export type Book = {
 
 export const exportPDF = async (book: Book) => {
     try {
-        const SQUARE_SIZE = 200;
+        const SQUARE_SIZE = 216;
 
         const pdf = new jsPDF({
             orientation: "portrait",

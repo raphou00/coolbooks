@@ -21,7 +21,6 @@ import { price } from "@/config/stripe";
 import FormReponse from "@/components/ui/form-response";
 import FormInput from "@/components/ui/form-input";
 import FormSelect from "@/components/ui/form-select";
-import FormButton from "@/components/ui/form-button";
 import bookSchema, {
     ageOptions,
     artStyleOptions,
@@ -342,11 +341,18 @@ const NewBook: React.FC = () => {
                     </div>
                 </div>
 
-                <FormButton
-                    title={t("generate") + " " + formatAmountForDisplay(price)}
-                    loading={loading}
-                    className="mt-0 btn-lg"
-                />
+                <button
+                    disabled={loading}
+                    className="mt-0 btn btn-lg btn-primary"
+                >
+                    {t("generate")}
+                    <span className="font-bold">
+                        {formatAmountForDisplay(price)}
+                    </span>
+                    <span className="text-white/90 text-xs line-through">
+                        {formatAmountForDisplay(price * 1.2)}
+                    </span>
+                </button>
             </form>
 
             {draggableCards.map((e) => (

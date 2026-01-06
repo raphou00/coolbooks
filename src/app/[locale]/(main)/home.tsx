@@ -74,11 +74,15 @@ const Home: React.FC<BooksProps> = ({ books }) => {
                 </div>
             </div>
 
+            <div className="absolute left-0 w-full px-2 py-1 flex justify-center items-center bg-secondary/80 z-50">
+                {t("banner")}
+            </div>
+
             <section
                 id="home"
-                className="relative h-[calc(100vh-80px)] w-full max-w-4xl mx-auto flex flex-col justify-between items-center py-6 z-10 text-black"
+                className="relative h-[calc(100vh-100px)] w-full max-w-4xl mx-auto flex flex-col items-center gap-y-4 pt-16 z-10 text-black"
             >
-                <div className="flex flex-col justify-center items-center gap-y-3">
+                <div className="flex flex-col justify-center items-center gap-y-2">
                     <div className="px-2 py-0.5 bg-secondary/20 glass border-2 border-neutral/10 rounded-full text-center">
                         {t("hero.chip")}
                     </div>
@@ -109,9 +113,15 @@ const Home: React.FC<BooksProps> = ({ books }) => {
                     </p>
                     <Link
                         href="/#create-book"
-                        className="px-3 py-1 h-12 rounded-full border-4 border-secondary bg-white text-black flex justify-center items-center"
+                        className="px-3 py-px h-12 rounded-full border-4 border-secondary bg-secondary/90 text-white flex justify-center items-center gap-2"
                     >
-                        {t("hero.create")} {formatAmountForDisplay(price)}
+                        {t("hero.create")}
+                        <span className="font-bold">
+                            {formatAmountForDisplay(price)}
+                        </span>
+                        <span className="text-white/90 text-xs line-through">
+                            {formatAmountForDisplay(price * 1.2)}
+                        </span>
                     </Link>
                 </div>
 

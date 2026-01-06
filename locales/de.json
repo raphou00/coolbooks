@@ -94,7 +94,7 @@
             "brown": "Braun",
             "by-email": "E-Mail",
             "age": "Alter",
-            "generate": "Generieren",
+            "generate": "Bezahlen und generieren",
             "hair-color": "Haarfarbe",
             "blue": "Blau",
             "blonde": "Blond",
@@ -172,6 +172,7 @@
             "cancel": "Abbrechen"
         },
         "home": {
+            "banner": "❄️ -20% Bis zum 31. Januar 2025",
             "cta": {
                 "title": "Beginne heute mit der Erstellung magischer Geschichten",
                 "description": "Schließe dich Tausenden von Familien an, die personalisierte Gute-Nacht-Geschichten erstellen, die die Fantasie anregen und bleibende Erinnerungen schaffen"

@@ -94,7 +94,7 @@
             "brown": "Marrone",
             "by-email": "Email",
             "age": "Età",
-            "generate": "Genera",
+            "generate": "Paga e genera",
             "hair-color": "Colore dei Capelli",
             "blue": "Blu",
             "blonde": "Biondo",
@@ -172,6 +172,7 @@
             "cancel": "Annulla"
         },
         "home": {
+            "banner": "❄️ -20% Fino al 31 gennaio 2025",
             "cta": {
                 "title": "Inizia a creare storie magiche oggi",
                 "description": "Unisciti a migliaia di famiglie che creano storie della buonanotte personalizzate che stimolano l'immaginazione e creano ricordi duraturi"

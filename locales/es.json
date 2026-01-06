@@ -94,7 +94,7 @@
             "brown": "Marrón",
             "by-email": "Correo Electrónico",
             "age": "Edad",
-            "generate": "Generar",
+            "generate": "Pagar y generar",
             "hair-color": "Color de Cabello",
             "blue": "Azul",
             "blonde": "Rubio",
@@ -172,6 +172,7 @@
             "cancel": "Cancelar"
         },
         "home": {
+            "banner": "❄️ -20% Hasta el 31 de enero de 2025",
             "cta": {
                 "title": "Comienza a crear historias mágicas hoy",
                 "description": "Únete a miles de familias que crean historias para dormir personalizadas que estimulan la imaginación y crean recuerdos duraderos"

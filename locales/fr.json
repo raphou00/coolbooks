@@ -94,7 +94,7 @@
             "brown": "Marron",
             "by-email": "e-mail",
             "age": "Âge",
-            "generate": "Générer",
+            "generate": "Payer et générer",
             "hair-color": "Couleur des cheveux",
             "blue": "Bleu",
             "blonde": "Blond",
@@ -172,6 +172,7 @@
             "cancel": "Annuler"
         },
         "home": {
+            "banner": "❄️ -20% Jusqu'au 31 janvier 2025",
             "cta": {
                 "title": "Commencez à créer des histoires magiques aujourd'hui",
                 "description": "Rejoignez des milliers de familles qui créent des histoires personnalisées au coucher du soleil qui stimulent l'imagination et créent des souvenirs durables"
