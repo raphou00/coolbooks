@@ -17,7 +17,7 @@ const Page = async () => {
 
     return (
         <Main>
-            <div className="relative w-full flex flex-col items-center justify-center gap-y-6 mx-auto">
+            <div className="w-full flex flex-col items-center justify-center gap-y-6 mx-auto">
                 <Title
                     text={t("title")}
                     className="text-4xl lg:text-5xl text-center mb-2"

@@ -172,7 +172,7 @@ const Home: React.FC<BooksProps> = ({ books }) => {
                     className="text-3xl lg:text-4xl"
                 />
 
-                <div className="bg-secondary/5 rounded-3xl px-2 sm:px-6 md:px-12 py-8 m-2 w-full max-w-2xl mx-auto">
+                <div className="size-full">
                     <NewBook />
                 </div>
             </section>

@@ -36,27 +36,27 @@ import { Lock, Mail, Paintbrush, PenLine, User } from "lucide-react";
 const draggableCards = [
     {
         image: "f7d0cbd5-0155-4858-8313-94c3bc06245c/29e67629-80d6-4270-b7a9-30356f632d91.png",
-        className: "absolute top-20 left-[2%] rotate-[5deg]",
+        className: "absolute top-[0%] left-[2%] rotate-[5deg]",
     },
     {
         image: "879ae571-6882-4e78-b32e-abb9964fcf3f/5cae381f-122d-4281-84ed-28878ff3da9a.png",
-        className: "absolute top-90 left-[3%] rotate-[-5deg]",
+        className: "absolute top-[40%] left-[3%] rotate-[-5deg]",
     },
     {
         image: "60fcc0bf-8d83-47f2-916b-3de8eaba8738/774abb4a-0c7d-47be-9251-688704e570b9.png",
-        className: "absolute top-160 left-[1%] rotate-[8deg]",
+        className: "absolute top-[70%] left-[1%] rotate-[8deg]",
     },
     {
         image: "83a7dc9e-f3ca-44d4-8d8b-65ed61b27d0d/a75ecaed-1c00-4f12-affa-f5c3b9977c68.png",
-        className: "absolute top-20 right-[2%] rotate-[-10deg]",
+        className: "absolute top-[0%] right-[2%] rotate-[-10deg]",
     },
     {
         image: "3795c5ed-37cc-4b0e-8623-d8f2d15bbcb2/97079ac2-4353-4c21-8c09-88de40b10e1f.png",
-        className: "absolute top-90 right-[2%] -rotate-[-8deg]",
+        className: "absolute top-[40%] right-[2%] -rotate-[-8deg]",
     },
     {
         image: "4a323aaf-4147-450e-ba37-241fbbf41363/16f954d2-b172-488f-aada-2f534df65f94.png",
-        className: "absolute top-160 right-[0%] rotate-[-7deg]",
+        className: "absolute top-[70%] right-[0%] rotate-[-7deg]",
     },
 ];
 
@@ -108,10 +108,10 @@ const NewBook: React.FC = () => {
     };
 
     return (
-        <>
+        <div className="relative w-full h-full">
             <form
                 onSubmit={handleSubmit(submit)}
-                className="w-full max-w-x mx-auto flex flex-col gap-y-6"
+                className="w-full max-w-xl mx-auto flex flex-col gap-y-6 bg-secondary/10 p-3 sm:p-4 md:p-8 rounded-box"
             >
                 <FormReponse success={state.success} message={state.message} />
 
@@ -360,7 +360,7 @@ const NewBook: React.FC = () => {
                     />
                 </DraggableCardBody>
             ))}
-        </>
+        </div>
     );
 };
 
@@ -504,7 +504,7 @@ const DraggableCardBody: React.FC<{
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
             className={cn(
-                "relative size-60 overflow-hidden rounded-box transform-3d max-[1280px]:hidden",
+                "relative size-60 overflow-hidden rounded-box transform-3d max-xl:hidden",
                 className
             )}
         >

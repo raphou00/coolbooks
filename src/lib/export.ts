@@ -97,7 +97,13 @@ export const exportPDF = async (book: Book) => {
             const textX = logoX + logoSize + 3;
             const textY = logoY + logoSize - 2;
             pdf.setFont("Poppins", "bold");
+            pdf.setTextColor(0, 0, 0);
             pdf.setFontSize(12);
+            pdf.text("Created on coolbooks.app", textX + 0.2, textY + 0.2);
+            pdf.text("Created on coolbooks.app", textX - 0.2, textY - 0.2);
+            pdf.text("Created on coolbooks.app", textX - 0.2, textY + 0.2);
+            pdf.text("Created on coolbooks.app", textX + 0.2, textY - 0.2);
+
             pdf.setTextColor(255, 255, 255);
             pdf.text("Created on coolbooks.app", textX, textY);
         } catch (error) {
