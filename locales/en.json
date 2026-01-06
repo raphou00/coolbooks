@@ -141,11 +141,11 @@
         },
         "home": {
             "hero": {
-                "title": "Make your child the hero of their own story !",
-                "description": "Create magical, personalized storybooks for you child. Every story is unique and filled with adventure.",
+                "title": "Turn your child into the hero of their own story",
+                "description": "A personalized storybook made with AI - ready in 2 minutes. Your child's name, look, and imagination in one magical book.",
                 "chip": "⭐️ Only 1 minute to create your book !",
-                "create": "Create My Story",
-                "rating": "4.7/5 • More than 1000 parents trust our product",
+                "create": "Create My Child's Book",
+                "rating": "4.7/5 • Trusted by 1,000+ parents",
                 "pdf": "PDF in 1 minute",
                 "style": "4 styles uniques",
                 "personalized": "100% personnalisé"
@@ -254,7 +254,7 @@
             "dark": "Dark",
             "olive": "Olive",
             "cartoon": "Cartoon",
-            "comics": "comics",
+            "comics": "Comics",
             "anime": "Anime",
             "watercolor": "Watercolor",
             "cartoon-description": "Colorful and cheerful",

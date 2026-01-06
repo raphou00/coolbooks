@@ -20,7 +20,7 @@ import {
     Zap,
 } from "lucide-react";
 import { price } from "@/config/stripe";
-import { capitalize, cn, formatAmountForDisplay } from "@/lib/utils";
+import { cn, formatAmountForDisplay } from "@/lib/utils";
 import Title from "@/components/ui/title";
 import NewBook, { artStyleImages } from "@/components/ui/new";
 import NextImage from "@/components/ui/image";
@@ -43,11 +43,12 @@ type BooksProps = {
 
 const Home: React.FC<BooksProps> = ({ books }) => {
     const t = useTranslations("pages.home");
+    const tNewBook = useTranslations("pages.new-book");
 
     return (
         <>
             <PaymentStatus />
-            <div className="absolute inset-0 w-screen h-[calc(100vh+71px)] object-cover z-0 bg-secondary/30 [background-image:radial-gradient(88%_100%_at_top,var(--color-primary),rgba(255,255,255,0))]">
+            <div className="absolute inset-0 w-full h-[calc(100vh+80px)] z-0 bg-secondary/30 [background-image:radial-gradient(88%_100%_at_top,var(--color-primary),rgba(255,255,255,0))]">
                 <div className="custom-shape-divider-bottom-1767706513">
                     <svg
                         data-name="Layer 1"
@@ -75,49 +76,46 @@ const Home: React.FC<BooksProps> = ({ books }) => {
 
             <section
                 id="home"
-                className="relative h-[calc(100vh-71px)] w-full max-w-4xl mx-auto flex flex-col justify-between items-center py-6 z-10 text-black"
+                className="relative h-[calc(100vh-80px)] w-full max-w-4xl mx-auto flex flex-col justify-between items-center py-6 z-10 text-black"
             >
-                <div className="flex flex-col justify-center items-center gap-y-2">
+                <div className="flex flex-col justify-center items-center gap-y-3">
                     <div className="px-2 py-0.5 bg-secondary/20 glass border-2 border-neutral/10 rounded-full text-center">
                         {t("hero.chip")}
                     </div>
                     <h1
                         className={cn(
-                            "relative text-3xl md:text-4xl lg:text-5xl my-2 tracking-tight text-center text-balance",
+                            "relative text-3xl md:text-4xl lg:text-5xl my-2 text-center",
                             font.className
                         )}
                     >
                         {t("hero.title")}
                         <motion.div
-                            className="absolute -z-10 right-0 top-0"
+                            className="absolute -z-10 right-0 -top-8"
                             animate={{ y: [0, -20, 0] }}
                             transition={{ duration: 9, repeat: Infinity }}
                         >
                             <Star className="w-12 h-12 text-yellow-300 fill-yellow-100 rotate-12 drop-shadow-lg" />
                         </motion.div>
                         <motion.div
-                            className="absolute -z-10 left-0 bottom-0"
+                            className="absolute -z-10 -left-2 -bottom-8"
                             animate={{ y: [0, -30, 0] }}
                             transition={{ duration: 8, repeat: Infinity }}
                         >
-                            <Sparkles className="w-12 h-12 text-indigo-300 fill-indigo-100 rotate-12 drop-shadow-lg" />
+                            <Sparkles className="w-12 h-12 text-indigo-300 fill-indigo-100 -rotate-12 drop-shadow-lg" />
                         </motion.div>
                     </h1>
-                    <p className="text-lg md:text-xl text-center max-w-xl">
+                    <p className="text-lg md:text-xl text-center max-w-2xl">
                         {t("hero.description")}
                     </p>
-                    <div className="flex flex-col sm:flex-row gap-4">
-                        <Link
-                            href="/#create-book"
-                            className="btn btn-xl h-12 rounded-full border-4 border-secondary bg-white text-black flex items-center group"
-                        >
-                            <span className="text-lg">
-                                {t("hero.create")}{" "}
-                                {formatAmountForDisplay(price)}
-                            </span>
-                            <ChevronRightIcon className="transition group-hover:translate-x-2" />
-                        </Link>
-                    </div>
+                    <Link
+                        href="/#create-book"
+                        className="btn btn-xl h-12 rounded-full border-4 border-secondary bg-white text-black flex items-center group"
+                    >
+                        <span className="text-lg">
+                            {t("hero.create")} {formatAmountForDisplay(price)}
+                        </span>
+                        <ChevronRightIcon className="transition group-hover:translate-x-2" />
+                    </Link>
                 </div>
 
                 <div className="relative">
@@ -153,23 +151,9 @@ const Home: React.FC<BooksProps> = ({ books }) => {
                     </motion.div>
                 </div>
 
-                <div className="relative flex flex-col justify-center gap-4 p-4 text-sm text-neutral rounded-field border border-neutral/20 bg-base-100/50 w-fit mx-auto">
-                    <div className="flex max-sm:flex-col items-center justify-center gap-x-2 lg:gap-x-2 text-center">
-                        <div className="rating rating-md rating-half">
-                            <div className="mask mask-star-2 mask-half-1 bg-yellow-500" />
-                            <div className="mask mask-star-2 mask-half-2 bg-yellow-500" />
-                            <div className="mask mask-star-2 mask-half-1 bg-yellow-500" />
-                            <div className="mask mask-star-2 mask-half-2 bg-yellow-500" />
-                            <div className="mask mask-star-2 mask-half-1 bg-yellow-500" />
-                            <div className="mask mask-star-2 mask-half-2 bg-yellow-500" />
-                            <div className="mask mask-star-2 mask-half-1 bg-yellow-500" />
-                            <div className="mask mask-star-2 mask-half-2 bg-yellow-500" />
-                            <div
-                                className="mask mask-star-2 mask-half-1 bg-yellow-500"
-                                aria-current="true"
-                            />
-                            <div className="mask mask-star-2 mask-half-2 bg-yellow-500" />
-                        </div>
+                <div className="relative flex flex-col justify-center gap-4 px-6 py-4 text-sm text-neutral rounded-field border border-neutral/20 bg-base-100/20 w-fit mx-auto">
+                    <div className="flex items-center justify-center gap-x-2 text-center">
+                        <Star className="text-yellow-500 fill-yellow-500" />
                         {t("hero.rating")}
                     </div>
                     <div className="flex justify-center gap-x-px lg:gap-x-4">
@@ -215,7 +199,7 @@ const Home: React.FC<BooksProps> = ({ books }) => {
                                     />
                                     <div className="absolute right-0 bottom-0 badge badge-secondary badge-lg gap-x-1">
                                         {artStyleImages[book.artStyle]}{" "}
-                                        {capitalize(book.artStyle)}
+                                        {tNewBook(book.artStyle as any)}
                                     </div>
                                 </div>
                                 <div className="flex justify-center items-center text-sm lg:text-base font-bold mt-2">

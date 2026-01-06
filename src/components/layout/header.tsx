@@ -113,6 +113,18 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                 </ul>
                             </div>
                             <div className="navbar-end space-x-2">
+                                <button
+                                    className="btn btn-circle"
+                                    onClick={() => setLocaleOpen((e) => !e)}
+                                >
+                                    <Image
+                                        src={`/images/locales/${locale}.png`}
+                                        alt={locale}
+                                        width={32}
+                                        height={32}
+                                        className="size-6 rounded-field"
+                                    />
+                                </button>
                                 <div className="dropdown dropdown-end dropdown-bottom dropdown-hover flex items-center h-10 z-100">
                                     <div
                                         role="button"
@@ -216,24 +228,6 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                                     <Sun className="swap-off size-6" />
                                                 </div>
                                                 {t("theme")}
-                                            </button>
-
-                                            <button
-                                                onClick={() =>
-                                                    setLocaleOpen((e) => !e)
-                                                }
-                                                className="btn btn-ghost rounded-field border-none m-0 my-px w-full justify-start"
-                                            >
-                                                <span className="flex items-center gap-2">
-                                                    <Image
-                                                        src={`/images/locales/${locale}.png`}
-                                                        alt={locale}
-                                                        width={32}
-                                                        height={32}
-                                                        className="size-6"
-                                                    />
-                                                    {t("language")}
-                                                </span>
                                             </button>
 
                                             {user && (
