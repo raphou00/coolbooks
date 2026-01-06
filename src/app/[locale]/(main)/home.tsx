@@ -109,12 +109,9 @@ const Home: React.FC<BooksProps> = ({ books }) => {
                     </p>
                     <Link
                         href="/#create-book"
-                        className="btn btn-xl h-12 rounded-full border-4 border-secondary bg-white text-black flex items-center group"
+                        className="px-3 py-1 h-12 rounded-full border-4 border-secondary bg-white text-black flex justify-center items-center"
                     >
-                        <span className="text-lg">
-                            {t("hero.create")} {formatAmountForDisplay(price)}
-                        </span>
-                        <ChevronRightIcon className="transition group-hover:translate-x-2" />
+                        {t("hero.create")} {formatAmountForDisplay(price)}
                     </Link>
                 </div>
 
@@ -156,7 +153,7 @@ const Home: React.FC<BooksProps> = ({ books }) => {
                         <Star className="text-yellow-500 fill-yellow-500" />
                         {t("hero.rating")}
                     </div>
-                    <div className="flex justify-center gap-x-px lg:gap-x-4">
+                    <div className="flex justify-center gap-x-2 lg:gap-x-4">
                         <div className="flex items-center gap-x-2">
                             <span className="status status-success" />
                             <span>{t("hero.pdf")}</span>

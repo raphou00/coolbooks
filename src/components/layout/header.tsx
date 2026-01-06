@@ -66,6 +66,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                     id="drawer"
                     type="checkbox"
                     className="drawer-toggle"
+                    checked={drawerOpen}
                     onChange={(e) => setDrawerOpen(e.target.checked)}
                 />
                 <div className="drawer-content">
@@ -267,6 +268,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                         {links.map((item) => (
                             <li key={item.title}>
                                 <a
+                                    onClick={() => setDrawerOpen(false)}
                                     href={item.path}
                                     className={cn(
                                         "btn justify-between w-[288px]",
