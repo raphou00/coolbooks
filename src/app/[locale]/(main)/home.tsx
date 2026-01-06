@@ -47,13 +47,13 @@ const Home: React.FC<BooksProps> = ({ books }) => {
             <Image
                 src="/images/home.png"
                 alt=""
-                className="absolute inset-0 h-[calc(100vh/1.3)] w-screen object-cover z-0 brightness-90 blur-xs"
+                className="absolute inset-0 h-screen w-screen object-cover z-0 brightness-90 blur-xs"
                 width={1920}
                 height={960}
             />
             <section
                 id="home"
-                className="relative h-[calc(100vh/1.5)] flex flex-col justify-between pt-6 z-10 mb-6! text-black"
+                className="relative h-[calc(100vh-56px)] flex flex-col justify-between py-6 z-10 text-black"
             >
                 <div className="flex flex-col justify-censter items-center gap-y-2">
                     <div className="px-2 py-0.5 bg-secondary/20 glass border-2 border-neutral/10 rounded-full text-center">
