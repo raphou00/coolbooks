@@ -311,14 +311,14 @@ const NewBook: React.FC = () => {
                     </div>
                 </div>
 
-                <div className="bg-info/20 border border-info/20 rounded-box p-6 divide-x">
+                <div className="bg-info/20 border border-info/10 rounded-box p-6 divide-x">
                     <div className="grid grid-cols-3 divide-x divide-info/30">
                         <div className="flex flex-col items-center justify-center">
                             <span className="text-sm text-neutral uppercase tracking-wide mb-2">
-                                {t("price")}
+                                {t("page")}
                             </span>
-                            <span className="text-base">
-                                {formatAmountForDisplay(price)}
+                            <span className="text-base text-info">
+                                {t("pages")}
                             </span>
                         </div>
 
@@ -326,7 +326,7 @@ const NewBook: React.FC = () => {
                             <span className="text-sm text-neutral uppercase tracking-wide mb-2">
                                 {t("delivery")}
                             </span>
-                            <span className="text-base text-success/80">
+                            <span className="text-base text-info">
                                 {t("by-email")}
                             </span>
                         </div>
@@ -335,7 +335,7 @@ const NewBook: React.FC = () => {
                             <span className="text-sm text-neutral uppercase tracking-wide mb-2">
                                 {t("time")}
                             </span>
-                            <span className="text-base text-success/80">
+                            <span className="text-base text-info">
                                 {t("instant")}
                             </span>
                         </div>
@@ -343,9 +343,9 @@ const NewBook: React.FC = () => {
                 </div>
 
                 <FormButton
-                    title={t("generate")}
+                    title={t("generate") + " " + formatAmountForDisplay(price)}
                     loading={loading}
-                    className="mt-0"
+                    className="mt-0 btn-lg"
                 />
             </form>
 

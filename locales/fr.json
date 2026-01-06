@@ -78,7 +78,7 @@
             "story-idea": "Décrivez votre idée d'histoire",
             "cartoon": "Dessin animé",
             "black": "Noir",
-            "instant": "⚡️ 1 minute",
+            "instant": "2 minute",
             "boy": "Garçon",
             "story-style": "Décrivez votre style d'histoire",
             "child-name": "Nom de l'enfant",
@@ -92,7 +92,7 @@
             "watercolor-description": "Doux et poétique",
             "gender": "Genre",
             "brown": "Marron",
-            "by-email": "📧 Par e-mail",
+            "by-email": "e-mail",
             "age": "Âge",
             "generate": "Générer",
             "hair-color": "Couleur des cheveux",
@@ -104,7 +104,9 @@
             "dark": "Foncé",
             "prompt-placeholder": "Ex : Toto joue au football, dans le parc avec ses amis, couleurs chaudes, amusant...",
             "light": "Clair",
-            "watercolor": "Aquarelle"
+            "watercolor": "Aquarelle",
+            "page": "Pages",
+            "pages": "12 Pages"
         },
         "delete-book": {
             "delete-book-text": "Êtes-vous sûr de vouloir supprimer ce livre ? Cette action ne peut pas être annulée.",

@@ -264,8 +264,10 @@
             "price": "Price",
             "delivery": "Delivery",
             "time": "Time",
-            "by-email": "📧 By Email",
-            "instant": "⚡️ 1 minute"
+            "by-email": "Email",
+            "instant": "2 minute",
+            "page": "Pages",
+            "pages": "12 Pages"
         },
         "my-books": {
             "title": "My Books",
