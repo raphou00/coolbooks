@@ -1,417 +1,417 @@
 {
     "common": {
-        "name": "Create Your Own Personalized Book",
-        "description": "Create magical, personalized storybooks for you child. Every story is unique and filled with adventure.",
-        "made-with": "Made with 🩵 for your kids",
-        "copyright": "All Rights Reserved",
-        "no-sessions-results": "No sessions found",
-        "no-books-results": "No books found",
-        "error": "An error occurred, please try again later",
-        "not-found": "Page Not Found",
-        "back-home": "Back to Home"
+        "made-with": "Gemacht mit 🩵 für deine Kinder",
+        "back-home": "Zurück zur Startseite",
+        "not-found": "Seite nicht gefunden",
+        "copyright": "Alle Rechte vorbehalten",
+        "no-books-results": "Keine Bücher gefunden",
+        "description": "Erstelle magische, personalisierte Geschichtenbücher für dein Kind. Jede Geschichte ist einzigartig und voller Abenteuer.",
+        "error": "Ein Fehler ist aufgetreten, bitte versuche es später erneut",
+        "name": "Erstelle dein eigenes personalisiertes Buch",
+        "no-sessions-results": "Keine Sitzungen gefunden"
     },
     "pages": {
-        "login": {
-            "title": "Login",
-            "description": "Login to your account",
-            "email": "E-Mail",
-            "email-placeholder": "Enter your e-mail...",
-            "password": "Password",
-            "password-placeholder": "Enter your password...",
-            "forgot": "Forgot Password?",
-            "submit": "Login",
-            "register": "Don't have an account?",
-            "or": "or"
-        },
-        "register": {
-            "title": "Register",
-            "description": "Create an account",
-            "name": "Name",
-            "name-placeholder": "Enter your name...",
-            "email": "E-Mail",
-            "email-placeholder": "Enter your e-mail...",
-            "password": "Password",
-            "password-placeholder": "Enter your password...",
-            "submit": "Register",
-            "login": "Already have an account?",
-            "legal": "By creating an account, you agree to the <terms>Terms of Service</terms> and <privacy>Privacy Policy</privacy>",
-            "or": "or"
-        },
-        "logout": {
-            "title": "Logout",
-            "description": "Logged Out"
-        },
-        "reset-password": {
-            "title": "Reset Password",
-            "description": "Create a new password",
-            "password": "Password",
-            "password-placeholder": "Enter your password...",
-            "confirm-password": "Confirm Password",
-            "confirm-password-placeholder": "Confirm your password...",
-            "submit": "Reset Password"
-        },
-        "forgot-password": {
-            "title": "Forgot Password",
-            "description": "Reset your forgotten password",
-            "email": "E-Mail",
-            "email-placeholder": "Enter your e-mail...",
-            "submit": "Send",
-            "info": "An E-Mail will be sent with a link to create a new password"
-        },
-        "social-exists": {
-            "title": "Create Account",
-            "description": "Information already in use",
-            "info": "Some of your information are already associated with an account, use different ones, or <login>login</login> to your account",
-            "name": "Name",
-            "name-placeholder": "Enter your name...",
-            "email": "E-Mail",
-            "email-placeholder": "Enter your e-mail...",
-            "submit": "Submit"
-        },
         "account": {
-            "title": "Account",
-            "description": "Manage your account settings",
-            "profile": "Profile",
-            "password": "Password",
-            "sessions": "Sessions",
-            "billing": "Billing",
-            "socials": "Socials",
-            "delete": "Delete Account"
-        },
-        "account-profile": {
-            "title": "Profile",
-            "description": "Edit your profile",
-            "name": "Name",
-            "name-placeholder": "Enter your name...",
-            "email": "E-Mail",
-            "email-placeholder": "Enter your e-mail...",
-            "password": "Password",
-            "password-placeholder": "Enter your password...",
-            "submit": "Update"
-        },
-        "account-password": {
-            "title": "Password",
-            "description": "Change your password",
-            "current": "Current Password",
-            "current-placeholder": "Enter your current password...",
-            "new": "New Password",
-            "new-placeholder": "Enter your new password...",
-            "confirm": "Confirm Password",
-            "confirm-placeholder": "Confirm your new password...",
-            "change": "Change",
-            "create": "Create"
-        },
-        "account-sessions": {
-            "title": "Sessions",
-            "description": "View your sessions",
-            "current": "Current",
-            "last-seen": "Last Seen:",
-            "expires": "Expires:",
-            "delete": "Delete"
+            "delete": "Konto löschen",
+            "password": "Passwort",
+            "billing": "Abrechnung",
+            "sessions": "Sitzungen",
+            "title": "Konto",
+            "description": "Verwalte deine Kontoeinstellungen",
+            "profile": "Profil",
+            "socials": "Soziale Netzwerke"
         },
         "account-billing": {
-            "title": "Billing",
-            "description": "Manage your billing information",
-            "free": "Free",
-            "basic": "Basic",
-            "family": "Family",
+            "description": "Verwalte deine Abrechnungsinformationen",
+            "upgrade": "Plan upgraden",
+            "credits": "Guthaben",
+            "family": "Familie",
             "premium": "Premium",
+            "basic": "Basis",
+            "manage-tip": "Klicke auf \"Abonnement verwalten\", um Rechnungen anzuzeigen, deine Zahlungsmethode zu aktualisieren oder deinen Plan zu kündigen.",
+            "title": "Abrechnung",
+            "free-trial": "Kostenlose Testversion",
+            "manage": "Abonnement verwalten",
             "plan": "{plan} Plan",
-            "credits": "Credits",
-            "payment-failed": "⚠️ Payment failed. Please update your payment method.",
-            "free-trial": "Free trial",
-            "manage": "Manage Subscription",
-            "upgrade": "Upgrade plan",
-            "manage-tip": "Click \"Manage Subscription\" to view invoices, update payment method, or cancel your plan."
+            "free": "Kostenlos",
+            "payment-failed": "⚠️ Zahlung fehlgeschlagen. Bitte aktualisiere deine Zahlungsmethode."
+        },
+        "social-exists": {
+            "submit": "Absenden",
+            "name-placeholder": "Gib deinen Namen ein...",
+            "title": "Konto erstellen",
+            "email": "E-Mail",
+            "email-placeholder": "Gib deine E-Mail ein...",
+            "description": "Information wird bereits verwendet",
+            "name": "Name",
+            "info": "Einige deiner Informationen sind bereits mit einem Konto verknüpft. Verwende andere oder <login>melde dich</login> bei deinem Konto an"
+        },
+        "logout": {
+            "title": "Abmelden",
+            "description": "Abgemeldet"
+        },
+        "terms": {
+            "title": "Nutzungsbedingungen",
+            "content": "Durch den Zugriff auf oder die Nutzung von Coolbooks stimmst du diesen Nutzungsbedingungen zu. Wenn du nicht zustimmst, darfst du den Service nicht nutzen.<return></return><return></return><title>1. Über Coolbooks</title>Coolbooks ist eine Plattform, die es Benutzern ermöglicht, personalisierte Kinderbücher mit Hilfe von künstlicher Intelligenz zu erstellen. Bücher werden basierend auf deinen Eingaben generiert und dir als PDF-Dateien per E-Mail zugestellt.<return></return><return></return><title>2. Berechtigung und Konto</title>• Der Service ist für Benutzer aller Altersgruppen verfügbar<return></return>• Ein Konto ist nicht erforderlich, um den Service zu nutzen<return></return>• Du kannst optional ein Konto mit E-Mail/Passwort oder Google-Authentifizierung erstellen<return></return>• Wenn du ein Konto erstellst, bist du verantwortlich für die Sicherheit deiner Anmeldedaten<return></return>• Du musst genaue Informationen bei der Kontoerstellung angeben<return></return><return></return><title>3. Service-Funktionen</title>• Pay-per-Book-Modell: Jede Bucherstellung erfordert eine separate einmalige Zahlung<return></return>• Es werden keine kostenlosen Stufen oder Testbücher angeboten<return></return>• Alle Buchinhalte werden von künstlicher Intelligenz basierend auf deinen Eingaben generiert<return></return>• Bücher werden als PDF-Dateien an die von dir angegebene E-Mail-Adresse geliefert<return></return>• Wenn du angemeldet bist, kannst du auf deine zuvor generierten Bücher von deinem Konto aus zugreifen<return></return><return></return><title>4. Zahlungsbedingungen</title>• Jede Bucherstellung erfordert eine einmalige Zahlung<return></return>• Die Zahlung wird verarbeitet, bevor die Bucherstellung beginnt<return></return>• Zahlungsinformationen werden durch sichere Drittanbieter-Zahlungsanbieter verarbeitet<return></return>• Alle Verkäufe sind endgültig und nicht erstattbar<return></return>• Zahlungen sind nicht zwischen Benutzern übertragbar<return></return><return></return><title>5. Inhaltserstellung und KI</title>• Alle Buchinhalte werden von künstlicher Intelligenz generiert<return></return>• Du stellst Themen, Vorlieben und Charakterinformationen bereit, um die KI zu lenken<return></return>• Du kannst den generierten Geschichtstext nicht manuell bearbeiten<return></return>• Die KI kann gelegentlich unerwartete Ergebnisse liefern<return></return>• Du bist verantwortlich für die Überprüfung des generierten Inhalts<return></return>• Coolbooks überprüft, genehmigt oder überwacht KI-generierte Inhalte nicht vor der Lieferung<return></return><return></return><title>6. Inhaltseigentum und Datenschutz</title>Dein erstellter Inhalt:<return></return>• Du behältst die vollständigen Eigentumsrechte an Büchern, die du mit dem Service erstellst<return></return>• Deine Bücher sind vollständig privat und nur für dich zugänglich<return></return>• Du darfst deine KI-erstellten Bücher auf anderen Plattformen veröffentlichen, verteilen oder verkaufen<return></return>• Bücher, die ohne Konto generiert werden, sind nur über die per E-Mail gesendete PDF zugänglich<return></return>• Bücher, die während der Anmeldung generiert werden, können über dein Konto aufgerufen werden<return></return><return></return>Datenschutz:<return></return>• Bücher werden niemals öffentlich auf der Plattform geteilt<return></return>• Andere Benutzer können deine Bücher nicht anzeigen oder aufrufen<return></return>• Du kannst Bücher anderer Benutzer nicht anzeigen oder aufrufen<return></return><return></return><title>7. Datenschutz</title>• Wir geben deine persönlichen Informationen nicht an Dritte weiter, außer soweit erforderlich, um den Service bereitzustellen (z. B. Zahlungsverarbeitung, E-Mail-Zustellung)<return></return>• Wenn du ein Konto erstellst, speichern wir deine E-Mail-Adresse und Authentifizierungsinformationen<return></return>• Buchinhalte und Benutzerdaten werden sicher gespeichert<return></return>• Du kannst dein Konto jederzeit löschen<return></return>• Das Löschen des Kontos entfernt dauerhaft deine Daten und den Zugriff auf deine Bücher<return></return><return></return><title>8. Benutzerverhalten und Inhaltsrichtlinien</title>Benutzer verpflichten sich NICHT zu:<return></return>• Unangemessene, beleidigende oder illegale E-Mail-Adressen oder Anzeigenamen verwenden<return></return>• Unangemessene Eingabeaufforderungen oder Charakternamen an die KI übermitteln<return></return>• Versuchen, die KI zu manipulieren, um unangemessene oder illegale Inhalte zu generieren<return></return>• Inhalte hochladen oder erstellen, die die Urheberrechte anderer verletzen<return></return>• Versuchen, den Service zu missbrauchen, auszunutzen oder zu hacken<return></return>• Anmeldedaten mit anderen teilen (wenn du ein Konto hast)<return></return>• Den Service für illegale Zwecke nutzen<return></return><return></return>Coolbooks behält sich das Recht vor, den Service zu verweigern, Inhalte zu entfernen oder Konten zu beenden, die gegen diese Richtlinien verstoßen, ohne Ankündigung oder Rückerstattung.<return></return><return></return><title>9. Geistiges Eigentum</title>• Die Coolbooks-Plattform, einschließlich ihrer KI-Technologie, des Designs und der Funktionen, ist Eigentum von Coolbooks<return></return>• Der Name Coolbooks, das Logo und die Marke sind Marken von Coolbooks<return></return>• Benutzer generierte Inhalte gehören den Benutzern wie in Abschnitt 6 beschrieben<return></return><return></return><title>10. Haftungsausschluss und Haftungsbeschränkung</title>IM GESETZLICH ZULÄSSIGEN UMFANG NACH SCHWEIZER RECHT:<return></return>• Der Service wird „WIE VORHANDEN\" ohne Gewährleistungen jeglicher Art bereitgestellt<return></return>• Coolbooks haftet nicht für Inhalte, die von Benutzern erstellt oder geteilt werden<return></return>• Coolbooks garantiert nicht die Genauigkeit, Qualität oder Angemessenheit von KI-generierten Inhalten<return></return>• Coolbooks ist nicht verantwortlich für Schäden, Verluste oder Beeinträchtigungen, die sich aus der Nutzung des Service ergeben<return></return>• Coolbooks garantiert nicht den kontinuierlichen, fehlerfreien oder sicheren Betrieb des Service<return></return>• Coolbooks ist nicht verantwortlich für Lieferfehler aufgrund falscher E-Mail-Adressen oder Probleme mit E-Mail-Diensteanbietern<return></return>• Die Gesamthaftung darf den Betrag nicht überschreiten, den du in den letzten 12 Monaten für den Service bezahlt hast<return></return><return></return><title>11. Drittanbieter-Services</title>Der Service ist mit Drittanbieter-Services integriert, einschließlich Zahlungsabwickler, KI-Anbieter und E-Mail-Zustellungsdienste. Deine Nutzung solcher Services unterliegt ihren jeweiligen Bedingungen und Richtlinien. Coolbooks ist nicht verantwortlich für Drittanbieter-Services.<return></return><return></return><title>12. Beendigung</title>• Du kannst dein Konto jederzeit über die Kontoeinstellungen beenden (wenn du ein Konto hast)<return></return>• Wir können Konten, die gegen diese Bedingungen verstoßen, aussetzen oder beenden<return></return>• Nach der Beendigung endet dein Recht zur Nutzung des Service sofort<return></return>• Bei Beendigung werden keine Rückerstattungen gewährt<return></return>• Wir behalten uns das Recht vor, inaktive Konten nach längeren Inaktivitätsperioden zu löschen<return></return>• Die Beendigung führt zum permanenten Verlust des Zugriffs auf deine generierten Bücher<return></return><return></return><title>13. Änderungen der Bedingungen</title>• Wir können diese Bedingungen jederzeit ohne vorherige Ankündigung aktualisieren<return></return>• Die weitere Nutzung des Service nach Änderungen gilt als Akzeptanz der neuen Bedingungen<return></return>• Wesentliche Änderungen werden über die Website oder per E-Mail mitgeteilt, wenn möglich<return></return>• Es ist deine Verantwortung, die Bedingungen regelmäßig zu überprüfen<return></return><return></return><title>14. Streitbeilegung und anwendbares Recht</title>• Diese Bedingungen unterliegen den Gesetzen der Schweiz<return></return>• Alle Streitigkeiten werden vor den Gerichten von Wallis, Schweiz, beigelegt<return></return>• Du stimmst zu, eine gütliche Einigung zu versuchen, bevor du rechtliche Schritte einleitest<return></return><return></return><title>15. Salvatorische Klausel</title>Sollte eine Bestimmung dieser Bedingungen für nicht durchsetzbar oder ungültig befunden werden, bleiben die übrigen Bestimmungen in vollem Umfang gültig.<return></return><return></return><title>16. Keine Befürwortung</title>Coolbooks befürwortet, überprüft oder garantiert nicht die Genauigkeit von benutzergenerierten Inhalten. Die in benutzergenerierten Büchern ausgedrückten Ansichten stellen nicht die Meinungen oder Überzeugungen von Coolbooks dar.<return></return><return></return><title>17. Sprache</title>Diese Bedingungen werden in mehreren Sprachen zu deiner Bequemlichkeit bereitgestellt. Im Falle von Konflikten zwischen Übersetzungen hat die englische Version Vorrang. Durch die Nutzung des Service bestätigst du, dass du die Bedingungen in mindestens einer bereitgestellten Sprache verstehst.<return></return><return></return><title>18. Kontakt</title>Für Fragen, Bedenken oder Support:<return></return>• E-Mail: {email}<return></return>• Website: {website}",
+            "description": "Zeige unsere Nutzungsbedingungen an",
+            "date": "Gültig ab: "
+        },
+        "new-book": {
+            "time": "Zeit",
+            "hazel": "Haselnussbraun",
+            "olive": "Olivgrün",
+            "email-placeholder": "Gib deine E-Mail ein...",
+            "gray": "Grau",
+            "anime": "Anime",
+            "girl": "Mädchen",
+            "anime-description": "Japanischer Manga-Stil",
+            "delivery": "Lieferung",
+            "cartoon-description": "Farbenfroh und fröhlich",
+            "skin-tone": "Hautfarbe",
+            "submit": "Generieren",
+            "prompt": "Beschreibe das Abenteuer in 1-2 Sätzen.",
+            "description": "Erstelle ein neues Buch mit nur einer Eingabeaufforderung",
+            "child-details": "Erzähle uns von deinem Kind",
+            "email-info": "Dein Buch wird dir per E-Mail zugestellt, nachdem es generiert wurde.",
+            "green": "Grün",
+            "medium": "Mittel",
+            "story-idea": "Beschreibe deine Geschichtsidee",
+            "cartoon": "Comic",
+            "black": "Schwarz",
+            "instant": "⚡️ 1 Minute",
+            "boy": "Junge",
+            "story-style": " Beschreibe deinen Geschichtsstil",
+            "child-name": "Name des Kindes",
+            "eye-color": "Augenfarbe",
+            "email": "Deine E-Mail",
+            "red": "Rot",
+            "art-style": "Kunststil",
+            "themes": "Themen",
+            "price": "Preis",
+            "child-name-placeholder": "Name deines Kindes...",
+            "watercolor-description": "Sanft und poetisch",
+            "gender": "Geschlecht",
+            "brown": "Braun",
+            "by-email": "📧 Per E-Mail",
+            "age": "Alter",
+            "generate": "Generieren",
+            "hair-color": "Haarfarbe",
+            "blue": "Blau",
+            "blonde": "Blond",
+            "title": "Neues Buch",
+            "comics": "Comics",
+            "comics-description": "Dynamischer Superheld",
+            "dark": "Dunkel",
+            "prompt-placeholder": "Beispiel: Toto spielt Fußball im Park mit seinen Freunden, warme Farben, lustig...",
+            "light": "Hell",
+            "watercolor": "Aquarell"
+        },
+        "delete-book": {
+            "delete-book-text": "Bist du sicher, dass du dieses Buch löschen möchtest? Diese Aktion kann nicht rückgängig gemacht werden.",
+            "delete": "Löschen",
+            "cancel": "Abbrechen",
+            "delete-book": "Buch löschen"
+        },
+        "account-password": {
+            "confirm-placeholder": "Bestätige dein neues Passwort...",
+            "current-placeholder": "Gib dein aktuelles Passwort ein...",
+            "current": "Aktuelles Passwort",
+            "change": "Ändern",
+            "create": "Erstellen",
+            "title": "Passwort",
+            "new-placeholder": "Gib dein neues Passwort ein...",
+            "description": "Ändere dein Passwort",
+            "confirm": "Passwort bestätigen",
+            "new": "Neues Passwort"
+        },
+        "contact": {
+            "submit": "Senden",
+            "name-placeholder": "Gib deinen Namen ein...",
+            "message-placeholder": "Gib deine Nachricht ein...",
+            "title": "Kontakt",
+            "subject": "Betreff",
+            "email": "E-Mail",
+            "email-placeholder": "Gib deine E-Mail ein...",
+            "description": "Kontaktiere uns",
+            "message": "Nachricht",
+            "name": "Name",
+            "subject-placeholder": "Gib einen Betreff ein..."
+        },
+        "forgot-password": {
+            "email": "E-Mail",
+            "title": "Passwort vergessen",
+            "submit": "Senden",
+            "description": "Setze dein vergessenes Passwort zurück",
+            "email-placeholder": "Gib deine E-Mail ein...",
+            "info": "Eine E-Mail wird mit einem Link zum Erstellen eines neuen Passworts versendet"
         },
         "account-socials": {
-            "title": "Socials",
-            "description": "Link your socials providers to your account",
-            "connect": "Connect",
-            "disconnect": "Disconnect",
-            "google": "Use google to login to your account"
+            "google": "Verwende Google, um dich bei deinem Konto anzumelden",
+            "title": "Soziale Netzwerke",
+            "connect": "Verbinden",
+            "description": "Verbinde deine Social-Media-Anbieter mit deinem Konto",
+            "disconnect": "Trennen"
+        },
+        "reset-password": {
+            "submit": "Passwort zurücksetzen",
+            "password": "Passwort",
+            "password-placeholder": "Gib dein Passwort ein...",
+            "title": "Passwort zurücksetzen",
+            "confirm-password-placeholder": "Bestätige dein Passwort...",
+            "description": "Erstelle ein neues Passwort",
+            "confirm-password": "Passwort bestätigen"
         },
         "account-delete": {
-            "title": "Delete Account",
-            "description": "Delete your account",
-            "sure": "Are you sure ?",
-            "confirm": "Permanently delete your account, history, sessions, and any linked integrations. This action cannot be undone.",
-            "cancel": "Cancel",
-            "submit": "Delete"
+            "submit": "Löschen",
+            "title": "Konto löschen",
+            "sure": "Bist du sicher?",
+            "description": "Lösche dein Konto",
+            "confirm": "Lösche dein Konto dauerhaft, deine Verlauf, Sitzungen und alle verknüpften Integrationen. Diese Aktion kann nicht rückgängig gemacht werden.",
+            "cancel": "Abbrechen"
         },
         "home": {
+            "cta": {
+                "title": "Beginne heute mit der Erstellung magischer Geschichten",
+                "description": "Schließe dich Tausenden von Familien an, die personalisierte Gute-Nacht-Geschichten erstellen, die die Fantasie anregen und bleibende Erinnerungen schaffen"
+            },
             "hero": {
-                "title": "Make your child the hero of their own story !",
-                "description": "Create magical, personalized storybooks for you child. Every story is unique and filled with adventure.",
-                "chip": "⭐️ Only 1 minute to create your book !",
-                "create": "Create My Story",
-                "rating": "4.7/5 • More than 1000 parents trust our product",
-                "pdf": "PDF in 1 minute",
-                "style": "4 styles uniques",
-                "personalized": "100% personnalisé"
+                "create": "Meine Geschichte erstellen",
+                "rating": "4,7/5 • Mehr als 1000 Eltern vertrauen unserem Produkt",
+                "style": "4 einzigartige Stile",
+                "personalized": "100% personalisiert",
+                "title": "Mache dein Kind zum Helden seiner eigenen Geschichte!",
+                "description": "Erstelle magische, personalisierte Geschichtenbücher für dein Kind. Jede Geschichte ist einzigartig und voller Abenteuer.",
+                "chip": "⭐️ Nur 1 Minute, um dein Buch zu erstellen!",
+                "pdf": "PDF in 1 Minute"
             },
             "examples": {
-                "badge": "Examples",
-                "title": "See some examples"
+                "badge": "Beispiele",
+                "title": "Sehe einige Beispiele"
+            },
+            "payment-status": {
+                "failed": "Zahlung fehlgeschlagen",
+                "success": "Zahlung erfolgreich",
+                "success-message": "Dein Buch wird gerade generiert und wird in Kürze an deine E-Mail versendet (warte etwa 1 Minute).",
+                "email": "Dein personalisiertes Buch wird versendet an",
+                "check-email": "Überprüfe deine E-Mail auf den Download-Link",
+                "close": "Schließen",
+                "failed-message": "Leider konnte deine Zahlung nicht verarbeitet werden. Bitte versuche es erneut."
             },
             "createBook": {
-                "badge": "Create Book",
-                "title": "Create your own book"
+                "badge": "Buch erstellen",
+                "title": "Erstelle dein eigenes Buch"
             },
             "howItWorks": {
-                "badge": "How It Works",
-                "title": "Create magic in 3 simple steps",
-                "step1": {
-                    "title": "Tell us about your child",
-                    "description": "Share their name, age, interests, and what kind of adventure they love"
-                },
                 "step2": {
-                    "title": "AI creates the story",
-                    "description": "Our AI crafts a unique tale with beautiful illustrations in minutes"
+                    "title": "KI erstellt die Geschichte",
+                    "description": "Unsere KI erstellt eine einzigartige Geschichte mit wunderschönen Illustrationen in Minuten"
                 },
+                "title": "Schaffe Magie in 3 einfachen Schritten",
+                "step1": {
+                    "title": "Erzähle uns von deinem Kind",
+                    "description": "Teile seinen Namen, Alter, Interessen und die Art von Abenteuer mit, die er liebt"
+                },
+                "badge": "Wie es funktioniert",
                 "step3": {
-                    "title": "Read and enjoy",
-                    "description": "Receive directly the book to your email to treasure forever"
+                    "title": "Lese und genieße",
+                    "description": "Erhalte das Buch direkt per E-Mail, um es für immer zu schätzen"
                 }
             },
             "features": {
-                "badge": "Features",
-                "title": "Why parents love coolbooks",
-                "subtitle": "Every story is crafted with care, combining AI magic with educational value",
                 "feature1": {
-                    "title": "Personalized Stories",
-                    "description": "Include your child's name, interests, and favorite characters in every tale"
-                },
-                "feature2": {
-                    "title": "Educational Content",
-                    "description": "Stories that teach values, vocabulary, and important life lessons"
-                },
-                "feature3": {
-                    "title": "Beautifully Illustrated",
-                    "description": "AI-generated artwork that brings each story to life in vivid color"
-                },
-                "feature4": {
-                    "title": "Age-Appropriate",
-                    "description": "Content tailored to your child's developmental stage and interests"
+                    "title": "Personalisierte Geschichten",
+                    "description": "Beziehe den Namen, die Interessen und die Lieblingscharaktere deines Kindes in jede Geschichte ein"
                 },
                 "feature5": {
-                    "title": "Family Memories",
-                    "description": "Create lasting memories with stories you can read together"
+                    "title": "Familienerinnerungen",
+                    "description": "Schaffe bleibende Erinnerungen mit Geschichten, die du zusammen lesen kannst"
+                },
+                "badge": "Funktionen",
+                "subtitle": "Jede Geschichte wird mit Sorgfalt erstellt und kombiniert KI-Magie mit pädagogischem Wert",
+                "feature4": {
+                    "title": "Altersgerecht",
+                    "description": "Inhalte, die auf die Entwicklungsphase und Interessen deines Kindes zugeschnitten sind"
+                },
+                "title": "Warum Eltern Coolbooks lieben",
+                "feature3": {
+                    "title": "Wunderschön illustriert",
+                    "description": "KI-generierte Kunstwerke, die jede Geschichte in lebendigen Farben zum Leben erwecken"
+                },
+                "feature2": {
+                    "title": "Pädagogischer Inhalt",
+                    "description": "Geschichten, die Werte, Vokabeln und wichtige Lektionen des Lebens vermitteln"
                 },
                 "feature6": {
-                    "title": "Print or Digital",
-                    "description": "Download PDFs or order beautiful printed hardcover books"
+                    "title": "Drucken oder Digital",
+                    "description": "Lade PDFs herunter oder bestelle wunderschöne gedruckte Hardcover-Bücher"
                 }
-            },
-            "cta": {
-                "title": "Start creating magical stories today",
-                "description": "Join thousands of families creating personalized bedtime stories that spark imagination and create lasting memories"
-            },
-            "payment-status": {
-                "success": "Payment Successful",
-                "success-message": "Your book is being generated and will be sent to your email shortly (wait about 1 minutes).",
-                "failed": "Payment Failed",
-                "failed-message": "Unfortunately, your payment could not be processed. Please try again.",
-                "email": "Your personalized book will be sent to",
-                "check-email": "Check your email for the download link",
-                "close": "Close"
             }
         },
-        "new-book": {
-            "title": "New Book",
-            "description": "Create a new book with only one prompt",
-            "submit": "Generate",
-            "child-details": "Tell us about your child",
-            "story-style": " Describe your story style",
-            "story-idea": "Describe your story idea",
-            "email": "Your email",
-            "email-placeholder": "Enter your e-mail...",
-            "email-info": "Your book will be sent to you by email after it has been generated.",
-            "child-name": "Child Name",
-            "child-name-placeholder": "Your child's name...",
-            "age": "Age",
-            "hair-color": "Hair Color",
-            "eye-color": "Eye Color",
-            "gender": "Gender",
-            "skin-tone": "Skin Tone",
-            "themes": "Themes",
-            "art-style": "Art Style",
-            "prompt": "Describe the adventure in 1-2 sentences.",
-            "prompt-placeholder": "Ex: Toto is playing football, in the park with his friends, warm colors, fun...",
-            "generate": "Generate",
-            "boy": "Boy",
-            "girl": "Girl",
-            "black": "Black",
-            "brown": "Brown",
-            "blonde": "Blonde",
-            "red": "Red",
-            "gray": "Gray",
-            "blue": "Blue",
-            "green": "Green",
-            "hazel": "Hazel",
-            "light": "Light",
-            "medium": "Medium",
-            "dark": "Dark",
-            "olive": "Olive",
-            "cartoon": "Cartoon",
-            "comics": "comics",
-            "anime": "Anime",
-            "watercolor": "Watercolor",
-            "cartoon-description": "Colorful and cheerful",
-            "comics-description": "Dynamic superhero",
-            "anime-description": "Japanese manga style",
-            "watercolor-description": "Gentle and poetic",
-            "price": "Price",
-            "delivery": "Delivery",
-            "time": "Time",
-            "by-email": "📧 By Email",
-            "instant": "⚡️ 1 minute"
+        "auth": {
+            "login": "Anmelden",
+            "must-login-text": "Bitte authentifiziere dich, um fortzufahren",
+            "must-login": "Anmelden",
+            "register": "Registrieren"
         },
-        "my-books": {
-            "title": "My Books",
-            "description": "Create, read & edit your own books",
-            "search-placeholder": "Search your books...",
-            "create": "New Book",
-            "modify": "Last modified ",
-            "no-books": "No books found"
+        "account-sessions": {
+            "last-seen": "Zuletzt gesehen:",
+            "title": "Sitzungen",
+            "current": "Aktuell",
+            "description": "Zeige deine Sitzungen an",
+            "expires": "Läuft ab:",
+            "delete": "Löschen"
         },
-        "delete-book": {
-            "delete-book": "Delete book",
-            "delete-book-text": "Are you sure you want to delete this book? This action cannot be undone.",
-            "delete": "Delete",
-            "cancel": "Cancel"
+        "login": {
+            "forgot": "Passwort vergessen?",
+            "password": "Passwort",
+            "password-placeholder": "Gib dein Passwort ein...",
+            "submit": "Anmelden",
+            "title": "Anmelden",
+            "email": "E-Mail",
+            "email-placeholder": "Gib deine E-Mail ein...",
+            "description": "Melde dich bei deinem Konto an",
+            "register": "Hast du kein Konto?",
+            "or": "oder"
+        },
+        "refund": {
+            "title": "Rückgabe- und Stornierungsrichtlinie",
+            "content": "Diese Rückgabe- und Stornierungsrichtlinie gilt für alle Käufe, die über Coolbooks getätigt werden (\"wir\", \"uns\" oder \"unser\"). Mit dem Kauf stimmst du dieser Richtlinie zu.<return></return><return></return><title>1. Keine Rückgaberichtlinie</title>Alle Verkäufe sind endgültig. Aufgrund der digitalen Natur unseres Service und der sofortigen Lieferung von KI-generierten Büchern bieten wir keine Rückgaben, Umtausch oder Stornierungen an, sobald:<return></return>• Die Zahlung erfolgreich verarbeitet wurde UND<return></return>• Deine Bucherstellung eingeleitet wurde<return></return><return></return><title>2. Warum wir keine Rückgaben anbieten</title>Coolbooks bietet benutzerdefinierte KI-generierte digitale Inhalte, die:<return></return>• Sofort basierend auf deinen eindeutigen Eingaben erstellt werden<return></return>• Sofort als PDF-Datei an deine E-Mail geliefert werden<return></return>• Nicht zurückgegeben werden können, da digitale Waren nicht \"ungenutzt\" werden können<return></return>• Speziell für dich erstellt werden und nicht weiterverkauft werden können<return></return><return></return>Sobald dein Buch generiert und geliefert ist, wurde der Service vollständig erbracht.<return></return><return></return><title>3. Überlegungen vor dem Kauf</title>Bevor du deinen Kauf abschließt, bitte:<return></return>• ✓ Überprüfe deine Eingabeaufforderungen, Themen und Charakterinformationen sorgfältig<return></return>• ✓ Überprüfe, dass deine E-Mail-Adresse korrekt ist<return></return>• ✓ Verstehe, dass KI-generierte Inhalte in Qualität und Stil variieren können<return></return>• ✓ Bestätige, dass du unseren Nutzungsbedingungen zustimmst<return></return>• ✓ Stelle sicher, dass du verstehst, dass alle Verkäufe endgültig sind<return></return><return></return>Sobald du auf \"Generieren\" oder \"Kaufen\" klickst, bestätigst du, dass du nicht stornieren oder eine Rückerstattung anfordern kannst.<return></return><return></return><title>4. Technische Probleme und Ausnahmen</title>Wir können eine Rückerstattung oder Neuerstellung nur in den folgenden begrenzten Fällen anbieten:<return></return><return></return><title>4.1 Zahlungsfehler</title>• Du wurdest aufgrund eines technischen Fehlers mehrmals für das gleiche Buch belastet<return></return>• Du wurdest belastet, aber keine Bucherstellung wurde eingeleitet<return></return>• Der belastete Betrag war aufgrund eines Systemfehlers falsch<return></return><return></return>Aktion: Kontaktiere uns innerhalb von 48 Stunden nach der Transaktion mit Nachweis des Fehlers.<return></return><return></return><title>4.2 Lieferfehler</title>• Dein Buch wurde aufgrund eines technischen Problems auf unserer Seite nicht an deine E-Mail geliefert<return></return>• Die PDF-Datei ist beschädigt und kann nicht geöffnet werden<return></return><return></return>Aktion: Kontaktiere uns innerhalb von 7 Tagen nach dem Kauf mit:<return></return>• Deiner Bestellbestätigung oder Transaktions-ID<return></return>• Der E-Mail-Adresse, die du verwendet hast<return></return>• Beschreibung des Problems<return></return><return></return>Lösung: Wir werden dein Buch erneut versenden oder neu generieren. Rückerstattungen werden nur gewährt, wenn wir das Lieferproblem nicht beheben können.<return></return><return></return><title>4.3 Service-Ausfälle</title>• Unser Service war vollständig nicht verfügbar und deine Zahlung wurde verarbeitet, aber kein Buch wurde generiert<return></return><return></return>Aktion: Kontaktiere uns innerhalb von 7 Tagen mit deinen Transaktionsdetails.<return></return><return></return><title>5. Was ist NICHT erstattungsfähig</title>Du hast keinen Anspruch auf Rückerstattung, wenn:<return></return>• ❌ Du mit dem KI-generierten Inhalt, Stil oder Qualität unzufrieden bist<return></return>• ❌ Du einen Tippfehler in deinen Eingabeaufforderungen oder Charakternamen gemacht hast<return></return>• ❌ Die KI-Interpretation unterscheidet sich von deinen Erwartungen<return></return>• ❌ Du eine falsche E-Mail-Adresse eingegeben hast und dein Buch nicht erhalten hast<return></return>• ❌ Dein E-Mail-Anbieter unsere Zustellungs-E-Mail blockiert oder gefiltert hat (überprüfe Spam/Junk-Ordner)<return></return>• ❌ Du das Buch nach der Generierung nicht mehr möchtest<return></return>• ❌ Du deine Meinung nach dem Kauf geändert hast<return></return>• ❌ Du versehentlich einen doppelten Kauf getätigt hast (überprüfe sorgfältig vor dem Kauf erneut)<return></return>• ❌ Du gegen unsere Nutzungsbedingungen verstoßen hast<return></return><return></return><title>6. Stornierungen</title>Vor der Zahlungsverarbeitung:<return></return>Du kannst deine Bestellung vor dem Klicken auf die endgültige Schaltfläche \"Kaufen\" oder \"Bezahlen\" stornieren.<return></return><return></return>Nach der Zahlungsverarbeitung:<return></return>Stornierungen sind nicht möglich, sobald die Zahlung verarbeitet wurde und die Bucherstellung begonnen hat. Der Prozess ist automatisiert und sofort.<return></return><return></return><title>7. Rückbuchungen und Streitigkeiten</title>Unbefugte Rückbuchungen:<return></return>• Wenn du eine Rückbuchung oder Zahlungsstreit einreichst, ohne uns zuerst zu kontaktieren, behalten wir uns das Recht vor:<return></return>  ▪ Dein Konto zu sperren oder zu beenden<return></return>  ▪ Dich von der zukünftigen Nutzung des Service zu verbieten<return></return>  ▪ Rechtliche Maßnahmen wegen Betrugs einzuleiten<return></return><return></return>Berechtigte Streitigkeiten:<return></return>• Kontaktiere uns bitte zuerst unter {email}, bevor du eine Rückbuchung einleitest<return></return>• Wir werden mit dir in gutem Glauben zusammenarbeiten, um legitime Probleme zu lösen<return></return>• Führe Aufzeichnungen über deine Transaktion und Kommunikation mit uns<return></return><return></return><title>8. Wie man eine Rückerstattung anfordert (nur in Ausnahmefällen)</title>Wenn du glaubst, dass du unter Abschnitt 4 für eine Rückerstattung berechtigt bist, kontaktiere uns mit:<return></return>E-Mail: {email}<return></return><return></return>Bitte gib an:<return></return>1. Deinen vollständigen Namen<return></return>2. E-Mail-Adresse, die für den Kauf verwendet wurde<return></return>3. Transaktions-ID oder Bestellbestätigung<return></return>4. Datum und Uhrzeit des Kaufs<return></return>5. Detaillierte Beschreibung des technischen Problems<return></return>6. Screenshots oder Nachweis des Problems (falls zutreffend)<return></return><return></return>Antwortzeit:<return></return>• Wir werden innerhalb von 5-7 Werktagen antworten<return></return>• Genehmigte Rückerstattungen werden innerhalb von 14 Tagen verarbeitet<return></return>• Rückerstattungen werden auf die ursprüngliche Zahlungsmethode verbucht<return></return><return></return><title>9. Verbraucherrechte</title>Schweizer Recht:<return></return>Nach Schweizer Verbraucherschutzrecht sind digitale Inhalte, die sofort geliefert werden und nicht zurückgegeben werden können, im Allgemeinen von standardmäßigen Widerrufsrechten ausgenommen.<return></return><return></return>EU-Kunden (falls zutreffend):<return></return>Durch den Kauf und die sofortige Generierung und Lieferung digitaler Inhalte stimmst du ausdrücklich zu, auf dein Widerrufsrecht gemäß EU-Verbraucherschutzrichtlinie Artikel 16(m) zu verzichten.<return></return><return></return>Du bestätigst, dass:<return></return>• Der Service beginnt sofort nach dem Kauf<return></return>• Digitale Inhalte werden sofort geliefert<return></return>• Du auf dein 14-Tage-Widerrufsrecht verzichtest<return></return><return></return><title>10. Änderungen dieser Richtlinie</title>Wir behalten uns das Recht vor, diese Rückgaberichtlinie jederzeit zu aktualisieren. Änderungen werden auf dieser Seite mit einem aktualisierten \"Gültig ab\"-Datum veröffentlicht. Deine weitere Nutzung des Service gilt als Akzeptanz von Änderungen.<return></return><return></return><title>11. Kontakt</title>Für Rückerstattungsanfragen, Fragen oder Bedenken:<return></return>E-Mail: {email}<return></return>Website: {website}<return></return><return></return>Bitte rechne mit einer Antwortzeit von 5-7 Werktagen.",
+            "description": "Zeige unsere Rückgabe- und Stornierungsrichtlinie an",
+            "date": "Gültig ab: "
+        },
+        "register": {
+            "description": "Erstelle ein Konto",
+            "legal": "Durch die Erstellung eines Kontos stimmst du den <terms>Nutzungsbedingungen</terms> und der <privacy>Datenschutzrichtlinie</privacy> zu",
+            "login": "Hast du bereits ein Konto?",
+            "or": "oder",
+            "title": "Registrieren",
+            "password": "Passwort",
+            "password-placeholder": "Gib dein Passwort ein...",
+            "email-placeholder": "Gib deine E-Mail ein...",
+            "name-placeholder": "Gib deinen Namen ein...",
+            "email": "E-Mail",
+            "name": "Name",
+            "submit": "Registrieren"
+        },
+        "account-profile": {
+            "submit": "Aktualisieren",
+            "password": "Passwort",
+            "password-placeholder": "Gib dein Passwort ein...",
+            "name-placeholder": "Gib deinen Namen ein...",
+            "title": "Profil",
+            "email": "E-Mail",
+            "email-placeholder": "Gib deine E-Mail ein...",
+            "description": "Bearbeite dein Profil",
+            "name": "Name"
+        },
+        "privacy": {
+            "title": "Datenschutzrichtlinie",
+            "content": "Diese Datenschutzrichtlinie erläutert, wie Coolbooks (\"wir\", \"uns\" oder \"unser\") deine Informationen erfasst, nutzt und schützt, wenn du unseren Service nutzt.<return></return><return></return><title>1. Informationen, die wir erfassen</title>E-Mail-Adresse (erforderlich):<return></return>• E-Mail-Adresse für Buchlieferung (PDF-Dateien)<return></return>• Wird für die Kommunikation über deine Bestellung verwendet<return></return><return></return>Kontoinformationen (optional):<return></return>• Wenn du dich für die Erstellung eines Kontos entscheidest:<return></return>  ▪ E-Mail-Adresse und Passwort (verschlüsselt) ODER<return></return>  ▪ Google-Authentifizierungsanmeldedaten<return></return>  ▪ Kontoerstellungsdatum<return></return>  ▪ Verlauf der Bücher, die du generiert hast<return></return><return></return>Zahlungsinformationen:<return></return>• Zahlungsinformationen werden von Drittanbieter-Zahlungsanbietern verarbeitet<return></return>• Wir speichern keine vollständigen Kreditkarten- oder Bankdaten<return></return>• Wir können Transaktionsverlauf für deine Käufe speichern<return></return><return></return>Inhaltsdaten:<return></return>• Bücher, die du erstellst (Text, Bilder, Metadaten)<return></return>• KI-Eingabeaufforderungen und Vorlieben, die du einreichst<return></return>• Alle Bücher sind privat und nur für dich zugänglich<return></return><return></return>Technische Informationen:<return></return>• Gerätetyp und Betriebssystem<return></return>• App-Version<return></return>• IP-Adresse<return></return>• Nutzungsstatistiken und Fehlerberichte<return></return>• Protokolldateien und Fehlermeldungen<return></return><return></return><title>2. Wie wir deine Informationen nutzen</title>Wir nutzen erfasste Informationen für:<return></return>• Bereitstellung und Wartung des Service<return></return>• Verarbeitung deiner einmaligen Zahlungen für die Bucherstellung<return></return>• Generierung von KI-gestützten Büchern basierend auf deinen Eingaben<return></return>• Lieferung von PDF-Büchern an deine E-Mail-Adresse<return></return>• Speicherung deiner erstellten Bücher (wenn du ein Konto hast)<return></return>• Kommunikation mit dir über deine Bestellungen und den Service<return></return>• Verbesserung und Optimierung des Service<return></return>• Erkennung und Verhinderung von Betrug oder Missbrauch<return></return>• Einhaltung rechtlicher Verpflichtungen<return></return><return></return><title>3. KI und Datenverarbeitung</title>• Deine Eingabeaufforderungen und Eingaben werden von künstlichen Intelligenzsystemen verarbeitet<return></return>• KI-Anbieter können deine Daten gemäß ihren eigenen Datenschutzrichtlinien verarbeiten<return></return>• Wir nutzen deine persönlichen Informationen nicht zum Trainieren von KI-Modellen ohne Zustimmung<return></return>• Generierte Inhalte werden auf unseren Servern gespeichert<return></return>• Bücher werden als PDF-Dateien per E-Mail geliefert<return></return><return></return><title>4. Informationsfreigabe</title>Wir verkaufen oder teilen deine persönlichen Informationen nicht. Wir können deine Informationen nur mit folgenden Stellen teilen:<return></return><return></return>Drittanbieter-Dienstleister:<return></return>• Zahlungsabwickler (für die Zahlungsverarbeitung)<return></return>• KI-Dienstleister (für die Bucherstellung)<return></return>• Cloud-Hosting-Dienste (für die Datenspeicherung)<return></return>• E-Mail-Zustellungsdienste (zum Versand von PDF-Büchern)<return></return>• Analyseanbieter (zur Verbesserung des Service)<return></return><return></return>Diese Anbieter sind vertraglich verpflichtet, deine Informationen zu schützen und nur zur Erbringung von Dienstleistungen für uns zu nutzen.<return></return><return></return>Rechtliche Anforderungen:<return></return>• Wir können Informationen offenlegen, wenn dies gesetzlich erforderlich ist<return></return>• Zum Schutz unserer Rechte, Sicherheit oder Eigentum<return></return>• Zur Untersuchung von Betrug oder Verstößen gegen unsere Bedingungen<return></return><return></return>Was wir nicht teilen:<return></return>• Deine Bücher werden niemals öffentlich geteilt<return></return>• Andere Benutzer können deine Bücher nicht aufrufen<return></return>• Deine E-Mail-Adresse wird niemals mit anderen Benutzern geteilt<return></return>• Deine persönlichen Informationen werden niemals an Dritte verkauft<return></return><return></return><title>5. Datenspeicherung und Sicherheit</title>• Deine Daten werden auf sicheren Servern gespeichert<return></return>• Wir verwenden Verschlüsselung nach Industriestandard für sensible Daten<return></return>• Passwörter sind verschlüsselt und nicht für uns zugänglich<return></return>• E-Mail-Kommunikation wird über sichere Kanäle versendet<return></return>• Wir können absolute Sicherheit nicht garantieren, ergreifen aber angemessene Maßnahmen zum Schutz deiner Informationen<return></return>• PDF-Dateien, die an deine E-Mail geliefert werden, sind deine Verantwortung zu sichern<return></return><return></return><title>6. Datenschutz von Kindern</title>• Der Service ist für Benutzer aller Altersgruppen verfügbar<return></return>• Wir erfassen nicht bewusst mehr Informationen von Kindern als notwendig, um den Service bereitzustellen<return></return>• Eltern und Erziehungsberechtigte sind verantwortlich für die Überwachung der Nutzung ihrer Kinder<return></return>• Eltern können Zugriff auf oder Löschung der Daten ihres Kindes anfordern, indem sie uns kontaktieren<return></return><return></return><title>7. Deine Rechte</title>Nach Schweizer und europäischem Datenschutzrecht hast du das Recht zu:<return></return>• Zugriff auf deine persönlichen Informationen<return></return>• Korrektur ungenauerInformationen<return></return>• Löschung deines Kontos und zugehöriger Daten<return></return>• Export deiner Daten in einem tragbaren Format<return></return>• Widerruf der Zustimmung zur Datenverarbeitung<return></return>• Einspruch gegen bestimmte Arten der Verarbeitung<return></return>• Beschwerde bei Datenschutzbehörden einreichen<return></return><return></return>Um diese Rechte auszuüben, kontaktiere uns unter {email}<return></return><return></return><title>8. Datenspeicherung</title>• Ohne Konto: Wir speichern deine E-Mail-Adresse und Transaktionsinformationen nur so lange wie nötig, um dein Buch zu liefern und für rechtliche/buchhalterische Zwecke<return></return>• Mit Konto: Wir speichern deine Informationen, solange dein Konto aktiv ist<return></return>• Nach Kontolöschung: Wir löschen deine persönlichen Informationen innerhalb von 30 Tagen<return></return>• Transaktionsdatensätze können länger aus rechtlichen, steuerlichen oder Sicherheitsgründen aufbewahrt werden<return></return>• Anonymisierte Daten können für Analysezwecke aufbewahrt werden<return></return>• PDF-Dateien, die an deine E-Mail versendet werden, werden von deinem E-Mail-Anbieter gemäß seinen Richtlinien gespeichert<return></return><return></return><title>9. Cookies und Tracking</title>• Wir können Cookies und ähnliche Technologien verwenden, um den Service zu verbessern<return></return>• Cookies helfen uns, deine Vorlieben und Anmeldestatus zu speichern (wenn du ein Konto hast)<return></return>• Du kannst Cookies in deinen Browsereinstellungen deaktivieren, aber dies kann die Funktionalität beeinträchtigen<return></return>• Wir verwenden keine Werbe- oder Tracking-Cookies<return></return>• Wir verfolgen deine Aktivität nicht außerhalb unseres Service<return></return><return></return><title>10. Links zu Drittanbietern</title>• Der Service kann Links zu Websites oder Services von Drittanbietern enthalten<return></return>• Wir sind nicht verantwortlich für die Datenschutzpraktiken von Drittanbietern<return></return>• Wir empfehlen dir, ihre Datenschutzrichtlinien zu überprüfen<return></return><return></return><title>11. Internationale Datenübertragungen</title>• Deine Informationen können in Länder außerhalb der Schweiz übertragen und verarbeitet werden<return></return>• Wir stellen angemessene Schutzmaßnahmen für solche Übertragungen sicher<return></return>• Durch die Nutzung des Service stimmst du solchen Übertragungen zu<return></return><return></return><title>12. E-Mail-Kommunikation</title>• Wir versenden Transaktions-E-Mails, um deine PDF-Bücher zu liefern<return></return>• Wir können servicebezogene E-Mails versenden (Bestellbestätigungen, Kontoaktualisierungen, Änderungen der Bedingungen usw.)<return></return>• Du kannst dich nicht von servicebezogenen Mitteilungen abmelden, die notwendig sind, um den Service bereitzustellen<return></return>• Wir versenden keine Marketing-E-Mails, es sei denn, du meldest dich an<return></return>• Du kannst dich jederzeit von Marketing-E-Mails abmelden<return></return><return></return><title>13. Google Sign-In</title>Wenn du dich für die Erstellung eines Kontos mit Google-Authentifizierung entscheidest:<return></return>• Wir erhalten begrenzte Informationen von Google (E-Mail-Adresse, Profilname)<return></return>• Deine Nutzung von Google Sign-In unterliegt der Datenschutzrichtlinie von Google<return></return>• Wir greifen nicht auf dein Google-Konto über die Authentifizierung hinaus zu<return></return>• Du kannst den Zugriff über deine Google-Kontoeinstellungen widerrufen<return></return><return></return><title>14. Konto vs. Kein Konto</title>Ohne Konto:<return></return>• Wir erfassen nur deine E-Mail-Adresse für die Buchlieferung<return></return>• Du erhältst dein PDF per E-Mail<return></return>• Wir speichern keinen Zugriff auf dein generiertes Buch nach der Lieferung (außer Sicherung/rechtliche Anforderungen)<return></return>• Du bist verantwortlich für das Speichern deines PDF<return></return><return></return>Mit Konto:<return></return>• Du kannst auf alle deine zuvor generierten Bücher zugreifen<return></return>• Deine Bücher werden sicher in deinem Konto gespeichert<return></return>• Du kannst dein Konto und alle zugehörigen Daten jederzeit löschen<return></return><return></return><title>15. Änderungen dieser Datenschutzrichtlinie</title>• Wir können diese Datenschutzrichtlinie jederzeit aktualisieren<return></return>• Wesentliche Änderungen werden über die Website oder per E-Mail mitgeteilt<return></return>• Die weitere Nutzung nach Änderungen gilt als Akzeptanz<return></return>• Das \"Gültig ab\"-Datum spiegelt wider, wann Änderungen vorgenommen wurden<return></return><return></return><title>16. Datenverantwortlicher</title>Der Datenverantwortliche für deine Informationen ist:<return></return>Coolbooks<return></return>E-Mail: {email}<return></return>Website: {website}<return></return><return></return><title>17. Kontakt</title>Für Fragen, Bedenken oder Anfragen bezüglich deines Datenschutzes oder dieser Datenschutzrichtlinie:<return></return>E-Mail: {email}<return></return>Website: {website}<return></return><return></return>Für Datenschutzanfragen in der Schweiz kannst du auch kontaktieren:<return></return>Bundesbeauftragter für Datenschutz und Informationsfreiheit (FDPIC)<return></return>Website: www.edoeb.admin.ch",
+            "description": "Zeige unsere Datenschutzrichtlinie an",
+            "date": "Gültig ab: "
         },
         "book": {
             "title": "{title}",
-            "description": "{title} generated with {app}",
-            "download-pdf": "Download PDF",
-            "delete": "Delete"
+            "download-pdf": "PDF herunterladen",
+            "description": "{title} generiert mit {app}",
+            "delete": "Löschen"
         },
-        "auth": {
-            "must-login": "Sign in",
-            "must-login-text": "Please authenticate to continue",
-            "login": "Login",
-            "register": "Register"
-        },
-        "contact": {
-            "title": "Contact",
-            "description": "Contact us",
-            "name": "Name",
-            "name-placeholder": "Enter your name...",
-            "email": "E-Mail",
-            "email-placeholder": "Enter your e-mail...",
-            "subject": "Subject",
-            "subject-placeholder": "Enter a subject...",
-            "message": "Message",
-            "message-placeholder": "Enter your message...",
-            "submit": "Send"
-        },
-        "terms": {
-            "title": "Terms of Service",
-            "description": "View our terms of service",
-            "date": "Effective Date: ",
-            "content": "By accessing or using Coolbooks, you agree to these Terms of Service. If you do not agree, do not use the Service.<return></return><return></return><title>1. About Coolbooks</title>Coolbooks is a platform that allows users to create personalized children's books using artificial intelligence technology. Books are generated based on your input and delivered to you as PDF files via email.<return></return><return></return><title>2. Eligibility and Account</title>• The Service is available to users of all ages<return></return>• An account is not required to use the Service<return></return>• You may optionally create an account using email/password or Google authentication<return></return>• If you create an account, you are responsible for maintaining the security of your credentials<return></return>• You must provide accurate information when creating an account<return></return><return></return><title>3. Service Features</title>• Pay-per-book model: Each book creation requires a separate one-time payment<return></return>• No free tier or trial books are provided<return></return>• All book content is generated by artificial intelligence based on your input<return></return>• Books are delivered as PDF files to the email address you provide<return></return>• If logged in, you can access your previously generated books from your account<return></return><return></return><title>4. Payment Terms</title>• Each book creation requires a one-time payment<return></return>• Payment is processed before book generation begins<return></return>• Payment information is processed through secure third-party payment providers<return></return>• All sales are final and non-refundable<return></return>• Payments are non-transferable between users<return></return><return></return><title>5. Content Creation and AI</title>• All book content is generated by artificial intelligence<return></return>• You provide themes, preferences, and character information to guide the AI<return></return>• You cannot manually edit generated story text<return></return>• The AI may occasionally produce unexpected results<return></return>• You are responsible for reviewing generated content<return></return>• Coolbooks does not review, approve, or monitor AI-generated content before delivery<return></return><return></return><title>6. Content Ownership and Privacy</title>Your Created Content:<return></return>• You retain full ownership rights to books you create using the Service<return></return>• Your books are completely private and only accessible to you<return></return>• You may publish, distribute, or sell your AI-created books on other platforms<return></return>• Books generated without an account are only accessible via the PDF sent to your email<return></return>• Books generated while logged in can be accessed through your account<return></return><return></return>Privacy:<return></return>• Books are never shared publicly on the platform<return></return>• Other users cannot view or access your books<return></return>• You cannot view or access books created by other users<return></return><return></return><title>7. Data Privacy</title>• We do not share your personal information with third parties except as necessary to provide the Service (e.g., payment processing, email delivery)<return></return>• If you create an account, we store your email address and authentication information<return></return>• Book content and user data are stored securely<return></return>• You may delete your account at any time<return></return>• Account deletion will permanently remove your data and access to your books<return></return><return></return><title>8. User Conduct and Content Guidelines</title>Users agree NOT to:<return></return>• Use inappropriate, offensive, or illegal email addresses or display names<return></return>• Submit inappropriate prompts or character names to the AI<return></return>• Attempt to manipulate the AI to generate inappropriate or illegal content<return></return>• Upload or create content that infringes on others' intellectual property rights<return></return>• Attempt to abuse, exploit, or hack the Service<return></return>• Share account credentials with others (if you have an account)<return></return>• Use the Service for any unlawful purpose<return></return><return></return>Coolbooks reserves the right to refuse service, remove content, or terminate accounts that violate these guidelines without notice or refund.<return></return><return></return><title>9. Intellectual Property</title>• The Coolbooks platform, including its AI technology, design, and features, is owned by Coolbooks<return></return>• The Coolbooks name, logo, and branding are trademarks of Coolbooks<return></return>• User-generated content belongs to users as described in Section 6<return></return><return></return><title>10. Disclaimer and Limitation of Liability</title>TO THE MAXIMUM EXTENT PERMITTED BY SWISS LAW:<return></return>• The Service is provided \"AS IS\" without warranties of any kind<return></return>• Coolbooks is not liable for content created or shared by users<return></return>• Coolbooks does not guarantee the accuracy, quality, or appropriateness of AI-generated content<return></return>• Coolbooks is not responsible for any damages, losses, or harm resulting from use of the Service<return></return>• Coolbooks does not guarantee continuous, error-free, or secure operation of the Service<return></return>• Coolbooks is not responsible for delivery failures due to incorrect email addresses or email service provider issues<return></return>• Total liability shall not exceed the amount you paid for the Service in the past 12 months<return></return><return></return><title>11. Third-Party Services</title>The Service integrates with third-party services including payment processors, AI providers, and email delivery services. Your use of such services is subject to their respective terms and policies. Coolbooks is not responsible for third-party services.<return></return><return></return><title>12. Termination</title>• You may terminate your account at any time through account settings (if you have an account)<return></return>• We may suspend or terminate accounts that violate these Terms<return></return>• Upon termination, your right to use the Service ceases immediately<return></return>• No refunds will be provided upon termination<return></return>• We reserve the right to delete inactive accounts after prolonged periods of inactivity<return></return>• Termination will result in permanent loss of access to your generated books<return></return><return></return><title>13. Modifications to Terms</title>• We may update these Terms at any time without prior notice<return></return>• Continued use of the Service after changes constitutes acceptance of the new Terms<return></return>• Material changes will be notified through the website or via email when possible<return></return>• It is your responsibility to review the Terms periodically<return></return><return></return><title>14. Dispute Resolution and Governing Law</title>• These Terms are governed by the laws of Switzerland<return></return>• Any disputes shall be resolved in the courts of Valais, Switzerland<return></return>• You agree to attempt good-faith resolution before pursuing legal action<return></return><return></return><title>15. Severability</title>If any provision of these Terms is found unenforceable or invalid, the remaining provisions remain in full effect.<return></return><return></return><title>16. No Endorsement</title>Coolbooks does not endorse, verify, or guarantee the accuracy of user-generated content. Views expressed in user-created books do not represent Coolbooks' opinions or beliefs.<return></return><return></return><title>17. Language</title>These Terms are provided in multiple languages for your convenience. In case of conflicts between translations, the English version shall prevail. By using the Service, you confirm you understand the Terms in at least one provided language.<return></return><return></return><title>18. Contact</title>For questions, concerns, or support:<return></return>• Email: {email}<return></return>• Website: {website}"
-        },
-        "privacy": {
-            "title": "Privacy Policy",
-            "description": "View our privacy policy",
-            "date": "Effective Date: ",
-            "content": "This Privacy Policy explains how Coolbooks (\"we\", \"us\", or \"our\") collects, uses, and protects your information when you use our Service.<return></return><return></return><title>1. Information We Collect</title>Email Address (Required):<return></return>• Email address for book delivery (PDF files)<return></return>• Used for communication about your order<return></return><return></return>Account Information (Optional):<return></return>• If you choose to create an account:<return></return>  ▪ Email address and password (encrypted), OR<return></return>  ▪ Google authentication credentials<return></return>  ▪ Account creation date<return></return>  ▪ History of books you've generated<return></return><return></return>Payment Information:<return></return>• Payment information is processed by third-party payment providers<return></return>• We do not store full credit card or banking details<return></return>• We may store transaction history for your purchases<return></return><return></return>Content Data:<return></return>• Books you create (text, images, metadata)<return></return>• AI prompts and preferences you submit<return></return>• All books are private and only accessible to you<return></return><return></return>Technical Information:<return></return>• Device type and operating system<return></return>• App version<return></return>• IP address<return></return>• Usage statistics and crash reports<return></return>• Log files and error messages<return></return><return></return><title>2. How We Use Your Information</title>We use collected information to:<return></return>• Provide and maintain the Service<return></return>• Process your one-time payments for book generation<return></return>• Generate AI-powered books based on your inputs<return></return>• Deliver PDF books to your email address<return></return>• Store your created books (if you have an account)<return></return>• Communicate with you about your orders and the Service<return></return>• Improve and optimize the Service<return></return>• Detect and prevent fraud or abuse<return></return>• Comply with legal obligations<return></return><return></return><title>3. AI and Data Processing</title>• Your prompts and inputs are processed by artificial intelligence systems<return></return>• AI providers may process your data according to their own privacy policies<return></return>• We do not use your personal information to train AI models without consent<return></return>• Generated content is stored on our servers<return></return>• Books are delivered as PDF files via email<return></return><return></return><title>4. Information Sharing</title>We do not sell or share your personal information. We may share your information only with:<return></return><return></return>Third-Party Service Providers:<return></return>• Payment processors (for payment processing)<return></return>• AI service providers (for book generation)<return></return>• Cloud hosting services (for data storage)<return></return>• Email delivery services (for sending PDF books)<return></return>• Analytics providers (for Service improvement)<return></return><return></return>These providers are contractually obligated to protect your information and use it only to provide services to us.<return></return><return></return>Legal Requirements:<return></return>• We may disclose information if required by law<return></return>• To protect our rights, safety, or property<return></return>• To investigate fraud or violations of our Terms<return></return><return></return>What We Don't Share:<return></return>• Your books are never shared publicly<return></return>• Other users cannot access your books<return></return>• Your email address is never shared with other users<return></return>• Your personal information is never sold to third parties<return></return><return></return><title>5. Data Storage and Security</title>• Your data is stored on secure servers<return></return>• We use industry-standard encryption for sensitive data<return></return>• Passwords are encrypted and not accessible to us<return></return>• Email communications are sent through secure channels<return></return>• We cannot guarantee absolute security but take reasonable measures to protect your information<return></return>• PDF files delivered to your email are your responsibility to secure<return></return><return></return><title>6. Children's Privacy</title>• The Service is available to users of all ages<return></return>• We do not knowingly collect more information from children than necessary to provide the Service<return></return>• Parents and guardians are responsible for monitoring their children's use<return></return>• Parents may request access to or deletion of their child's data by contacting us<return></return><return></return><title>7. Your Rights</title>Under Swiss and European data protection law, you have the right to:<return></return>• Access your personal information<return></return>• Correct inaccurate information<return></return>• Delete your account and associated data<return></return>• Export your data in a portable format<return></return>• Withdraw consent for data processing<return></return>• Object to certain types of processing<return></return>• Lodge a complaint with data protection authorities<return></return><return></return>To exercise these rights, contact us at {email}<return></return><return></return><title>8. Data Retention</title>• Without an account: We retain your email address and transaction information only as long as necessary to deliver your book and for legal/accounting purposes<return></return>• With an account: We retain your information for as long as your account is active<return></return>• After account deletion, we delete your personal information within 30 days<return></return>• Transaction records may be retained longer for legal, tax, or security purposes<return></return>• Anonymized data may be retained for analytics<return></return>• PDF files sent to your email are stored by your email provider according to their policies<return></return><return></return><title>9. Cookies and Tracking</title>• We may use cookies and similar technologies to improve the Service<return></return>• Cookies help us remember your preferences and login status (if you have an account)<return></return>• You can disable cookies in your browser settings, but this may affect functionality<return></return>• We do not use advertising or tracking cookies<return></return>• We do not track your activity outside of our Service<return></return><return></return><title>10. Third-Party Links</title>• The Service may contain links to third-party websites or services<return></return>• We are not responsible for the privacy practices of third parties<return></return>• We encourage you to review their privacy policies<return></return><return></return><title>11. International Data Transfers</title>• Your information may be transferred to and processed in countries outside Switzerland<return></return>• We ensure appropriate safeguards are in place for such transfers<return></return>• By using the Service, you consent to such transfers<return></return><return></return><title>12. Email Communications</title>• We send transactional emails to deliver your PDF books<return></return>• We may send service-related emails (order confirmations, account updates, changes to Terms, etc.)<return></return>• You cannot opt out of service-related communications necessary to provide the Service<return></return>• We do not send marketing emails unless you opt in<return></return>• You can unsubscribe from marketing emails at any time<return></return><return></return><title>13. Google Sign-In</title>If you choose to create an account using Google authentication:<return></return>• We receive limited information from Google (email address, profile name)<return></return>• Your use of Google Sign-In is subject to Google's privacy policy<return></return>• We do not access your Google account beyond authentication<return></return>• You can revoke access through your Google account settings<return></return><return></return><title>14. Account vs. No Account</title>Without an Account:<return></return>• We only collect your email address for book delivery<return></return>• You receive your PDF via email<return></return>• We do not retain access to your generated book after delivery (beyond backup/legal requirements)<return></return>• You are responsible for saving your PDF<return></return><return></return>With an Account:<return></return>• You can access all your previously generated books<return></return>• Your books are stored securely in your account<return></return>• You can delete your account and all associated data at any time<return></return><return></return><title>15. Changes to This Privacy Policy</title>• We may update this Privacy Policy at any time<return></return>• Material changes will be notified through the website or via email<return></return>• Continued use after changes constitutes acceptance<return></return>• The \"Effective Date\" will reflect when changes were made<return></return><return></return><title>16. Data Controller</title>The data controller responsible for your information is:<return></return>Coolbooks<return></return>Email: {email}<return></return>Website: {website}<return></return><return></return><title>17. Contact Us</title>For questions, concerns, or requests regarding your privacy or this Privacy Policy:<return></return>Email: {email}<return></return>Website: {website}<return></return><return></return>For data protection inquiries in Switzerland, you may also contact:<return></return>Federal Data Protection and Information Commissioner (FDPIC)<return></return>Website: www.edoeb.admin.ch"
-        },
-        "refund": {
-            "title": "Refund and Cancellation Policy",
-            "description": "View our Refund and Cancellation Policy",
-            "date": "Effective Date: ",
-            "content": "This Refund and Cancellation Policy applies to all purchases made through Coolbooks (\"we\", \"us\", or \"our\"). By making a purchase, you agree to this policy.<return></return><return></return><title>1. No Refund Policy</title>All sales are final. Due to the digital nature of our Service and immediate delivery of AI-generated books, we do not offer refunds, exchanges, or cancellations once:<return></return>• Payment has been successfully processed, AND<return></return>• Your book generation has been initiated<return></return><return></return><title>2. Why We Don't Offer Refunds</title>Coolbooks provides custom AI-generated digital content that is:<return></return>• Instantly created based on your unique inputs<return></return>• Immediately delivered to your email as a PDF file<return></return>• Non-returnable digital goods that cannot be \"un-used\"<return></return>• Custom-made specifically for you and cannot be resold<return></return><return></return>Once your book is generated and delivered, the service has been fully rendered.<return></return><return></return><title>3. Pre-Purchase Considerations</title>Before completing your purchase, please:<return></return>• ✓ Review your prompts, themes, and character information carefully<return></return>• ✓ Verify your email address is correct<return></return>• ✓ Understand that AI-generated content may vary in quality and style<return></return>• ✓ Confirm you agree to our Terms of Service<return></return>• ✓ Ensure you understand that all sales are final<return></return><return></return>Once you click \"Generate\" or \"Purchase,\" you acknowledge that you cannot cancel or request a refund.<return></return><return></return><title>4. Technical Issues and Exceptions</title>We may provide a refund or regeneration only in the following limited circumstances:<return></return><return></return><title>4.1 Payment Errors</title>• You were charged multiple times for the same book due to a technical error<return></return>• You were charged but no book generation was initiated<return></return>• The charged amount was incorrect due to a system error<return></return><return></return>Action: Contact us within 48 hours of the transaction with proof of the error.<return></return><return></return><title>4.2 Delivery Failures</title>• Your book was not delivered to your email due to a technical issue on our end<return></return>• The PDF file is corrupted and cannot be opened<return></return><return></return>Action: Contact us within 7 days of purchase with:<return></return>• Your order confirmation or transaction ID<return></return>• The email address you used<return></return>• Description of the issue<return></return><return></return>Resolution: We will resend your book or regenerate it. Refunds will only be issued if we cannot resolve the delivery issue.<return></return><return></return><title>4.3 Service Outages</title>• Our Service was completely unavailable and your payment was processed but no book was generated<return></return><return></return>Action: Contact us within 7 days with your transaction details.<return></return><return></return><title>5. What is NOT Eligible for Refunds</title>You are not entitled to a refund if:<return></return>• ❌ You are dissatisfied with the AI-generated content, style, or quality<return></return>• ❌ You made a typo in your prompts or character names<return></return>• ❌ The AI interpretation differs from your expectations<return></return>• ❌ You entered an incorrect email address and did not receive your book<return></return>• ❌ Your email provider blocked or filtered our delivery email (check spam/junk folders)<return></return>• ❌ You no longer want the book after it has been generated<return></return>• ❌ You changed your mind after purchase<return></return>• ❌ You accidentally made a duplicate purchase (please check carefully before purchasing again)<return></return>• ❌ You violated our Terms of Service<return></return><return></return><title>6. Cancellations</title>Before Payment is Processed:<return></return>You may cancel your order before clicking the final \"Purchase\" or \"Pay\" button.<return></return><return></return>After Payment is Processed:<return></return>Cancellations are not possible once payment has been processed and book generation has begun. The process is automated and immediate.<return></return><return></return><title>7. Chargebacks and Disputes</title>Unauthorized Chargebacks:<return></return>• If you file a chargeback or payment dispute without first contacting us, we reserve the right to:<return></return>  ▪ Suspend or terminate your account<return></return>  ▪ Ban you from future use of the Service<return></return>  ▪ Pursue legal action for fraud<return></return><return></return>Legitimate Disputes:<return></return>• Please contact us first at {email} before initiating a chargeback<return></return>• We will work with you in good faith to resolve legitimate issues<return></return>• Keep records of your transaction and communication with us<return></return><return></return><title>8. How to Request a Refund (Exceptional Cases Only)</title>If you believe you qualify for a refund under Section 4, contact us with:<return></return>Email: {email}<return></return><return></return>Include:<return></return>1. Your full name<return></return>2. Email address used for purchase<return></return>3. Transaction ID or order confirmation<return></return>4. Date and time of purchase<return></return>5. Detailed description of the technical issue<return></return>6. Screenshots or proof of the problem (if applicable)<return></return><return></return>Response Time:<return></return>• We will respond within 5-7 business days<return></return>• Approved refunds will be processed within 14 days<return></return>• Refunds will be issued to the original payment method<return></return><return></return><title>9. Consumer Rights</title>Swiss Law:<return></return>Under Swiss consumer protection law, digital content that is immediately delivered and cannot be returned is generally exempt from standard withdrawal rights.<return></return><return></return>EU Customers (if applicable):<return></return>By purchasing and initiating the immediate generation and delivery of digital content, you explicitly agree to waive your right of withdrawal under EU Consumer Rights Directive Article 16(m).<return></return><return></return>You acknowledge that:<return></return>• The service begins immediately upon purchase<return></return>• Digital content is delivered immediately<return></return>• You waive your right to a 14-day cooling-off period<return></return><return></return><title>10. Modifications to This Policy</title>We reserve the right to update this Refund Policy at any time. Changes will be posted on this page with an updated \"Effective Date.\" Your continued use of the Service constitutes acceptance of any changes.<return></return><return></return><title>11. Contact Us</title>For refund requests, questions, or concerns:<return></return>Email: {email}<return></return>Website: {website}<return></return><return></return>Please allow 5-7 business days for a response."
-        }
-    },
-    "emails": {
-        "register": {
-            "title": "Welcome to Coolbooks!",
-            "hello": "Hello {name}!",
-            "body": "Thank you for joining Coolbooks! You can now create your first book for free using our AI-powered tools. Explore our library of children's books or start creating your own magical stories. Click the link below to get started.",
-            "get-started": "Get started",
-            "best": "Best regards,\nThe Coolbooks Team"
-        },
-        "forgot-password": {
-            "title": "Reset your Coolbooks password",
-            "hello": "Hello {name}!",
-            "body": "We received a request to reset your password. Please click on the link below to create a new password.",
-            "click": "Click here to reset your password",
-            "warning": "If you did not request a password reset, please ignore this email. Your account remains secure.",
-            "link": "You can also copy and paste this link into your browser:"
-        },
-        "receipt": {
-            "title": "Your book \"{title}\" is ready!",
-            "hello": "Hello!",
-            "body": "Congratulations on purchasing your first book : {title}.",
-            "link": "Download My Book",
-            "thanks": "Thank you for your trust 🩵.",
-            "best": "Best regards,\nThe Coolbooks Team"
+        "my-books": {
+            "search-placeholder": "Durchsuche deine Bücher...",
+            "modify": "Zuletzt geändert ",
+            "title": "Meine Bücher",
+            "no-books": "Keine Bücher gefunden",
+            "description": "Erstelle, lese und bearbeite deine eigenen Bücher",
+            "create": "Neues Buch"
         }
     },
     "messages": {
-        "done": "Done",
-        "required": "Required",
-        "invalid-email": "Invalid E-Mail",
-        "taken-email": "E-Mail already taken",
-        "invalid-password": "Invalid password",
-        "passwords-dont-match": "Passwords don't match",
-        "min": "Min {min} characters required",
-        "max": "Max {max} characters allowed",
-        "unauthorized": "Unauthorized",
-        "server-error": "Something went wrong",
-        "profile-updated": "Profile successfully updated",
-        "already-have-password": "You already have a password",
-        "password-created": "Password successfully created",
-        "book-creating": "Creating book",
-        "account-deleted": "Account successfully deleted",
-        "session-deleted": "Session successfully deleted",
-        "set-password-first": "You need to set a password first",
-        "current-password-wrong": "Current password is wrong",
-        "password-updated": "Password successfully updated",
-        "email-sent": "E-Mail successfully sent",
-        "invalid-credentials": "Invalid credentials",
-        "logged-out": "Logged out",
-        "code-invalid": "Code invalid or expired",
-        "too-many-requests": "Too many requests, please try again later",
-        "forbidden": "Forbidden",
-        "bad-request": "Bad request",
-        "home": "Home",
-        "google-disconnected": "Google successfully disconnected",
-        "message-sent": "Message successfully sent",
-        "loginLike": "You need to login first",
-        "book-not-found": "Book not found",
-        "rate-limit": "Too many requests, please try again later",
-        "book-deleted": "Book successfully deleted",
-        "login-success": "Login successful",
-        "register-success": "Registration successful",
-        "prompt-inappropriate": "Your story description contain inappropriate content"
+        "password-created": "Passwort erfolgreich erstellt",
+        "invalid-email": "Ungültige E-Mail",
+        "taken-email": "E-Mail wird bereits verwendet",
+        "min": "Mindestens {min} Zeichen erforderlich",
+        "done": "Fertig",
+        "book-not-found": "Buch nicht gefunden",
+        "server-error": "Etwas ist schief gelaufen",
+        "forbidden": "Verboten",
+        "bad-request": "Ungültige Anfrage",
+        "home": "Startseite",
+        "password-updated": "Passwort erfolgreich aktualisiert",
+        "profile-updated": "Profil erfolgreich aktualisiert",
+        "account-deleted": "Konto erfolgreich gelöscht",
+        "code-invalid": "Code ungültig oder abgelaufen",
+        "rate-limit": "Zu viele Anfragen, bitte versuche es später erneut",
+        "prompt-inappropriate": "Deine Geschichtsbeschreibung enthält unangemessene Inhalte",
+        "invalid-credentials": "Ungültige Anmeldedaten",
+        "set-password-first": "Du musst zuerst ein Passwort setzen",
+        "google-disconnected": "Google erfolgreich getrennt",
+        "login-success": "Anmeldung erfolgreich",
+        "session-deleted": "Sitzung erfolgreich gelöscht",
+        "email-sent": "E-Mail erfolgreich versendet",
+        "required": "Erforderlich",
+        "max": "Maximal {max} Zeichen erlaubt",
+        "unauthorized": "Nicht autorisiert",
+        "invalid-password": "Ungültiges Passwort",
+        "logged-out": "Abgemeldet",
+        "current-password-wrong": "Aktuelles Passwort ist falsch",
+        "too-many-requests": "Zu viele Anfragen, bitte versuche es später erneut",
+        "passwords-dont-match": "Passwörter stimmen nicht überein",
+        "book-deleted": "Buch erfolgreich gelöscht",
+        "register-success": "Registrierung erfolgreich",
+        "book-creating": "Buch wird erstellt",
+        "already-have-password": "Du hast bereits ein Passwort",
+        "message-sent": "Nachricht erfolgreich versendet",
+        "loginLike": "Du musst dich zuerst anmelden"
     },
     "links": {
-        "get-started": "Get started",
-        "login": "Login",
-        "register": "Register",
-        "logout": "Logout",
-        "account": "Account",
-        "profile": "Profile",
-        "password": "Password",
-        "sessions": "Sessions",
-        "socials": "Socials",
-        "delete-account": "Delete Account",
-        "contact": "Contact",
-        "legal": "Legal",
-        "privacy": "Privacy Policy",
-        "terms": "Terms of Service",
-        "refund": "Refund policy",
-        "home": "Home",
-        "examples": "Examples",
-        "create-book": "Create Book",
-        "how-it-works": "How It Works",
-        "features": "Features",
-        "my-books": "My Books",
-        "create-first-book": "Create my first book",
-        "theme": "Theme",
-        "language": "Language"
+        "account": "Konto",
+        "socials": "Soziale Netzwerke",
+        "create-book": "Buch erstellen",
+        "language": "Sprache",
+        "get-started": "Erste Schritte",
+        "profile": "Profil",
+        "logout": "Abmelden",
+        "terms": "Nutzungsbedingungen",
+        "examples": "Beispiele",
+        "legal": "Rechtliches",
+        "contact": "Kontakt",
+        "delete-account": "Konto löschen",
+        "home": "Startseite",
+        "login": "Anmelden",
+        "how-it-works": "Wie es funktioniert",
+        "refund": "Rückgaberichtlinie",
+        "register": "Registrieren",
+        "theme": "Design",
+        "create-first-book": "Mein erstes Buch erstellen",
+        "password": "Passwort",
+        "sessions": "Sitzungen",
+        "privacy": "Datenschutzrichtlinie",
+        "features": "Funktionen",
+        "my-books": "Meine Bücher"
+    },
+    "emails": {
+        "receipt": {
+            "body": "Herzlichen Glückwunsch zum Kauf deines ersten Buches: {title}.",
+            "thanks": "Danke für dein Vertrauen 🩵.",
+            "title": "Dein Buch \"{title}\" ist bereit!",
+            "hello": "Hallo!",
+            "best": "Beste Grüße,\nDas Coolbooks-Team",
+            "link": "Mein Buch herunterladen"
+        },
+        "forgot-password": {
+            "body": "Wir haben eine Anfrage zum Zurücksetzen deines Passworts erhalten. Bitte klicke auf den Link unten, um ein neues Passwort zu erstellen.",
+            "warning": "Wenn du keine Passwort-Zurücksetzen-Anfrage gestellt hast, ignoriere diese E-Mail bitte. Dein Konto bleibt sicher.",
+            "title": "Setze dein Coolbooks-Passwort zurück",
+            "hello": "Hallo {name}!",
+            "click": "Klicke hier, um dein Passwort zurückzusetzen",
+            "link": "Du kannst diesen Link auch kopieren und in deinen Browser einfügen:"
+        },
+        "register": {
+            "body": "Danke, dass du dich bei Coolbooks anmeldest! Du kannst jetzt dein erstes Buch kostenlos mit unseren KI-gestützten Tools erstellen. Erkunde unsere Bibliothek von Kinderbüchern oder beginne mit der Erstellung deiner eigenen magischen Geschichten. Klicke auf den Link unten, um zu beginnen.",
+            "title": "Willkommen bei Coolbooks!",
+            "hello": "Hallo {name}!",
+            "get-started": "Erste Schritte",
+            "best": "Beste Grüße,\nDas Coolbooks-Team"
+        }
     }
 }
