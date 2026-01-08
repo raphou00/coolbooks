@@ -182,7 +182,7 @@ const Home: React.FC<BooksProps> = ({ books }) => {
 
             <section
                 id="create-book"
-                className="relative flex flex-col items-center justify-center gap-y-2 min-h-screen w-full pt-36"
+                className="relative flex flex-col items-center justify-center gap-y-2 min-h-screen w-full pt-16 mt-16"
             >
                 <div className="badge badge-xl badge-secondary rounded-4xl">
                     {t("createBook.badge")}

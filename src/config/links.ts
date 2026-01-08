@@ -8,12 +8,12 @@ export const useGetLinks = () => {
             path: "/",
         },
         {
-            title: t("examples"),
-            path: "/#examples",
-        },
-        {
             title: t("create-book"),
             path: "/#create-book",
+        },
+        {
+            title: t("examples"),
+            path: "/#examples",
         },
         {
             title: t("how-it-works"),
