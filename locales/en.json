@@ -144,10 +144,9 @@
             "hero": {
                 "title": "Your child as the hero of their own story",
                 "description": "Your child's name, look, and imagination in one magical book.",
-                "chip": "⭐️ Only 2 minute to create your book !",
                 "create": "Create My Child's Book",
-                "rating": "4.7/5 • Trusted by 1,000+ parents",
-                "pdf": "PDF in 2 minute",
+                "rating": "⭐️ 4.7/5 • Trusted by 1,000+ parents",
+                "pdf": "2 minute",
                 "style": "4 unique styles",
                 "personalized": "100% customized"
             },

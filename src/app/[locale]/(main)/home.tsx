@@ -9,6 +9,7 @@ import { useState } from "react";
 import {
     AlertCircle,
     BookOpen,
+    BookOpenText,
     ChevronRightIcon,
     Heart,
     Rocket,
@@ -80,11 +81,11 @@ const Home: React.FC<BooksProps> = ({ books }) => {
 
             <section
                 id="home"
-                className="relative h-[calc(100vh-88px)] w-full max-w-2xl mx-auto flex flex-col justify-between items-center gap-y-4 pt-12 z-10 text-black"
+                className="relative h-[calc(100vh-88px)] w-full max-w-2xl mx-auto flex flex-col justify-c items-center gap-y-8 pt-18 z-10 text-black"
             >
                 <div className="flex flex-col justify-center items-center gap-y-2">
                     <div className="px-2 py-0.5 bg-secondary/20 glass border-2 border-neutral/10 rounded-full text-center">
-                        {t("hero.chip")}
+                        {t("hero.rating")}
                     </div>
                     <h1
                         className={cn(
@@ -98,14 +99,14 @@ const Home: React.FC<BooksProps> = ({ books }) => {
                             animate={{ y: [0, -20, 0] }}
                             transition={{ duration: 9, repeat: Infinity }}
                         >
-                            <Star className="w-12 h-12 text-yellow-300 fill-yellow-100 rotate-12 drop-shadow-lg" />
+                            <BookOpenText className="w-12 h-12 text-indigo-300 fill-indigo-100 rotate-12 drop-shadow-lg" />
                         </motion.div>
                         <motion.div
-                            className="absolute -z-10 -left-2 -bottom-8"
-                            animate={{ y: [0, -30, 0] }}
+                            className="absolute -z-10 -left-2 -bottom-2"
+                            animate={{ y: [0, -10, 0] }}
                             transition={{ duration: 8, repeat: Infinity }}
                         >
-                            <Sparkles className="w-12 h-12 text-indigo-300 fill-indigo-100 -rotate-12 drop-shadow-lg" />
+                            <Sparkles className="w-12 h-12 text-yellow-300 fill-yellow-100 -rotate-12 drop-shadow-lg" />
                         </motion.div>
                     </h1>
                     <p className="text-lg md:text-xl text-center">
@@ -158,21 +159,17 @@ const Home: React.FC<BooksProps> = ({ books }) => {
                     </motion.div>
                 </div>
 
-                <div className="relative flex flex-col justify-center gap-4 px-6 py-4 text-sm text-neutral rounded-field border border-neutral/20 bg-base-100/20 w-fit mx-auto">
-                    <div className="flex items-center justify-center gap-x-2 text-center">
-                        <Star className="text-yellow-500 fill-yellow-500" />
-                        {t("hero.rating")}
-                    </div>
-                    <div className="flex justify-center gap-x-2 lg:gap-x-4">
-                        <div className="flex items-center gap-x-2">
+                <div>
+                    <div className="flex flex-wrap justify-center gap-x-2 lg:gap-x-4 text-xl text-neutral rounded-field border border-neutral/20 bg-base-100/20 py-4">
+                        <div className="w-fit flex items-center gap-x-2">
                             <span className="status status-success" />
                             <span>{t("hero.pdf")}</span>
                         </div>
-                        <div className="flex items-center gap-x-2">
+                        <div className="w-fit flex items-center gap-x-2">
                             <span className="status status-secondary" />
                             <span>{t("hero.style")}</span>
                         </div>
-                        <div className="flex items-center gap-x-2">
+                        <div className="w-fit flex items-center gap-x-2">
                             <span className="status status-primary" />
                             <span>{t("hero.personalized")}</span>
                         </div>
