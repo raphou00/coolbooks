@@ -48,7 +48,7 @@ const Home: React.FC<BooksProps> = ({ books }) => {
     return (
         <>
             <PaymentStatus />
-            <div className="absolute inset-0 w-full h-[calc(100vh+80px)] z-0 bg-secondary/30 [background-image:radial-gradient(88%_100%_at_top,var(--color-primary),rgba(255,255,255,0))]">
+            <div className="absolute inset-0 w-full h-[calc(100vh+88px)] z-0 bg-secondary/30 [background-image:radial-gradient(88%_100%_at_top,var(--color-primary),rgba(255,255,255,0))]">
                 <div className="custom-shape-divider-bottom-1767706513">
                     <svg
                         data-name="Layer 1"
@@ -80,7 +80,7 @@ const Home: React.FC<BooksProps> = ({ books }) => {
 
             <section
                 id="home"
-                className="relative h-[calc(100vh-100px)] w-full max-w-4xl mx-auto flex flex-col items-center gap-y-4 pt-16 z-10 text-black"
+                className="relative h-[calc(100vh-88px)] w-full max-w-2xl mx-auto flex flex-col justify-between items-center gap-y-4 pt-12 z-10 text-black"
             >
                 <div className="flex flex-col justify-center items-center gap-y-2">
                     <div className="px-2 py-0.5 bg-secondary/20 glass border-2 border-neutral/10 rounded-full text-center">
@@ -88,13 +88,13 @@ const Home: React.FC<BooksProps> = ({ books }) => {
                     </div>
                     <h1
                         className={cn(
-                            "relative text-3xl md:text-4xl lg:text-5xl my-2 text-center",
+                            "relative text-3xl md:text-4xl lg:text-5xl text-center",
                             font.className
                         )}
                     >
                         {t("hero.title")}
                         <motion.div
-                            className="absolute -z-10 right-0 -top-8"
+                            className="absolute -z-10 -right-2 -top-8"
                             animate={{ y: [0, -20, 0] }}
                             transition={{ duration: 9, repeat: Infinity }}
                         >
@@ -108,7 +108,7 @@ const Home: React.FC<BooksProps> = ({ books }) => {
                             <Sparkles className="w-12 h-12 text-indigo-300 fill-indigo-100 -rotate-12 drop-shadow-lg" />
                         </motion.div>
                     </h1>
-                    <p className="text-lg md:text-xl text-center max-w-2xl">
+                    <p className="text-lg md:text-xl text-center">
                         {t("hero.description")}
                     </p>
                     <Link
@@ -182,7 +182,7 @@ const Home: React.FC<BooksProps> = ({ books }) => {
 
             <section
                 id="create-book"
-                className="relative flex flex-col items-center justify-center gap-y-2 min-h-screen w-full pt-16 mt-16"
+                className="relative flex flex-col items-center justify-center gap-y-2 min-h-screen w-full pt-32"
             >
                 <div className="badge badge-xl badge-secondary rounded-4xl">
                     {t("createBook.badge")}
@@ -199,7 +199,7 @@ const Home: React.FC<BooksProps> = ({ books }) => {
 
             <section
                 id="examples"
-                className="flex flex-col justify-center items-center gap-y-4 pt-36"
+                className="flex flex-col justify-center items-center gap-y-4 pt-16"
             >
                 <div className="badge badge-xl badge-secondary rounded-4xl">
                     {t("examples.badge")}
