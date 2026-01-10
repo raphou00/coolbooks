@@ -172,11 +172,11 @@ const Home: React.FC<BooksProps> = ({ books }) => {
                         <span>{t("hero.pdf")}</span>
                     </div>
                     <div className="w-fit flex items-center gap-2">
-                        <span className="status status-secondary" />
+                        <span className="status status-error" />
                         <span>{t("hero.style")}</span>
                     </div>
                     <div className="w-fit flex items-center gap-2">
-                        <span className="status status-primary" />
+                        <span className="status status-info" />
                         <span>{t("hero.personalized")}</span>
                     </div>
                 </div>
