@@ -72,7 +72,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                 <div className="drawer-content">
                     <header
                         className={cn(
-                            "fixed top-0 z-90 w-full backdrop-blur-xl bg-base-100/30 transition-all",
+                            "fixed top-0 z-90 w-full backdrop-blur-2xl bg-base-100/50 transition-all",
                             hasScrolled ? "bg-base-100" : ""
                         )}
                     >

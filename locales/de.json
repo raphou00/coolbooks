@@ -57,54 +57,54 @@
             "date": "Gültig ab: "
         },
         "new-book": {
-            "time": "Zeit",
-            "hazel": "Haselnussbraun",
-            "olive": "Olivgrün",
-            "email-placeholder": "Gib deine E-Mail ein...",
-            "gray": "Grau",
-            "anime": "Anime",
-            "girl": "Mädchen",
-            "anime-description": "Japanischer Manga-Stil",
-            "delivery": "Lieferung",
-            "cartoon-description": "Farbenfroh und fröhlich",
-            "skin-tone": "Hautfarbe",
-            "submit": "Generieren",
-            "prompt": "Beschreibe das Abenteuer in 1-2 Sätzen.",
-            "description": "Erstelle ein neues Buch mit nur einer Eingabeaufforderung",
-            "child-details": "Erzähle uns von deinem Kind",
-            "email-info": "Dein Buch wird dir per E-Mail zugestellt, nachdem es generiert wurde.",
-            "green": "Grün",
-            "medium": "Mittel",
-            "story-idea": "Beschreibe deine Geschichtsidee",
-            "cartoon": "Comic",
-            "black": "Schwarz",
-            "instant": "2 Minute",
-            "boy": "Junge",
-            "story-style": " Beschreibe deinen Geschichtsstil",
-            "child-name": "Name des Kindes",
-            "eye-color": "Augenfarbe",
-            "email": "Deine E-Mail",
-            "red": "Rot",
-            "art-style": "Kunststil",
-            "themes": "Themen",
-            "price": "Preis",
-            "child-name-placeholder": "Name deines Kindes...",
-            "watercolor-description": "Sanft und poetisch",
-            "gender": "Geschlecht",
-            "brown": "Braun",
-            "by-email": "E-Mail",
-            "age": "Alter",
-            "generate": "Bezahlen und generieren",
-            "hair-color": "Haarfarbe",
-            "blue": "Blau",
-            "blonde": "Blond",
             "title": "Neues Buch",
-            "comics": "Comics",
-            "comics-description": "Dynamischer Superheld",
-            "dark": "Dunkel",
-            "prompt-placeholder": "Beispiel: Toto spielt Fußball im Park mit seinen Freunden, warme Farben, lustig...",
+            "description": "Generieren Sie ein neues Buch für Ihr Kind",
+            "submit": "Kauf abschließen",
+            "total": "Gesamt",
+            "child-details": "Erzählen Sie uns von Ihrem Kind",
+            "story-style": "Beschreiben Sie Ihren Geschichtsstil",
+            "story-idea": "Beschreiben Sie Ihre Geschichtsidee",
+            "email": "Ihre E-Mail",
+            "email-placeholder": "Geben Sie Ihre E-Mail ein...",
+            "email-info": "Ihr Buch wird Ihnen per E-Mail zugesendet, nachdem es generiert wurde.",
+            "child-name": "Name des Kindes",
+            "child-name-placeholder": "Der Name Ihres Kindes...",
+            "age": "Alter",
+            "hair-color": "Haarfarbe",
+            "eye-color": "Augenfarbe",
+            "gender": "Geschlecht",
+            "skin-tone": "Hautton",
+            "themes": "Themen",
+            "art-style": "Kunststil",
+            "prompt": "Beschreiben Sie das Abenteuer in 1-2 Sätzen.",
+            "prompt-placeholder": "Bsp: Toto spielt Fußball im Park mit seinen Freunden, warme Farben, Spaß...",
+            "boy": "Junge",
+            "girl": "Mädchen",
+            "black": "Schwarz",
+            "brown": "Braun",
+            "blonde": "Blond",
+            "red": "Rot",
+            "gray": "Grau",
+            "blue": "Blau",
+            "green": "Grün",
+            "hazel": "Haselnussbraun",
             "light": "Hell",
+            "medium": "Mittel",
+            "dark": "Dunkel",
+            "olive": "Olivfarben",
+            "cartoon": "Zeichentrick",
+            "comics": "Comics",
+            "anime": "Anime",
             "watercolor": "Aquarell",
+            "cartoon-description": "Farbenfroh und fröhlich",
+            "comics-description": "Dynamischer Superheld",
+            "anime-description": "Japanischer Manga-Stil",
+            "watercolor-description": "Sanft und poetisch",
+            "price": "Preis",
+            "delivery": "Lieferung",
+            "time": "Zeit",
+            "by-email": "E-Mail",
+            "instant": "2 Minuten",
             "page": "Seiten",
             "pages": "12 Seiten"
         },
@@ -172,82 +172,81 @@
             "cancel": "Abbrechen"
         },
         "home": {
-            "banner": "❄️ -20% Bis zum 31. Januar 2025",
-            "cta": {
-                "title": "Beginne heute mit der Erstellung magischer Geschichten",
-                "description": "Schließe dich Tausenden von Familien an, die personalisierte Gute-Nacht-Geschichten erstellen, die die Fantasie anregen und bleibende Erinnerungen schaffen"
-            },
             "hero": {
-                "create": "Buch Meines Kindes Erstellen",
-                "rating": "4,7/5 • Vertraut von über 1 000 Eltern",
+                "rating": "⭐️ 4,7/5 • Vertrauenswürdig für 1'000+ Eltern",
+                "title": "Dein Kind als Held seiner eigenen Geschichte",
+                "description": "Name, Aussehen und Fantasie deines Kindes in einem magischen Buch.",
+                "create": "Das Buch meines Kindes erstellen",
+                "offer": "20% Rabatt bis 31. Januar 2025",
+                "pdf": "PDF in 2 Minuten",
                 "style": "4 einzigartige Stile",
-                "personalized": "100% personalisiert",
-                "title": "Verwandeln Sie Ihr Kind in den Helden seiner eigenen Geschichte",
-                "description": "Ein personalisiertes Storybook mit KI erstellt - in 2 Minuten fertig. Der Name, das Aussehen und die Fantasie Ihres Kindes in einem magischen Buch.",
-                "chip": "⭐️ Nur 1 Minute, um dein Buch zu erstellen!",
-                "pdf": "PDF in 1 Minute"
+                "personalized": "100% personalisiert"
             },
-            "examples": {
-                "badge": "Beispiele",
-                "title": "Sehe einige Beispiele"
-            },
-            "payment-status": {
-                "failed": "Zahlung fehlgeschlagen",
-                "success": "Zahlung erfolgreich",
-                "success-message": "Dein Buch wird gerade generiert und wird in Kürze an deine E-Mail versendet (warte etwa 1 Minute).",
-                "email": "Dein personalisiertes Buch wird versendet an",
-                "check-email": "Überprüfe deine E-Mail auf den Download-Link",
-                "close": "Schließen",
-                "failed-message": "Leider konnte deine Zahlung nicht verarbeitet werden. Bitte versuche es erneut."
-            },
-            "createBook": {
+            "create-book": {
                 "badge": "Buch erstellen",
                 "title": "Erstelle dein eigenes Buch"
             },
-            "howItWorks": {
-                "step2": {
-                    "title": "KI erstellt die Geschichte",
-                    "description": "Unsere KI erstellt eine einzigartige Geschichte mit wunderschönen Illustrationen in Minuten"
-                },
-                "title": "Schaffe Magie in 3 einfachen Schritten",
+            "examples": {
+                "badge": "Beispiele",
+                "title": "Beispiele ansehen"
+            },
+            "how-it-works": {
+                "badge": "So funktioniert's",
+                "title": "In 3 einfachen Schritten zur Magie",
                 "step1": {
-                    "title": "Erzähle uns von deinem Kind",
-                    "description": "Teile seinen Namen, Alter, Interessen und die Art von Abenteuer mit, die er liebt"
+                    "title": "Erzähl uns von deinem Kind",
+                    "description": "Teile Name, Alter, Interessen und welche Abenteuer es liebt"
                 },
-                "badge": "Wie es funktioniert",
+                "step2": {
+                    "title": "KI schreibt die Geschichte",
+                    "description": "Unsere KI erstellt in wenigen Minuten eine einzigartige Geschichte mit schönen Illustrationen"
+                },
                 "step3": {
-                    "title": "Lese und genieße",
-                    "description": "Erhalte das Buch direkt per E-Mail, um es für immer zu schätzen"
+                    "title": "Lesen und genießen",
+                    "description": "Erhalte das Buch direkt per E-Mail und bewahre es für immer auf"
                 }
             },
             "features": {
+                "badge": "Funktionen",
+                "title": "Warum Eltern coolbooks lieben",
+                "subtitle": "Jede Geschichte wird mit Sorgfalt erstellt und verbindet KI-Magie mit Bildungswert",
                 "feature1": {
                     "title": "Personalisierte Geschichten",
-                    "description": "Beziehe den Namen, die Interessen und die Lieblingscharaktere deines Kindes in jede Geschichte ein"
+                    "description": "Name, Interessen und Lieblingsfiguren deines Kindes in jeder Geschichte"
+                },
+                "feature2": {
+                    "title": "Lerninhalte",
+                    "description": "Geschichten, die Werte, Wortschatz und wichtige Lebenslektionen vermitteln"
+                },
+                "feature3": {
+                    "title": "Wunderschön illustriert",
+                    "description": "KI-generierte Illustrationen, die jede Geschichte in lebendigen Farben zum Leben erwecken"
+                },
+                "feature4": {
+                    "title": "Altersgerecht",
+                    "description": "Inhalte, die auf Entwicklungsstand und Interessen deines Kindes abgestimmt sind"
                 },
                 "feature5": {
                     "title": "Familienerinnerungen",
-                    "description": "Schaffe bleibende Erinnerungen mit Geschichten, die du zusammen lesen kannst"
-                },
-                "badge": "Funktionen",
-                "subtitle": "Jede Geschichte wird mit Sorgfalt erstellt und kombiniert KI-Magie mit pädagogischem Wert",
-                "feature4": {
-                    "title": "Altersgerecht",
-                    "description": "Inhalte, die auf die Entwicklungsphase und Interessen deines Kindes zugeschnitten sind"
-                },
-                "title": "Warum Eltern Coolbooks lieben",
-                "feature3": {
-                    "title": "Wunderschön illustriert",
-                    "description": "KI-generierte Kunstwerke, die jede Geschichte in lebendigen Farben zum Leben erwecken"
-                },
-                "feature2": {
-                    "title": "Pädagogischer Inhalt",
-                    "description": "Geschichten, die Werte, Vokabeln und wichtige Lektionen des Lebens vermitteln"
+                    "description": "Schafft bleibende Erinnerungen mit Geschichten zum gemeinsamen Lesen"
                 },
                 "feature6": {
-                    "title": "Drucken oder Digital",
-                    "description": "Lade PDFs herunter oder bestelle wunderschöne gedruckte Hardcover-Bücher"
+                    "title": "Print oder Digital",
+                    "description": "PDFs zum Download oder wunderschöne gebundene Bücher bestellen"
                 }
+            },
+            "cta": {
+                "title": "Beginne noch heute mit magischen Geschichten",
+                "description": "Schließe dich tausenden Familien an, die personalisierte Gutenachtgeschichten schaffen, die Fantasie wecken und Erinnerungen fürs Leben schaffen"
+            },
+            "payment-status": {
+                "success": "Zahlung erfolgreich",
+                "success-message": "Dein Buch wird gerade erstellt und in Kürze an deine E-Mail gesendet (warte etwa 1 Minute).",
+                "failed": "Zahlung fehlgeschlagen",
+                "failed-message": "Leider konnte deine Zahlung nicht verarbeitet werden. Bitte versuche es erneut.",
+                "email": "Dein personalisiertes Buch wird gesendet an",
+                "check-email": "Prüfe deine E-Mails für den Download-Link",
+                "close": "Schließen"
             }
         },
         "auth": {

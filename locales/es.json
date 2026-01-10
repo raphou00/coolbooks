@@ -57,56 +57,56 @@
             "date": "Fecha Efectiva: "
         },
         "new-book": {
-            "time": "Tiempo",
-            "hazel": "Avellana",
-            "olive": "Oliva",
-            "email-placeholder": "Ingresa tu correo electrónico...",
-            "gray": "Gris",
-            "anime": "Anime",
-            "girl": "Niña",
-            "anime-description": "Estilo manga japonés",
-            "delivery": "Entrega",
-            "cartoon-description": "Colorido y alegre",
-            "skin-tone": "Tono de Piel",
-            "submit": "Generar",
-            "prompt": "Describe la aventura en 1-2 oraciones.",
-            "description": "Crea un nuevo libro con solo un indicador",
-            "child-details": "Cuéntanos sobre tu hijo",
-            "email-info": "Tu libro te será enviado por correo electrónico después de que haya sido generado.",
-            "green": "Verde",
-            "medium": "Medio",
-            "story-idea": "Describe tu idea de historia",
-            "cartoon": "Caricatura",
-            "black": "Negro",
-            "instant": "2 minuto",
-            "boy": "Niño",
-            "story-style": "Describe tu estilo de historia",
-            "child-name": "Nombre del Niño",
-            "eye-color": "Color de Ojos",
-            "email": "Tu correo electrónico",
-            "red": "Rojo",
-            "art-style": "Estilo de Arte",
-            "themes": "Temas",
-            "price": "Precio",
-            "child-name-placeholder": "El nombre de tu hijo...",
-            "watercolor-description": "Suave y poético",
-            "gender": "Género",
-            "brown": "Marrón",
-            "by-email": "Correo Electrónico",
+            "title": "Libro Nuevo",
+            "description": "Genere un nuevo libro para su hijo",
+            "submit": "Completar compra",
+            "total": "Total",
+            "child-details": "Cuéntenos sobre su hijo",
+            "story-style": "Describa su estilo de historia",
+            "story-idea": "Describa su idea de historia",
+            "email": "Su correo electrónico",
+            "email-placeholder": "Ingrese su correo electrónico...",
+            "email-info": "Su libro le será enviado por correo electrónico después de ser generado.",
+            "child-name": "Nombre del niño",
+            "child-name-placeholder": "El nombre de su hijo...",
             "age": "Edad",
-            "generate": "Pagar y generar",
-            "hair-color": "Color de Cabello",
-            "blue": "Azul",
+            "hair-color": "Color de cabello",
+            "eye-color": "Color de ojos",
+            "gender": "Género",
+            "skin-tone": "Tono de piel",
+            "themes": "Temas",
+            "art-style": "Estilo artístico",
+            "prompt": "Describa la aventura en 1-2 oraciones.",
+            "prompt-placeholder": "Ej: Toto juega fútbol, en el parque con sus amigos, colores cálidos, diversión...",
+            "boy": "Niño",
+            "girl": "Niña",
+            "black": "Negro",
+            "brown": "Marrón",
             "blonde": "Rubio",
-            "title": "Nuevo Libro",
-            "comics": "cómics",
-            "comics-description": "Dinámico y superheroico",
-            "dark": "Oscuro",
-            "prompt-placeholder": "Ej: Toto está jugando fútbol, en el parque con sus amigos, colores cálidos, divertido...",
+            "red": "Rojo",
+            "gray": "Gris",
+            "blue": "Azul",
+            "green": "Verde",
+            "hazel": "Avellana",
             "light": "Claro",
+            "medium": "Medio",
+            "dark": "Oscuro",
+            "olive": "Oliva",
+            "cartoon": "Dibujos animados",
+            "comics": "Cómics",
+            "anime": "Anime",
             "watercolor": "Acuarela",
+            "cartoon-description": "Colorido y alegre",
+            "comics-description": "Superhéroe dinámico",
+            "anime-description": "Estilo manga japonés",
+            "watercolor-description": "Suave y poético",
+            "price": "Precio",
+            "delivery": "Entrega",
+            "time": "Tiempo",
+            "by-email": "Correo electrónico",
+            "instant": "2 minutos",
             "page": "Páginas",
-            "pages": "12 Páginas"
+            "pages": "12 páginas"
         },
         "delete-book": {
             "delete-book-text": "¿Estás seguro de que deseas eliminar este libro? Esta acción no se puede deshacer.",
@@ -172,82 +172,81 @@
             "cancel": "Cancelar"
         },
         "home": {
-            "banner": "❄️ -20% Hasta el 31 de enero de 2025",
-            "cta": {
-                "title": "Comienza a crear historias mágicas hoy",
-                "description": "Únete a miles de familias que crean historias para dormir personalizadas que estimulan la imaginación y crean recuerdos duraderos"
-            },
             "hero": {
-                "create": "Crear el Libro de Mi Hijo",
-                "rating": "4.7/5 • Confiado por más de 1 000 padres",
+                "rating": "⭐️ 4,7/5 • De confianza para 1'000+ padres",
+                "title": "Tu hijo como héroe de su propia historia",
+                "description": "El nombre, aspecto e imaginación de tu hijo en un libro mágico.",
+                "create": "Crear el libro de mi hijo",
+                "offer": "20% de descuento hasta el 31 de enero de 2025",
+                "pdf": "PDF en 2 minutos",
                 "style": "4 estilos únicos",
-                "personalized": "100% personalizado",
-                "title": "Convierte a tu hijo en el héroe de su propia historia",
-                "description": "Un libro de cuentos personalizado hecho con IA - listo en 2 minutos. El nombre, la apariencia y la imaginación de tu hijo en un único libro mágico.",
-                "chip": "⭐️ ¡Solo 1 minuto para crear tu libro!",
-                "pdf": "PDF en 1 minuto"
+                "personalized": "100% personalizado"
+            },
+            "create-book": {
+                "badge": "Crear libro",
+                "title": "Crea tu propio libro"
             },
             "examples": {
                 "badge": "Ejemplos",
                 "title": "Ver algunos ejemplos"
             },
-            "payment-status": {
-                "failed": "Pago Fallido",
-                "success": "Pago Exitoso",
-                "success-message": "Tu libro se está generando y será enviado a tu correo electrónico en breve (espera aproximadamente 1 minuto).",
-                "email": "Tu libro personalizado será enviado a",
-                "check-email": "Revisa tu correo electrónico para obtener el enlace de descarga",
-                "close": "Cerrar",
-                "failed-message": "Desafortunadamente, tu pago no pudo ser procesado. Por favor intenta de nuevo."
-            },
-            "createBook": {
-                "badge": "Crear Libro",
-                "title": "Crea tu propio libro"
-            },
-            "howItWorks": {
-                "step2": {
-                    "title": "La IA crea la historia",
-                    "description": "Nuestra IA crea un cuento único con hermosas ilustraciones en minutos"
-                },
-                "title": "Crea magia en 3 pasos simples",
+            "how-it-works": {
+                "badge": "Cómo funciona",
+                "title": "Crea magia en 3 sencillos pasos",
                 "step1": {
                     "title": "Cuéntanos sobre tu hijo",
-                    "description": "Comparte su nombre, edad, intereses y qué tipo de aventura aman"
+                    "description": "Comparte su nombre, edad, intereses y qué tipo de aventura le encanta"
                 },
-                "badge": "Cómo Funciona",
+                "step2": {
+                    "title": "La IA crea la historia",
+                    "description": "Nuestra IA crea un relato único con ilustraciones preciosas en cuestión de minutos"
+                },
                 "step3": {
                     "title": "Lee y disfruta",
-                    "description": "Recibe directamente el libro en tu correo electrónico para atesorar por siempre"
+                    "description": "Recibe el libro directamente en tu correo electrónico para guardarlo para siempre"
                 }
             },
             "features": {
+                "badge": "Características",
+                "title": "Por qué a los padres les encanta coolbooks",
+                "subtitle": "Cada historia se crea con cuidado, combinando la magia de la IA con valor educativo",
                 "feature1": {
-                    "title": "Historias Personalizadas",
+                    "title": "Historias personalizadas",
                     "description": "Incluye el nombre, intereses y personajes favoritos de tu hijo en cada cuento"
                 },
-                "feature5": {
-                    "title": "Recuerdos Familiares",
-                    "description": "Crea recuerdos duraderos con historias que puedes leer juntos"
-                },
-                "badge": "Características",
-                "subtitle": "Cada historia se elabora con cuidado, combinando magia de IA con valor educativo",
-                "feature4": {
-                    "title": "Apropiado para la Edad",
-                    "description": "Contenido adaptado al estadio de desarrollo e intereses de tu hijo"
-                },
-                "title": "Por qué los padres aman coolbooks",
-                "feature3": {
-                    "title": "Hermosamente Ilustrado",
-                    "description": "Ilustraciones generadas por IA que dan vida a cada historia en colores vívidos"
-                },
                 "feature2": {
-                    "title": "Contenido Educativo",
-                    "description": "Historias que enseñan valores, vocabulario y lecciones de vida importantes"
+                    "title": "Contenido educativo",
+                    "description": "Historias que enseñan valores, vocabulario y lecciones importantes de vida"
+                },
+                "feature3": {
+                    "title": "Hermosamente ilustrado",
+                    "description": "Ilustraciones generadas por IA que dan vida a cada historia con colores vivos"
+                },
+                "feature4": {
+                    "title": "Adecuado para su edad",
+                    "description": "Contenido adaptado a la etapa de desarrollo y a los intereses de tu hijo"
+                },
+                "feature5": {
+                    "title": "Recuerdos en familia",
+                    "description": "Crea recuerdos duraderos con historias para leer juntos"
                 },
                 "feature6": {
-                    "title": "Impreso o Digital",
-                    "description": "Descarga PDFs u ordena hermosos libros de tapa dura impresos"
+                    "title": "Impreso o digital",
+                    "description": "Descarga PDFs u ordena preciosos libros de tapa dura"
                 }
+            },
+            "cta": {
+                "title": "Empieza hoy a crear historias mágicas",
+                "description": "Únete a miles de familias que crean cuentos personalizados para dormir que despiertan la imaginación y crean recuerdos duraderos"
+            },
+            "payment-status": {
+                "success": "Pago exitoso",
+                "success-message": "Tu libro se está generando y se enviará a tu correo electrónico en breve (espera alrededor de 1 minuto).",
+                "failed": "Pago fallido",
+                "failed-message": "Lamentablemente tu pago no pudo procesarse. Por favor, inténtalo de nuevo.",
+                "email": "Tu libro personalizado se enviará a",
+                "check-email": "Revisa tu correo electrónico para obtener el enlace de descarga",
+                "close": "Cerrar"
             }
         },
         "auth": {

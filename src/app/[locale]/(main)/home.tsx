@@ -10,12 +10,12 @@ import {
     AlertCircle,
     BookOpen,
     BookOpenText,
-    ChevronRightIcon,
     Heart,
     Rocket,
     Sparkles,
     Star,
     ThumbsUp,
+    Undo,
     Users,
     Wand2,
     Zap,
@@ -49,7 +49,7 @@ const Home: React.FC<BooksProps> = ({ books }) => {
     return (
         <>
             <PaymentStatus />
-            <div className="absolute inset-0 w-full h-[calc(100vh+88px)] z-0 bg-secondary/30 [background-image:radial-gradient(88%_100%_at_top,var(--color-primary),rgba(255,255,255,0))]">
+            <div className="absolute inset-0 w-full h-[calc(100vh+88px)] z-0 bg-secondary/50 [background-image:radial-gradient(88%_100%_at_top,var(--color-primary),rgba(255,255,255,0))]">
                 <div className="custom-shape-divider-bottom-1767706513">
                     <svg
                         data-name="Layer 1"
@@ -75,15 +75,11 @@ const Home: React.FC<BooksProps> = ({ books }) => {
                 </div>
             </div>
 
-            <div className="absolute left-0 w-full px-2 py-1 flex justify-center items-center bg-secondary/80 z-50">
-                {t("banner")}
-            </div>
-
             <section
                 id="home"
-                className="relative h-[calc(100vh-88px)] w-full max-w-2xl mx-auto flex flex-col justify-c items-center gap-y-8 pt-18 z-10 text-black"
+                className="relative h-[calc(100vh-88px)] w-full max-w-2xl mx-auto flex flex-col items-center gap-y-4 pt-8 z-10 text-black"
             >
-                <div className="flex flex-col justify-center items-center gap-y-2">
+                <div className="flex flex-col justify-center items-center gap-y-4">
                     <div className="px-2 py-0.5 bg-secondary/20 glass border-2 border-neutral/10 rounded-full text-center">
                         {t("hero.rating")}
                     </div>
@@ -99,41 +95,52 @@ const Home: React.FC<BooksProps> = ({ books }) => {
                             animate={{ y: [0, -20, 0] }}
                             transition={{ duration: 9, repeat: Infinity }}
                         >
-                            <BookOpenText className="w-12 h-12 text-indigo-300 fill-indigo-100 rotate-12 drop-shadow-lg" />
+                            <BookOpenText className="size-12 opacity-70 text-indigo-300 fill-indigo-100 rotate-12 drop-shadow-lg" />
                         </motion.div>
                         <motion.div
                             className="absolute -z-10 -left-2 -bottom-2"
                             animate={{ y: [0, -10, 0] }}
                             transition={{ duration: 8, repeat: Infinity }}
                         >
-                            <Sparkles className="w-12 h-12 text-yellow-300 fill-yellow-100 -rotate-12 drop-shadow-lg" />
+                            <Sparkles className="size-12 opacity-70 text-yellow-300 fill-yellow-100 -rotate-12 drop-shadow-lg" />
                         </motion.div>
                     </h1>
                     <p className="text-lg md:text-xl text-center">
                         {t("hero.description")}
                     </p>
-                    <Link
-                        href="/#create-book"
-                        className="px-3 py-px h-12 rounded-full border-4 border-secondary bg-secondary/90 text-white flex justify-center items-center gap-2"
-                    >
-                        {t("hero.create")}
-                        <span className="font-bold">
-                            {formatAmountForDisplay(price)}
+                    <div className="relative flex flex-col items-center text-center gap-1">
+                        <Link
+                            href="/#create-book"
+                            className="btn btn-lg rounded-full bg-secondary/80 text-white border-4 border-secondary"
+                        >
+                            {t("hero.create")}
+                        </Link>
+                        <span className="mt-2 text-neutral text-sm">
+                            {t("hero.offer")}
                         </span>
-                        <span className="text-white/90 text-xs line-through">
-                            {formatAmountForDisplay(price * 1.2)}
-                        </span>
-                    </Link>
+                    </div>
                 </div>
 
-                <div className="relative">
+                <div className="relative pt-4">
+                    <div className="absolute top-6 left-1/2 flex justify-center gap-x-2">
+                        <Undo className="-rotate-[30deg]" />
+                        <div className="flex justify-start items-center gap-x-2">
+                            <span className="font-bold">
+                                {formatAmountForDisplay(price)}
+                            </span>
+                            <span className="text-neutral/80 line-through">
+                                {formatAmountForDisplay(price * 1.2)}
+                            </span>
+                        </div>
+                    </div>
+
                     <motion.img
                         src="/images/book.png"
                         alt=""
                         width={1000}
                         height={560}
                         className="w-full aspect-video max-w-md"
-                        animate={{ y: [0, -30, 0] }}
+                        animate={{ y: [0, -10, 0] }}
                         transition={{ duration: 9, repeat: Infinity }}
                     />
                     <Image
@@ -144,48 +151,46 @@ const Home: React.FC<BooksProps> = ({ books }) => {
                         className="absolute -z-10 top-0 left-0 w-full aspect-video max-w-lg"
                     />
                     <motion.div
-                        className="absolute -z-10 -left-16 top-0"
+                        className="absolute -z-10 -left- top-6"
                         animate={{ y: [0, -35, 0] }}
                         transition={{ duration: 7, repeat: Infinity }}
                     >
-                        <Zap className="w-12 h-12 text-blue-300 fill-blue-100 -rotate-12 drop-shadow-lg" />
+                        <Zap className="size-12 opacity-70 text-blue-300 fill-blue-100 -rotate-12 drop-shadow-lg" />
                     </motion.div>
                     <motion.div
                         className="absolute -z-10 right-0 -bottom-4"
                         animate={{ y: [0, -30, 0] }}
                         transition={{ duration: 8, repeat: Infinity }}
                     >
-                        <Rocket className="w-12 h-12 text-green-300 fill-green-100 -rotate-12 drop-shadow-lg" />
+                        <Rocket className="size-12 opacity-70 text-green-300 fill-green-100 -rotate-12 drop-shadow-lg" />
                     </motion.div>
                 </div>
 
-                <div>
-                    <div className="flex flex-wrap justify-center gap-x-2 lg:gap-x-4 text-xl text-neutral rounded-field border border-neutral/20 bg-base-100/20 py-4">
-                        <div className="w-fit flex items-center gap-x-2">
-                            <span className="status status-success" />
-                            <span>{t("hero.pdf")}</span>
-                        </div>
-                        <div className="w-fit flex items-center gap-x-2">
-                            <span className="status status-secondary" />
-                            <span>{t("hero.style")}</span>
-                        </div>
-                        <div className="w-fit flex items-center gap-x-2">
-                            <span className="status status-primary" />
-                            <span>{t("hero.personalized")}</span>
-                        </div>
+                <div className="w-full sm:w-fit flex max-sm:flex-col justify-center items-center gap-2 text-neutral rounded-box border border-neutral/20 bg-base-100/20 px-4 py-3">
+                    <div className="w-fit flex items-center gap-2">
+                        <span className="status status-success" />
+                        <span>{t("hero.pdf")}</span>
+                    </div>
+                    <div className="w-fit flex items-center gap-2">
+                        <span className="status status-secondary" />
+                        <span>{t("hero.style")}</span>
+                    </div>
+                    <div className="w-fit flex items-center gap-2">
+                        <span className="status status-primary" />
+                        <span>{t("hero.personalized")}</span>
                     </div>
                 </div>
             </section>
 
             <section
                 id="create-book"
-                className="relative flex flex-col items-center justify-center gap-y-2 min-h-screen w-full pt-32"
+                className="relative flex flex-col items-center justify-center gap-y-4 min-h-screen w-full pt-40"
             >
                 <div className="badge badge-xl badge-secondary rounded-4xl">
-                    {t("createBook.badge")}
+                    {t("create-book.badge")}
                 </div>
                 <Title
-                    text={t("createBook.title")}
+                    text={t("create-book.title")}
                     className="text-3xl lg:text-4xl"
                 />
 
@@ -196,7 +201,7 @@ const Home: React.FC<BooksProps> = ({ books }) => {
 
             <section
                 id="examples"
-                className="flex flex-col justify-center items-center gap-y-4 pt-16"
+                className="flex flex-col justify-center items-center gap-y-4 pt-24"
             >
                 <div className="badge badge-xl badge-secondary rounded-4xl">
                     {t("examples.badge")}
@@ -238,29 +243,35 @@ const Home: React.FC<BooksProps> = ({ books }) => {
                 <div className="bg-secondary/30 rounded-box px-8 py-16">
                     <div className="text-center space-y-4 mb-8">
                         <div className="badge badge-xl badge-secondary rounded-4xl">
-                            {t("howItWorks.badge")}
+                            {t("how-it-works.badge")}
                         </div>
                         <Title
                             className="text-4xl md:text-5xl font-bold tracking-tight text-balance"
-                            text={t("howItWorks.title")}
+                            text={t("how-it-works.title")}
                         />
                     </div>
                     <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
                         {[
                             {
                                 step: "01",
-                                title: t("howItWorks.step1.title"),
-                                description: t("howItWorks.step1.description"),
+                                title: t("how-it-works.step1.title"),
+                                description: t(
+                                    "how-it-works.step1.description"
+                                ),
                             },
                             {
                                 step: "02",
-                                title: t("howItWorks.step2.title"),
-                                description: t("howItWorks.step2.description"),
+                                title: t("how-it-works.step2.title"),
+                                description: t(
+                                    "how-it-works.step2.description"
+                                ),
                             },
                             {
                                 step: "03",
-                                title: t("howItWorks.step3.title"),
-                                description: t("howItWorks.step3.description"),
+                                title: t("how-it-works.step3.title"),
+                                description: t(
+                                    "how-it-works.step3.description"
+                                ),
                             },
                         ].map((step, i) => (
                             <div key={i} className="relative">
@@ -333,8 +344,8 @@ const Home: React.FC<BooksProps> = ({ books }) => {
                             className="border-2 border-neutral/20 hover:border-primary/50 rounded-box transition-all hover:shadow-lg"
                         >
                             <div className="p-6 space-y-4">
-                                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
-                                    <feature.icon className="w-6 h-6 text-primary" />
+                                <div className="size-12 rounded-xl bg-primary/10 flex items-center justify-center">
+                                    <feature.icon className="size-6 text-primary" />
                                 </div>
                                 <h3 className="text-xl font-semibold">
                                     {feature.title}
@@ -361,12 +372,9 @@ const Home: React.FC<BooksProps> = ({ books }) => {
                         <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
                             <Link
                                 href="/#create-book"
-                                className="btn btn-xl h-12 rounded-full border-4 border-secondary bg-white text-black flex items-center group"
+                                className="btn btn-lg rounded-full bg-secondary/80 text-white border-4 border-secondary"
                             >
-                                <span className="text-lg">
-                                    {t("hero.create")}
-                                </span>
-                                <ChevronRightIcon className="transition group-hover:translate-x-2" />
+                                {t("hero.create")}
                             </Link>
                         </div>
                     </div>

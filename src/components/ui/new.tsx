@@ -13,6 +13,7 @@ import {
     useVelocity,
     useAnimationControls,
 } from "motion/react";
+import { Info, Lock, Mail, Paintbrush, PenLine, User } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { type ActionsState } from "@/lib/types";
@@ -30,7 +31,6 @@ import bookSchema, {
     skinToneOptions,
     type BookSchema,
 } from "@/schema/book";
-import { Lock, Mail, Paintbrush, PenLine, User } from "lucide-react";
 
 const draggableCards = [
     {
@@ -302,8 +302,8 @@ const NewBook: React.FC = () => {
                         error={errors.email?.message}
                         {...register("email")}
                     />
-                    <div className="flex items-center justify-left gap-x-2 mt-2">
-                        <Lock className="size-5 text-neutral" />
+                    <div className="flex items-center justify-left gap-x-1 mt-2 ml-1">
+                        <Info className="size-4 text-neutral/80" />
                         <span className="text-sm text-neutral/80">
                             {t("email-info")}
                         </span>
@@ -341,18 +341,36 @@ const NewBook: React.FC = () => {
                     </div>
                 </div>
 
-                <button
-                    disabled={loading}
-                    className="mt-0 btn btn-lg btn-primary"
-                >
-                    {t("generate")}
-                    <span className="font-bold">
-                        {formatAmountForDisplay(price)}
-                    </span>
-                    <span className="text-white/90 text-xs line-through">
-                        {formatAmountForDisplay(price * 1.2)}
-                    </span>
-                </button>
+                <div className="space-y-2 mt-2">
+                    <div className="flex justify-between px-2 text-lg">
+                        <div className="font-bold">{t("total")}</div>
+
+                        <div className="flex justify-start items-center gap-x-2">
+                            <span className="font-bold">
+                                {formatAmountForDisplay(price)}
+                            </span>
+                            <span className="text-base text-neutral/80 line-through">
+                                {formatAmountForDisplay(price * 1.2)}
+                            </span>
+                        </div>
+                    </div>
+                    <button
+                        type="submit"
+                        className={cn(
+                            "btn btn-lg w-full rounded-full text-white bg-secondary/80 border-4 border-secondary",
+                            loading && "btn-disabled"
+                        )}
+                        disabled={loading}
+                    >
+                        {loading ?
+                            <div className="loading" />
+                        :   t("submit")}
+                    </button>
+                    <div className="mt-1 flex justify-center gap-x-1 text-center text-sm text-neutral/70">
+                        <Lock className="size-4 text-neutral/80" />
+                        Secure payment • Instant delivery by email
+                    </div>
+                </div>
             </form>
 
             {draggableCards.map((e) => (

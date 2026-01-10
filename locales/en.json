@@ -140,25 +140,25 @@
             "submit": "Delete"
         },
         "home": {
-            "banner": "❄️ -20% Until January 31, 2025",
             "hero": {
+                "rating": "⭐️ 4.7/5 • Trusted by 1,000+ parents",
                 "title": "Your child as the hero of their own story",
                 "description": "Your child's name, look, and imagination in one magical book.",
                 "create": "Create My Child's Book",
-                "rating": "⭐️ 4.7/5 • Trusted by 1,000+ parents",
-                "pdf": "2 minute",
+                "offer": "20% off until January 31, 2025",
+                "pdf": "PDF in 2 minutes",
                 "style": "4 unique styles",
                 "personalized": "100% customized"
+            },
+            "create-book": {
+                "badge": "Create Book",
+                "title": "Create your own book"
             },
             "examples": {
                 "badge": "Examples",
                 "title": "See some examples"
             },
-            "createBook": {
-                "badge": "Create Book",
-                "title": "Create your own book"
-            },
-            "howItWorks": {
+            "how-it-works": {
                 "badge": "How It Works",
                 "title": "Create magic in 3 simple steps",
                 "step1": {
@@ -219,8 +219,9 @@
         },
         "new-book": {
             "title": "New Book",
-            "description": "Create a new book with only one prompt",
-            "submit": "Generate",
+            "description": "Generate a new book for your child",
+            "submit": "Complete purchase",
+            "total": "Total",
             "child-details": "Tell us about your child",
             "story-style": " Describe your story style",
             "story-idea": "Describe your story idea",
@@ -238,7 +239,6 @@
             "art-style": "Art Style",
             "prompt": "Describe the adventure in 1-2 sentences.",
             "prompt-placeholder": "Ex: Toto is playing football, in the park with his friends, warm colors, fun...",
-            "generate": "Pay and generate",
             "boy": "Boy",
             "girl": "Girl",
             "black": "Black",
@@ -265,7 +265,7 @@
             "delivery": "Delivery",
             "time": "Time",
             "by-email": "Email",
-            "instant": "2 minute",
+            "instant": "2 minutes",
             "page": "Pages",
             "pages": "12 Pages"
         },
@@ -391,7 +391,7 @@
         "prompt-inappropriate": "Your story description contain inappropriate content"
     },
     "links": {
-        "get-started": "Get started",
+        "get-started": "Sign In",
         "login": "Login",
         "register": "Register",
         "logout": "Logout",
