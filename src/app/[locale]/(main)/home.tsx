@@ -166,7 +166,7 @@ const Home: React.FC<BooksProps> = ({ books }) => {
                     </motion.div>
                 </div>
 
-                <div className="w-full sm:w-fit flex max-sm:flex-col justify-center items-center gap-2 text-neutral rounded-box border border-neutral/20 bg-base-100/20 px-4 py-3">
+                <div className="w-full sm:w-fit flex max-sm:flex-col justify-center items-center gap-x-2 text-neutral rounded-box border border-neutral/20 bg-base-100/20 px-4 py-3">
                     <div className="w-fit flex items-center gap-2">
                         <span className="status status-success" />
                         <span>{t("hero.pdf")}</span>
