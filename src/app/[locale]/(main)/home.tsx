@@ -77,7 +77,7 @@ const Home: React.FC<BooksProps> = ({ books }) => {
 
             <section
                 id="home"
-                className="relative h-[calc(100vh-88px)] w-full max-w-2xl mx-auto flex flex-col items-center gap-y-4 pt-8 z-10 text-black"
+                className="relative h-[calc(100vh-88px)] w-full max-w-2xl mx-auto flex flex-col items-center gap-y-3 pt-8 z-10 text-black"
             >
                 <div className="flex flex-col justify-center items-center gap-y-4">
                     <div className="px-2 py-0.5 bg-secondary/20 glass border-2 border-neutral/10 rounded-full text-center">

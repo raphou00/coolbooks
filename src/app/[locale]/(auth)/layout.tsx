@@ -1,14 +1,16 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
-import { useTranslations } from "next-intl";
-import { Home, Languages } from "lucide-react";
+import { useLocale, useTranslations } from "next-intl";
+import { Home } from "lucide-react";
 import LocaleModal from "@/components/ui/locale-modal";
 
 const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
     const t = useTranslations("links");
     const [localeOpen, setLocaleOpen] = useState<boolean>(false);
+    const locale = useLocale();
 
     return (
         <>
@@ -31,7 +33,13 @@ const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
                             onClick={() => setLocaleOpen((e) => !e)}
                             className="btn max-sm:btn-circle"
                         >
-                            <Languages className="size-5" />
+                            <Image
+                                src={`/images/locales/${locale}.png`}
+                                alt={locale}
+                                width={32}
+                                height={32}
+                                className="size-6 rounded-field"
+                            />
                             <span className="hidden sm:block">
                                 {t("language")}
                             </span>

@@ -159,7 +159,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                                     clipPath:
                                                         "polygon(0 0, 100% 0, 50% 50%, 0% 100%)",
                                                 }}
-                                                className="absolute right-0 top-0 h-4 w-4 -translate-x-9 -translate-y-[calc(50%)] rotate-45 rounded-tl border-2 border-neutral/20 bg-base-100"
+                                                className="absolute right-0 top-0 h-4 w-4 -translate-x-7 -translate-y-[calc(50%)] rotate-45 rounded-tl border-2 border-neutral/20 bg-base-100"
                                             />
                                             {user ?
                                                 <>
@@ -186,7 +186,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                                             :   <>
                                                     <a
                                                         href="/#create-book"
-                                                        className="btn rounded-field border-none m-0 my-px w-full justify-start text-white bg-linear-to-bl from-primary to-secondary"
+                                                        className="btn rounded-field border-none m-0 my-px w-full justify-start text-white bg-secondary"
                                                     >
                                                         <span className="flex items-center gap-2">
                                                             <Sparkles className="size-6" />
