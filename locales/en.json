@@ -222,6 +222,7 @@
             "description": "Generate a new book for your child",
             "submit": "Complete purchase",
             "total": "Total",
+            "secure": "Secure payment • Instant delivery by email",
             "child-details": "Tell us about your child",
             "story-style": " Describe your story style",
             "story-idea": "Describe your story idea",

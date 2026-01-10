@@ -61,6 +61,7 @@
             "description": "Gere um novo livro para seu filho",
             "submit": "Concluir compra",
             "total": "Total",
+            "secure": "Pagamento seguro • Entrega instantânea por email",
             "child-details": "Conte-nos sobre seu filho",
             "story-style": "Descreva seu estilo de história",
             "story-idea": "Descreva sua ideia de história",

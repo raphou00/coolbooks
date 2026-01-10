@@ -20,12 +20,13 @@ export type Book = {
 
 export const exportPDF = async (book: Book) => {
     try {
-        const SQUARE_SIZE = 216;
+        const PAGE_WIDTH = 432;
+        const PAGE_HEIGHT = 216;
 
         const pdf = new jsPDF({
-            orientation: "portrait",
+            orientation: "landscape",
             unit: "mm",
-            format: [SQUARE_SIZE, SQUARE_SIZE],
+            format: [PAGE_WIDTH, PAGE_HEIGHT],
         });
 
         const poppinsRegular = await fetchFont(
@@ -70,11 +71,16 @@ export const exportPDF = async (book: Book) => {
             const coverBase64 = await imageToBase64(
                 env.CLOUDFRONT_URL + "/" + book.cover
             );
-            pdf.addPage();
-            pdf.addImage(coverBase64, "JPEG", 0, 0, pageWidth, pageHeight);
+            pdf.addPage([PAGE_HEIGHT, PAGE_HEIGHT]);
 
-            const logoSize = 15;
-            const padding = 5;
+            pdf.setFillColor(0, 0, 0);
+
+            pdf.rect(0, 0, pageWidth, pageHeight, "F");
+
+            pdf.addImage(coverBase64, "JPEG", 0, 0, PAGE_HEIGHT, pageHeight);
+
+            const logoSize = 12;
+            const padding = 8;
             const logoX = padding;
             const logoY = pageHeight - logoSize - padding;
 
@@ -97,12 +103,11 @@ export const exportPDF = async (book: Book) => {
             const textX = logoX + logoSize + 3;
             const textY = logoY + logoSize - 2;
             pdf.setFont("Poppins", "bold");
+            pdf.setTextColor(255, 255, 255);
+            pdf.setFontSize(10);
+
             pdf.setTextColor(0, 0, 0);
-            pdf.setFontSize(12);
-            pdf.text("Created on coolbooks.app", textX + 0.2, textY + 0.2);
-            pdf.text("Created on coolbooks.app", textX - 0.2, textY - 0.2);
-            pdf.text("Created on coolbooks.app", textX - 0.2, textY + 0.2);
-            pdf.text("Created on coolbooks.app", textX + 0.2, textY - 0.2);
+            pdf.text("Created on coolbooks.app", textX + 0.3, textY + 0.3);
 
             pdf.setTextColor(255, 255, 255);
             pdf.text("Created on coolbooks.app", textX, textY);
@@ -115,32 +120,37 @@ export const exportPDF = async (book: Book) => {
             const page = sortedPages[i];
             const rgb = hexToRgb(page.color);
 
-            pdf.addPage();
+            pdf.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
+
             pdf.setFillColor(rgb.r, rgb.g, rgb.b);
             pdf.rect(0, 0, pageWidth, pageHeight, "F");
+
+            const imageWidth = pageWidth / 2;
+            const textWidth = pageWidth / 2;
+            const padding = 15;
 
             try {
                 const imageBase64 = await imageToBase64(
                     env.CLOUDFRONT_URL + "/" + page.image
                 );
-                pdf.addImage(imageBase64, "JPEG", 0, 0, pageWidth, pageHeight);
+                pdf.addImage(imageBase64, "JPEG", 0, 0, imageWidth, pageHeight);
             } catch (error) {
                 console.error(`Failed to add image for page ${i}:`, error);
             }
-
-            pdf.addPage();
-            pdf.setFillColor(rgb.r, rgb.g, rgb.b);
-            pdf.rect(0, 0, pageWidth, pageHeight, "F");
 
             pdf.setFont("Poppins", "bold");
             pdf.setFontSize(24);
             pdf.setTextColor(51, 51, 51);
 
-            const textX = pageWidth / 2;
-            const textY = pageHeight / 2;
-            const contentWidth = pageWidth - 20;
+            const textX = imageWidth + padding;
+            const textY = pageHeight / 3;
+            const contentWidth = textWidth - padding * 2;
+
             const lines = pdf.splitTextToSize(page.text, contentWidth);
-            pdf.text(lines, textX, textY, { align: "center" });
+            pdf.text(lines, textX, textY, {
+                align: "left",
+                lineHeightFactor: 2,
+            });
         }
 
         return pdf.output("blob");

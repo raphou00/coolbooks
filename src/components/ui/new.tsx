@@ -368,7 +368,7 @@ const NewBook: React.FC = () => {
                     </button>
                     <div className="mt-1 flex justify-center gap-x-1 text-center text-sm text-neutral/70">
                         <Lock className="size-4 text-neutral/80" />
-                        Secure payment • Instant delivery by email
+                        {t("secure")}
                     </div>
                 </div>
             </form>
