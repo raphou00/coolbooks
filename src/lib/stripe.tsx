@@ -26,6 +26,7 @@ export const handleCheckout = async (
                 JSON.stringify({
                     appUrl: env.APP_URL + "/api/stripe/process-checkout",
                     userId: user?.id,
+                    paymentIntent: session.payment_intent,
                     topic: session.metadata,
                 })
             ),

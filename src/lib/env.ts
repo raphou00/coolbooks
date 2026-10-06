@@ -60,6 +60,14 @@ export default createEnv({
         GOOGLE_CLIENT_SECRET: z
             .string()
             .min(1, { message: "Google Client Secret is missing" }),
+
+        OPENAI_API_KEY: z
+            .string()
+            .min(1, { message: "OpenAI API key is missing" }),
+
+        BOOK_CREATOR_SECRET: z
+            .string()
+            .min(32, { message: "Book creator secret must be 32+ chars" }),
     },
     client: {
         NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: z
@@ -90,5 +98,7 @@ export default createEnv({
         STRIPE_WEBHOOK_SECRET: process.env.STRIPE_WEBHOOK_SECRET,
         GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
         GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
+        OPENAI_API_KEY: process.env.OPENAI_API_KEY,
+        BOOK_CREATOR_SECRET: process.env.BOOK_CREATOR_SECRET,
     },
 });

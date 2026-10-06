@@ -351,6 +351,12 @@
             "link": "Download My Book",
             "thanks": "Thank you for your trust 🩵.",
             "best": "Best regards,\nThe Coolbooks Team"
+        },
+        "refund": {
+            "title": "We couldn't create your book",
+            "hello": "Hello!",
+            "body": "Something went wrong while creating your book, so we have refunded your payment in full. It should appear on your statement within 5–10 business days. We're sorry for the trouble.",
+            "best": "Best regards,\nThe Coolbooks Team"
         }
     },
     "messages": {

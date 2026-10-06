@@ -415,6 +415,12 @@
             "hello": "Ciao {name}!",
             "get-started": "Inizia",
             "best": "Cordiali saluti,\nIl Team di Coolbooks"
+        },
+        "refund": {
+            "title": "Non siamo riusciti a creare il tuo libro",
+            "hello": "Ciao!",
+            "body": "Si è verificato un problema durante la creazione del tuo libro, quindi ti abbiamo rimborsato l'intero pagamento. Il rimborso dovrebbe comparire sul tuo estratto conto entro 5–10 giorni lavorativi. Ci scusiamo per l'inconveniente.",
+            "best": "Cordiali saluti,\nIl Team di Coolbooks"
         }
     }
 }

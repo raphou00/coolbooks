@@ -415,6 +415,12 @@
             "hello": "Olá {name}!",
             "get-started": "Começar",
             "best": "Atenciosamente,\nO Time Coolbooks"
+        },
+        "refund": {
+            "title": "Não conseguimos criar o seu livro",
+            "hello": "Olá!",
+            "body": "Algo deu errado ao criar o seu livro, então reembolsamos o valor total do seu pagamento. O reembolso deve aparecer no seu extrato em 5 a 10 dias úteis. Pedimos desculpas pelo transtorno.",
+            "best": "Atenciosamente,\nO Time Coolbooks"
         }
     }
 }

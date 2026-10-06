@@ -5,10 +5,12 @@ const { z } = require("zod");
 const { OpenAI } = require("openai");
 const { zodTextFormat } = require("openai/helpers/zod");
 
-const { BUCKET_NAME, DATABASE_URL, OPENROUTER_API_KEY } = process.env;
+const { BUCKET_NAME, DATABASE_URL, OPENROUTER_API_KEY, BOOK_CREATOR_SECRET } =
+    process.env;
 
 const PLANNER_MODEL = "openai/gpt-5.2";
 const IMAGE_MODEL = "google/gemini-2.5-flash-image-preview";
+const IMAGE_ATTEMPTS = 3;
 
 const pool = new Pool({
     connectionString: DATABASE_URL,
@@ -35,6 +37,20 @@ const colors = ["#FFF5F5", "#FFF0F5", "#F0F8FF", "#F5FFFA",
 
 const randomHex = () =>
     colors[Math.floor(Math.random() * colors.length)];
+
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+const withRetry = async (fn, attempts) => {
+    for (let i = 1; ; i++) {
+        try {
+            return await fn();
+        } catch (err) {
+            if (i >= attempts) throw err;
+            console.error(`Attempt ${i}/${attempts} failed, retrying`, err);
+            await sleep(2000 * 2 ** (i - 1));
+        }
+    }
+};
 
 const getS3 = (key) => {
     return `https://${BUCKET_NAME}.s3.us-east-1.amazonaws.com/${key}`;
@@ -84,13 +100,7 @@ const putObject = async (file, key) => {
         Body: body,
     };
 
-    try {
-        const res = await s3.send(new PutObjectCommand(params));
-
-        return res;
-    } catch (err) {
-        console.error("Error", err);
-    }
+    return s3.send(new PutObjectCommand(params));
 };
 
 const createPlan = async (topic) => {
@@ -140,22 +150,27 @@ const createImage = async (
         });
     }
 
-    const completion = (await openai.chat.completions.create({
-        model: IMAGE_MODEL,
-        messages: [
-            {
-                role: "user",
-                content: content,
-            },
-        ],
-    }));
+    await withRetry(async () => {
+        const completion = await openai.chat.completions.create({
+            model: IMAGE_MODEL,
+            messages: [
+                {
+                    role: "user",
+                    content: content,
+                },
+            ],
+        });
 
-    const image = completion.choices[0].message.images[0].image_url.url;
+        const image = completion.choices[0]?.message?.images?.[0]?.image_url?.url;
+        if (!image) {
+            throw new Error("Image model returned no image");
+        }
 
-    const base64Data = image.replace(/^data:image\/\w+;base64,/, "");
-    const buffer = Buffer.from(base64Data, "base64");
+        const base64Data = image.replace(/^data:image\/\w+;base64,/, "");
+        const buffer = Buffer.from(base64Data, "base64");
 
-    await putObject(buffer, key);
+        await putObject(buffer, key);
+    }, IMAGE_ATTEMPTS);
 
     return key;
 };
@@ -175,7 +190,7 @@ const createBook = async (bookData) => {
             bookData.cover,
             bookData.age,
             bookData.artStyle,
-            bookData.userId || "64488f3a-0beb-40cc-882b-c458d0725a7e"
+            bookData.userId || null
         ];
 
         const result = await client.query(query, values);
@@ -233,11 +248,32 @@ const updateBookGenerating = async (bookId, generating) => {
 };
 
 
-const lambda_handler = async (event) => {
-    const { appUrl, userId, topic } = event;
+const deleteBook = async (bookId) => {
+    const client = await pool.connect();
+    try {
+        await client.query(`DELETE FROM "Book" WHERE id = $1`, [bookId]);
+    } finally {
+        client.release();
+    }
+};
 
-    const bookId = crypto.randomUUID();
-    const plan = await createPlan(topic);
+const notifyApp = async (appUrl, payload) => {
+    const res = await fetch(appUrl, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${BOOK_CREATOR_SECRET}`,
+        },
+        body: JSON.stringify(payload),
+    });
+
+    if (!res.ok) {
+        throw new Error(`App responded ${res.status}: ${await res.text()}`);
+    }
+};
+
+const generateBook = async (bookId, userId, topic) => {
+    const plan = await withRetry(() => createPlan(topic), 2);
 
     const coverKey = bookId + "/" + crypto.randomUUID() + ".png";
 
@@ -281,27 +317,69 @@ const lambda_handler = async (event) => {
             }));
     });
 
-    await Promise.all([...pageJobs]);
+    // Wait for every page before failing so cleanup never races a write.
+    const results = await Promise.allSettled(pageJobs);
+    const failed = results.find((r) => r.status === "rejected");
+    if (failed) {
+        throw failed.reason;
+    }
 
     await updateBookGenerating(bookId, false);
 
-    const body = JSON.stringify({
+    return { title: plan.title, cover: coverKey, pages };
+};
+
+const lambda_handler = async (event) => {
+    const { appUrl, userId, paymentIntent, topic } = event;
+
+    const bookId = crypto.randomUUID();
+
+    let book;
+    try {
+        book = await generateBook(bookId, userId, topic);
+    } catch (err) {
+        // Never rethrow: an async Lambda retry would generate (and pay for) a
+        // second book. Clean up and let the app refund the customer instead.
+        console.error(`Book ${bookId} failed`, err);
+
+        try {
+            await deleteBook(bookId);
+        } catch (dbErr) {
+            console.error(`Could not delete failed book ${bookId}`, dbErr);
+        }
+
+        try {
+            await notifyApp(appUrl, {
+                status: "failed",
+                bookId,
+                paymentIntent,
+                locale: topic.locale,
+                email: topic.email,
+            });
+        } catch (notifyErr) {
+            console.error(`Could not report failed book ${bookId}`, notifyErr);
+        }
+
+        return { statusCode: 500, body: JSON.stringify({ bookId }) };
+    }
+
+    const body = {
+        status: "done",
         bookId,
         locale: topic.locale,
         email: topic.email,
-        title: plan.title,
-        cover: coverKey,
-        pages: pages
-    });
+        ...book,
+    };
 
-    await fetch(appUrl, {
-        method: "POST",
-        body,
-    });
+    try {
+        await notifyApp(appUrl, body);
+    } catch (err) {
+        console.error(`Book ${bookId} was generated but not delivered`, err);
+    }
 
     return {
         statusCode: 201,
-        body,
+        body: JSON.stringify(body),
     };
 };
 

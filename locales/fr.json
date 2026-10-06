@@ -415,6 +415,12 @@
             "hello": "Bonjour {name} !",
             "get-started": "Commencer",
             "best": "Cordialement,\nL'équipe Coolbooks"
+        },
+        "refund": {
+            "title": "Nous n'avons pas pu créer votre livre",
+            "hello": "Bonjour !",
+            "body": "Un problème est survenu lors de la création de votre livre, nous vous avons donc remboursé l'intégralité de votre paiement. Le remboursement devrait apparaître sur votre relevé sous 5 à 10 jours ouvrés. Nous sommes désolés pour la gêne occasionnée.",
+            "best": "Cordialement,\nL'équipe Coolbooks"
         }
     }
 }

@@ -415,6 +415,12 @@
             "hello": "¡Hola {name}!",
             "get-started": "Comenzar",
             "best": "Saludos cordiales,\nEl Equipo de Coolbooks"
+        },
+        "refund": {
+            "title": "No pudimos crear tu libro",
+            "hello": "¡Hola!",
+            "body": "Algo salió mal al crear tu libro, así que te hemos reembolsado el pago completo. Debería aparecer en tu extracto en un plazo de 5 a 10 días hábiles. Sentimos las molestias.",
+            "best": "Saludos cordiales,\nEl Equipo de Coolbooks"
         }
     }
 }

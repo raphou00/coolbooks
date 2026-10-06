@@ -415,6 +415,12 @@
             "hello": "Hallo {name}!",
             "get-started": "Erste Schritte",
             "best": "Beste Grüße,\nDas Coolbooks-Team"
+        },
+        "refund": {
+            "title": "Wir konnten dein Buch nicht erstellen",
+            "hello": "Hallo!",
+            "body": "Beim Erstellen deines Buches ist etwas schiefgelaufen, daher haben wir dir den vollen Betrag erstattet. Die Gutschrift sollte innerhalb von 5–10 Werktagen auf deinem Konto erscheinen. Entschuldige die Unannehmlichkeiten.",
+            "best": "Beste Grüße,\nDas Coolbooks-Team"
         }
     }
 }
