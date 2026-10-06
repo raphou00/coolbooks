@@ -2,6 +2,7 @@ import { type Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { redirect } from "next/navigation";
 import db from "@/lib/db";
+import { getUser } from "@/lib/auth";
 import { title } from "@/config/seo";
 import Main from "@/components/layout/main";
 import Book from "./book";
@@ -57,6 +58,7 @@ const Page = async ({ params }: PageProps) => {
             id: true,
             title: true,
             cover: true,
+            userId: true,
             pages: {
                 select: {
                     number: true,
@@ -72,9 +74,14 @@ const Page = async ({ params }: PageProps) => {
         return redirect("/404");
     }
 
+    const user = await getUser();
+    const canDelete =
+        !!user?.user &&
+        (book.userId === user.user.id || user.user.role === "ADMIN");
+
     return (
         <Main>
-            <Book book={book} />
+            <Book book={book} canDelete={canDelete} />
         </Main>
     );
 };

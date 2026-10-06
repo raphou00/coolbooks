@@ -27,6 +27,7 @@ type BookProps = {
         cover: string;
         pages: Page[];
     };
+    canDelete: boolean;
 };
 
 type PagesProps = {
@@ -43,7 +44,7 @@ const SPRING_OPTIONS = {
     damping: 50,
 };
 
-const Book: React.FC<BookProps> = ({ book }) => {
+const Book: React.FC<BookProps> = ({ book, canDelete }) => {
     const t = useTranslations("pages.book");
     const tMessages = useTranslations("messages");
     const [imgIndex, setImgIndex] = useState(0);
@@ -100,25 +101,29 @@ const Book: React.FC<BookProps> = ({ book }) => {
 
     return (
         <>
-            <DeleteBook
-                bookId={book.id}
-                callback={() => redirect("/my-books")}
-                open={open}
-                setOpen={setOpen}
-            />
+            {canDelete && (
+                <DeleteBook
+                    bookId={book.id}
+                    callback={() => redirect("/my-books")}
+                    open={open}
+                    setOpen={setOpen}
+                />
+            )}
             <div className="w-full max-w-[850px] px-2 flex items-center justify-between mt-4 mx-auto">
                 <div className="flex flex-col">
                     <Title text={book.title} className="font-bold text-xl" />
                 </div>
 
                 <div className="flex gap-2">
-                    <button
-                        onClick={() => setOpen(true)}
-                        className="btn btn-circle btn-error btn-soft"
-                        title={t("delete")}
-                    >
-                        <Trash2 className="size-6" />
-                    </button>
+                    {canDelete && (
+                        <button
+                            onClick={() => setOpen(true)}
+                            className="btn btn-circle btn-error btn-soft"
+                            title={t("delete")}
+                        >
+                            <Trash2 className="size-6" />
+                        </button>
+                    )}
                     <button
                         onClick={exportPDF}
                         className="btn btn-circle btn-primary"

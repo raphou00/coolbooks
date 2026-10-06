@@ -109,6 +109,13 @@ export const DELETE = async (req: NextRequest) => {
             });
         }
 
+        if (book.user?.id !== user.user.id && user.user.role !== "ADMIN") {
+            return NextResponse.json({
+                success: false,
+                message: t("messages.unauthorized"),
+            });
+        }
+
         await db.book.delete({
             where: {
                 id: book.id,
