@@ -21,7 +21,7 @@ const Page = async () => {
     }
 
     return (
-        <Main className="flex w-full items-center justify-center mt-0">
+        <Main className="flex flex-1 items-center justify-center min-h-0 pt-6 pb-16 md:py-16">
             <ForgotPassword />
         </Main>
     );

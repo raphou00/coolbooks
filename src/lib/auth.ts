@@ -1,14 +1,13 @@
 import { cache } from "react";
 import { userAgent } from "next/server";
 import { cookies, headers } from "next/headers";
-import type { Role } from "@/lib/types";
-import { PrismaAdapter } from "@lucia-auth/adapter-prisma";
+import type { Role } from "@/lib/db";
 import { Lucia, TimeSpan } from "lucia";
 import { Google } from "arctic";
-import db from "./db";
+import { DynamoDBAdapter } from "./auth-adapter";
 import env from "./env";
 
-const adapter = new PrismaAdapter(db.session, db.user);
+const adapter = new DynamoDBAdapter();
 
 export const lucia = new Lucia(adapter, {
     sessionExpiresIn: new TimeSpan(12, "w"),

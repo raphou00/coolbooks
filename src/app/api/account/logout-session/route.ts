@@ -35,12 +35,7 @@ export const POST = async (req: NextRequest) => {
             });
         }
 
-        await db.session.delete({
-            where: {
-                userId: user.user.id,
-                id: body.sessionId,
-            },
-        });
+        await db.sessions.deleteForUser(user.user.id, body.sessionId);
 
         revalidatePath("/account");
 

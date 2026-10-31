@@ -37,7 +37,7 @@ const Modal: React.FC<ModalProps> = ({
         if (isOpen) {
             document.documentElement.style.overflow = "hidden";
         } else {
-            document.documentElement.style.overflow = "auto";
+            document.documentElement.style.overflow = "";
         }
     }, [isOpen]);
 
@@ -49,27 +49,27 @@ const Modal: React.FC<ModalProps> = ({
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     onClick={() => setIsOpen(!closeButton)}
-                    className="fixed inset-0 h-screen w-full flex items-center justify-center z-100 cursor-pointer bg-base-300/20 backdrop-blur sm:p-2"
+                    className="fixed inset-0 z-100 flex h-dvh w-full items-end sm:items-center justify-center bg-[rgb(24_29_38/0.45)] p-0 sm:p-4"
                 >
                     <motion.div
-                        initial={{ scale: 0, rotate: "12.5deg" }}
-                        animate={{ scale: 1, rotate: "0deg" }}
-                        exit={{ scale: 0, rotate: "0deg" }}
+                        initial={{ opacity: 0, y: 16 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 16 }}
+                        transition={{ duration: 0.18, ease: "easeOut" }}
                         onClick={(e) => e.stopPropagation()}
                         className={cn(
-                            "w-fit max-w-2xl max-sm:w-[calc(100%-1.5rem)] cursor-default rounded-2xl bg-base-100 shadow-xl p-4 pb-8",
+                            "relative w-full sm:w-fit max-w-2xl max-h-[90dvh] overflow-y-auto cursor-default rounded-t-lg sm:rounded-lg bg-canvas p-6 pb-8 sm:p-8 shadow-[0_16px_48px_rgb(24_29_38/0.18)]",
                             className
                         )}
                     >
                         {closeButton && (
-                            <div className="w-full flex justify-end">
-                                <button
-                                    className="btn btn-ghost btn-square btn-sm"
-                                    onClick={() => setIsOpen(false)}
-                                >
-                                    <X />
-                                </button>
-                            </div>
+                            <button
+                                className="button-icon absolute right-4 top-4 z-10 size-9!"
+                                onClick={() => setIsOpen(false)}
+                                aria-label="Close"
+                            >
+                                <X className="size-4" />
+                            </button>
                         )}
                         <div className="h-full relative">{children}</div>
                     </motion.div>

@@ -41,16 +41,7 @@ export const POST = async (req: NextRequest) => {
         const code = body.code;
         const password = body.password;
 
-        const token = await db.token.findFirst({
-            where: {
-                token: code,
-            },
-            select: {
-                id: true,
-                userId: true,
-                expiresAt: true,
-            },
-        });
+        const token = await db.tokens.byToken(code);
 
         if (!token) {
             return NextResponse.json({
@@ -60,11 +51,7 @@ export const POST = async (req: NextRequest) => {
         }
 
         if (token.expiresAt < new Date()) {
-            await db.token.delete({
-                where: {
-                    id: token.id,
-                },
-            });
+            await db.tokens.delete(token.token);
 
             return NextResponse.json({
                 success: false,
@@ -72,21 +59,10 @@ export const POST = async (req: NextRequest) => {
             });
         }
 
-        await db.token.deleteMany({
-            where: {
-                userId: token.userId,
-            },
-        });
+        await db.tokens.deleteByUser(token.userId);
 
         const hashedPassword = await hash(password, 10);
-        await db.user.update({
-            where: {
-                id: token.userId,
-            },
-            data: {
-                password: hashedPassword,
-            },
-        });
+        await db.users.update(token.userId, { password: hashedPassword });
 
         return NextResponse.json({
             success: true,

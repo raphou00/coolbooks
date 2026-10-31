@@ -26,9 +26,7 @@ const updateProfileSchema = (t: T, curEmail: string) =>
                     if (email === curEmail) {
                         return true;
                     }
-                    const user = await db.user.findUnique({
-                        where: { email },
-                    });
+                    const user = await db.users.byEmail(email);
                     return !user;
                 },
                 { message: t("messages.taken-email") }

@@ -21,20 +21,12 @@ const Page = async () => {
         redirect("/login");
     }
 
-    const books = await db.book.findMany({
-        where: {
-            userId: user.user.id,
-        },
-        select: {
-            id: true,
-            title: true,
-            cover: true,
-            createdAt: true,
-        },
-        orderBy: {
-            createdAt: "desc",
-        },
-    });
+    const books = (await db.books.byUser(user.user.id)).map((b) => ({
+        id: b.id,
+        title: b.title,
+        cover: b.cover,
+        createdAt: b.createdAt,
+    }));
 
     return (
         <Main>

@@ -1,11 +1,15 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as aws from "@pulumi/aws";
 
-const provision = (bucketName: pulumi.Output<string>) => {
+const provision = (
+    bucketName: pulumi.Output<string>,
+    dataTable: aws.dynamodb.Table
+) => {
     const stack = pulumi.getStack();
     const config = new pulumi.Config();
-    const DATABASE_URL = config.requireSecret("DATABASE_URL");
     const OPENROUTER_API_KEY = config.requireSecret("OPENROUTER_API_KEY");
+    /** Same value as LAMBDA_CALLBACK_SECRET in the web app. */
+    const CALLBACK_SECRET = config.requireSecret("CALLBACK_SECRET");
 
     const lambdaRole = new aws.iam.Role(
         `coolbooks-book-creator-lambda-role-${stack}`,
@@ -45,6 +49,38 @@ const provision = (bucketName: pulumi.Output<string>) => {
         }
     );
 
+    const dataPolicy = new aws.iam.Policy(
+        `coolbooks-book-creator-lambda-data-policy-${stack}`,
+        {
+            policy: dataTable.arn.apply((arn) =>
+                JSON.stringify({
+                    Version: "2012-10-17",
+                    Statement: [
+                        {
+                            Effect: "Allow",
+                            Action: [
+                                "dynamodb:GetItem",
+                                "dynamodb:PutItem",
+                                "dynamodb:UpdateItem",
+                                "dynamodb:Query",
+                                "dynamodb:BatchWriteItem",
+                            ],
+                            Resource: [arn, `${arn}/index/*`],
+                        },
+                    ],
+                })
+            ),
+        }
+    );
+
+    new aws.iam.RolePolicyAttachment(
+        `coolbooks-book-creator-lambda-data-policy-attachment-${stack}`,
+        {
+            role: lambdaRole.name,
+            policyArn: dataPolicy.arn,
+        }
+    );
+
     new aws.iam.RolePolicyAttachment(
         `coolbooks-book-creator-lambda-role-policy-attachment-${stack}`,
         {
@@ -62,14 +98,28 @@ const provision = (bucketName: pulumi.Output<string>) => {
             }),
             handler: "index.lambda_handler",
             role: lambdaRole.arn,
-            timeout: 200,
+            // 12 illustrations can take several minutes; 900 s is the maximum.
+            timeout: 900,
+            memorySize: 512,
             environment: {
                 variables: {
                     BUCKET_NAME: bucketName,
-                    DATABASE_URL: DATABASE_URL,
+                    DATA_TABLE: dataTable.name,
                     OPENROUTER_API_KEY: OPENROUTER_API_KEY,
+                    CALLBACK_SECRET: CALLBACK_SECRET,
                 },
             },
+        }
+    );
+
+    // No automatic AWS retries: the web app's order sweeper owns retries,
+    // so a paid book is never generated twice in parallel.
+    new aws.lambda.FunctionEventInvokeConfig(
+        `coolbooks-book-creator-invoke-config-${stack}`,
+        {
+            functionName: lambda.name,
+            maximumRetryAttempts: 0,
+            maximumEventAgeInSeconds: 3600,
         }
     );
 

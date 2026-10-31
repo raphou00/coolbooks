@@ -25,19 +25,19 @@ const Socials: React.FC<SocialsProps> = ({ googleId }) => {
     return (
         <>
             <div className="">
-                <ul role="list" className="divide-y divide-neutral/20">
-                    <li className="flex justify-between gap-x-2 py-5">
+                <ul role="list" className="rounded-md border border-hairline">
+                    <li className="flex items-center justify-between gap-4 p-4 md:p-5">
                         <div className="flex items-center justify-center min-w-0 gap-x-4">
                             <Image
                                 src="/images/icons/google.png"
                                 alt="Google"
                                 width={256}
                                 height={256}
-                                className="size-8 rounded-xl"
+                                className="size-8"
                             />
                             <div className="min-w-0 flex-auto">
-                                <p className="text-lg">Google</p>
-                                <p className="text-sm text-neutral">
+                                <p className="type-label text-ink">Google</p>
+                                <p className="type-body text-muted">
                                     {t("google")}
                                 </p>
                             </div>
@@ -46,8 +46,10 @@ const Socials: React.FC<SocialsProps> = ({ googleId }) => {
                             <div className="flex items-center justify-center gap-2">
                                 <button
                                     className={cn(
-                                        "btn",
-                                        google ? "btn-error" : "btn-primary"
+                                        "button-sm",
+                                        google ?
+                                            "button-secondary text-error!"
+                                        :   "button-primary"
                                     )}
                                     onClick={connectGoogle}
                                 >

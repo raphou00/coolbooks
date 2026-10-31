@@ -1,17 +1,16 @@
 import { defineRouting } from "next-intl/routing";
 
+/** Swiss launch: the three main national languages, plus English. */
 export const localesTitle = {
-    en: "English",
-    fr: "Français",
     de: "Deutsch",
-    es: "Español",
-    pt: "Português",
+    fr: "Français",
     it: "Italiano",
+    en: "English",
 };
 
 export const routing = defineRouting({
-    locales: ["en", "fr", "de", "es", "pt", "it"],
-    defaultLocale: "en",
+    locales: ["de", "fr", "it", "en"],
+    defaultLocale: "de",
     localePrefix: {
         mode: "never",
     },

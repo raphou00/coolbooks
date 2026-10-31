@@ -25,17 +25,18 @@ export const getObject = (key: string) => {
 
 export const putObject = async (
     file: File | Buffer | Blob,
-    key: string
+    key: string,
+    type?: string
 ): Promise<PutObjectCommandOutput> => {
     let body: Buffer;
-    let contentType = "application/octet-stream";
+    let contentType = type ?? "application/octet-stream";
 
     if (file instanceof File) {
         body = Buffer.from(await file.arrayBuffer());
-        contentType = file.type;
+        contentType = type ?? file.type;
     } else if (file instanceof Blob) {
         body = Buffer.from(await file.arrayBuffer());
-        contentType = "application/pdf";
+        contentType = type ?? "application/pdf";
     } else {
         body = file;
     }

@@ -41,14 +41,7 @@ export const POST = async (req: NextRequest) => {
             });
         }
 
-        await db.user.update({
-            where: {
-                id: user.user.id,
-            },
-            data: {
-                locale: body.locale,
-            },
-        });
+        await db.users.update(user.user.id, { locale: body.locale });
 
         return NextResponse.json({
             success: true,

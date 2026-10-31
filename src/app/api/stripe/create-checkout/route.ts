@@ -1,100 +1,129 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { getTranslations } from "next-intl/server";
-import { OpenAI } from "openai";
-import { stripe } from "@/lib/stripe";
+import type Stripe from "stripe";
+import db from "@/lib/db";
 import env from "@/lib/env";
-import type { Locale } from "@/lib/types";
+import { stripe } from "@/lib/stripe";
+import { getUser } from "@/lib/auth";
+import { routing } from "@/lib/navigation";
 import { checkRateLimit, ratelimitPost } from "@/lib/rate-limiter";
 import { formatAmountForStripe } from "@/lib/utils";
-import { currency, price } from "@/config/stripe";
-import bookSchema, { type BookSchema } from "@/schema/book";
-import { getUser } from "@/lib/auth";
-
-const openai = new OpenAI({
-    apiKey: env.OPENAI_API_KEY,
-});
+import {
+    currency,
+    priceFor,
+    printEnabled,
+    shippingCountries,
+} from "@/config/stripe";
+import { checkoutSchema, type CheckoutSchema } from "@/schema/book";
 
 export const POST = async (req: NextRequest) => {
-    const locale = req.cookies.get("NEXT_LOCALE")?.value || ("en" as Locale);
-    const t = await getTranslations({
-        locale,
-    });
-    try {
-        const identifier = req.headers.get("x-forwarded-for");
+    const cookieLocale = req.cookies.get("NEXT_LOCALE")?.value;
+    const locale =
+        routing.locales.includes(cookieLocale as never) ?
+            (cookieLocale as string)
+        :   routing.defaultLocale;
+    const t = await getTranslations({ locale });
 
-        if (!identifier) {
+    try {
+        const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim();
+        if (!ip) {
             return NextResponse.json({
                 redirect: new URL("/error?error=403", req.url),
             });
         }
 
-        const { allowed } = await checkRateLimit(identifier, ratelimitPost);
+        const { allowed } = await checkRateLimit(ip, ratelimitPost);
         if (!allowed) {
             return NextResponse.json({
                 redirect: new URL("/error?error=429", req.url),
             });
         }
 
-        const user = await getUser();
-
-        const body = (await req.json()) as BookSchema;
-
-        const { error } = bookSchema(t).safeParse(body);
-
-        if (error) {
+        const body = (await req.json()) as CheckoutSchema;
+        const parsed = checkoutSchema(t).safeParse(body);
+        if (!parsed.success) {
             return NextResponse.json({
                 success: false,
-                errors: error.flatten().fieldErrors,
+                errors: parsed.error.flatten().fieldErrors,
+            });
+        }
+        const data = parsed.data;
+
+        if (data.product === "PRINT" && !printEnabled) {
+            return NextResponse.json({
+                success: false,
+                message: t("messages.bad-request"),
             });
         }
 
-        const moderation = await openai.moderations.create({
-            model: "omni-moderation-latest",
-            input: body.childName + " " + body.prompt,
+        // Only a cover the parent has actually seen can be bought.
+        const preview = await db.previews.get(data.previewId);
+        if (!preview?.cover || !preview.title) {
+            return NextResponse.json({
+                success: false,
+                message: t("messages.preview-expired"),
+            });
+        }
+
+        const user = await getUser();
+        const amount = formatAmountForStripe(priceFor(data.product));
+
+        const order = await db.orders.create({
+            product: data.product,
+            email: data.email,
+            locale,
+            amount,
+            currency,
+            previewId: preview.id,
+            userId: user?.user?.id ?? null,
+            dedication: data.dedication || null,
+            giftTo: data.isGift ? data.giftTo : null,
+            giftFrom: data.isGift ? data.giftFrom : null,
         });
 
-        if (moderation.results[0].flagged) {
-            return NextResponse.json({
-                success: false,
-                message: t("messages.prompt-inappropriate"),
-            });
-        }
-
-        const metadata = {
-            userId: user?.user?.id || null,
-            locale: locale,
-            ...body,
-        };
-
+        const isPrint = data.product === "PRINT";
         const session = await stripe.checkout.sessions.create({
+            mode: "payment",
             line_items: [
                 {
-                    price_data: {
-                        product_data: {
-                            name: t("common.name"),
-                            description: t("common.description"),
-                            images: [env.APP_URL + "/og.png"],
-                        },
-                        currency: currency,
-                        unit_amount: formatAmountForStripe(price),
-                    },
                     quantity: 1,
+                    price_data: {
+                        currency,
+                        unit_amount: amount,
+                        product_data: {
+                            name:
+                                isPrint ?
+                                    `${preview.title} · ${t("pages.new-book.print")}`
+                                :   preview.title,
+                            description: t("common.name"),
+                            images: [`${env.CLOUDFRONT_URL}/${preview.cover}`],
+                        },
+                    },
                 },
             ],
-            mode: "payment",
+            ...(isPrint && {
+                shipping_address_collection: {
+                    allowed_countries: [
+                        ...shippingCountries,
+                    ] as Stripe.Checkout.SessionCreateParams.ShippingAddressCollection.AllowedCountry[],
+                },
+            }),
+            ...(user?.user?.stripeCustomerId ?
+                { customer: user.user.stripeCustomerId }
+            :   { customer_email: data.email }),
             success_url: `${env.APP_URL}/?payment_success=true`,
             cancel_url: `${env.APP_URL}/?payment_success=false`,
-            locale: locale as Locale,
-            customer: user?.user?.stripeCustomerId || undefined,
-            client_reference_id: user?.user?.id || undefined,
-            metadata,
+            locale: locale as Stripe.Checkout.SessionCreateParams.Locale,
+            client_reference_id: order.id,
+            metadata: { orderId: order.id },
+            payment_intent_data: { metadata: { orderId: order.id } },
         });
 
-        return NextResponse.json({
-            redirect: session.url,
-        });
+        await db.orders.update(order.id, { stripeSessionId: session.id });
+
+        return NextResponse.json({ redirect: session.url });
     } catch (err) {
-        console.error(err);
+        console.error("Checkout failed:", err);
         return NextResponse.json({
             success: false,
             message: t("messages.server-error"),

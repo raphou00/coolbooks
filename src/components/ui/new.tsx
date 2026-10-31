@@ -1,63 +1,38 @@
-/* eslint-disable react-hooks/incompatible-library */
 "use client";
 
-import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
-import {
-    motion,
-    useMotionValue,
-    useSpring,
-    useTransform,
-    animate,
-    useVelocity,
-    useAnimationControls,
-} from "motion/react";
-import { Info, Lock, Mail, Paintbrush, PenLine, User } from "lucide-react";
+import { Gift, Info, Loader2, Lock, RefreshCw, Pencil } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { type ActionsState } from "@/lib/types";
-import { cn, formatAmountForDisplay, getImage, requestAPI } from "@/lib/utils";
-import { price } from "@/config/stripe";
+import { cn, formatAmountForDisplay, requestAPI } from "@/lib/utils";
+import {
+    christmasPrintDeadline,
+    compareAtPrice,
+    maxRedraws,
+    price,
+    printEnabled,
+    printPrice,
+} from "@/config/stripe";
 import FormReponse from "@/components/ui/form-response";
 import FormInput from "@/components/ui/form-input";
 import FormSelect from "@/components/ui/form-select";
-import bookSchema, {
+import NextImage from "@/components/ui/image";
+import Boo from "@/components/ui/boo";
+import {
     ageOptions,
     artStyleOptions,
+    checkoutSchema,
     eyeColorOptions,
     genderOptions,
     hairColorOptions,
+    maxDedicationLength,
+    previewSchema,
     skinToneOptions,
-    type BookSchema,
+    type CheckoutSchema,
+    type PreviewSchema,
 } from "@/schema/book";
-
-const draggableCards = [
-    {
-        image: "f7d0cbd5-0155-4858-8313-94c3bc06245c/29e67629-80d6-4270-b7a9-30356f632d91.png",
-        className: "absolute top-[0%] left-[2%] rotate-[5deg]",
-    },
-    {
-        image: "879ae571-6882-4e78-b32e-abb9964fcf3f/5cae381f-122d-4281-84ed-28878ff3da9a.png",
-        className: "absolute top-[40%] left-[3%] rotate-[-5deg]",
-    },
-    {
-        image: "60fcc0bf-8d83-47f2-916b-3de8eaba8738/774abb4a-0c7d-47be-9251-688704e570b9.png",
-        className: "absolute top-[70%] left-[1%] rotate-[8deg]",
-    },
-    {
-        image: "83a7dc9e-f3ca-44d4-8d8b-65ed61b27d0d/a75ecaed-1c00-4f12-affa-f5c3b9977c68.png",
-        className: "absolute top-[0%] right-[2%] rotate-[-10deg]",
-    },
-    {
-        image: "3795c5ed-37cc-4b0e-8623-d8f2d15bbcb2/97079ac2-4353-4c21-8c09-88de40b10e1f.png",
-        className: "absolute top-[40%] right-[2%] -rotate-[-8deg]",
-    },
-    {
-        image: "4a323aaf-4147-450e-ba37-241fbbf41363/16f954d2-b172-488f-aada-2f534df65f94.png",
-        className: "absolute top-[70%] right-[0%] rotate-[-7deg]",
-    },
-];
 
 const genderImages: Record<string, string> = {
     boy: "👦",
@@ -71,470 +46,537 @@ export const artStyleImages: Record<string, string> = {
     watercolor: "🎭",
 };
 
+type Preview = { id: string; title: string; cover: string };
+type Phase = "details" | "drawing" | "ready";
+
+/**
+ * Two-step book form: describe the child → see the free cover → choose
+ * delivery and pay. The paid book is built from the approved cover.
+ */
 const NewBook: React.FC = () => {
     const t = useTranslations("pages.new-book");
-    const tBook = useTranslations();
+    const tAll = useTranslations();
+    const [phase, setPhase] = useState<Phase>("details");
+    const [preview, setPreview] = useState<Preview | null>(null);
+    const [message, setMessage] = useState<string | undefined>();
+    const topRef = useRef<HTMLDivElement>(null);
 
-    const [state, setState] = useState<ActionsState<BookSchema>>({
-        success: false,
-        message: undefined,
-        errors: undefined,
+    const details = useForm<PreviewSchema>({
+        resolver: zodResolver(previewSchema(tAll)),
+        defaultValues: { artStyle: artStyleOptions[0] },
     });
 
-    const {
-        control,
-        watch,
-        register,
-        handleSubmit,
-        formState: { errors, isSubmitting: loading },
-    } = useForm<BookSchema>({
-        resolver: zodResolver(bookSchema(tBook)),
+    const checkout = useForm<CheckoutSchema>({
+        resolver: zodResolver(checkoutSchema(tAll)),
         defaultValues: {
-            artStyle: artStyleOptions[0],
+            previewId: "",
+            email: "",
+            product: "PDF",
+            dedication: "",
+            isGift: false,
+            giftTo: "",
+            giftFrom: "",
         },
     });
 
-    const artStyle = watch("artStyle");
-    const gender = watch("gender");
+    // eslint-disable-next-line react-hooks/incompatible-library
+    const product = checkout.watch("product");
+    const isGift = checkout.watch("isGift");
+    const dedication = checkout.watch("dedication") ?? "";
+    const total = product === "PRINT" ? printPrice : price;
 
-    const submit = async (data: BookSchema) => {
-        const res = await requestAPI<BookSchema>(
+    useEffect(() => {
+        if (phase !== "details") {
+            topRef.current?.scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+            });
+        }
+    }, [phase]);
+
+    const drawCover = async (data: PreviewSchema) => {
+        setMessage(undefined);
+        setPhase("drawing");
+        const res = (await requestAPI<PreviewSchema>(
+            "POST",
+            "/api/book/preview",
+            data
+        )) as ActionsState<PreviewSchema> & { preview?: Preview };
+
+        if (res.success && res.preview) {
+            setPreview(res.preview);
+            checkout.setValue("previewId", res.preview.id);
+            setPhase("ready");
+        } else {
+            setMessage(res.message);
+            setPhase(preview ? "ready" : "details");
+        }
+    };
+
+    const pay = async (data: CheckoutSchema) => {
+        setMessage(undefined);
+        const res = await requestAPI<CheckoutSchema>(
             "POST",
             "/api/stripe/create-checkout",
             data
         );
-        setState(res);
+        if (!res.success && !res.redirect) setMessage(res.message);
     };
 
+    const errors = details.formState.errors;
+    const cErrors = checkout.formState.errors;
+
     return (
-        <div className="relative w-full h-full">
-            <form
-                onSubmit={handleSubmit(submit)}
-                className="w-full max-w-xl mx-auto flex flex-col gap-y-6 bg-secondary/10 p-3 sm:p-4 md:p-8 rounded-box"
-            >
-                <FormReponse success={state.success} message={state.message} />
+        <div
+            ref={topRef}
+            className="sticker flex w-full scroll-mt-24 flex-col gap-8 rounded-lg! p-4 sm:p-6 md:p-8"
+        >
+            <FormReponse success={false} message={message} />
 
-                <div className="space-y-2">
-                    <span className="flex items-center gap-x-2 text-2xl px-1 font-bold mb-2">
-                        <div className="flex items-center justify-center size-12 bg-primary/20 rounded-field">
-                            <User className="size-7 text-primary" />
-                        </div>
-                        {t("child-details")}
-                    </span>
+            {/* ---------- Steps 1–3: details ---------- */}
+            {phase === "details" && (
+                <form
+                    onSubmit={details.handleSubmit(drawCover)}
+                    noValidate
+                    className="flex flex-col gap-8"
+                >
+                    <fieldset className="flex flex-col gap-4">
+                        <StepHeading n={1} title={t("child-details")} />
 
-                    <FormInput
-                        type="text"
-                        label={t("child-name")}
-                        placeholder={t("child-name-placeholder")}
-                        error={errors.childName?.message}
-                        {...register("childName")}
-                    />
-
-                    <div className="w-full text-sm mt-4">
-                        <div className="w-full flex justify-between pb-1">
-                            <span className="label-text px-1 font-bold">
-                                {t("gender")}
-                            </span>
-                            <span className="label-text-alt text-error">
-                                {errors.gender?.message}
-                            </span>
-                        </div>
-                        <div className="grid grid-cols-2 gap-3">
-                            {genderOptions.map((g) => (
-                                <label
-                                    key={g}
-                                    className={cn(
-                                        "cursor-pointer flex flex-col items-center bg-base-100 border-2 border-neutral/30 rounded-2xl p-2 transition",
-                                        "hover:shadow-md relative group",
-                                        gender == g &&
-                                            "border-primary bg-primary/20"
-                                    )}
-                                >
-                                    <div className="absolute top-0 right-0 m-0.5">
-                                        {gender == g ?
-                                            <div className="size-6 border-2 border-primary inset-ring-4 inset-ring-base-100 bg-primary rounded-full" />
-                                        :   <div className="size-6 border-2 border-neutral/30 rounded-full" />
-                                        }
-                                    </div>
-                                    <input
-                                        type="radio"
-                                        value={g}
-                                        className="absolute left-2 top-2 opacity-0 group-checked:border-primary"
-                                        {...register("gender")}
-                                    />
-                                    <span className="capitalize text-lg text-center">
-                                        {genderImages[g]} {t(g)}
-                                    </span>
-                                </label>
-                            ))}
-                        </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-x-2">
-                        <FormSelect
-                            name="age"
-                            label={t("age")}
-                            defaultValue={ageOptions[0]}
-                            values={ageOptions as unknown as string[]}
-                            control={control}
-                            error={errors.age?.message}
+                        <FormInput
+                            type="text"
+                            label={t("child-name")}
+                            placeholder={t("child-name-placeholder")}
+                            error={errors.childName?.message}
+                            {...details.register("childName")}
                         />
 
-                        <FormSelect
-                            name="hairColor"
-                            label={t("hair-color")}
-                            defaultValue={hairColorOptions[0]}
-                            values={hairColorOptions as unknown as string[]}
-                            control={control}
-                            error={errors.hairColor?.message}
-                            t={t}
-                        />
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-x-2">
-                        <FormSelect
-                            name="eyeColor"
-                            label={t("eye-color")}
-                            defaultValue={eyeColorOptions[0]}
-                            values={eyeColorOptions as unknown as string[]}
-                            control={control}
-                            error={errors.eyeColor?.message}
-                            t={t}
-                        />
-                        <FormSelect
-                            name="skinTone"
-                            label={t("skin-tone")}
-                            defaultValue={skinToneOptions[0]}
-                            values={skinToneOptions as unknown as string[]}
-                            control={control}
-                            error={errors.skinTone?.message}
-                            t={t}
-                        />
-                    </div>
-                </div>
-
-                <div>
-                    <div className="w-full text-sm">
-                        <div className="w-full flex justify-between pb-1">
-                            <span className="flex items-center gap-x-2 text-2xl px-1 font-bold mb-2">
-                                <div className="flex items-center justify-center size-12 bg-secondary/20 rounded-field">
-                                    <Paintbrush className="size-7 text-secondary" />
-                                </div>
-                                {t("art-style")}
-                            </span>
-                            <span className="label-text-alt text-error">
-                                {errors.artStyle?.message}
-                            </span>
+                        <div>
+                            <FieldLabel
+                                label={t("gender")}
+                                error={errors.gender?.message}
+                            />
+                            <div className="grid grid-cols-2 gap-3">
+                                {genderOptions.map((g) => (
+                                    <label
+                                        key={g}
+                                        className="choice h-12 items-center justify-center gap-2 px-4"
+                                    >
+                                        <input
+                                            type="radio"
+                                            value={g}
+                                            className="sr-only"
+                                            {...details.register("gender")}
+                                        />
+                                        <span aria-hidden>
+                                            {genderImages[g]}
+                                        </span>
+                                        <span className="type-label capitalize">
+                                            {t(g)}
+                                        </span>
+                                        <ChoiceMark />
+                                    </label>
+                                ))}
+                            </div>
                         </div>
+
+                        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                            <FormSelect
+                                name="age"
+                                label={t("age")}
+                                defaultValue={ageOptions[0]}
+                                values={ageOptions as unknown as string[]}
+                                control={details.control}
+                                error={errors.age?.message}
+                            />
+                            <FormSelect
+                                name="hairColor"
+                                label={t("hair-color")}
+                                defaultValue={hairColorOptions[0]}
+                                values={hairColorOptions as unknown as string[]}
+                                control={details.control}
+                                error={errors.hairColor?.message}
+                                t={t}
+                            />
+                            <FormSelect
+                                name="eyeColor"
+                                label={t("eye-color")}
+                                defaultValue={eyeColorOptions[0]}
+                                values={eyeColorOptions as unknown as string[]}
+                                control={details.control}
+                                error={errors.eyeColor?.message}
+                                t={t}
+                            />
+                            <FormSelect
+                                name="skinTone"
+                                label={t("skin-tone")}
+                                defaultValue={skinToneOptions[0]}
+                                values={skinToneOptions as unknown as string[]}
+                                control={details.control}
+                                error={errors.skinTone?.message}
+                                t={t}
+                            />
+                        </div>
+                    </fieldset>
+
+                    <fieldset className="flex flex-col gap-4 border-t-2 border-dashed border-hairline pt-8">
+                        <StepHeading
+                            n={2}
+                            title={t("art-style")}
+                            error={errors.artStyle?.message}
+                        />
                         <div className="grid grid-cols-2 gap-3">
                             {artStyleOptions.map((style) => (
                                 <label
                                     key={style}
-                                    className={cn(
-                                        "cursor-pointer flex flex-col items-center bg-base-100 border-2 border-neutral/30 rounded-box p-2 transition",
-                                        "hover:shadow-md relative group",
-                                        artStyle === style &&
-                                            "border-primary bg-primary/20"
-                                    )}
+                                    className="choice flex-col items-start gap-1 p-4"
                                 >
-                                    <div className="absolute top-0 right-0 m-1">
-                                        {artStyle === style ?
-                                            <div className="size-6 border-2 border-primary inset-ring-4 inset-ring-base-100 bg-primary rounded-full" />
-                                        :   <div className="size-6 border-2 border-neutral/30 rounded-full" />
-                                        }
-                                    </div>
                                     <input
                                         type="radio"
                                         value={style}
-                                        className="absolute left-2 top-2 opacity-0"
-                                        {...register("artStyle")}
+                                        className="sr-only"
+                                        {...details.register("artStyle")}
                                     />
-                                    <span className="text-lg">
+                                    <span
+                                        className="text-xl leading-none"
+                                        aria-hidden
+                                    >
                                         {artStyleImages[style]}
                                     </span>
-                                    <span className="capitalize text-base text-center font-bold">
+                                    <span className="type-label mt-2 capitalize">
                                         {t(style)}
                                     </span>
-                                    <span className="text-sm text-center">
+                                    <span className="type-body text-muted">
                                         {t(`${style}-description`)}
                                     </span>
+                                    <ChoiceMark />
                                 </label>
                             ))}
                         </div>
-                    </div>
-                </div>
+                    </fieldset>
 
-                <div>
-                    <span className="flex items-center gap-x-2 text-2xl px-1 font-bold mb-2">
-                        <div className="flex items-center justify-center size-12 bg-green-500/20 rounded-field">
-                            <PenLine className="size-7 text-green-500" />
-                        </div>
-                        {t("story-idea")}
+                    <fieldset className="flex flex-col gap-4 border-t-2 border-dashed border-hairline pt-8">
+                        <StepHeading n={3} title={t("story-idea")} />
+                        <label className="block">
+                            <FieldLabel
+                                label={t("prompt")}
+                                error={errors.prompt?.message}
+                            />
+                            <textarea
+                                placeholder={t("prompt-placeholder")}
+                                className="field"
+                                aria-invalid={!!errors.prompt}
+                                rows={4}
+                                {...details.register("prompt")}
+                            />
+                        </label>
+                    </fieldset>
+
+                    <div className="flex flex-col items-center gap-3 rounded-md bg-butter p-5 text-center text-navy">
+                        <button type="submit" className="button-primary w-full">
+                            {t("preview-cta")}
+                        </button>
+                        <p className="type-body font-bold">
+                            {t("preview-hint")}
+                        </p>
+                    </div>
+                </form>
+            )}
+
+            {/* ---------- Drawing ---------- */}
+            {phase === "drawing" && (
+                <div
+                    className="flex flex-col items-center gap-4 py-10 text-center"
+                    role="status"
+                    aria-live="polite"
+                >
+                    <div className="w-44">
+                        <Boo pose="read" className="animate-bob" />
+                    </div>
+                    <h3 className="type-title-lg text-ink">
+                        {t("preview-loading-title")}
+                    </h3>
+                    <p className="type-body max-w-sm text-muted">
+                        {t("preview-loading-body")}
+                    </p>
+                    <span className="flex gap-1.5" aria-hidden>
+                        {[0, 1, 2].map((i) => (
+                            <span
+                                key={i}
+                                className="size-2.5 animate-bounce rounded-full bg-tomato"
+                                style={{ animationDelay: `${i * 150}ms` }}
+                            />
+                        ))}
                     </span>
-                    <label className="w-full text-sm">
-                        <div className="w-full flex justify-between pb-1">
-                            <span className="label-text px-1 font-bold">
-                                {t("prompt")}
-                            </span>
-                            <span className="label-text-alt text-error">
-                                {errors.prompt?.message}
-                            </span>
-                        </div>
-                        <textarea
-                            placeholder={t("prompt-placeholder")}
-                            className="textarea w-full rounded-box resize-none border-2 bg-base-100 transition placeholder:text-neutral-400 focus:border-primary/50 focus:outline-none focus:bg-base-300"
-                            rows={5}
-                            {...register("prompt")}
-                        />
-                    </label>
                 </div>
+            )}
 
-                <div>
-                    <span className="flex items-center gap-x-2 text-2xl px-1 font-bold mb-2">
-                        <div className="flex items-center justify-center size-12 bg-info/20 rounded-field">
-                            <Mail className="size-7 text-info" />
+            {/* ---------- Step 4: approve the cover, choose delivery ---------- */}
+            {phase === "ready" && preview && (
+                <form
+                    onSubmit={checkout.handleSubmit(pay)}
+                    noValidate
+                    className="flex flex-col gap-8"
+                >
+                    <div className="flex flex-col items-center gap-5 text-center">
+                        <div className="w-full max-w-[300px] -rotate-2 rounded-md border-[2.5px] border-navy bg-white p-2 shadow-[0_6px_0_#23264a]">
+                            <div className="aspect-square overflow-hidden rounded-[10px]">
+                                <NextImage
+                                    src={preview.cover}
+                                    width={1024}
+                                    height={1024}
+                                    alt={preview.title}
+                                    isCover
+                                />
+                            </div>
                         </div>
-                        {t("email")}
-                    </span>
-                    <FormInput
-                        type="text"
-                        label={t("email")}
-                        placeholder={t("email-placeholder")}
-                        error={errors.email?.message}
-                        {...register("email")}
-                    />
-                    <div className="flex items-center justify-left gap-x-1 mt-2 ml-1">
-                        <Info className="size-4 text-neutral/80" />
-                        <span className="text-sm text-neutral/80">
-                            {t("email-info")}
-                        </span>
-                    </div>
-                </div>
-
-                <div className="bg-info/20 border border-info/10 rounded-box p-6 divide-x">
-                    <div className="grid grid-cols-3 divide-x divide-info/30">
-                        <div className="flex flex-col items-center justify-center">
-                            <span className="text-sm text-neutral uppercase tracking-wide mb-2">
-                                {t("page")}
-                            </span>
-                            <span className="text-base text-info">
-                                {t("pages")}
-                            </span>
+                        <div>
+                            <h3 className="type-title-lg text-ink">
+                                {t("preview-ready")}
+                            </h3>
+                            <p className="type-body mt-1 text-muted">
+                                {t("preview-ready-body")}
+                            </p>
                         </div>
-
-                        <div className="flex flex-col items-center justify-center">
-                            <span className="text-sm text-neutral uppercase tracking-wide mb-2">
-                                {t("delivery")}
-                            </span>
-                            <span className="text-base text-info">
-                                {t("by-email")}
-                            </span>
-                        </div>
-
-                        <div className="flex flex-col items-center justify-center">
-                            <span className="text-sm text-neutral uppercase tracking-wide mb-2">
-                                {t("time")}
-                            </span>
-                            <span className="text-base text-info">
-                                {t("instant")}
-                            </span>
+                        <div className="flex flex-wrap justify-center gap-2">
+                            <button
+                                type="button"
+                                className="button-secondary button-sm"
+                                onClick={details.handleSubmit(drawCover)}
+                            >
+                                <RefreshCw className="size-4" />
+                                {t("preview-again")}
+                            </button>
+                            <button
+                                type="button"
+                                className="button-secondary button-sm"
+                                onClick={() => setPhase("details")}
+                            >
+                                <Pencil className="size-4" />
+                                {t("preview-edit")}
+                            </button>
                         </div>
                     </div>
-                </div>
 
-                <div className="space-y-2 mt-2">
-                    <div className="flex justify-between px-2 text-lg">
-                        <div className="font-bold">{t("total")}</div>
+                    <fieldset className="flex flex-col gap-4 border-t-2 border-dashed border-hairline pt-8">
+                        <StepHeading n={4} title={t("step-delivery")} />
 
-                        <div className="flex justify-start items-center gap-x-2">
-                            <span className="font-bold">
-                                {formatAmountForDisplay(price)}
-                            </span>
-                            <span className="text-base text-neutral/80 line-through">
-                                {formatAmountForDisplay(price * 1.2)}
-                            </span>
-                        </div>
-                    </div>
-                    <button
-                        type="submit"
-                        className={cn(
-                            "btn btn-lg w-full rounded-full text-white bg-secondary/80 border-4 border-secondary",
-                            loading && "btn-disabled"
+                        {printEnabled && (
+                            <div>
+                                <FieldLabel label={t("format")} />
+                                <div className="grid gap-3 sm:grid-cols-2">
+                                    {(["PDF", "PRINT"] as const).map((p) => (
+                                        <label
+                                            key={p}
+                                            className="choice flex-col items-start gap-1 p-4"
+                                        >
+                                            <input
+                                                type="radio"
+                                                value={p}
+                                                className="sr-only"
+                                                {...checkout.register(
+                                                    "product"
+                                                )}
+                                            />
+                                            <span className="type-label">
+                                                {p === "PDF" ?
+                                                    t("pdf")
+                                                :   t("print")}
+                                            </span>
+                                            <span className="type-body text-muted">
+                                                {p === "PDF" ?
+                                                    t("pdf-description")
+                                                :   t("print-description")}
+                                            </span>
+                                            <span className="mt-1 font-display text-lg font-semibold tabular-nums">
+                                                {formatAmountForDisplay(
+                                                    p === "PDF" ? price : (
+                                                        printPrice
+                                                    )
+                                                )}
+                                            </span>
+                                            <ChoiceMark />
+                                        </label>
+                                    ))}
+                                </div>
+                                <p className="type-caption mt-2 text-muted">
+                                    🎄{" "}
+                                    {t("christmas", {
+                                        date: new Date(
+                                            christmasPrintDeadline
+                                        ).toLocaleDateString("de-CH"),
+                                    })}
+                                </p>
+                            </div>
                         )}
-                        disabled={loading}
-                    >
-                        {loading ?
-                            <div className="loading" />
-                        :   t("submit")}
-                    </button>
-                    <div className="mt-1 flex justify-center gap-x-1 text-center text-sm text-neutral/70">
-                        <Lock className="size-4 text-neutral/80" />
-                        {t("secure")}
-                    </div>
-                </div>
-            </form>
 
-            {draggableCards.map((e) => (
-                <DraggableCardBody key={e.image} className={e.className}>
-                    <Image
-                        src={getImage(e.image)}
-                        alt=""
-                        width={512}
-                        height={512}
-                        className="pointer-events-none relative z-10 size-60 object-cover"
-                    />
-                </DraggableCardBody>
-            ))}
+                        <FormInput
+                            type="email"
+                            label={t("email")}
+                            placeholder={t("email-placeholder")}
+                            error={cErrors.email?.message}
+                            {...checkout.register("email")}
+                        />
+
+                        <label className="block">
+                            <span className="flex items-baseline justify-between gap-2">
+                                <span className="field-label">
+                                    {t("dedication")}
+                                </span>
+                                <span className="type-caption pb-1.5 text-muted tabular-nums">
+                                    {dedication.length}/{maxDedicationLength}
+                                </span>
+                            </span>
+                            <textarea
+                                placeholder={t("dedication-placeholder")}
+                                className="field"
+                                rows={2}
+                                maxLength={maxDedicationLength}
+                                {...checkout.register("dedication")}
+                            />
+                            <span className="type-body mt-1.5 block text-muted">
+                                {t("dedication-info")}
+                            </span>
+                        </label>
+
+                        <label className="choice items-center gap-3 px-4 py-3">
+                            <input
+                                type="checkbox"
+                                className="sr-only"
+                                {...checkout.register("isGift")}
+                            />
+                            <Gift className="size-5 shrink-0" />
+                            <span className="type-label flex-1">
+                                {t("gift")}
+                            </span>
+                            <ChoiceMark square />
+                        </label>
+
+                        {isGift ?
+                            <div className="grid gap-4 rounded-md bg-canvas p-4 sm:grid-cols-2">
+                                <FormInput
+                                    type="email"
+                                    label={t("gift-to")}
+                                    placeholder={t("gift-to-placeholder")}
+                                    error={cErrors.giftTo?.message}
+                                    {...checkout.register("giftTo")}
+                                />
+                                <FormInput
+                                    type="text"
+                                    label={t("gift-from")}
+                                    placeholder={t("gift-from-placeholder")}
+                                    error={cErrors.giftFrom?.message}
+                                    {...checkout.register("giftFrom")}
+                                />
+                                <p className="type-body flex items-start gap-2 text-muted sm:col-span-2">
+                                    <Info className="mt-0.5 size-4 shrink-0" />
+                                    {t("gift-info")}
+                                </p>
+                            </div>
+                        :   <p className="type-body flex items-start gap-2 text-muted">
+                                <Info className="mt-0.5 size-4 shrink-0" />
+                                {t("email-info")}
+                            </p>
+                        }
+                    </fieldset>
+
+                    <div className="rounded-md border-2 border-dashed border-hairline bg-canvas p-5 md:p-6">
+                        <dl className="grid grid-cols-3 gap-4 border-b-2 border-dashed border-hairline pb-5">
+                            {[
+                                [t("page"), t("pages")],
+                                [t("delivery"), t("by-email")],
+                                [t("time"), t("instant")],
+                            ].map(([label, value]) => (
+                                <div key={label} className="min-w-0">
+                                    <dt className="type-eyebrow truncate text-muted">
+                                        {label}
+                                    </dt>
+                                    <dd className="type-label mt-1 text-ink">
+                                        {value}
+                                    </dd>
+                                </div>
+                            ))}
+                        </dl>
+
+                        <div className="flex items-end justify-between gap-4 pt-5">
+                            <span className="type-label text-ink">
+                                {t("total")}
+                            </span>
+                            <span className="flex items-baseline gap-2">
+                                {product === "PDF" && (
+                                    <span className="type-body text-border-strong line-through">
+                                        {formatAmountForDisplay(compareAtPrice)}
+                                    </span>
+                                )}
+                                <span className="type-price text-[32px]! text-ink md:text-[40px]!">
+                                    {formatAmountForDisplay(total)}
+                                </span>
+                            </span>
+                        </div>
+
+                        <button
+                            type="submit"
+                            className="button-primary mt-5 w-full"
+                            disabled={checkout.formState.isSubmitting}
+                        >
+                            {checkout.formState.isSubmitting ?
+                                <Loader2 className="size-5 animate-spin" />
+                            :   t("submit")}
+                        </button>
+
+                        <p className="type-body mt-3 text-center font-bold text-ink">
+                            ✨ {t("guarantee", { max: maxRedraws })}
+                        </p>
+                        <p className="type-body mt-1 flex items-center justify-center gap-1.5 text-muted">
+                            <Lock className="size-3.5" />
+                            {t("secure")}
+                        </p>
+                    </div>
+                </form>
+            )}
         </div>
     );
 };
 
-const DraggableCardBody: React.FC<{
-    className?: string;
-    children?: React.ReactNode;
-}> = ({ className, children }) => {
-    const mouseX = useMotionValue(0);
-    const mouseY = useMotionValue(0);
-    const cardRef = useRef<HTMLDivElement>(null);
-    const controls = useAnimationControls();
-    const [constraints, setConstraints] = useState({
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-    });
+const StepHeading: React.FC<{ n: number; title: string; error?: string }> = ({
+    n,
+    title,
+    error,
+}) => (
+    <div className="flex items-center justify-between gap-3">
+        <span className="flex items-center gap-3">
+            <span className="flex size-9 shrink-0 items-center justify-center rounded-full border-2 border-navy bg-tomato font-display text-base font-bold text-white">
+                {n}
+            </span>
+            <span className="type-title-md text-ink">{title}</span>
+        </span>
+        {error && <span className="type-body text-error">{error}</span>}
+    </div>
+);
 
-    const velocityX = useVelocity(mouseX);
-    const velocityY = useVelocity(mouseY);
+const FieldLabel: React.FC<{ label: string; error?: string }> = ({
+    label,
+    error,
+}) => (
+    <span className="flex items-baseline justify-between gap-2">
+        <span className="field-label">{label}</span>
+        {error && <span className="type-body pb-1.5 text-error">{error}</span>}
+    </span>
+);
 
-    const springConfig = {
-        stiffness: 100,
-        damping: 20,
-        mass: 0.5,
-    };
-
-    const rotateX = useSpring(
-        useTransform(mouseY, [-300, 300], [25, -25]),
-        springConfig
-    );
-    const rotateY = useSpring(
-        useTransform(mouseX, [-300, 300], [-25, 25]),
-        springConfig
-    );
-
-    const opacity = useSpring(
-        useTransform(mouseX, [-300, 0, 300], [0.8, 1, 0.8]),
-        springConfig
-    );
-
-    useEffect(() => {
-        const updateConstraints = () => {
-            if (typeof window !== "undefined") {
-                setConstraints({
-                    top: -window.innerHeight / 2,
-                    left: -window.innerWidth / 2,
-                    right: window.innerWidth / 2,
-                    bottom: window.innerHeight / 2,
-                });
-            }
-        };
-
-        updateConstraints();
-
-        window.addEventListener("resize", updateConstraints);
-
-        return () => {
-            window.removeEventListener("resize", updateConstraints);
-        };
-    }, []);
-
-    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-        const { clientX, clientY } = e;
-        const { width, height, left, top } =
-            cardRef.current?.getBoundingClientRect() ?? {
-                width: 0,
-                height: 0,
-                left: 0,
-                top: 0,
-            };
-        const centerX = left + width / 2;
-        const centerY = top + height / 2;
-        const deltaX = clientX - centerX;
-        const deltaY = clientY - centerY;
-        mouseX.set(deltaX);
-        mouseY.set(deltaY);
-    };
-
-    const handleMouseLeave = () => {
-        mouseX.set(0);
-        mouseY.set(0);
-    };
-
-    return (
-        <motion.div
-            ref={cardRef}
-            drag
-            dragConstraints={constraints}
-            onDragStart={() => {
-                document.body.style.cursor = "grabbing";
-            }}
-            onDragEnd={(event, info) => {
-                document.body.style.cursor = "default";
-
-                controls.start({
-                    rotateX: 0,
-                    rotateY: 0,
-                    transition: {
-                        type: "spring",
-                        ...springConfig,
-                    },
-                });
-                const currentVelocityX = velocityX.get();
-                const currentVelocityY = velocityY.get();
-
-                const velocityMagnitude = Math.sqrt(
-                    currentVelocityX * currentVelocityX +
-                        currentVelocityY * currentVelocityY
-                );
-                const bounce = Math.min(0.8, velocityMagnitude / 1000);
-
-                animate(info.point.x, info.point.x + currentVelocityX * 0.3, {
-                    duration: 0.8,
-                    ease: [0.2, 0, 0, 1],
-                    bounce,
-                    type: "spring",
-                    stiffness: 50,
-                    damping: 15,
-                    mass: 0.8,
-                });
-
-                animate(info.point.y, info.point.y + currentVelocityY * 0.3, {
-                    duration: 0.8,
-                    ease: [0.2, 0, 0, 1],
-                    bounce,
-                    type: "spring",
-                    stiffness: 50,
-                    damping: 15,
-                    mass: 0.8,
-                });
-            }}
-            style={{
-                rotateX,
-                rotateY,
-                opacity,
-                willChange: "transform",
-            }}
-            animate={controls}
-            whileHover={{ scale: 1.02 }}
-            onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
-            className={cn(
-                "relative size-60 overflow-hidden rounded-box transform-3d max-xl:hidden",
-                className
-            )}
-        >
-            {children}
-        </motion.div>
-    );
-};
+/** Radio/checkbox indicator: fills when the parent `.choice` is checked. */
+const ChoiceMark: React.FC<{ square?: boolean }> = ({ square }) => (
+    <span
+        aria-hidden
+        className={cn(
+            "flex size-5 shrink-0 items-center justify-center border-2 border-border-strong [.choice:has(input:checked)_&]:border-navy [.choice:has(input:checked)_&]:bg-tomato",
+            square ?
+                "relative rounded-md"
+            :   "absolute top-3 right-3 rounded-full"
+        )}
+    >
+        <span className="size-2 rounded-full bg-white opacity-0 [.choice:has(input:checked)_&]:opacity-100" />
+    </span>
+);
 
 export default NewBook;

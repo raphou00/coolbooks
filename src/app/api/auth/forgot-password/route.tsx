@@ -45,11 +45,7 @@ export const POST = async (req: NextRequest) => {
             });
         }
 
-        const user = await db.user.findFirst({
-            where: {
-                email: body.email,
-            },
-        });
+        const user = await db.users.byEmail(body.email);
 
         if (!user) {
             return NextResponse.json({
@@ -60,12 +56,10 @@ export const POST = async (req: NextRequest) => {
 
         const code = crypto.randomUUID();
 
-        await db.token.create({
-            data: {
-                userId: user.id,
-                token: code,
-                expiresAt: new Date(Date.now() + 60 * 60 * 1000),
-            },
+        await db.tokens.create({
+            userId: user.id,
+            token: code,
+            expiresAt: new Date(Date.now() + 60 * 60 * 1000),
         });
 
         await sendEmail(

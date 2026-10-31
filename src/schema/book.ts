@@ -37,7 +37,12 @@ export const artStyleOptions = [
     "watercolor",
 ] as const;
 
-const bookSchema = (t: T) =>
+export const productOptions = ["PDF", "PRINT"] as const;
+export const maxDedicationLength = 160;
+export const maxGiftFromLength = 40;
+
+/** Step 1: everything needed to draw the free cover preview. */
+export const previewSchema = (t: T) =>
     z.object({
         childName: z
             .string()
@@ -67,12 +72,51 @@ const bookSchema = (t: T) =>
                 message: t("messages.min", { min: minPromptLength }),
             })
             .min(1, { message: t("messages.required") }),
-        email: z
-            .string()
-            .trim()
-            .email({ message: t("messages.invalid-email") })
-            .min(1, { message: t("messages.required") }),
     });
 
-export type BookSchema = z.infer<ReturnType<typeof bookSchema>>;
-export default bookSchema;
+/** Step 2: delivery details, after the parent has approved the cover. */
+export const checkoutSchema = (t: T) =>
+    z
+        .object({
+            previewId: z.string().uuid(),
+            email: z
+                .string()
+                .trim()
+                .email({ message: t("messages.invalid-email") })
+                .min(1, { message: t("messages.required") }),
+            product: z.enum(productOptions),
+            dedication: z
+                .string()
+                .trim()
+                .max(maxDedicationLength, {
+                    message: t("messages.max", { max: maxDedicationLength }),
+                }),
+            isGift: z.boolean(),
+            giftTo: z.string().trim(),
+            giftFrom: z
+                .string()
+                .trim()
+                .max(maxGiftFromLength, {
+                    message: t("messages.max", { max: maxGiftFromLength }),
+                }),
+        })
+        .superRefine((v, ctx) => {
+            if (!v.isGift) return;
+            if (!z.string().email().safeParse(v.giftTo).success) {
+                ctx.addIssue({
+                    code: "custom",
+                    path: ["giftTo"],
+                    message: t("messages.invalid-email"),
+                });
+            }
+            if (!v.giftFrom) {
+                ctx.addIssue({
+                    code: "custom",
+                    path: ["giftFrom"],
+                    message: t("messages.required"),
+                });
+            }
+        });
+
+export type PreviewSchema = z.infer<ReturnType<typeof previewSchema>>;
+export type CheckoutSchema = z.infer<ReturnType<typeof checkoutSchema>>;

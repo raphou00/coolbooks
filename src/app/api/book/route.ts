@@ -4,6 +4,7 @@ import db from "@/lib/db";
 import { type localesTitle } from "@/lib/navigation";
 import { deleteObject } from "@/lib/file";
 import { getUser } from "@/lib/auth";
+import { canEditBook } from "@/lib/books";
 
 export const GET = async (req: NextRequest) => {
     const locale = (req.cookies.get("NEXT_LOCALE")?.value ||
@@ -20,35 +21,7 @@ export const GET = async (req: NextRequest) => {
             });
         }
 
-        const book = await db.book.findUnique({
-            where: {
-                id: bookId,
-            },
-            select: {
-                id: true,
-                title: true,
-                cover: true,
-                age: true,
-                artStyle: true,
-                generating: true,
-                user: {
-                    select: {
-                        id: true,
-                        name: true,
-                    },
-                },
-                pages: {
-                    select: {
-                        id: true,
-                        image: true,
-                        text: true,
-                        color: true,
-                        number: true,
-                    },
-                },
-                updatedAt: true,
-            },
-        });
+        const book = await db.books.getWithPages(bookId);
 
         return NextResponse.json({
             success: true,
@@ -88,19 +61,7 @@ export const DELETE = async (req: NextRequest) => {
             });
         }
 
-        const book = await db.book.findUnique({
-            where: {
-                id: bookId,
-            },
-            select: {
-                id: true,
-                user: {
-                    select: {
-                        id: true,
-                    },
-                },
-            },
-        });
+        const book = await db.books.get(bookId);
 
         if (!book) {
             return NextResponse.json({
@@ -109,11 +70,15 @@ export const DELETE = async (req: NextRequest) => {
             });
         }
 
-        await db.book.delete({
-            where: {
-                id: book.id,
-            },
-        });
+        // Only the owner (or an admin) may delete a book.
+        if (!(await canEditBook(book.id))) {
+            return NextResponse.json({
+                success: false,
+                message: t("messages.unauthorized"),
+            });
+        }
+
+        await db.books.delete(book.id);
 
         await deleteObject(book.id);
 

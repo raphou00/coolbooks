@@ -1,13 +1,6 @@
-import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
-import {
-    DynamoDBDocumentClient,
-    GetCommand,
-    PutCommand,
-} from "@aws-sdk/lib-dynamodb";
+import { GetCommand, PutCommand } from "@aws-sdk/lib-dynamodb";
+import { ddb as docClient } from "./dynamo";
 import env from "./env";
-
-const client = new DynamoDBClient();
-const docClient = DynamoDBDocumentClient.from(client);
 const TABLE_NAME = env.RATE_LIMITS_DYNAMODB_TABLE;
 
 export const checkRateLimit = async (
@@ -66,3 +59,10 @@ export const ratelimitContact = { maxRequests: 3, windowSeconds: 3600 };
 export const ratelimitRegiser = { maxRequests: 10, windowSeconds: 3600 * 24 };
 
 export const ratelimitForgotPassword = { maxRequests: 3, windowSeconds: 3600 };
+
+/** Free cover previews cost an AI generation each. */
+export const ratelimitPreview = { maxRequests: 5, windowSeconds: 3600 };
+
+export const ratelimitRedraw = { maxRequests: 10, windowSeconds: 3600 };
+
+export const ratelimitAudio = { maxRequests: 40, windowSeconds: 3600 };

@@ -23,7 +23,13 @@ export default createEnv({
             .string()
             .min(1, { message: "AWS Secret Access Key is missing" }),
 
-        DATABASE_URL: z.string().min(1, { message: "Database URL is missing" }),
+        /** Main data table (users, sessions, books, orders…). */
+        DATA_DYNAMODB_TABLE: z
+            .string()
+            .min(1, { message: "Data DynamoDB table is missing" }),
+
+        /** Local development only: DynamoDB Local, e.g. http://localhost:8001 */
+        DYNAMODB_ENDPOINT: z.string().url().optional(),
 
         BUCKET_NAME: z.string().min(1, { message: "Bucket name is missing" }),
 
@@ -60,6 +66,24 @@ export default createEnv({
         GOOGLE_CLIENT_SECRET: z
             .string()
             .min(1, { message: "Google Client Secret is missing" }),
+
+        /** Moderation of story ideas and read-aloud audio (text-to-speech). */
+        OPENAI_API_KEY: z
+            .string()
+            .min(1, { message: "OpenAI API key is missing" }),
+
+        /** Shared with the book-creator Lambda; signs its delivery callback. */
+        LAMBDA_CALLBACK_SECRET: z.string().min(32, {
+            message: "Lambda callback secret must be at least 32 characters",
+        }),
+
+        /** Sent by the scheduler to /api/cron/* as `Authorization: Bearer …`. */
+        CRON_SECRET: z
+            .string()
+            .min(16, { message: "Cron secret must be at least 16 characters" }),
+
+        /** Receives failed-order alerts and print orders. Defaults to SENDER_EMAIL. */
+        ADMIN_EMAIL: z.string().email().optional(),
     },
     client: {
         NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: z
@@ -76,7 +100,8 @@ export default createEnv({
         AWS_REGION: process.env.AWS_REGION,
         AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID,
         AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY,
-        DATABASE_URL: process.env.DATABASE_URL,
+        DATA_DYNAMODB_TABLE: process.env.DATA_DYNAMODB_TABLE,
+        DYNAMODB_ENDPOINT: process.env.DYNAMODB_ENDPOINT || undefined,
         BUCKET_NAME: process.env.BUCKET_NAME,
         CLOUDFRONT_URL: process.env.CLOUDFRONT_URL,
         NEXT_PUBLIC_CLOUDFRONT_URL: process.env.NEXT_PUBLIC_CLOUDFRONT_URL,
@@ -90,5 +115,9 @@ export default createEnv({
         STRIPE_WEBHOOK_SECRET: process.env.STRIPE_WEBHOOK_SECRET,
         GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
         GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
+        OPENAI_API_KEY: process.env.OPENAI_API_KEY,
+        LAMBDA_CALLBACK_SECRET: process.env.LAMBDA_CALLBACK_SECRET,
+        CRON_SECRET: process.env.CRON_SECRET,
+        ADMIN_EMAIL: process.env.ADMIN_EMAIL || undefined,
     },
 });

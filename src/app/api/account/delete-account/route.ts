@@ -32,11 +32,7 @@ export const DELETE = async (req: NextRequest) => {
             });
         }
 
-        await db.user.delete({
-            where: {
-                id: user.user.id,
-            },
-        });
+        await db.users.delete(user.user.id);
 
         return NextResponse.json({
             success: true,

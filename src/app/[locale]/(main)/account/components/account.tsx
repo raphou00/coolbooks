@@ -13,18 +13,11 @@ const Account: React.FC<AccountProps> = ({ user }) => {
     const t = useTranslations("pages.account");
 
     return (
-        <div className="mx-auto my-6 space-y-4">
-            <div className="flex flex-col w-full">
-                <div className="flex items-center gap-x-4">
-                    <Avatar userName={user.name} className="size-14" />
-
-                    <div className="flex flex-col">
-                        <Title text={t("title")} className="text-3xl w-fit" />
-                        <p className="text-sm text-base-content/80">
-                            {t("description")}
-                        </p>
-                    </div>
-                </div>
+        <div className="mb-10 flex items-center gap-4 md:mb-14">
+            <Avatar userName={user.name} className="size-14 text-lg" />
+            <div className="min-w-0">
+                <Title text={t("title")} className="type-display-md" />
+                <p className="type-body mt-1 text-muted">{t("description")}</p>
             </div>
         </div>
     );

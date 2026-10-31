@@ -1,7 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { getTranslations } from "next-intl/server";
-import db from "@/lib/db";
 import { lucia, getUser } from "@/lib/auth";
 import { checkRateLimit, ratelimitPost } from "@/lib/rate-limiter";
 
@@ -34,7 +33,6 @@ export const GET = async (req: NextRequest) => {
             });
         }
 
-        await db.session.delete({ where: { id: user.session?.id } });
         await lucia.invalidateSession(user.session!.id);
 
         const sessionCookie = lucia.createBlankSessionCookie();

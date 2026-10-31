@@ -37,7 +37,7 @@ const Template: React.FC<TemplateProps> = async ({
                 theme: {
                     extend: {
                         colors: {
-                            primary: "#6bc4d9",
+                            primary: "#ff5a47",
                         },
                     },
                 },
@@ -46,14 +46,14 @@ const Template: React.FC<TemplateProps> = async ({
             <Html>
                 <Head />
                 <Preview>{body}</Preview>
-                <Body className="mx-auto my-0 bg-stone-50 p-4">
+                <Body className="mx-auto my-0 bg-[#fff8ea] p-4">
                     <Container className="mx-auto my-0 max-w-xl">
                         <Section className="mt-4">
                             <Img
                                 src={`${domain}/favicon-96x96.png`}
                                 width="70"
                                 height="70"
-                                alt="Coolbooks Logo"
+                                alt="Bibliboo"
                             />
                         </Section>
 
@@ -70,7 +70,7 @@ const Template: React.FC<TemplateProps> = async ({
                                         src={`${domain}/favicon-96x96.png`}
                                         width="40"
                                         height="40"
-                                        alt="Coolbooks Logo"
+                                        alt="Bibliboo"
                                     />
                                 </Column>
                                 <Column>

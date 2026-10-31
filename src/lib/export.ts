@@ -10,6 +10,8 @@ export type Book = {
     locale: string;
     title: string;
     cover: string;
+    /** Optional dedication, printed on its own page after the cover. */
+    dedication?: string | null;
     pages: {
         text: string;
         image: string;
@@ -107,12 +109,30 @@ export const exportPDF = async (book: Book) => {
             pdf.setFontSize(10);
 
             pdf.setTextColor(0, 0, 0);
-            pdf.text("Created on coolbooks.app", textX + 0.3, textY + 0.3);
+            pdf.text("bibliboo.ch", textX + 0.3, textY + 0.3);
 
             pdf.setTextColor(255, 255, 255);
-            pdf.text("Created on coolbooks.app", textX, textY);
+            pdf.text("bibliboo.ch", textX, textY);
         } catch (error) {
             console.error("Failed to add cover:", error);
+        }
+
+        if (book.dedication?.trim()) {
+            pdf.addPage([PAGE_HEIGHT, PAGE_HEIGHT]);
+            pdf.setFillColor(255, 248, 234);
+            pdf.rect(0, 0, PAGE_HEIGHT, PAGE_HEIGHT, "F");
+            pdf.setFont("Poppins", "normal");
+            pdf.setFontSize(22);
+            pdf.setTextColor(35, 38, 74);
+            const lines = pdf.splitTextToSize(
+                book.dedication.trim(),
+                PAGE_HEIGHT - 60
+            );
+            pdf.text(lines, PAGE_HEIGHT / 2, PAGE_HEIGHT / 2, {
+                align: "center",
+                baseline: "middle",
+                lineHeightFactor: 1.6,
+            });
         }
 
         const sortedPages = sortPages(book.pages);

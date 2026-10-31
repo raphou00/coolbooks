@@ -1,41 +1,21 @@
-import Image from "next/image";
 import { useTranslations } from "next-intl";
-import Title from "./title";
+import { Inbox } from "lucide-react";
+
+const Empty: React.FC<{ text: string }> = ({ text }) => (
+    <div className="flex flex-col items-center gap-3 py-12 text-center">
+        <span className="flex size-12 items-center justify-center rounded-full bg-surface-soft text-muted">
+            <Inbox className="size-5" />
+        </span>
+        <p className="type-label text-ink">{text}</p>
+    </div>
+);
 
 export const NoSessionResults: React.FC = () => {
     const t = useTranslations("common");
-    return (
-        <div className="text-center my-12">
-            <Image
-                src="/images/error.svg"
-                width={400}
-                height={400}
-                alt="404"
-                className="mx-auto h-44"
-            />
-            <Title
-                text={t("no-sessions-results")}
-                className="mx-auto w-max my-2"
-            />
-        </div>
-    );
+    return <Empty text={t("no-sessions-results")} />;
 };
 
 export const NoBooksResults: React.FC = () => {
     const t = useTranslations("common");
-    return (
-        <div className="text-center my-12">
-            <Image
-                src="/images/error.svg"
-                width={400}
-                height={400}
-                alt="404"
-                className="mx-auto h-44"
-            />
-            <Title
-                text={t("no-books-results")}
-                className="mx-auto w-max my-2"
-            />
-        </div>
-    );
+    return <Empty text={t("no-books-results")} />;
 };

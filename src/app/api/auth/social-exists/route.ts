@@ -1,6 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { getTranslations } from "next-intl/server";
-import type { User } from "lucia";
 import db from "@/lib/db";
 import socialExistsSchema, {
     type SocialExistsSchema,
@@ -39,23 +38,11 @@ export const POST = async (req: NextRequest) => {
             });
         }
 
-        let user: User | null = null;
-        if (body.googleId) {
-            user = (await db.user.create({
-                data: {
-                    name: body.name,
-                    email: body.email,
-                    googleId: body.googleId,
-                },
-            })) as User;
-        } else {
-            user = (await db.user.create({
-                data: {
-                    name: body.name,
-                    email: body.email,
-                },
-            })) as User;
-        }
+        const user = await db.users.create({
+            name: body.name,
+            email: body.email,
+            googleId: body.googleId || null,
+        });
 
         await createSession(user.id);
 

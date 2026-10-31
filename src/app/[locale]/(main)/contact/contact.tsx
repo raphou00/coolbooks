@@ -6,7 +6,6 @@ import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 import { type ActionsState } from "@/lib/types";
 import { requestAPI } from "@/lib/utils";
-import Form from "@/components/ui/form";
 import FormInput from "@/components/ui/form-input";
 import FormButton from "@/components/ui/form-button";
 import FormReponse from "@/components/ui/form-response";
@@ -39,24 +38,30 @@ const Page: React.FC<ContactProps> = ({ senderEmail }) => {
     };
 
     return (
-        <div className="relative w-full">
-            <Form
-                title={t("title")}
-                logo={false}
-                className="md:px-5 lg:px-8 py-6 rounded-2xl max-w-lg"
-            >
-                <Link href={"mailto:" + senderEmail} className="link mx-auto">
-                    {senderEmail}
-                </Link>
-                <form
-                    onSubmit={handleSubmit(submit)}
-                    className="w-full space-y-2"
-                >
-                    <FormReponse
-                        success={state.success}
-                        message={state.message}
-                    />
+        <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
+            <div className="lg:col-span-5">
+                <h1 className="type-display-lg text-ink">{t("title")}</h1>
+                <p className="type-body-lg mt-4 text-body max-w-md">
+                    {t("description")}
+                </p>
+                <div className="mt-8 rounded-md border-2 border-navy bg-butter p-6 text-navy shadow-[0_4px_0_#23264a]">
+                    <p className="type-eyebrow text-[#4a4d6e]">{t("email")}</p>
+                    <Link
+                        href={"mailto:" + senderEmail}
+                        className="type-title-sm mt-2 block break-all"
+                    >
+                        {senderEmail}
+                    </Link>
+                </div>
+            </div>
 
+            <form
+                onSubmit={handleSubmit(submit)}
+                className="sticker flex flex-col gap-4 rounded-lg! p-5 sm:p-8 lg:col-span-7"
+            >
+                <FormReponse success={state.success} message={state.message} />
+
+                <div className="grid gap-4 sm:grid-cols-2">
                     <FormInput
                         type="text"
                         label={t("name")}
@@ -72,37 +77,39 @@ const Page: React.FC<ContactProps> = ({ senderEmail }) => {
                         error={state.errors?.email?.[0]}
                         {...register("email")}
                     />
+                </div>
 
-                    <FormInput
-                        type="text"
-                        label={t("subject")}
-                        placeholder={t("subject-placeholder")}
-                        error={state.errors?.subject?.[0]}
-                        {...register("subject")}
+                <FormInput
+                    type="text"
+                    label={t("subject")}
+                    placeholder={t("subject-placeholder")}
+                    error={state.errors?.subject?.[0]}
+                    {...register("subject")}
+                />
+
+                <label className="block">
+                    <span className="flex items-baseline justify-between gap-2">
+                        <span className="field-label">{t("message")}</span>
+                        {state.errors?.message?.[0] && (
+                            <span className="type-body text-error pb-1.5">
+                                {state.errors.message[0]}
+                            </span>
+                        )}
+                    </span>
+                    <textarea
+                        placeholder={t("message-placeholder")}
+                        className="field"
+                        rows={6}
+                        {...register("message")}
                     />
+                </label>
 
-                    <div className="w-full">
-                        <label className="w-full text-sm">
-                            <div className="w-full flex justify-between pb-1">
-                                <span className="label-text px-1 font-bold">
-                                    {t("message")}
-                                </span>
-                                <span className="label-text-alt text-error">
-                                    {state.errors?.message?.[0]}
-                                </span>
-                            </div>
-                            <textarea
-                                placeholder={t("message-placeholder")}
-                                className="textarea textarea-lg px-4 py-3 w-full rounded-2xl resize-none border-2 bg-base-100 transition placeholder:text-neutral-400 focus:border-primary/50 focus:outline-none focus:bg-base-300"
-                                rows={5}
-                                {...register("message")}
-                            />
-                        </label>
-                    </div>
-
-                    <FormButton title={t("submit")} loading={loading} />
-                </form>
-            </Form>
+                <FormButton
+                    title={t("submit")}
+                    loading={loading}
+                    className="sm:w-fit sm:self-start"
+                />
+            </form>
         </div>
     );
 };

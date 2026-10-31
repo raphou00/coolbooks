@@ -1,53 +1,75 @@
 import { type NextRequest, NextResponse } from "next/server";
-import { headers } from "next/headers";
 import type Stripe from "stripe";
 import env from "@/lib/env";
 import db from "@/lib/db";
-import { handleCheckout, stripe } from "@/lib/stripe";
+import { stripe } from "@/lib/stripe";
+import { startGeneration } from "@/lib/orders";
+
+/**
+ * Mark the order paid and start its book, exactly once. Stripe can deliver
+ * the same event several times; only the first PENDING → PAID flip wins.
+ */
+const markPaid = async (session: Stripe.Checkout.Session) => {
+    const orderId = session.metadata?.orderId;
+    if (!orderId) {
+        console.warn(`Checkout ${session.id} has no orderId`);
+        return;
+    }
+
+    const shipping = session.collected_information?.shipping_details;
+    const paymentIntentId =
+        typeof session.payment_intent === "string" ?
+            session.payment_intent
+        :   (session.payment_intent?.id ?? null);
+
+    const updated = await db.orders.transition(orderId, ["PENDING"], {
+        status: "PAID",
+        paidAt: new Date(),
+        stripeSessionId: session.id,
+        paymentIntentId,
+        shipping: shipping ? JSON.parse(JSON.stringify(shipping)) : null,
+    });
+    if (!updated) return; // already handled
+
+    try {
+        await startGeneration(orderId);
+    } catch (err) {
+        // The order stays PAID; the order sweeper will start it again.
+        console.error(`Could not start book for order ${orderId}`, err);
+    }
+};
 
 export const POST = async (req: NextRequest) => {
+    const payload = await req.text();
+    const signature = req.headers.get("stripe-signature") ?? "";
+
+    let event: Stripe.Event;
     try {
-        const payload = await req.text();
-        const header = await headers();
-        const signature = header.get("stripe-signature") as string;
+        event = await stripe.webhooks.constructEventAsync(
+            payload,
+            signature,
+            env.STRIPE_WEBHOOK_SECRET
+        );
+    } catch (err) {
+        console.error("Webhook signature verification failed.", err);
+        return NextResponse.json(
+            { error: "Webhook signature verification failed." },
+            { status: 400 }
+        );
+    }
 
-        let event: Stripe.Event;
-        try {
-            event = await stripe.webhooks.constructEventAsync(
-                payload,
-                signature,
-                env.STRIPE_WEBHOOK_SECRET
-            );
-        } catch (err) {
-            console.error("Webhook signature verification failed.", err);
-            return NextResponse.json(
-                { error: "Webhook signature verification failed." },
-                { status: 400 }
-            );
-        }
-
-        const eventData = event.data.object as Stripe.Checkout.Session;
-
-        const customerId = eventData.metadata?.userId;
-
-        let user = null;
-        if (customerId) {
-            user = await db.user.findUnique({
-                where: {
-                    id: customerId.toString(),
-                },
-            });
-        }
-
+    try {
         switch (event.type) {
             case "checkout.session.completed":
-                if (eventData.payment_status === "paid") {
-                    await handleCheckout(eventData, user);
+            case "checkout.session.async_payment_succeeded": {
+                const session = event.data.object;
+                if (session.payment_status === "paid") {
+                    await markPaid(session);
                 }
                 break;
-
+            }
             default:
-                console.log(`Unhandled event type ${event.type}`);
+                break;
         }
 
         return NextResponse.json({ received: true });
