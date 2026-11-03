@@ -59,7 +59,7 @@ export const requestAPI = async <T>(
 };
 
 export const formatAmountForDisplay = (amount: number): string => {
-    const numberFormat = new Intl.NumberFormat(["en-US"], {
+    const numberFormat = new Intl.NumberFormat(["de-CH"], {
         style: "currency",
         currency: currency,
         currencyDisplay: "symbol",

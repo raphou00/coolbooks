@@ -6,7 +6,6 @@ import { useTranslations } from "next-intl";
 import { requestAPI } from "@/lib/utils";
 import type { Session } from "@/lib/types";
 import Date from "@/components/ui/date";
-import Title from "@/components/ui/title";
 import { NoSessionResults } from "@/components/ui/no-results";
 
 type SessionsProps = {
@@ -37,37 +36,38 @@ const LogoutSessions: React.FC<SessionsProps> = ({
     return (
         <>
             <div className="">
-                <ul role="list" className="divide-y divide-neutral/20">
+                <ul
+                    role="list"
+                    className="divide-y divide-hairline rounded-md border border-hairline"
+                >
                     {sessions.length === 0 && <NoSessionResults />}
                     {sessions.map((session: Session) => (
                         <li
                             key={session.id}
-                            className="flex justify-between gap-x-2 py-5"
+                            className="flex items-start justify-between gap-4 p-4 md:p-5"
                         >
                             <div className="flex min-w-0 gap-x-4">
                                 <div className="min-w-0 flex-auto">
-                                    <p className="badge badge-ghost badge-primary badge-lg mb-1.5">
+                                    <p className="mb-2 inline-flex rounded-sm bg-surface-soft px-2 py-0.5 type-caption text-ink tabular-nums">
                                         {session.ip}
                                     </p>
-                                    <p className="text-base">
-                                        <span className="font-bold">
-                                            {session.browser}
-                                        </span>{" "}
-                                        - {session.os}
+                                    <p className="type-label text-ink">
+                                        <span>{session.browser}</span> -{" "}
+                                        {session.os}
                                     </p>
-                                    <p className="text-sm">
-                                        <span className="font-bold">
+                                    <p className="type-body mt-1 text-muted">
+                                        <span className="text-ink">
                                             {t("last-seen")}
                                         </span>{" "}
-                                        <span className="text-neutral">
+                                        <span>
                                             <Date date={session.updatedAt} />
                                         </span>
                                     </p>
-                                    <p className="text-sm">
-                                        <span className="font-bold">
+                                    <p className="type-body mt-1 text-muted">
+                                        <span className="text-ink">
                                             {t("expires")}
                                         </span>{" "}
-                                        <span className="text-neutral">
+                                        <span>
                                             <Date date={session.expiresAt} />
                                         </span>
                                     </p>
@@ -76,12 +76,12 @@ const LogoutSessions: React.FC<SessionsProps> = ({
                             <div className="flex shrink-0 items-start gap-4 ">
                                 <div className="flex items-center justify-center gap-2">
                                     {sessionId === session.id ?
-                                        <Title
-                                            text={t("current")}
-                                            className="text-xl text-primary"
-                                        />
+                                        <span className="inline-flex items-center gap-1.5 rounded-full bg-mint/40 px-3 py-1 type-caption text-navy dark:text-ink">
+                                            <span className="size-1.5 rounded-full bg-success-border" />
+                                            {t("current")}
+                                        </span>
                                     :   <button
-                                            className="btn btn-soft btn-error"
+                                            className="button-secondary button-sm text-error!"
                                             onClick={() =>
                                                 logoutSession(session.id)
                                             }

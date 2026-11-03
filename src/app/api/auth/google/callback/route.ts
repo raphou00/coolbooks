@@ -44,33 +44,18 @@ export async function GET(req: NextRequest) {
         const email = claimsParser.getString("email");
 
         if (user?.user && !user.user.googleId) {
-            await db.user.update({
-                where: {
-                    id: user.user.id,
-                },
-                data: {
-                    googleId,
-                },
-            });
+            await db.users.update(user.user.id, { googleId });
             return NextResponse.redirect(new URL("/account", env.APP_URL));
         }
 
-        const existingUser = await db.user.findFirst({
-            where: {
-                googleId,
-            },
-        });
+        const existingUser = await db.users.byGoogleId(googleId);
 
         if (existingUser) {
             await createSession(existingUser.id);
             return NextResponse.redirect(new URL("/", env.APP_URL));
         }
 
-        const existingEmail = await db.user.findFirst({
-            where: {
-                email,
-            },
-        });
+        const existingEmail = await db.users.byEmail(email);
 
         if (existingEmail) {
             return NextResponse.redirect(
@@ -81,13 +66,7 @@ export async function GET(req: NextRequest) {
             );
         }
 
-        const newUser = await db.user.create({
-            data: {
-                name,
-                email,
-                googleId,
-            },
-        });
+        const newUser = await db.users.create({ name, email, googleId });
 
         await createSession(newUser.id);
 

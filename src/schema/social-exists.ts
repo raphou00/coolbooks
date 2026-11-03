@@ -11,9 +11,7 @@ const socialExistsSchema = (t: T) =>
             .min(1, { message: t("messages.required") })
             .refine(
                 async (email) => {
-                    const user = await db.user.findUnique({
-                        where: { email },
-                    });
+                    const user = await db.users.byEmail(email);
                     return !user;
                 },
                 { message: t("messages.taken-email") }

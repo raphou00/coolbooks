@@ -42,12 +42,11 @@ export const POST = async (req: NextRequest) => {
 
         const hashedPassword = await hash(body.password, 10);
 
-        const user = await db.user.create({
-            data: {
-                name: body.name,
-                email: body.email,
-                password: hashedPassword,
-            },
+        const user = await db.users.create({
+            name: body.name,
+            email: body.email,
+            password: hashedPassword,
+            locale: req.cookies.get("NEXT_LOCALE")?.value,
         });
 
         await createSession(user.id);

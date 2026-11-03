@@ -44,8 +44,11 @@ const UpdateProfile: React.FC<UpdateProfileProps> = ({ email, name }) => {
 
     return (
         <>
-            <form onSubmit={handleSubmit(submit)} className="w-full space-y-2">
-                <div className="mb-2">
+            <form
+                onSubmit={handleSubmit(submit)}
+                className="flex w-full flex-col gap-4"
+            >
+                <div>
                     <FormReponse
                         message={state.message}
                         success={state.success}
@@ -68,11 +71,11 @@ const UpdateProfile: React.FC<UpdateProfileProps> = ({ email, name }) => {
                     {...register("email")}
                 />
 
-                <div className="flex w-full justify-end">
+                <div className="flex w-full">
                     <FormButton
                         title={t("submit")}
                         loading={loading}
-                        className="w-min"
+                        className="w-full sm:w-auto"
                     />
                 </div>
             </form>

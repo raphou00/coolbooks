@@ -1,308 +1,452 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
-const { Pool } = require("pg");
+const { DynamoDBClient } = require("@aws-sdk/client-dynamodb");
+const {
+    DynamoDBDocumentClient,
+    GetCommand,
+    PutCommand,
+    UpdateCommand,
+    QueryCommand,
+    BatchWriteCommand,
+} = require("@aws-sdk/lib-dynamodb");
 const { z } = require("zod");
 const { OpenAI } = require("openai");
 const { zodTextFormat } = require("openai/helpers/zod");
 
-const { BUCKET_NAME, DATABASE_URL, OPENROUTER_API_KEY } = process.env;
+const {
+    BUCKET_NAME,
+    DATA_TABLE,
+    OPENROUTER_API_KEY,
+    CALLBACK_SECRET,
+    DYNAMODB_ENDPOINT,
+} = process.env;
+const AWS_REGION = process.env.AWS_REGION || "us-east-1";
 
 const PLANNER_MODEL = "openai/gpt-5.2";
 const IMAGE_MODEL = "google/gemini-2.5-flash-image-preview";
+/** Pages drawn in parallel: enough to be fast, few enough to avoid rate limits. */
+const IMAGE_CONCURRENCY = 4;
+/** Books bought as a guest are attached to this account (unchanged behaviour). */
+const GUEST_USER_ID = "64488f3a-0beb-40cc-882b-c458d0725a7e";
 
-const pool = new Pool({
-    connectionString: DATABASE_URL,
-    max: 1,
-})
+const LANGUAGES = {
+    de: "German, using Swiss spelling (always 'ss', never 'ß')",
+    fr: "French",
+    it: "Italian",
+    en: "English",
+};
 
-const openai = new OpenAI({
-    baseURL: "https://openrouter.ai/api/v1",
-    apiKey: OPENROUTER_API_KEY,
-    defaultHeaders: {
-        "HTTP-Referer": "https://coolbooks.app",
-        "X-Title": "Cool Books",
-    }
-});
-
-const s3 = new S3Client();
-
-const colors = ["#FFF5F5", "#FFF0F5", "#F0F8FF", "#F5FFFA",
-    "#FFFACD", "#FFF8DC", "#F0FFF0", "#F8F8FF", "#FDF5E6",
-    "#E6E6FA", "#F0E68C", "#FFEFD5", "#FFE4E1", "#E0FFFF",
-    "#FFF5EE", "#F0FFFF", "#FFFAF0", "#F5F0FF", "#FFF0F0",
-    "#F0FFF8", "#FFFFF0", "#F8FFF8", "#FFF8F0", "#FAF0E6"
+const PAGE_COLORS = [
+    "#FFF5F5", "#FFF0F5", "#F0F8FF", "#F5FFFA", "#FFFACD", "#FFF8DC",
+    "#F0FFF0", "#F8F8FF", "#FDF5E6", "#E6E6FA", "#F0E68C", "#FFEFD5",
+    "#FFE4E1", "#E0FFFF", "#FFF5EE", "#F0FFFF", "#FFFAF0", "#F5F0FF",
 ];
 
-const randomHex = () =>
-    colors[Math.floor(Math.random() * colors.length)];
+/* ---------- data table keys (same as src/lib/db/keys.ts) ---------- */
 
-const getS3 = (key) => {
-    return `https://${BUCKET_NAME}.s3.us-east-1.amazonaws.com/${key}`;
+const keys = {
+    book: (id) => ({ pk: `BOOK#${id}`, sk: "BOOK" }),
+    page: (bookId, pageId) => ({ pk: `BOOK#${bookId}`, sk: `PAGE#${pageId}` }),
+    preview: (id) => ({ pk: `PREVIEW#${id}`, sk: "PREVIEW" }),
+    order: (id) => ({ pk: `ORDER#${id}`, sk: "ORDER" }),
+    userIndex: (userId) => `USER#${userId}`,
+    orderStatusIndex: (status) => `ORDERS#${status}`,
 };
 
-const promptPlan = (topic) => `
-Create a kid book using the following details:
+/* ---------- dependencies (overridable in tests) ---------- */
 
--  Prompt/Topic: ${topic.prompt}
--  Main Character: ${topic.childName}
--  Gender: ${topic.gender}
--  Age: ${topic.age}
--  Hair Color: ${topic.hairColor}
--  Eye Color: ${topic.eyeColor}
--  Skin Color: ${topic.skinTone}
--  Art Style for image prompt: ${topic.artStyle}
--  Theme: ${topic.themes}
+const deps = {
+    ddb: DynamoDBDocumentClient.from(
+        new DynamoDBClient(
+            DYNAMODB_ENDPOINT ? { endpoint: DYNAMODB_ENDPOINT } : {}
+        ),
+        { marshallOptions: { removeUndefinedValues: true } }
+    ),
+    openai: new OpenAI({
+        baseURL: "https://openrouter.ai/api/v1",
+        apiKey: OPENROUTER_API_KEY,
+        defaultHeaders: {
+            "HTTP-Referer": "https://bibliboo.ch",
+            "X-Title": "Bibliboo",
+        },
+    }),
+    s3: new S3Client(),
+    fetch: (...args) => fetch(...args),
+    uuid: () => crypto.randomUUID(),
+};
+
+const now = () => new Date().toISOString();
+
+const getItem = async (Key) =>
+    (await deps.ddb.send(new GetCommand({ TableName: DATA_TABLE, Key }))).Item ??
+    null;
+
+const putItem = (Item) =>
+    deps.ddb.send(new PutCommand({ TableName: DATA_TABLE, Item }));
+
+/** SET the given fields on an item. */
+const setFields = (Key, fields, extra = {}) => {
+    const names = {};
+    const values = {};
+    const sets = Object.entries(fields).map(([k, v], i) => {
+        names[`#f${i}`] = k;
+        values[`:v${i}`] = v;
+        return `#f${i} = :v${i}`;
+    });
+    return deps.ddb.send(
+        new UpdateCommand({
+            TableName: DATA_TABLE,
+            Key,
+            UpdateExpression: `SET ${sets.join(", ")}`,
+            ExpressionAttributeNames: { ...names, ...(extra.names || {}) },
+            ExpressionAttributeValues: { ...values, ...(extra.values || {}) },
+            ...(extra.condition ? { ConditionExpression: extra.condition } : {}),
+        })
+    );
+};
+
+/** Update an order, keeping its status index (gsi2) in sync. */
+const updateOrder = (orderId, fields, extra) => {
+    const ts = now();
+    return setFields(
+        keys.order(orderId),
+        {
+            ...fields,
+            ...(fields.status ?
+                { gsi2pk: keys.orderStatusIndex(fields.status) }
+            :   {}),
+            gsi2sk: ts,
+            updatedAt: ts,
+        },
+        extra
+    );
+};
+
+/** Delete a book and all its pages (same partition). */
+const deleteBook = async (bookId) => {
+    const res = await deps.ddb.send(
+        new QueryCommand({
+            TableName: DATA_TABLE,
+            KeyConditionExpression: "pk = :b",
+            ExpressionAttributeValues: { ":b": keys.book(bookId).pk },
+            ProjectionExpression: "pk, sk",
+        })
+    );
+    const items = res.Items ?? [];
+    for (let i = 0; i < items.length; i += 25) {
+        await deps.ddb.send(
+            new BatchWriteCommand({
+                RequestItems: {
+                    [DATA_TABLE]: items.slice(i, i + 25).map((Key) => ({
+                        DeleteRequest: { Key },
+                    })),
+                },
+            })
+        );
+    }
+};
+
+const s3Url = (key) =>
+    `https://${BUCKET_NAME}.s3.${AWS_REGION}.amazonaws.com/${key}`;
+
+const pickColor = () =>
+    PAGE_COLORS[Math.floor(Math.random() * PAGE_COLORS.length)];
+
+/** Run `fn` over `items` with at most `limit` in flight. */
+const mapLimit = async (items, limit, fn) => {
+    const results = new Array(items.length);
+    let next = 0;
+    const worker = async () => {
+        while (next < items.length) {
+            const i = next++;
+            results[i] = await fn(items[i], i);
+        }
+    };
+    await Promise.all(
+        Array.from({ length: Math.min(limit, items.length) }, worker)
+    );
+    return results;
+};
+
+/* ---------- prompts ---------- */
+
+const planSchema = z.object({
+    title: z.string(),
+    character: z.string(),
+    cover: z.string(),
+    pages: z.array(z.object({ text: z.string(), image: z.string() })),
+});
+
+const promptPlan = (topic) => {
+    const language = LANGUAGES[topic.locale] || LANGUAGES.en;
+    return `
+Create a personalised children's picture book.
+
+- Story idea: ${topic.prompt}
+- Main character: ${topic.childName}
+- Gender: ${topic.gender}
+- Age: ${topic.age}
+- Hair colour: ${topic.hairColor}
+- Eye colour: ${topic.eyeColor}
+- Skin tone: ${topic.skinTone}
+- Art style: ${topic.artStyle}
 
 Requirements:
-* The title must be short and concise.
-* Each page's text should contain 3~4 sentences
-* Describe the cover and each page's image in a detailed prompt, matching the specified art style, character appearance, theme.
-* Be very precise with the image prompts to ensure the visuals match the description.
-* Write the text in a kid-friendly style corresponding to the target age group.
-* Everything MUST be in English.
-* The cover prompt MUST include the description of the kid.
-
-Output:
-1. Title
-2. Page-by-page story text (12 pages)
-3. For each page (including the cover), a detailed image prompt reflecting all the above details.
-4. Output MUST be in JSON format.
+* "title": short (max 6 words), written in ${language}.
+* "pages": exactly 12 pages. Each "text" has 3 to 4 sentences written in ${language}, in a warm, simple style suited to a child aged ${topic.age}.
+* "character": ONE fixed visual description of ${topic.childName}, in English: face, hair, eyes, skin, and one specific outfit with colours. It is reused verbatim for every illustration, so be concrete.
+* "cover" and each page "image": an English prompt describing only the scene (setting, action, mood, composition). Do not describe the main character's appearance again.
+* Keep everything gentle, positive and age-appropriate: no violence, no frightening scenes.
 `;
-
-const promptImage = (topic, artStyle, title) => `
-generate an image of "${topic}, ${artStyle} style",
-use the reference image as a base for character, background and style design
-${title ? `include the title: ${title}` : "no text should be displayed on the image"}
-`;
-
-const putObject = async (file, key) => {
-    const body =
-        file instanceof File ? Buffer.from(await file.arrayBuffer()) : file;
-    const params = {
-        Bucket: BUCKET_NAME,
-        Key: key,
-        Body: body,
-    };
-
-    try {
-        const res = await s3.send(new PutObjectCommand(params));
-
-        return res;
-    } catch (err) {
-        console.error("Error", err);
-    }
 };
+
+const promptImage = ({ character, scene, artStyle, title }) => `
+Children's picture book illustration in ${artStyle} style.
+Main character (keep exactly the same in every picture): ${character}
+Scene: ${scene}
+${
+    title ?
+        `This is the book cover. Include the title "${title}" in large, clear, child-friendly lettering.`
+    :   "Use the reference image for the character's look, the colour palette and the art style. Do not draw any text."
+}
+`;
+
+/* ---------- generation ---------- */
 
 const createPlan = async (topic) => {
-    const result = await openai.responses.parse({
+    const result = await deps.openai.responses.parse({
         model: PLANNER_MODEL,
         input: [{ role: "developer", content: promptPlan(topic) }],
-        text: {
-            format: zodTextFormat(
-                z.object({
-                    title: z.string(),
-                    cover: z.string(),
-                    pages: z.array(
-                        z.object({
-                            text: z.string(),
-                            image: z.string(),
-                        })
-                    ),
-                }),
-                "event"
-            ),
-        },
+        text: { format: zodTextFormat(planSchema, "book") },
     });
-
-    return result.output_parsed;
+    const plan = result.output_parsed;
+    if (!plan || plan.pages.length === 0) throw new Error("Empty story plan");
+    return plan;
 };
 
-const createImage = async (
-    topic,
-    artStyle,
-    key,
-    base,
-    title
-) => {
-    const content = [
-        {
-            type: "text",
-            text: promptImage(topic, artStyle, title),
-        },
-    ];
+const putObject = async (body, key, contentType = "image/png") => {
+    await deps.s3.send(
+        new PutObjectCommand({
+            Bucket: BUCKET_NAME,
+            Key: key,
+            Body: body,
+            ContentType: contentType,
+        })
+    );
+};
 
-    if (base) {
-        content.push({
-            type: "image_url",
-            image_url: {
-                url: base,
-            },
-        });
+const createImage = async ({ prompt, key, reference }) => {
+    const content = [{ type: "text", text: prompt }];
+    if (reference) {
+        content.push({ type: "image_url", image_url: { url: reference } });
     }
 
-    const completion = (await openai.chat.completions.create({
+    const completion = await deps.openai.chat.completions.create({
         model: IMAGE_MODEL,
-        messages: [
-            {
-                role: "user",
-                content: content,
-            },
-        ],
-    }));
+        messages: [{ role: "user", content }],
+    });
 
-    const image = completion.choices[0].message.images[0].image_url.url;
+    const image = completion.choices?.[0]?.message?.images?.[0]?.image_url?.url;
+    if (!image) throw new Error(`No image returned for ${key}`);
 
-    const base64Data = image.replace(/^data:image\/\w+;base64,/, "");
-    const buffer = Buffer.from(base64Data, "base64");
-
+    const buffer = Buffer.from(
+        image.replace(/^data:image\/\w+;base64,/, ""),
+        "base64"
+    );
     await putObject(buffer, key);
-
     return key;
 };
 
-const createBook = async (bookData) => {
-    const client = await pool.connect();
+/* ---------- modes ---------- */
+
+/** Free cover preview, before payment. Idempotent per preview. */
+const runPreview = async ({ previewId }) => {
+    const preview = await getItem(keys.preview(previewId));
+    if (!preview) throw new Error(`Preview ${previewId} not found`);
+    if (preview.cover && preview.title) {
+        return { title: preview.title, cover: preview.cover };
+    }
+
+    const topic = preview.topic;
+    const plan = await createPlan(topic);
+    const cover = `previews/${previewId}/${deps.uuid()}.png`;
+
+    await createImage({
+        prompt: promptImage({
+            character: plan.character,
+            scene: plan.cover,
+            artStyle: topic.artStyle,
+            title: plan.title,
+        }),
+        key: cover,
+    });
+
+    await setFields(keys.preview(previewId), {
+        plan,
+        title: plan.title,
+        cover,
+    });
+
+    return { title: plan.title, cover };
+};
+
+/** The paid book, built from the approved preview. */
+const runBook = async ({ orderId, appUrl }) => {
+    const order = await getItem(keys.order(orderId));
+    if (!order) throw new Error(`Order ${orderId} not found`);
+    if (order.status !== "PAID") return { skipped: order.status };
+
+    // Claim the order: only one worker may move it from PAID to GENERATING.
     try {
-        const query = `
-            INSERT INTO "Book" (id, title, cover, age, "artStyle", "userId", "createdAt", "updatedAt")
-            VALUES ($1, $2, $3, $4, $5, $6, NOW(), NOW())
-            RETURNING *
-        `;
+        await updateOrder(
+            orderId,
+            {
+                status: "GENERATING",
+                attempts: (order.attempts || 0) + 1,
+                error: null,
+            },
+            {
+                condition: "#st = :paid",
+                names: { "#st": "status" },
+                values: { ":paid": "PAID" },
+            }
+        );
+    } catch (err) {
+        if (err?.name === "ConditionalCheckFailedException") {
+            return { skipped: "claimed" };
+        }
+        throw err;
+    }
 
-        const values = [
-            bookData.id,
-            bookData.title,
-            bookData.cover,
-            bookData.age,
-            bookData.artStyle,
-            bookData.userId || "64488f3a-0beb-40cc-882b-c458d0725a7e"
-        ];
+    try {
+        const preview = await getItem(keys.preview(order.previewId));
+        if (!preview?.plan || !preview.cover) {
+            throw new Error("Preview incomplete or expired");
+        }
+        const { topic, plan } = preview;
 
-        const result = await client.query(query, values);
-        return result.rows[0];
-    } finally {
-        client.release();
+        // A retry starts from a clean book.
+        if (order.bookId) {
+            await updateOrder(orderId, { bookId: null });
+            await deleteBook(order.bookId);
+        }
+
+        const bookId = deps.uuid();
+        const userId = order.userId || GUEST_USER_ID;
+        const createdAt = now();
+        await putItem({
+            ...keys.book(bookId),
+            type: "Book",
+            gsi1pk: keys.userIndex(userId),
+            gsi1sk: `BOOK#${createdAt}`,
+            id: bookId,
+            title: preview.title,
+            cover: preview.cover,
+            age: topic.age,
+            artStyle: topic.artStyle,
+            dedication: order.dedication || null,
+            generating: true,
+            redraws: 0,
+            userId,
+            orderId,
+            // Kept on the book so pages can be redrawn after the preview expires.
+            plan,
+            createdAt,
+            updatedAt: createdAt,
+        });
+        await updateOrder(orderId, { bookId });
+
+        await mapLimit(plan.pages, IMAGE_CONCURRENCY, async (page, i) => {
+            const pageId = deps.uuid();
+            const key = `${bookId}/${deps.uuid()}.png`;
+            await createImage({
+                prompt: promptImage({
+                    character: plan.character,
+                    scene: page.image,
+                    artStyle: topic.artStyle,
+                }),
+                key,
+                reference: s3Url(preview.cover),
+            });
+            await putItem({
+                ...keys.page(bookId, pageId),
+                type: "Page",
+                id: pageId,
+                bookId,
+                number: i,
+                text: page.text,
+                image: key,
+                color: pickColor(),
+            });
+        });
+
+        await setFields(keys.book(bookId), {
+            generating: false,
+            updatedAt: now(),
+        });
+
+        // Hand over to the app: it builds the PDF and emails the family.
+        const res = await deps.fetch(appUrl, {
+            method: "POST",
+            headers: {
+                "content-type": "application/json",
+                "x-callback-secret": CALLBACK_SECRET,
+            },
+            body: JSON.stringify({ orderId }),
+        });
+        if (!res.ok) throw new Error(`Delivery callback failed: ${res.status}`);
+
+        return { bookId };
+    } catch (err) {
+        await updateOrder(orderId, {
+            status: "FAILED",
+            error: String(err?.message || err).slice(0, 1000),
+        });
+        throw err;
     }
 };
 
-const createPage = async (pageData) => {
-    const client = await pool.connect();
-    try {
-        const query = `
-            INSERT INTO "Page" ("id", "bookId", color, text, image, number, "createdAt", "updatedAt")
-            VALUES ($1, $2, $3, $4, $5, $6, NOW(), NOW())
-            RETURNING *
-        `;
-
-        const values = [
-            crypto.randomUUID(),
-            pageData.bookId,
-            pageData.color,
-            pageData.text,
-            pageData.image,
-            pageData.number
-        ];
-
-        const result = await client.query(query, values);
-        return result.rows[0];
-    } finally {
-        client.release();
+/** Free redraw of one page with the same character and scene. */
+const runRedraw = async ({ bookId, pageId }) => {
+    const [book, page] = await Promise.all([
+        getItem(keys.book(bookId)),
+        getItem(keys.page(bookId, pageId)),
+    ]);
+    if (!book?.plan || !page) {
+        throw new Error(`Page ${pageId} cannot be redrawn`);
     }
+
+    const scene = book.plan.pages[page.number]?.image;
+    if (!scene) throw new Error(`No scene for page ${pageId}`);
+
+    const key = `${bookId}/${deps.uuid()}.png`;
+    await createImage({
+        prompt: promptImage({
+            character: book.plan.character,
+            scene,
+            artStyle: book.artStyle,
+        }),
+        key,
+        reference: s3Url(book.cover),
+    });
+
+    await setFields(keys.page(bookId, pageId), { image: key });
+    return { image: key };
 };
-
-const updateBookGenerating = async (bookId, generating) => {
-    const client = await pool.connect();
-    try {
-        const query = `
-            UPDATE "Book"
-            SET generating = $1, "updatedAt" = NOW()
-            WHERE id = $2
-            RETURNING *
-        `;
-
-        const values = [
-            generating,
-            bookId
-        ];
-
-        const result = await client.query(query, values);
-        return result.rows[0];
-    } finally {
-        client.release();
-    }
-};
-
 
 const lambda_handler = async (event) => {
-    const { appUrl, userId, topic } = event;
-
-    const bookId = crypto.randomUUID();
-    const plan = await createPlan(topic);
-
-    const coverKey = bookId + "/" + crypto.randomUUID() + ".png";
-
-    await createBook({
-        id: bookId,
-        title: plan.title,
-        cover: coverKey,
-        public: topic.public,
-        age: topic.age,
-        artStyle: topic.artStyle,
-        themes: topic.themes,
-        userId: userId,
-    });
-
-    await createImage(
-        plan.cover,
-        topic.artStyle,
-        coverKey,
-        null,
-        plan.title
-    );
-
-    const pages = plan.pages.map((page, i) => {
-        const key = bookId + "/" + crypto.randomUUID() + ".png";
-        return {
-            color: randomHex(),
-            text: page.text,
-            image: key,
-            number: i
-        };
-    });
-
-    const pageJobs = pages.map((page, i) => {
-        return createImage(plan.pages[i].image, topic.artStyle, page.image, getS3(coverKey))
-            .then(() => createPage({
-                bookId,
-                color: page.color,
-                text: page.text,
-                image: page.image,
-                number: page.number
-            }));
-    });
-
-    await Promise.all([...pageJobs]);
-
-    await updateBookGenerating(bookId, false);
-
-    const body = JSON.stringify({
-        bookId,
-        locale: topic.locale,
-        email: topic.email,
-        title: plan.title,
-        cover: coverKey,
-        pages: pages
-    });
-
-    await fetch(appUrl, {
-        method: "POST",
-        body,
-    });
-
-    return {
-        statusCode: 201,
-        body,
-    };
+    switch (event.mode) {
+        case "preview":
+            return runPreview(event);
+        case "redraw":
+            return runRedraw(event);
+        case "book":
+            return runBook(event);
+        default:
+            throw new Error(`Unknown mode: ${event.mode}`);
+    }
 };
 
 exports.lambda_handler = lambda_handler;
+exports.__deps = deps;
+exports.__internals = { promptPlan, promptImage, mapLimit, keys };

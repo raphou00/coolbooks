@@ -16,7 +16,7 @@ const Providers: React.FC<React.PropsWithChildren> = ({ children }) => {
                 toastOptions={{
                     duration: 5000,
                     className:
-                        "!bg-base-200 !text-base-content border border-neutral/20 !rounded-field shadow-lg !text-lg !px-6 !py-2",
+                        "!bg-canvas !text-ink !border !border-hairline !rounded-md !shadow-[0_8px_24px_rgb(24_29_38/0.10)] !text-sm !px-4 !py-3",
                 }}
             />
             {children}

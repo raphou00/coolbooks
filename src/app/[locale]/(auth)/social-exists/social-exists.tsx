@@ -49,10 +49,10 @@ const ResetPassword: React.FC = () => {
 
     return (
         <Form title={t("title")} description={t("description")}>
-            <p className="p-0.5 text-center text-sm text-neutral">
+            <p className="type-body text-muted mb-6">
                 {t.rich("info", {
                     login: (chunk) => (
-                        <Link href="/login" className="link link-primary">
+                        <Link href="/login" className="text-link">
                             {chunk}
                         </Link>
                     ),
@@ -60,7 +60,7 @@ const ResetPassword: React.FC = () => {
             </p>
             <form
                 onSubmit={handleSubmit(submit)}
-                className="w-full max-w-md space-y-2"
+                className="flex w-full flex-col gap-4"
             >
                 <FormReponse success={state.success} message={state.message} />
 

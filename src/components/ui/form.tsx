@@ -1,13 +1,10 @@
-"use client";
-
-import Title from "@/components/ui/title";
 import { cn } from "@/lib/utils";
-import Logo from "./logo";
 
 type FormProps = {
     title?: string;
     description?: string;
     className?: string;
+    /** Kept for API compatibility; the wordmark now lives in the page chrome. */
     logo?: boolean;
     children: React.ReactNode;
 };
@@ -17,27 +14,20 @@ const Form: React.FC<FormProps> = ({
     description,
     className,
     children,
-    logo = true,
 }) => {
     return (
-        <div className="w-full flex items-center justify-center">
-            <div className={cn("relative w-full max-w-md", className)}>
-                <div className="flex flex-col items-center gap-y-2">
-                    {logo && <Logo className="w-auto h-16" />}
-                    <div className="flex">
-                        {title && (
-                            <Title
-                                text={title}
-                                className="text-center text-4xl md:text-5xl lg:text-6xl font-bold w-fit"
-                            />
-                        )}
-                    </div>
-                    <p className="p-0.5">{description}</p>
-                </div>
-                <div className="flex w-full items-center justify-center">
-                    <div className="flex flex-col w-full">{children}</div>
-                </div>
+        <div className={cn("w-full max-w-sm", className)}>
+            <div className="mb-8">
+                {title && (
+                    <h1 className="type-display-md text-ink text-balance">
+                        {title}
+                    </h1>
+                )}
+                {description && (
+                    <p className="type-body-lg mt-3 text-body">{description}</p>
+                )}
             </div>
+            <div className="flex w-full flex-col">{children}</div>
         </div>
     );
 };

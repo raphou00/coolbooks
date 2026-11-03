@@ -2,8 +2,8 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
     return {
-        name: "Coolbooks",
-        short_name: "Coolbooks",
+        name: "Bibliboo",
+        short_name: "Bibliboo",
         icons: [
             {
                 src: "/web-app-manifest-192x192.png",
@@ -18,8 +18,8 @@ export default function manifest(): MetadataRoute.Manifest {
                 purpose: "maskable",
             },
         ],
-        theme_color: "#ffffff",
-        background_color: "#ffffff",
+        theme_color: "#fff8ea",
+        background_color: "#fff8ea",
         display: "standalone",
     };
 }

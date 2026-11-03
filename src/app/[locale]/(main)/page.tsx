@@ -1,27 +1,19 @@
 import db from "@/lib/db";
 import { expo } from "@/config/book";
-import Main from "@/components/layout/main";
 import Home from "./home";
 
 const Page = async () => {
-    const books = await db.book.findMany({
-        where: {
-            id: {
-                in: expo,
-            },
-        },
-        select: {
-            id: true,
-            title: true,
-            cover: true,
-            artStyle: true,
-        },
-    });
+    const books = (await db.books.byIds([...expo])).map((b) => ({
+        id: b.id,
+        title: b.title,
+        cover: b.cover,
+        artStyle: b.artStyle,
+    }));
 
     return (
-        <Main>
+        <main>
             <Home books={books} />
-        </Main>
+        </main>
     );
 };
 

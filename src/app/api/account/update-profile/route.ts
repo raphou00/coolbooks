@@ -49,14 +49,9 @@ export const POST = async (req: NextRequest) => {
             });
         }
 
-        await db.user.update({
-            where: {
-                id: user.user.id,
-            },
-            data: {
-                name: body.name,
-                email: body.email,
-            },
+        await db.users.update(user.user.id, {
+            name: body.name,
+            email: body.email,
         });
 
         return NextResponse.json({

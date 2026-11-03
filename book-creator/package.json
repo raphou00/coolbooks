@@ -10,11 +10,10 @@
     "license": "ISC",
     "description": "",
     "dependencies": {
-        "@aws-sdk/client-s3": "^3.919.0",
-        "ai": "^5.0.82",
-        "openai": "^6.7.0",
-        "pdfkit": "^0.17.2",
-        "pg": "^8.16.3",
-        "zod": "^4.1.12"
+        "@aws-sdk/client-dynamodb": "^3.958.0",
+        "@aws-sdk/client-s3": "^3.958.0",
+        "@aws-sdk/lib-dynamodb": "^3.958.0",
+        "openai": "^6.15.0",
+        "zod": "^4.3.4"
     }
 }

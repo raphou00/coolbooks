@@ -1,21 +1,20 @@
-"use client";
-
 import { cn } from "@/lib/utils";
-import { Lexend as Font } from "next/font/google";
 
 type TitleProps = {
     text: string;
     className?: string;
+    as?: "h1" | "h2" | "h3" | "h4";
 };
 
-const font = Font({
-    subsets: ["latin"],
-    weight: "800",
-});
-
-const Title: React.FC<TitleProps> = ({ text, className }: TitleProps) => {
+/**
+ * Editorial headline. Weight stays at 400 — emphasis comes from size and
+ * ink contrast, never from bold.
+ */
+const Title: React.FC<TitleProps> = ({ text, className, as: Tag = "h1" }) => {
     return (
-        <h1 className={cn("text-2xl", className, font.className)}>{text}</h1>
+        <Tag className={cn("type-title-lg text-ink text-balance", className)}>
+            {text}
+        </Tag>
     );
 };
 

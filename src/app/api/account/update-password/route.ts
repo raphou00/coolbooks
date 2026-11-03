@@ -47,11 +47,7 @@ export const POST = async (req: NextRequest) => {
             });
         }
 
-        const userdb = await db.user.findUnique({
-            where: {
-                id: user.user.id,
-            },
-        });
+        const userdb = await db.users.get(user.user.id);
 
         if (!userdb?.password) {
             return NextResponse.json({
@@ -70,13 +66,8 @@ export const POST = async (req: NextRequest) => {
             });
         }
 
-        await db.user.updateMany({
-            where: {
-                id: user.user.id,
-            },
-            data: {
-                password: await hash(body.newPassword, 10),
-            },
+        await db.users.update(user.user.id, {
+            password: await hash(body.newPassword, 10),
         });
 
         return NextResponse.json({

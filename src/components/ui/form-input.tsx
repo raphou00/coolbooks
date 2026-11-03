@@ -41,54 +41,57 @@ const FormInput: React.FC<FormInputProps> = forwardRef<
         const [passwordVisible, setPasswordVisible] = useState(false);
 
         return (
-            <div className="w-full">
-                <label className="w-full text-sm">
-                    {label && (
-                        <div className="w-full flex justify-between pb-1">
-                            <span className="label-text px-1 font-bold">
-                                {label}
-                            </span>
-                            <span className="label-text-alt text-error">
+            <label className="block w-full">
+                {(label || error) && (
+                    <span className="flex items-baseline justify-between gap-2">
+                        {label && <span className="field-label">{label}</span>}
+                        {error && (
+                            <span className="type-body text-error pb-1.5">
                                 {error}
                             </span>
-                        </div>
-                    )}
-                    <div className="relative w-full">
-                        <input
-                            ref={ref}
-                            id={id}
-                            name={name}
-                            type={passwordVisible ? "text" : type}
-                            placeholder={placeholder}
-                            defaultValue={defaultValue}
-                            value={value}
-                            onChange={onChange}
-                            onKeyDown={onKeyDown}
-                            className={cn(
-                                "input w-full px-3 border-2 bg-base-100 tracking-wide transition placeholder:text-neutral-400 focus:border-primary/80 focus:outline-none focus:bg-base-300",
-                                className
-                            )}
-                            spellCheck={false}
-                            autoComplete="off"
-                            autoCapitalize="off"
-                            autoCorrect="off"
-                        />
-                        {type === "password" && (
-                            <button
-                                type="button"
-                                className="absolute right-2 top-1/2 mx-1.5 -translate-y-1/2 z-50 cursor-pointer"
-                                onClick={() =>
-                                    setPasswordVisible((prev) => !prev)
-                                }
-                            >
-                                {passwordVisible ?
-                                    <EyeOff />
-                                :   <Eye />}
-                            </button>
                         )}
-                    </div>
-                </label>
-            </div>
+                    </span>
+                )}
+                <span className="relative block w-full">
+                    <input
+                        ref={ref}
+                        id={id}
+                        name={name}
+                        type={passwordVisible ? "text" : type}
+                        placeholder={placeholder}
+                        defaultValue={defaultValue}
+                        value={value}
+                        onChange={onChange}
+                        onKeyDown={onKeyDown}
+                        aria-invalid={!!error}
+                        className={cn(
+                            "field",
+                            type === "password" && "pr-12",
+                            className
+                        )}
+                        spellCheck={false}
+                        autoComplete="off"
+                        autoCapitalize="off"
+                        autoCorrect="off"
+                    />
+                    {type === "password" && (
+                        <button
+                            type="button"
+                            className="absolute right-1 top-1/2 flex size-10 -translate-y-1/2 items-center justify-center text-muted"
+                            onClick={() => setPasswordVisible((prev) => !prev)}
+                            aria-label={
+                                passwordVisible ? "Hide password" : (
+                                    "Show password"
+                                )
+                            }
+                        >
+                            {passwordVisible ?
+                                <EyeOff className="size-4" />
+                            :   <Eye className="size-4" />}
+                        </button>
+                    )}
+                </span>
+            </label>
         );
     }
 );

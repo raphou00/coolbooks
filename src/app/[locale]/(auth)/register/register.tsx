@@ -52,26 +52,28 @@ const Register: React.FC = () => {
         >
             <form
                 onSubmit={handleSubmit(submit)}
-                className="w-full max-w-md space-y-2"
+                className="flex w-full flex-col gap-4"
             >
-                <div className="flex flex-col justify-between gap-2 pt-2">
-                    <button
-                        type="button"
-                        onClick={google}
-                        className="btn w-full"
-                    >
-                        <Image
-                            src="/images/icons/google.png"
-                            alt="Google"
-                            className="size-6"
-                            width={100}
-                            height={100}
-                        />
-                        Google
-                    </button>
-                </div>
+                <button
+                    type="button"
+                    onClick={google}
+                    className="button-secondary w-full"
+                >
+                    <Image
+                        src="/images/icons/google.png"
+                        alt=""
+                        className="size-5"
+                        width={100}
+                        height={100}
+                    />
+                    Google
+                </button>
 
-                <div className="divider px-4 uppercase">{t("or")}</div>
+                <div className="flex items-center gap-4 py-2 type-eyebrow text-muted">
+                    <span className="h-px flex-1 bg-hairline" />
+                    {t("or")}
+                    <span className="h-px flex-1 bg-hairline" />
+                </div>
 
                 <FormReponse success={state.success} message={state.message} />
 
@@ -101,26 +103,26 @@ const Register: React.FC = () => {
 
                 <FormButton title={t("submit")} loading={loading} />
 
-                <div className="label w-full justify-between text-sm">
-                    <span className="floating-label">
+                <div className="flex w-full flex-wrap justify-between gap-2 type-body">
+                    <span>
                         <Link
                             href={`/login?redirect=${redirect}`}
-                            className="link link-neutral"
+                            className="text-link"
                         >
                             {t("login")}
                         </Link>
                     </span>
                 </div>
 
-                <p className="mt-5 text-center text-xs">
+                <p className="type-body text-muted">
                     {t.rich("legal", {
                         terms: (chunk) => (
-                            <Link href="/terms" className="link link-neutral">
+                            <Link href="/terms" className="text-link">
                                 {chunk}
                             </Link>
                         ),
                         privacy: (chunk) => (
-                            <Link href="/privacy" className="link link-neutral">
+                            <Link href="/privacy" className="text-link">
                                 {chunk}
                             </Link>
                         ),

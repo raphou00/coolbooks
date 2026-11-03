@@ -1,37 +1,27 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { DynaPuff as Font } from "next/font/google";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import {
     AlertCircle,
+    ArrowRight,
     BookOpen,
-    BookOpenText,
+    FileText,
     Heart,
-    Rocket,
+    Palette,
     Sparkles,
     Star,
-    ThumbsUp,
-    Undo,
     Users,
     Wand2,
-    Zap,
 } from "lucide-react";
-import { price } from "@/config/stripe";
+import { compareAtPrice, price } from "@/config/stripe";
 import { cn, formatAmountForDisplay } from "@/lib/utils";
-import Title from "@/components/ui/title";
 import NewBook, { artStyleImages } from "@/components/ui/new";
 import NextImage from "@/components/ui/image";
 import Modal from "@/components/ui/modal";
-import { motion } from "framer-motion";
-
-const font = Font({
-    subsets: ["latin"],
-    weight: "500",
-});
+import Boo from "@/components/ui/boo";
 
 type BooksProps = {
     books: {
@@ -43,399 +33,546 @@ type BooksProps = {
 };
 
 const Home: React.FC<BooksProps> = ({ books }) => {
-    const t = useTranslations("pages.home");
-    const tNewBook = useTranslations("pages.new-book");
-
     return (
         <>
             <PaymentStatus />
-            <div className="absolute inset-0 w-full h-[calc(100vh+88px)] z-0 bg-secondary/50 [background-image:radial-gradient(88%_100%_at_top,var(--color-primary),rgba(255,255,255,0))]">
-                <div className="custom-shape-divider-bottom-1767706513">
-                    <svg
-                        data-name="Layer 1"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 1200 120"
-                        preserveAspectRatio="none"
-                    >
-                        <path
-                            d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z"
-                            opacity=".25"
-                            className="shape-fill"
-                        ></path>
-                        <path
-                            d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z"
-                            opacity=".5"
-                            className="shape-fill"
-                        ></path>
-                        <path
-                            d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z"
-                            className="shape-fill"
-                        ></path>
-                    </svg>
-                </div>
+            <div className="flex flex-col gap-16 pb-4 md:gap-24">
+                <Hero books={books} />
+                <HowItWorks />
+                <CreateBook books={books} />
+                <Examples books={books} />
+                <Features />
+                <CallToAction />
             </div>
+        </>
+    );
+};
 
-            <section
-                id="home"
-                className="relative h-[calc(100vh-88px)] w-full max-w-2xl mx-auto flex flex-col items-center gap-y-3 pt-8 z-10 text-black"
-            >
-                <div className="flex flex-col justify-center items-center gap-y-4">
-                    <div className="px-2 py-0.5 bg-secondary/20 glass border-2 border-neutral/10 rounded-full text-center">
-                        {t("hero.rating")}
-                    </div>
-                    <h1
-                        className={cn(
-                            "relative text-3xl md:text-4xl lg:text-5xl text-center",
-                            font.className
-                        )}
-                    >
-                        {t("hero.title")}
-                        <motion.div
-                            className="absolute -z-10 -right-2 -top-8"
-                            animate={{ y: [0, -20, 0] }}
-                            transition={{ duration: 9, repeat: Infinity }}
-                        >
-                            <BookOpenText className="size-12 opacity-70 text-indigo-300 fill-indigo-100 rotate-12 drop-shadow-lg" />
-                        </motion.div>
-                        <motion.div
-                            className="absolute -z-10 -left-2 -bottom-2"
-                            animate={{ y: [0, -10, 0] }}
-                            transition={{ duration: 8, repeat: Infinity }}
-                        >
-                            <Sparkles className="size-12 opacity-70 text-yellow-300 fill-yellow-100 -rotate-12 drop-shadow-lg" />
-                        </motion.div>
+/** Small sticker-style label above section titles. */
+const Tag: React.FC<{ children: React.ReactNode; className?: string }> = ({
+    children,
+    className,
+}) => (
+    <span
+        className={cn(
+            "inline-flex w-fit items-center gap-2 rounded-full border-2 border-navy bg-white px-3.5 py-1 font-display text-sm font-semibold text-navy shadow-[0_3px_0_#23264a]",
+            className
+        )}
+    >
+        {children}
+    </span>
+);
+
+/** Toy-box band: a crayon-coloured block with a thick outline. */
+const Band: React.FC<{
+    children: React.ReactNode;
+    className?: string;
+    id?: string;
+}> = ({ children, className, id }) => (
+    <section id={id} className="container-page">
+        <div
+            className={cn(
+                "relative overflow-hidden rounded-lg border-[2.5px] border-navy card-pad shadow-[0_6px_0_#23264a] dark:border-outline dark:shadow-[0_6px_0_var(--cb-outline)]",
+                className
+            )}
+        >
+            {children}
+        </div>
+    </section>
+);
+
+const Squiggle: React.FC = () => (
+    <svg
+        viewBox="0 0 200 16"
+        preserveAspectRatio="none"
+        aria-hidden
+        className="absolute -bottom-2 left-0 h-3 w-full text-sun md:-bottom-3 md:h-4"
+    >
+        <path
+            d="M3 10 Q 20 2, 37 10 T 71 10 T 105 10 T 139 10 T 173 10 T 197 9"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="6"
+            strokeLinecap="round"
+        />
+    </svg>
+);
+
+/* ---------- Hero ---------- */
+
+const Hero: React.FC<BooksProps> = ({ books }) => {
+    const t = useTranslations("pages.home");
+    const tLinks = useTranslations("links");
+    const [first, second] = books;
+
+    return (
+        <section id="home" className="container-page pt-8 md:pt-16">
+            <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-12">
+                <div className="lg:col-span-7">
+                    <Tag>{t("hero.tag")}</Tag>
+                    <h1 className="type-display-lg mt-6 text-balance text-ink">
+                        {t.rich("hero.title", {
+                            hl: (chunks) => (
+                                <span className="relative inline-block whitespace-nowrap text-tomato">
+                                    {chunks}
+                                    <Squiggle />
+                                </span>
+                            ),
+                        })}
                     </h1>
-                    <p className="text-lg md:text-xl text-center">
+                    <p className="type-body-lg mt-6 max-w-xl text-body">
                         {t("hero.description")}
                     </p>
-                    <div className="relative flex flex-col items-center text-center gap-1">
-                        <Link
-                            href="/#create-book"
-                            className="btn btn-lg rounded-full bg-secondary/80 text-white border-4 border-secondary"
-                        >
+
+                    <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+                        <Link href="/#create-book" className="button-primary">
                             {t("hero.create")}
                         </Link>
-                        <span className="mt-2 text-neutral text-sm">
+                        <Link href="/#examples" className="button-secondary">
+                            {tLinks("examples")}
+                        </Link>
+                    </div>
+
+                    <div className="mt-6 flex flex-wrap items-center gap-x-3 gap-y-2">
+                        <span className="font-display text-2xl font-bold text-ink tabular-nums">
+                            {formatAmountForDisplay(price)}
+                        </span>
+                        <span className="type-body font-bold text-border-strong line-through tabular-nums">
+                            {formatAmountForDisplay(compareAtPrice)}
+                        </span>
+                        <span className="rounded-full bg-sun px-3 py-0.5 font-display text-sm font-semibold text-navy">
                             {t("hero.offer")}
                         </span>
                     </div>
                 </div>
 
-                <div className="relative pt-4">
-                    <div className="absolute top-6 left-1/2 flex justify-center gap-x-2">
-                        <Undo className="-rotate-[30deg]" />
-                        <div className="flex justify-start items-center gap-x-2">
-                            <span className="font-bold">
-                                {formatAmountForDisplay(price)}
-                            </span>
-                            <span className="text-neutral/80 line-through">
-                                {formatAmountForDisplay(price * 1.2)}
-                            </span>
-                        </div>
-                    </div>
+                <div className="lg:col-span-5">
+                    <HeroBoo message={t("hero.boo")} covers={[first, second]} />
+                </div>
+            </div>
 
-                    <motion.img
-                        src="/images/book.png"
-                        alt=""
-                        width={1000}
-                        height={560}
-                        className="w-full aspect-video max-w-md"
-                        animate={{ y: [0, -10, 0] }}
-                        transition={{ duration: 9, repeat: Infinity }}
-                    />
-                    <Image
-                        src="/images/book-bed.png"
-                        alt=""
-                        width={1000}
-                        height={600}
-                        className="absolute -z-10 top-0 left-0 w-full aspect-video max-w-lg"
-                    />
-                    <motion.div
-                        className="absolute -z-10 -left- top-6"
-                        animate={{ y: [0, -35, 0] }}
-                        transition={{ duration: 7, repeat: Infinity }}
+            <ul className="mt-12 flex flex-wrap gap-3 md:mt-16 md:justify-center">
+                {[
+                    { icon: FileText, label: t("hero.pdf"), bg: "bg-butter" },
+                    { icon: Palette, label: t("hero.style"), bg: "bg-ice" },
+                    {
+                        icon: Sparkles,
+                        label: t("hero.personalized"),
+                        bg: "bg-mint",
+                    },
+                ].map((item) => (
+                    <li
+                        key={item.label}
+                        className={cn(
+                            "flex items-center gap-2.5 rounded-full border-2 border-navy px-4 py-2 text-navy shadow-[0_3px_0_#23264a]",
+                            item.bg
+                        )}
                     >
-                        <Zap className="size-12 opacity-70 text-blue-300 fill-blue-100 -rotate-12 drop-shadow-lg" />
-                    </motion.div>
-                    <motion.div
-                        className="absolute -z-10 right-0 -bottom-4"
-                        animate={{ y: [0, -30, 0] }}
-                        transition={{ duration: 8, repeat: Infinity }}
-                    >
-                        <Rocket className="size-12 opacity-70 text-green-300 fill-green-100 -rotate-12 drop-shadow-lg" />
-                    </motion.div>
-                </div>
-
-                <div className="w-full sm:w-fit flex max-sm:flex-col justify-center items-center gap-x-2 text-neutral rounded-box border border-neutral/20 bg-base-100/20 px-4 py-3">
-                    <div className="w-fit flex items-center gap-2">
-                        <span className="status status-success" />
-                        <span>{t("hero.pdf")}</span>
-                    </div>
-                    <div className="w-fit flex items-center gap-2">
-                        <span className="status status-error" />
-                        <span>{t("hero.style")}</span>
-                    </div>
-                    <div className="w-fit flex items-center gap-2">
-                        <span className="status status-info" />
-                        <span>{t("hero.personalized")}</span>
-                    </div>
-                </div>
-            </section>
-
-            <section
-                id="create-book"
-                className="relative flex flex-col items-center justify-center gap-y-4 min-h-screen w-full pt-40"
-            >
-                <div className="badge badge-xl badge-secondary rounded-4xl">
-                    {t("create-book.badge")}
-                </div>
-                <Title
-                    text={t("create-book.title")}
-                    className="text-3xl lg:text-4xl"
-                />
-
-                <div className="size-full">
-                    <NewBook />
-                </div>
-            </section>
-
-            <section
-                id="examples"
-                className="flex flex-col justify-center items-center gap-y-4 pt-24"
-            >
-                <div className="badge badge-xl badge-secondary rounded-4xl">
-                    {t("examples.badge")}
-                </div>
-                <Title
-                    className="text-3xl lg:text-4xl text-center"
-                    text={t("examples.title")}
-                />
-                <div className="w-full grid grid-cols-2 md:grid-cols-4 gap-x-4 lg:gap-x-12 gap-y-8 overflow-x-auto scrollbar-hide scroll-smooth">
-                    {books.map((book) => (
-                        <div key={book.id} className="relative flex-shrink-0">
-                            <Link href={`/book/${book.id}`}>
-                                <div className="relative aspect-square shadow-lg rounded-box overflow-hidden">
-                                    <NextImage
-                                        className=""
-                                        src={book.cover}
-                                        width={1024}
-                                        height={1024}
-                                        alt={book.title}
-                                        isCover
-                                    />
-                                    <div className="absolute right-0 bottom-0 badge badge-secondary badge-lg gap-x-1">
-                                        {artStyleImages[book.artStyle]}{" "}
-                                        {tNewBook(book.artStyle as any)}
-                                    </div>
-                                </div>
-                                <div className="flex justify-center items-center text-sm lg:text-base font-bold mt-2">
-                                    <h2 className="text-left truncate w-full">
-                                        {book.title}
-                                    </h2>
-                                </div>
-                            </Link>
-                        </div>
-                    ))}
-                </div>
-            </section>
-
-            <section id="how-it-works" className="pt-24">
-                <div className="bg-secondary/30 rounded-box px-8 py-16">
-                    <div className="text-center space-y-4 mb-8">
-                        <div className="badge badge-xl badge-secondary rounded-4xl">
-                            {t("how-it-works.badge")}
-                        </div>
-                        <Title
-                            className="text-4xl md:text-5xl font-bold tracking-tight text-balance"
-                            text={t("how-it-works.title")}
-                        />
-                    </div>
-                    <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-                        {[
-                            {
-                                step: "01",
-                                title: t("how-it-works.step1.title"),
-                                description: t(
-                                    "how-it-works.step1.description"
-                                ),
-                            },
-                            {
-                                step: "02",
-                                title: t("how-it-works.step2.title"),
-                                description: t(
-                                    "how-it-works.step2.description"
-                                ),
-                            },
-                            {
-                                step: "03",
-                                title: t("how-it-works.step3.title"),
-                                description: t(
-                                    "how-it-works.step3.description"
-                                ),
-                            },
-                        ].map((step, i) => (
-                            <div key={i} className="relative">
-                                <div className="text-7xl max-md:text-center font-bold text-primary mb-4">
-                                    {step.step}
-                                </div>
-                                <h3 className="text-2xl max-md:text-center font-semibold mb-3">
-                                    {step.title}
-                                </h3>
-                                <p className="text-muted-foreground max-md:text-center max-w-sm mx-auto leading-relaxed">
-                                    {step.description}
-                                </p>
-                                {i < 2 && (
-                                    <div className="hidden md:block absolute top-12 -right-4 w-8 h-0.5 bg-border" />
-                                )}
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
-
-            <section id="features" className="pt-24">
-                <div className="text-center space-y-4 mb-12">
-                    <div className="badge badge-xl badge-secondary rounded-4xl">
-                        {t("features.badge")}
-                    </div>
-                    <Title
-                        className="text-4xl md:text-5xl"
-                        text={t("features.title")}
-                    />
-                    <p className="text-lg max-w-2xl mx-auto">
-                        {t("features.subtitle")}
-                    </p>
-                </div>
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {[
-                        {
-                            icon: Wand2,
-                            title: t("features.feature1.title"),
-                            description: t("features.feature1.description"),
-                        },
-                        {
-                            icon: BookOpen,
-                            title: t("features.feature2.title"),
-                            description: t("features.feature2.description"),
-                        },
-                        {
-                            icon: Sparkles,
-                            title: t("features.feature3.title"),
-                            description: t("features.feature3.description"),
-                        },
-                        {
-                            icon: Heart,
-                            title: t("features.feature4.title"),
-                            description: t("features.feature4.description"),
-                        },
-                        {
-                            icon: Users,
-                            title: t("features.feature5.title"),
-                            description: t("features.feature5.description"),
-                        },
-                        {
-                            icon: Star,
-                            title: t("features.feature6.title"),
-                            description: t("features.feature6.description"),
-                        },
-                    ].map((feature, i) => (
-                        <div
-                            key={i}
-                            className="border-2 border-neutral/20 hover:border-primary/50 rounded-box transition-all hover:shadow-lg"
-                        >
-                            <div className="p-6 space-y-4">
-                                <div className="size-12 rounded-xl bg-primary/10 flex items-center justify-center">
-                                    <feature.icon className="size-6 text-primary" />
-                                </div>
-                                <h3 className="text-xl font-semibold">
-                                    {feature.title}
-                                </h3>
-                                <p className="text-muted-foreground leading-relaxed">
-                                    {feature.description}
-                                </p>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </section>
-
-            <section className="pt-24">
-                <div className="bg-primary/50 rounded-box shadow-xl overflow-hidden">
-                    <div className="p-12 md:p-16 text-center space-y-6">
-                        <Title
-                            className="text-4xl md:text-5xl font-bold tracking-tight text-balance"
-                            text={t("cta.title")}
-                        />
-                        <p className="text-lg md:text-xl text-primary-foreground/90 max-w-2xl mx-auto leading-relaxed">
-                            {t("cta.description")}
-                        </p>
-                        <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-                            <Link
-                                href="/#create-book"
-                                className="btn btn-lg rounded-full bg-secondary/80 text-white border-4 border-secondary"
-                            >
-                                {t("hero.create")}
-                            </Link>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </>
+                        <item.icon className="size-5" strokeWidth={2.25} />
+                        <span className="type-label">{item.label}</span>
+                    </li>
+                ))}
+            </ul>
+        </section>
     );
 };
+
+/** Four-point twinkle star, same shape as Boo's wink sparkle. */
+const Twinkle: React.FC<{ className?: string; color: string }> = ({
+    className,
+    color,
+}) => (
+    <svg viewBox="0 0 24 24" aria-hidden className={cn("absolute", className)}>
+        <path
+            d="M12 1.5 Q13.6 10.4 22.5 12 Q13.6 13.6 12 22.5 Q10.4 13.6 1.5 12 Q10.4 10.4 12 1.5 Z"
+            fill={color}
+            stroke="#23264a"
+            strokeWidth="1.8"
+            strokeLinejoin="round"
+        />
+    </svg>
+);
+
+const Cloud: React.FC<{ className?: string }> = ({ className }) => (
+    <svg viewBox="0 0 64 28" aria-hidden className={cn("absolute", className)}>
+        <path
+            d="M10 26 Q2 26 3 19 Q4 13 11 14 Q12 5 22 6 Q28 0 36 5 Q46 2 48 12 Q58 11 60 19 Q61 26 53 26 Z"
+            fill="#fff"
+            stroke="#23264a"
+            strokeWidth="2.2"
+            strokeLinejoin="round"
+        />
+    </svg>
+);
+
+const HeroCover: React.FC<{
+    book: BooksProps["books"][number];
+    className: string;
+}> = ({ book, className }) => (
+    <div
+        className={cn(
+            "absolute z-[5] overflow-hidden rounded-md border-[2.5px] border-navy bg-white p-1.5 shadow-[0_5px_0_#23264a]",
+            className
+        )}
+    >
+        <div className="aspect-square overflow-hidden rounded-[10px]">
+            <NextImage
+                src={book.cover}
+                width={512}
+                height={512}
+                alt={book.title}
+                isCover
+            />
+        </div>
+    </div>
+);
+
+/**
+ * Boo on a little sky-and-hill sticker scene, with a speech bubble aimed at
+ * his head. The two latest covers tuck in at the edges when there are any.
+ */
+const HeroBoo: React.FC<{
+    message: string;
+    covers: (BooksProps["books"][number] | undefined)[];
+}> = ({ message, covers: [first, second] }) => (
+    <div className="relative mx-auto aspect-square w-full max-w-[460px]">
+        {/* backdrop disc */}
+        <div className="absolute inset-[9%] overflow-hidden rounded-full border-[2.5px] border-navy bg-sky shadow-[0_6px_0_#23264a] dark:border-outline dark:shadow-[0_6px_0_var(--cb-outline)]">
+            <Cloud className="left-[10%] top-[30%] w-[24%] opacity-95" />
+            <Cloud className="right-[8%] top-[46%] w-[17%] opacity-95" />
+            <div className="absolute -inset-x-[15%] -bottom-[38%] h-[70%] rounded-[50%] border-[2.5px] border-navy bg-grass" />
+        </div>
+
+        {first && (
+            <HeroCover
+                book={first}
+                className="bottom-[4%] left-0 w-[30%] -rotate-[9deg]"
+            />
+        )}
+        {second && (
+            <HeroCover
+                book={second}
+                className="right-0 top-[10%] w-[27%] rotate-[8deg]"
+            />
+        )}
+
+        <Twinkle
+            color="#ffc93c"
+            className="right-[4%] top-[2%] w-[9%] animate-twinkle"
+        />
+        <Twinkle
+            color="#ff5a47"
+            className="left-[2%] top-[46%] w-[6%] animate-twinkle [animation-delay:-1.1s]"
+        />
+        <Twinkle
+            color="#ffc93c"
+            className="bottom-[2%] right-[10%] w-[7%] animate-twinkle [animation-delay:-2.2s]"
+        />
+
+        {/* ground shadow, shrinks as Boo bobs up */}
+        <div
+            aria-hidden
+            className="absolute bottom-[12.5%] left-[31%] z-[6] h-[4%] w-[38%] animate-bob-shadow rounded-[50%] bg-navy/25"
+        />
+        <div className="absolute left-[16%] top-[19%] z-10 w-[68%]">
+            <Boo pose="wink" className="animate-bob" title="Boo" />
+        </div>
+
+        <p className="absolute left-0 top-[1%] z-20 max-w-[56%] -rotate-3 rounded-2xl border-[2.5px] border-navy bg-white px-4 py-2.5 text-center font-display text-base font-semibold leading-tight text-navy shadow-[0_4px_0_#23264a] sm:text-lg">
+            {message}
+            <span
+                aria-hidden
+                className="absolute -bottom-[10px] left-[68%] size-4 rotate-45 border-b-[2.5px] border-r-[2.5px] border-navy bg-white"
+            />
+        </p>
+    </div>
+);
+
+/* ---------- How it works — sun band ---------- */
+
+const HowItWorks: React.FC = () => {
+    const t = useTranslations("pages.home");
+    const steps = [1, 2, 3].map((n) => ({
+        n,
+        title: t(`how-it-works.step${n}.title` as never),
+        description: t(`how-it-works.step${n}.description` as never),
+    }));
+    const bubbles = ["bg-tomato", "bg-sky", "bg-grass"];
+
+    return (
+        <Band id="how-it-works" className="bg-sun text-navy">
+            <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+                <div className="flex flex-col gap-4">
+                    <Tag>{t("how-it-works.badge")}</Tag>
+                    <h2 className="type-display-md max-w-xl text-balance">
+                        {t("how-it-works.title")}
+                    </h2>
+                </div>
+                <div className="hidden w-36 shrink-0 md:block">
+                    <Boo pose="read" />
+                </div>
+            </div>
+
+            <ol className="mt-10 grid gap-4 md:grid-cols-3 md:gap-5">
+                {steps.map((step, i) => (
+                    <li
+                        key={step.n}
+                        className="rounded-md border-2 border-navy bg-white p-6 text-navy shadow-[0_4px_0_#23264a]"
+                    >
+                        <span
+                            className={cn(
+                                "flex size-11 items-center justify-center rounded-full border-2 border-navy font-display text-xl font-bold",
+                                bubbles[i],
+                                i === 0 ? "text-white" : "text-navy"
+                            )}
+                        >
+                            {step.n}
+                        </span>
+                        <h3 className="type-title-md mt-5">{step.title}</h3>
+                        <p className="type-body mt-2 text-[#4a4d6e]">
+                            {step.description}
+                        </p>
+                    </li>
+                ))}
+            </ol>
+
+            <Link
+                href="/#create-book"
+                className="button-on-dark mt-8 w-full sm:w-fit"
+            >
+                {t("hero.create")}
+            </Link>
+        </Band>
+    );
+};
+
+/* ---------- Create book ---------- */
+
+const CreateBook: React.FC<BooksProps> = ({ books }) => {
+    const t = useTranslations("pages.home");
+    const tCommon = useTranslations("common");
+    const samples = books.slice(2, 4);
+
+    return (
+        <section id="create-book" className="container-page">
+            <div className="grid gap-10 lg:grid-cols-12 lg:gap-14">
+                <div className="lg:col-span-5">
+                    <div className="lg:sticky lg:top-28">
+                        <Tag className="bg-butter">
+                            {t("create-book.badge")}
+                        </Tag>
+                        <h2 className="type-display-md mt-5 text-balance text-ink">
+                            {t("create-book.title")}
+                        </h2>
+                        <p className="type-body-lg mt-4 max-w-md text-body">
+                            {tCommon("description")}
+                        </p>
+
+                        {samples.length > 0 && (
+                            <div className="mt-10 hidden grid-cols-2 gap-5 lg:grid">
+                                {samples.map((book, i) => (
+                                    <div
+                                        key={book.id}
+                                        className={cn(
+                                            "rounded-md border-[2.5px] border-navy bg-white p-2 shadow-[0_5px_0_#23264a]",
+                                            i === 0 ? "-rotate-3" : (
+                                                "mt-10 rotate-3"
+                                            )
+                                        )}
+                                    >
+                                        <div className="aspect-square overflow-hidden rounded-[10px]">
+                                            <NextImage
+                                                src={book.cover}
+                                                width={512}
+                                                height={512}
+                                                alt={book.title}
+                                                isCover
+                                            />
+                                        </div>
+                                        <p className="mt-2 truncate px-1 pb-1 font-display text-sm font-semibold text-navy">
+                                            {book.title}
+                                        </p>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                </div>
+
+                <div className="lg:col-span-7">
+                    <NewBook />
+                </div>
+            </div>
+        </section>
+    );
+};
+
+/* ---------- Examples — sky band ---------- */
+
+const Examples: React.FC<BooksProps> = ({ books }) => {
+    const t = useTranslations("pages.home");
+    const tNewBook = useTranslations("pages.new-book");
+    const tilt = ["-rotate-2", "rotate-1", "-rotate-1", "rotate-2"];
+
+    if (books.length === 0) return null;
+
+    return (
+        <Band id="examples" className="bg-sky text-navy">
+            <Tag>{t("examples.badge")}</Tag>
+            <h2 className="type-display-md mt-4">{t("examples.title")}</h2>
+
+            <div className="mt-10 grid grid-cols-2 gap-x-3 gap-y-5 sm:gap-x-5 lg:grid-cols-4 lg:gap-x-6 lg:gap-y-8">
+                {books.map((book, i) => (
+                    <Link
+                        key={book.id}
+                        href={`/book/${book.id}`}
+                        className={cn(
+                            "block rounded-md border-[2.5px] border-navy bg-white p-2 text-navy shadow-[0_5px_0_#23264a] transition-transform active:translate-y-1 sm:p-2.5",
+                            tilt[i % tilt.length]
+                        )}
+                    >
+                        <div className="aspect-square overflow-hidden rounded-[10px]">
+                            <NextImage
+                                src={book.cover}
+                                width={512}
+                                height={512}
+                                alt={book.title}
+                                isCover
+                            />
+                        </div>
+                        <div className="px-1 pb-1 pt-2.5">
+                            <h3 className="line-clamp-2 font-display text-[15px] font-semibold leading-tight sm:text-[17px]">
+                                {book.title}
+                            </h3>
+                            <p className="mt-1 text-xs font-bold text-[#4a4d6e] sm:text-sm">
+                                {artStyleImages[book.artStyle]}{" "}
+                                {tNewBook(book.artStyle as never)}
+                            </p>
+                        </div>
+                    </Link>
+                ))}
+            </div>
+        </Band>
+    );
+};
+
+/* ---------- Features ---------- */
+
+const Features: React.FC = () => {
+    const t = useTranslations("pages.home");
+    const items = [
+        { icon: Wand2, bg: "bg-tomato", fg: "text-white" },
+        { icon: BookOpen, bg: "bg-sun", fg: "text-navy" },
+        { icon: Sparkles, bg: "bg-sky", fg: "text-navy" },
+        { icon: Heart, bg: "bg-peach", fg: "text-navy" },
+        { icon: Users, bg: "bg-grass", fg: "text-navy" },
+        { icon: Star, bg: "bg-berry", fg: "text-white" },
+    ];
+
+    return (
+        <section id="features" className="container-page">
+            <div className="max-w-2xl">
+                <Tag className="bg-mint">{t("features.badge")}</Tag>
+                <h2 className="type-display-md mt-5 text-balance text-ink">
+                    {t("features.title")}
+                </h2>
+                <p className="type-body-lg mt-4 text-body">
+                    {t("features.subtitle")}
+                </p>
+            </div>
+
+            <div className="mt-10 grid gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
+                {items.map((item, i) => (
+                    <div key={i} className="sticker p-6">
+                        <span
+                            className={cn(
+                                "flex size-12 items-center justify-center rounded-2xl border-2 border-navy",
+                                item.bg,
+                                item.fg
+                            )}
+                        >
+                            <item.icon className="size-6" strokeWidth={2.25} />
+                        </span>
+                        <h3 className="type-title-sm mt-5 text-ink">
+                            {t(`features.feature${i + 1}.title` as never)}
+                        </h3>
+                        <p className="type-body mt-2 text-muted">
+                            {t(`features.feature${i + 1}.description` as never)}
+                        </p>
+                    </div>
+                ))}
+            </div>
+        </section>
+    );
+};
+
+/* ---------- Closing CTA — tomato band ---------- */
+
+const CallToAction: React.FC = () => {
+    const t = useTranslations("pages.home");
+
+    return (
+        <Band className="bg-tomato text-white">
+            <div className="flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
+                <div className="max-w-xl">
+                    <h2 className="type-display-md text-balance">
+                        {t("cta.title")}
+                    </h2>
+                    <p className="type-body-lg mt-4 text-white/90">
+                        {t("cta.description")}
+                    </p>
+                    <Link
+                        href="/#create-book"
+                        className="button-on-dark mt-8 w-full sm:w-fit"
+                    >
+                        {t("hero.create")}
+                        <ArrowRight className="size-5" />
+                    </Link>
+                </div>
+                <div className="mx-auto w-44 shrink-0 md:mx-0 md:w-56">
+                    <Boo pose="sleep" />
+                </div>
+            </div>
+        </Band>
+    );
+};
+
+/* ---------- Payment status modal ---------- */
 
 const PaymentStatus: React.FC = () => {
     const t = useTranslations("pages.home.payment-status");
     const searchParams = useSearchParams();
     const paymentStatus = searchParams.get("payment_success");
     const [open, setOpen] = useState(paymentStatus ? true : false);
-    const status = paymentStatus === "true" ? true : false;
+    const status = paymentStatus === "true";
 
     return (
-        <Modal
-            isOpen={open}
-            setIsOpen={setOpen}
-            className="overflow-hidden z-100 w-full max-w-lg"
-        >
-            <Image
-                src={status ? "/images/success.svg" : "/images/error.svg"}
-                alt=""
-                width={200}
-                height={200}
-                className="-rotate-12 size-56 absolute z-0 -top-28 -left-10 opacity-50 saturate-50"
-            />
-            <div className="relative flex flex-col justify-center items-center gap-y-4">
+        <Modal isOpen={open} setIsOpen={setOpen} className="w-full max-w-md">
+            <div className="flex flex-col items-center gap-5 text-center">
                 {status ?
-                    <div className="mx-auto flex size-12 shrink-0 items-center justify-center rounded-full bg-green-100 sm:mx-0 sm:size-20">
-                        <ThumbsUp
-                            aria-hidden="true"
-                            className="size-10 text-success"
-                        />
+                    <div className="w-36">
+                        <Boo pose="wink" />
                     </div>
-                :   <div className="mx-auto flex size-12 shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:size-20">
-                        <AlertCircle
-                            aria-hidden="true"
-                            className="size-10 text-error"
-                        />
-                    </div>
+                :   <span className="flex size-14 items-center justify-center rounded-full border-2 border-navy bg-peach text-navy">
+                        <AlertCircle className="size-7" />
+                    </span>
                 }
 
-                <div className="mt-3 text-center">
-                    <Title text={status ? t("success") : t("failed")} />
-
-                    <p className="text-sm text-neutral max-w-lg">
+                <div>
+                    <h2 className="type-title-lg text-ink">
+                        {status ? t("success") : t("failed")}
+                    </h2>
+                    <p className="type-body mt-2 text-body">
                         {status ? t("success-message") : t("failed-message")}
                     </p>
                 </div>
 
-                <div className="mt-5 sm:mt-4">
-                    <button
-                        onClick={() => setOpen(false)}
-                        className="btn btn-primary"
-                    >
-                        {t("close")}
-                    </button>
-                </div>
+                <button
+                    onClick={() => setOpen(false)}
+                    className="button-primary w-full"
+                >
+                    {t("close")}
+                </button>
             </div>
         </Modal>
     );

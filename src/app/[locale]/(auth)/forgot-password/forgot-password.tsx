@@ -37,7 +37,7 @@ const ForgotPassword: React.FC = () => {
         <Form title={t("title")} description={t("description")}>
             <form
                 onSubmit={handleSubmit(submit)}
-                className="w-full max-w-md space-y-2"
+                className="flex w-full flex-col gap-4"
             >
                 <FormReponse success={state.success} message={state.message} />
 
@@ -51,7 +51,7 @@ const ForgotPassword: React.FC = () => {
 
                 <FormButton title={t("submit")} loading={loading} />
 
-                <p className="mt-5 text-center text-xs">{t("info")}</p>
+                <p className="type-body text-muted">{t("info")}</p>
             </form>
         </Form>
     );

@@ -1,5 +1,6 @@
 "use client";
 
+import { Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 type FormButtonProps = {
@@ -17,11 +18,11 @@ const FormButton: React.FC<FormButtonProps> = ({
         <button
             type="submit"
             disabled={loading}
-            className={cn("btn btn-primary mt-4 w-full border-4", className)}
+            className={cn("button-primary mt-2 w-full", className)}
         >
             {loading ?
-                <span className="loading loading-spinner"></span>
-            :   <span className="font-bold">{title}</span>}
+                <Loader2 className="size-5 animate-spin" />
+            :   title}
         </button>
     );
 };

@@ -35,8 +35,11 @@ export const UpdatePassword: React.FC = () => {
 
     return (
         <>
-            <form onSubmit={handleSubmit(submit)} className="w-full space-y-2">
-                <div className="mb-2">
+            <form
+                onSubmit={handleSubmit(submit)}
+                className="flex w-full flex-col gap-4"
+            >
+                <div>
                     <FormReponse
                         message={state.message}
                         success={state.success}
@@ -45,33 +48,33 @@ export const UpdatePassword: React.FC = () => {
 
                 <FormInput
                     type="password"
-                    label="Current password"
-                    placeholder="Enter your current password..."
+                    label={t("current")}
+                    placeholder={t("current-placeholder")}
                     error={state.errors?.currentPassword?.[0]}
                     {...register("currentPassword")}
                 />
 
                 <FormInput
                     type="password"
-                    label="New password"
-                    placeholder="Enter your new password..."
+                    label={t("new")}
+                    placeholder={t("new-placeholder")}
                     error={state.errors?.newPassword?.[0]}
                     {...register("newPassword")}
                 />
 
                 <FormInput
                     type="password"
-                    label="Confirm password"
-                    placeholder="Confirm your new password..."
+                    label={t("confirm")}
+                    placeholder={t("confirm-placeholder")}
                     error={state.errors?.confirmPassword?.[0]}
                     {...register("confirmPassword")}
                 />
 
-                <div className="flex w-full justify-end">
+                <div className="flex w-full">
                     <FormButton
                         title={t("change")}
                         loading={loading}
-                        className="w-min"
+                        className="w-full sm:w-auto"
                     />
                 </div>
             </form>
@@ -105,9 +108,9 @@ export const CreatePassword: React.FC = () => {
         <>
             <form
                 onSubmit={handleSubmit(submit)}
-                className="w-full  flex flex-col gap-y-2"
+                className="flex w-full flex-col gap-4"
             >
-                <div className="mb-2">
+                <div>
                     <FormReponse
                         message={state.message}
                         success={state.success}
@@ -116,25 +119,25 @@ export const CreatePassword: React.FC = () => {
 
                 <FormInput
                     type="password"
-                    label="New password"
-                    placeholder="Enter your new password..."
+                    label={t("new")}
+                    placeholder={t("new-placeholder")}
                     error={state.errors?.newPassword?.[0]}
                     {...register("newPassword")}
                 />
 
                 <FormInput
                     type="password"
-                    label="Confirm password"
-                    placeholder="Confirm your new password..."
+                    label={t("confirm")}
+                    placeholder={t("confirm-placeholder")}
                     error={state.errors?.confirmPassword?.[0]}
                     {...register("confirmPassword")}
                 />
 
-                <div className="flex w-full justify-end">
+                <div className="flex w-full">
                     <FormButton
                         title={t("create")}
                         loading={loading}
-                        className="w-min"
+                        className="w-full sm:w-auto"
                     />
                 </div>
             </form>

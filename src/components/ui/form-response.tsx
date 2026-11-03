@@ -13,27 +13,20 @@ const FormReponse: React.FC<FormReponseProps> = ({ success, message }) => {
     return (
         message && (
             <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
+                initial={{ opacity: 0, y: -4 }}
+                animate={{ opacity: 1, y: 0 }}
+                role="status"
+                className={cn(
+                    "flex w-full items-start gap-2.5 rounded-sm border px-4 py-3 type-body",
+                    success ?
+                        "border-success-border/60 bg-mint/30 text-success"
+                    :   "border-error/40 bg-peach/25 text-error"
+                )}
             >
-                <div
-                    className={cn(
-                        "flex h-auto w-full items-center justify-center gap-2 rounded-box border-2 p-2",
-                        success ?
-                            "border-success bg-success/10"
-                        :   "border-error bg-error/10"
-                    )}
-                >
-                    {success ?
-                        <Check className="text-success" />
-                    :   <AlertCircle className="text-error" />}
-                    <span
-                        className={cn(success ? "text-success" : "text-error")}
-                    >
-                        {message}
-                    </span>
-                </div>
+                {success ?
+                    <Check className="mt-0.5 size-4 shrink-0" />
+                :   <AlertCircle className="mt-0.5 size-4 shrink-0" />}
+                <span>{message}</span>
             </motion.div>
         )
     );

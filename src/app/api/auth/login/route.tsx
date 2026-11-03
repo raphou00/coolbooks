@@ -37,11 +37,7 @@ export const POST = async (req: NextRequest) => {
             });
         }
 
-        const user = await db.user.findFirst({
-            where: {
-                email: body.email,
-            },
-        });
+        const user = await db.users.byEmail(body.email);
 
         if (!user || !(await compare(body.password, user.password!))) {
             await new Promise((resolve) => setTimeout(resolve, 1000));

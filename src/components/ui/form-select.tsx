@@ -28,14 +28,16 @@ const FormSelect: React.FC<FormSelectProps> = ({
     t,
 }) => {
     return (
-        <div className="w-full my-2">
-            <label className="w-full text-sm">
-                <div className="w-full flex justify-between pb-1">
-                    <span className="label-text px-1 font-bold">{label}</span>
-                    <span className="label-text-alt text-error">
-                        {typeof error === "string" ? error : error?.message}
-                    </span>
-                </div>
+        <div className="w-full">
+            <label className="block w-full">
+                <span className="flex items-baseline justify-between gap-2">
+                    <span className="field-label">{label}</span>
+                    {error && (
+                        <span className="type-body text-error pb-1.5">
+                            {typeof error === "string" ? error : error?.message}
+                        </span>
+                    )}
+                </span>
                 <div className="relative w-full">
                     <Controller
                         name={name}
@@ -53,9 +55,7 @@ const FormSelect: React.FC<FormSelectProps> = ({
                                     <SelectGroup>
                                         {values.map((e) => (
                                             <SelectItem key={e} value={e}>
-                                                <div className="flex items-center gap-2">
-                                                    {t ? t(e) : e}
-                                                </div>
+                                                {t ? t(e) : e}
                                             </SelectItem>
                                         ))}
                                     </SelectGroup>

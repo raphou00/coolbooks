@@ -45,5 +45,9 @@ export const useGetFooterLinks = () => {
             title: t("refund"),
             path: "/refund",
         },
+        {
+            title: t("impressum"),
+            path: "/impressum",
+        },
     ];
 };

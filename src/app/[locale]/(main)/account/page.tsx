@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { getTranslations } from "next-intl/server";
-import { AlertTriangle } from "lucide-react";
 import { getUser } from "@/lib/auth";
 import db from "@/lib/db";
 import { cn } from "@/lib/utils";
@@ -26,16 +25,8 @@ const Page: React.FC = async () => {
     const t = await getTranslations("pages.account");
     const user = await getUser();
 
-    const userdb = await db.user.findUnique({
-        where: {
-            id: user?.user?.id,
-        },
-        select: {
-            sessions: true,
-            googleId: true,
-            password: true,
-        },
-    });
+    const userdb = user?.user ? await db.users.get(user.user.id) : null;
+    const sessions = user?.user ? await db.sessions.byUser(user.user.id) : [];
 
     if (!user?.user || !userdb) {
         return redirect("/login");
@@ -51,7 +42,7 @@ const Page: React.FC = async () => {
         <Socials key="socials" googleId={userdb.googleId} />,
         <LogoutSessions
             key="sessions"
-            sessions={userdb.sessions}
+            sessions={sessions}
             sessionId={user!.session!.id}
         />,
         <DeleteAccount key="delete" />,
@@ -59,36 +50,33 @@ const Page: React.FC = async () => {
 
     return (
         <Main>
-            <div className="max-w-4xl mx-auto">
+            <div className="mx-auto max-w-5xl">
                 <AccoutMenu user={user.user} />
-                <div className="flex flex-col gap-y-8">
-                    {pages.map((PageComponent, index) => (
-                        <div
-                            key={index}
-                            id={PageComponent.key as string}
-                            className="p-6 bg-base-300/10 border border-neutral/20 rounded-box shadow"
-                        >
-                            <div className="flex items-center justify-start gap-x-2 mb-4">
-                                {index === pages.length - 1 && (
-                                    <span className="flex size-12 shrink-0 items-center justify-center rounded-box bg-red-100 sm:mx-0 sm:size-10">
-                                        <AlertTriangle
-                                            aria-hidden="true"
-                                            className="size-6 text-error"
-                                        />
-                                    </span>
-                                )}
-                                <Title
-                                    text={t(PageComponent.key as never)}
-                                    className={cn(
-                                        "",
-                                        index === pages.length - 1 &&
-                                            "text-error"
-                                    )}
-                                />
-                            </div>
-                            {PageComponent}
-                        </div>
-                    ))}
+                <div className="flex flex-col">
+                    {pages.map((PageComponent, index) => {
+                        const danger = index === pages.length - 1;
+                        return (
+                            <section
+                                key={index}
+                                id={PageComponent.key as string}
+                                className="grid gap-6 border-t border-hairline py-10 md:grid-cols-12 md:gap-10"
+                            >
+                                <div className="md:col-span-4">
+                                    <Title
+                                        as="h2"
+                                        text={t(PageComponent.key as never)}
+                                        className={cn(
+                                            "type-title-md",
+                                            danger && "text-error"
+                                        )}
+                                    />
+                                </div>
+                                <div className="md:col-span-8">
+                                    {PageComponent}
+                                </div>
+                            </section>
+                        );
+                    })}
                 </div>
             </div>
         </Main>

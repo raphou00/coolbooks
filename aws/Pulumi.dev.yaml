@@ -3,5 +3,3 @@ config:
   aws:region: us-east-1
   coolbooks:OPENROUTER_API_KEY:
     secure: v1:pabJN5UxhjqufiHE:Mvm5zsPpsC7YDMROLPW+Fv8k+G+CHdMkr5gxPUooGhTK1T0KiS5pKKIQ6sOk/FC9Umbqla4/u/B+UESOcHaKKTqMjMIGw3r5hrjpL5sy36W6j07nvFm8X7s=
-  coolbooks:DATABASE_URL:
-    secure: v1:1tAGv9NQZDnrsC8p:w1B+Z/SKUAy7TUlCdq3DtIMd+/7FUpXdUMjFMohqt4ZsJaZWn7WjfV+t/yHQa9PJ1gmUi/n/1IyYQogpOIT2n5wWFUNAxP0PY1/rhQ==

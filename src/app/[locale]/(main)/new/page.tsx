@@ -17,11 +17,8 @@ const Page = async () => {
 
     return (
         <Main>
-            <div className="w-full flex flex-col items-center justify-center gap-y-6 mx-auto">
-                <Title
-                    text={t("title")}
-                    className="text-4xl lg:text-5xl text-center mb-2"
-                />
+            <div className="mx-auto flex w-full max-w-3xl flex-col gap-8">
+                <Title text={t("title")} className="type-display-lg" />
                 <NewBook />
             </div>
         </Main>

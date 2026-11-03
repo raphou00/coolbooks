@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Script from "next/script";
-import { Poppins } from "next/font/google";
+import { Fredoka, Nunito } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages, getTranslations } from "next-intl/server";
 import { routing } from "@/lib/navigation";
@@ -10,9 +10,18 @@ import * as metadata from "@/config/seo";
 import RootProviders from "./providers";
 import "@/styles/globals.css";
 
-const poppins = Poppins({
+const fredoka = Fredoka({
     subsets: ["latin"],
-    weight: ["500"],
+    weight: ["500", "600", "700"],
+    variable: "--font-fredoka",
+    display: "swap",
+});
+
+const nunito = Nunito({
+    subsets: ["latin"],
+    weight: ["500", "600", "700", "800"],
+    variable: "--font-body",
+    display: "swap",
 });
 
 const generateMetadata = async (): Promise<Metadata> => {
@@ -63,6 +72,7 @@ const Root = async ({ children }: React.PropsWithChildren) => {
     return (
         <html
             lang={locale}
+            className={cn(fredoka.variable, nunito.variable)}
             data-scroll-behavior="smooth"
             suppressHydrationWarning
         >
@@ -84,7 +94,7 @@ const Root = async ({ children }: React.PropsWithChildren) => {
                     `}
                 </Script>
             </head>
-            <body className={cn("bg-base-100", poppins.className)}>
+            <body className={cn("font-sans bg-canvas text-body")}>
                 <NextIntlClientProvider messages={messages}>
                     <RootProviders>{children}</RootProviders>
                 </NextIntlClientProvider>

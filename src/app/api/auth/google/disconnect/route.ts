@@ -32,14 +32,7 @@ export async function GET(req: NextRequest) {
             });
         }
 
-        await db.user.update({
-            where: {
-                id: user.user.id,
-            },
-            data: {
-                googleId: null,
-            },
-        });
+        await db.users.update(user.user.id, { googleId: null });
 
         return NextResponse.json({
             success: true,

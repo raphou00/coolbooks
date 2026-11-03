@@ -1,16 +1,26 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { motion, useMotionValue } from "framer-motion";
-import { ChevronLeft, ChevronRight, Download, Trash2 } from "lucide-react";
+import {
+    ChevronLeft,
+    ChevronRight,
+    Download,
+    Loader2,
+    RefreshCw,
+    Square,
+    Trash2,
+    Volume2,
+} from "lucide-react";
 import toast from "react-hot-toast";
 import saveAs from "file-saver";
-import { cn, requestAPI, sortPages } from "@/lib/utils";
+import { cn, requestAPI } from "@/lib/utils";
 import Title from "@/components/ui/title";
 import NextImage from "@/components/ui/image";
 import DeleteBook from "@/components/ui/delete-book";
+import { BooFace } from "@/components/ui/boo";
 
 type Page = {
     id: string;
@@ -20,18 +30,21 @@ type Page = {
     image: string;
 };
 
+type Slide = Page & { kind: "cover" | "dedication" | "page" };
+
 type BookProps = {
     book: {
         id: string;
         title: string;
         cover: string;
+        dedication: string | null;
+        redraws: number;
         pages: Page[];
     };
-};
-
-type PagesProps = {
-    pages: Page[];
-    imgIndex: number;
+    /** Owner or holder of the private link: may redraw and delete. */
+    canEdit: boolean;
+    editKey: string | null;
+    maxRedraws: number;
 };
 
 const DRAG_BUFFER = 25;
@@ -41,27 +54,59 @@ const SPRING_OPTIONS = {
     mass: 3,
     stiffness: 400,
     damping: 50,
-};
+} as const;
 
-const Book: React.FC<BookProps> = ({ book }) => {
+const Book: React.FC<BookProps> = ({ book, canEdit, editKey, maxRedraws }) => {
     const t = useTranslations("pages.book");
     const tMessages = useTranslations("messages");
+    const router = useRouter();
     const [imgIndex, setImgIndex] = useState(0);
     const [loadingPdf, setLoadingPdf] = useState(false);
     const [open, setOpen] = useState<boolean>(false);
-    const containerRef = useRef<HTMLDivElement | null>(null);
+    const [pages, setPages] = useState<Page[]>(book.pages);
+    const [redrawsLeft, setRedrawsLeft] = useState(
+        Math.max(0, maxRedraws - book.redraws)
+    );
+    const [redrawing, setRedrawing] = useState<string | null>(null);
+    const [reading, setReading] = useState(false);
+    const [loadingAudio, setLoadingAudio] = useState(false);
+    const audioRef = useRef<HTMLAudioElement | null>(null);
+    const readingRef = useRef(false);
 
-    const pages: Page[] = [
-        { id: "cover", image: book.cover, text: "", color: "", number: -1 },
-        ...book.pages,
-    ];
+    const slides: Slide[] = useMemo(
+        () => [
+            {
+                id: "cover",
+                image: book.cover,
+                text: "",
+                color: "",
+                number: -2,
+                kind: "cover",
+            },
+            ...(book.dedication ?
+                [
+                    {
+                        id: "dedication",
+                        image: "",
+                        text: book.dedication,
+                        color: "",
+                        number: -1,
+                        kind: "dedication" as const,
+                    },
+                ]
+            :   []),
+            ...[...pages]
+                .sort((a, b) => a.number - b.number)
+                .map((p) => ({ ...p, kind: "page" as const })),
+        ],
+        [book.cover, book.dedication, pages]
+    );
 
     const dragX = useMotionValue(0);
 
     const onDragEnd = () => {
         const x = dragX.get();
-
-        if (x <= -DRAG_BUFFER && imgIndex < pages.length - 1) {
+        if (x <= -DRAG_BUFFER && imgIndex < slides.length - 1) {
             setImgIndex((pv) => pv + 1);
         } else if (x >= DRAG_BUFFER && imgIndex > 0) {
             setImgIndex((pv) => pv - 1);
@@ -72,7 +117,6 @@ const Book: React.FC<BookProps> = ({ book }) => {
         if (loadingPdf) return;
         try {
             setLoadingPdf(true);
-
             const blob = await requestAPI(
                 "GET",
                 `/api/book/export?bookId=${book.id}`,
@@ -80,168 +124,278 @@ const Book: React.FC<BookProps> = ({ book }) => {
                 {},
                 "blob"
             );
-
             saveAs(blob as unknown as Blob, `${book.title}.pdf`);
-            setLoadingPdf(false);
         } catch (err) {
             console.error(err);
             toast.error(tMessages("server-error"));
+        } finally {
             setLoadingPdf(false);
         }
     };
 
-    const handlePrev = () => {
-        setImgIndex((pv) => Math.max(0, pv - 1));
+    /* ---------- Boo reads ---------- */
+
+    const stopReading = useCallback(() => {
+        readingRef.current = false;
+        setReading(false);
+        setLoadingAudio(false);
+        audioRef.current?.pause();
+    }, []);
+
+    const readFrom = useCallback(
+        async (index: number) => {
+            // Skip the cover: start at the first slide that has text.
+            let i = index;
+            while (i < slides.length && slides[i].kind !== "page") i++;
+            if (i >= slides.length || !readingRef.current) {
+                stopReading();
+                return;
+            }
+
+            setImgIndex(i);
+            setLoadingAudio(true);
+            try {
+                const res = await fetch(
+                    `/api/book/audio?bookId=${book.id}&pageId=${slides[i].id}`
+                );
+                const data = (await res.json()) as { url?: string };
+                if (!res.ok || !data.url) throw new Error("audio");
+                if (!readingRef.current) return;
+
+                const audio = audioRef.current ?? new Audio();
+                audioRef.current = audio;
+                audio.src = data.url;
+                audio.onended = () => void readFrom(i + 1);
+                setLoadingAudio(false);
+                await audio.play();
+            } catch {
+                toast.error(tMessages("server-error"));
+                stopReading();
+            }
+        },
+        [book.id, slides, stopReading, tMessages]
+    );
+
+    const toggleReading = () => {
+        if (readingRef.current) {
+            stopReading();
+            return;
+        }
+        readingRef.current = true;
+        setReading(true);
+        void readFrom(imgIndex);
     };
 
-    const handleNext = () => {
-        setImgIndex((pv) => Math.min(pages.length - 1, pv + 1));
+    useEffect(() => () => audioRef.current?.pause(), []);
+
+    /* ---------- Free redraw ---------- */
+
+    const redraw = async (pageId: string) => {
+        if (redrawing) return;
+        setRedrawing(pageId);
+        const res = await requestAPI<{ pageId: string }>(
+            "POST",
+            "/api/book/redraw",
+            { bookId: book.id, pageId, key: editKey }
+        );
+        if (res.success && res.key) {
+            setPages((all) =>
+                all.map((p) => (p.id === pageId ? { ...p, image: res.key } : p))
+            );
+            setRedrawsLeft((n) => Math.max(0, n - 1));
+        }
+        setRedrawing(null);
     };
+
+    const handlePrev = () => setImgIndex((pv) => Math.max(0, pv - 1));
+    const handleNext = () =>
+        setImgIndex((pv) => Math.min(slides.length - 1, pv + 1));
 
     return (
         <>
-            <DeleteBook
-                bookId={book.id}
-                callback={() => redirect("/my-books")}
-                open={open}
-                setOpen={setOpen}
-            />
-            <div className="w-full max-w-[850px] px-2 flex items-center justify-between mt-4 mx-auto">
-                <div className="flex flex-col">
-                    <Title text={book.title} className="font-bold text-xl" />
+            {canEdit && (
+                <DeleteBook
+                    bookId={book.id}
+                    callback={() => router.push("/my-books")}
+                    open={open}
+                    setOpen={setOpen}
+                />
+            )}
+            <div className="mx-auto flex w-full max-w-[948px] flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+                <div className="min-w-0">
+                    <p className="type-caption text-muted tabular-nums">
+                        {imgIndex + 1} / {slides.length}
+                    </p>
+                    <Title text={book.title} className="type-display-md mt-2" />
                 </div>
 
-                <div className="flex gap-2">
+                <div className="flex shrink-0 flex-wrap gap-2">
                     <button
-                        onClick={() => setOpen(true)}
-                        className="btn btn-circle btn-error btn-soft"
-                        title={t("delete")}
+                        onClick={toggleReading}
+                        className="button-secondary button-sm"
+                        aria-pressed={reading}
                     >
-                        <Trash2 className="size-6" />
+                        {loadingAudio ?
+                            <Loader2 className="size-4 animate-spin" />
+                        : reading ?
+                            <Square className="size-4" />
+                        :   <span className="w-5">
+                                <BooFace />
+                            </span>
+                        }
+                        {reading ? t("stop") : t("read-aloud")}
+                        {!reading && <Volume2 className="size-4" />}
                     </button>
                     <button
                         onClick={exportPDF}
-                        className="btn btn-circle btn-primary"
-                        title={t("download-pdf")}
+                        className="button-primary button-sm"
                         disabled={loadingPdf}
                     >
                         {loadingPdf ?
-                            <div className="loading" />
-                        :   <Download className="size-6" />}
+                            <Loader2 className="size-4 animate-spin" />
+                        :   <Download className="size-4" />}
+                        {t("download-pdf")}
                     </button>
+                    {canEdit && (
+                        <button
+                            onClick={() => setOpen(true)}
+                            className="button-icon text-error!"
+                            title={t("delete")}
+                            aria-label={t("delete")}
+                        >
+                            <Trash2 className="size-4" />
+                        </button>
+                    )}
                 </div>
             </div>
 
-            <div ref={containerRef} className="relative overflow-hidden mt-4">
+            <div className="relative mt-8 overflow-hidden md:mt-10">
                 <motion.div
                     drag="x"
-                    dragConstraints={{
-                        left: 0,
-                        right: 0,
-                    }}
-                    style={{
-                        x: dragX,
-                    }}
-                    animate={{
-                        translateX: `-${imgIndex * 100}%`,
-                    }}
+                    dragConstraints={{ left: 0, right: 0 }}
+                    style={{ x: dragX }}
+                    animate={{ translateX: `-${imgIndex * 100}%` }}
                     transition={SPRING_OPTIONS}
                     onDragEnd={onDragEnd}
-                    className={cn(
-                        "flex items-center",
-                        "cursor-grab active:cursor-grabbing"
-                    )}
+                    className="flex cursor-grab items-start active:cursor-grabbing"
                 >
-                    <Pages pages={pages} imgIndex={imgIndex} />
+                    {slides.map((slide, idx) => (
+                        <div key={slide.id} className="w-full shrink-0">
+                            {slide.kind === "dedication" ?
+                                <div className="mx-auto flex aspect-square w-full max-w-[450px] flex-col items-center justify-center gap-4 rounded-md border-2 border-dashed border-hairline bg-paper p-10 text-center">
+                                    <p className="type-eyebrow text-muted">
+                                        {t("dedication")}
+                                    </p>
+                                    <p className="font-display text-2xl font-medium text-ink">
+                                        {slide.text}
+                                    </p>
+                                </div>
+                            :   <div className="flex min-w-full flex-col items-center justify-center gap-4 md:flex-row md:gap-6">
+                                    <div
+                                        className={cn(
+                                            "relative aspect-square w-full max-w-[450px]",
+                                            idx === 0 ? "max-md:w-full" : (
+                                                "max-md:w-[70vw]"
+                                            )
+                                        )}
+                                    >
+                                        {slide.image !== "" && (
+                                            <NextImage
+                                                key={slide.image}
+                                                src={slide.image}
+                                                className="rounded-md select-none"
+                                                alt={slide.text}
+                                                width={1024}
+                                                height={1024}
+                                                isCover={slide.kind === "cover"}
+                                            />
+                                        )}
+                                        {redrawing === slide.id && (
+                                            <div className="absolute inset-0 z-40 flex flex-col items-center justify-center gap-2 rounded-md bg-canvas/85 text-center">
+                                                <Loader2 className="size-6 animate-spin text-ink" />
+                                                <span className="type-label text-ink">
+                                                    {t("redrawing")}
+                                                </span>
+                                            </div>
+                                        )}
+                                        {canEdit &&
+                                            slide.kind === "page" &&
+                                            redrawsLeft > 0 &&
+                                            redrawing !== slide.id && (
+                                                <button
+                                                    onClick={() =>
+                                                        redraw(slide.id)
+                                                    }
+                                                    disabled={!!redrawing}
+                                                    className="button-secondary button-sm absolute right-3 bottom-3 z-40"
+                                                    title={t("redraws-left", {
+                                                        count: redrawsLeft,
+                                                    })}
+                                                >
+                                                    <RefreshCw className="size-4" />
+                                                    {t("redraw")}
+                                                </button>
+                                            )}
+                                    </div>
+                                    {slide.text && (
+                                        <div
+                                            className="relative flex w-full max-w-[450px] flex-col justify-center rounded-md text-navy max-md:mx-auto md:aspect-square"
+                                            style={{ background: slide.color }}
+                                        >
+                                            <div className="type-title-md p-8 md:p-12 md:text-[22px]">
+                                                {slide.text}
+                                            </div>
+                                            <p className="type-caption absolute bottom-4 left-1/2 -translate-x-1/2 text-navy/60 tabular-nums">
+                                                {slide.number + 1}
+                                            </p>
+                                        </div>
+                                    )}
+                                </div>
+                            }
+                        </div>
+                    ))}
                 </motion.div>
             </div>
 
-            <div className="mx-auto w-fit flex items-center justify-between gap-x-4 mt-6">
+            {canEdit && (
+                <p className="type-caption mt-6 text-center text-muted">
+                    ✨ {t("redraws-left", { count: redrawsLeft })}
+                </p>
+            )}
+
+            <div className="mx-auto mt-6 flex w-fit items-center gap-4">
                 <button
-                    className="btn btn-circle flex items-center gap-1"
+                    className="button-icon"
                     onClick={handlePrev}
                     disabled={imgIndex === 0}
+                    aria-label="Previous page"
                 >
-                    <ChevronLeft className="size-5" />
+                    <ChevronLeft className="size-4" />
                 </button>
-                <div className="flex w-full justify-center gap-2">
-                    {Array.from({ length: pages.length }).map((_, idx) => {
-                        return (
-                            <button
-                                key={idx}
-                                onClick={() => setImgIndex(idx)}
-                                className={cn(
-                                    "h-3 w-3 rounded-full transition-colors",
-                                    idx === imgIndex ? "bg-primary" : (
-                                        "bg-accent"
-                                    )
-                                )}
-                                aria-label={`Go to page ${idx + 1}`}
-                            />
-                        );
-                    })}
+                <div className="flex flex-wrap justify-center gap-1.5">
+                    {slides.map((s, idx) => (
+                        <button
+                            key={s.id}
+                            onClick={() => setImgIndex(idx)}
+                            className={cn(
+                                "h-2 rounded-full transition-all",
+                                idx === imgIndex ? "w-6 bg-ink" : (
+                                    "w-2 bg-hairline"
+                                )
+                            )}
+                            aria-label={`Go to page ${idx + 1}`}
+                        />
+                    ))}
                 </div>
                 <button
-                    className="btn btn-circle flex items-center gap-1"
+                    className="button-icon"
                     onClick={handleNext}
-                    disabled={imgIndex === pages.length - 1}
+                    disabled={imgIndex === slides.length - 1}
+                    aria-label="Next page"
                 >
-                    <ChevronRight className="size-5" />
+                    <ChevronRight className="size-4" />
                 </button>
             </div>
-        </>
-    );
-};
-
-const Pages: React.FC<PagesProps> = ({ pages }) => {
-    return (
-        <>
-            {sortPages(pages).map((page, idx) => {
-                return (
-                    <motion.div
-                        key={idx}
-                        transition={SPRING_OPTIONS}
-                        className={cn(
-                            "w-full shrink-0 rounded-xl object-cover"
-                        )}
-                    >
-                        <div className="flex flex-col md:flex-row items-center justify-center min-w-full gap-4 snap-center">
-                            <div
-                                className={cn(
-                                    "relative aspect-square w-full max-w-[450px]",
-                                    idx === 0 ? "max-md:w-full" : (
-                                        "max-md:w-[70vw]"
-                                    )
-                                )}
-                            >
-                                {page.image !== "" && (
-                                    <NextImage
-                                        src={page.image}
-                                        className="rounded-2xl select-none"
-                                        alt={page.text}
-                                        width={1024}
-                                        height={1024}
-                                        isCover={idx == 0}
-                                    />
-                                )}
-                            </div>
-                            {page.text && (
-                                <div
-                                    className="relative flex flex-col justify-center rounded-2xl w-full max-w-[450px] md:aspect-square text-gray-800 max-md:mx-auto"
-                                    style={{ background: page.color }}
-                                >
-                                    <div className="text-xl md:text-2xl leading-relaxed text-justify p-8">
-                                        {page.text}
-                                    </div>
-                                    <p className="absolute bottom-2 left-1/2 -translate-x-1/2 text-sm text-gray-600">
-                                        {idx}
-                                    </p>
-                                </div>
-                            )}
-                        </div>
-                    </motion.div>
-                );
-            })}
         </>
     );
 };

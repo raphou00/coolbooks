@@ -3,77 +3,185 @@
 
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
+/*
+ * Bibliboo design tokens — a toy-box world.
+ * Warm paper, crayon colours, chunky rounded type, thick ink outlines and
+ * sticker-like cards with a hard bottom edge. Dark mode is "bedtime".
+ */
+:root,
 html[data-theme="light"] {
     color-scheme: light;
 
-    --color-primary: #6bc4d9;
-    --color-primary-content: #ffffff;
-    --color-secondary: #e89fdf;
-    --color-secondary-content: #ffffff;
-    --color-neutral: #3d4451;
+    --cb-canvas: #fff8ea; /* warm paper page */
+    --cb-paper: #ffffff; /* cards */
+    --cb-surface-soft: #ffffff;
+    --cb-surface-strong: #ffedc7;
+    --cb-hairline: #eadcbf;
+    --cb-outline: #23264a; /* thick toy outlines */
+
+    --cb-ink: #23264a;
+    --cb-body: #3a3d5c;
+    --cb-muted: #63668a;
+    --cb-border-strong: #b3adc2;
+
+    --cb-primary: #ff5a47;
+    --cb-primary-active: #e9442f;
+    --cb-on-primary: #ffffff;
+
+    --cb-link: #1d74c4;
+    --cb-link-active: #12538f;
+    --cb-info-border: #45b3ff;
+    --cb-success: #17803f;
+    --cb-error: #d93a28;
+
+    /* daisyUI bridge */
+    --color-primary: var(--cb-primary);
+    --color-primary-content: var(--cb-on-primary);
+    --color-secondary: #45b3ff;
+    --color-secondary-content: #23264a;
+    --color-neutral: var(--cb-muted);
     --color-neutral-content: #ffffff;
-    --color-accent: #000000;
-    --color-accent-content: #ffffff;
-    --color-base-100: #ffffff;
-    --color-base-200: #f9fafb;
-    --color-base-300: #f3f4f6;
-    --color-base-content: #1f2937;
-    --color-info: #0ea5e9;
-    --color-success: #22c55e;
-    --color-warning: #f59e0b;
-    --color-error: #ef4444;
+    --color-accent: var(--cb-surface-strong);
+    --color-accent-content: var(--cb-ink);
+    --color-base-100: var(--cb-canvas);
+    --color-base-200: var(--cb-paper);
+    --color-base-300: var(--cb-surface-strong);
+    --color-base-content: var(--cb-body);
+    --color-info: var(--cb-link);
+    --color-success: var(--cb-success);
+    --color-warning: #ffc93c;
+    --color-error: var(--cb-error);
+    --color-error-content: #ffffff;
 
-    --radius-box: 1.2rem;
-    --radius-field: 1rem;
-
-    --animation-btn: 0;
-    --animation-input: 0;
-    --btn-focus-scale: 0.99;
+    --radius-box: 18px;
+    --radius-field: 14px;
+    --radius-selector: 9999px;
+    --border: 2px;
+    --depth: 0;
+    --noise: 0;
 }
 
+/* Bedtime: a night-sky version of the same toy box */
 html[data-theme="dark"] {
     color-scheme: dark;
 
-    --color-primary: #6bc4d9;
-    --color-primary-content: #ffffff;
-    --color-secondary: #e89fdf;
-    --color-secondary-content: #ffffff;
-    --color-neutral: #cbd5e1;
-    --color-neutral-content: #1f2937;
-    --color-accent: #ffffff;
-    --color-accent-content: #000000;
-    --color-base-100: #101010;
-    --color-base-200: #1c1c1c;
-    --color-base-300: #323232;
-    --color-base-content: #f9fafb;
-    --color-info: #38bdf8;
-    --color-success: #4ade80;
-    --color-warning: #fbbf24;
-    --color-error: #f87171;
+    --cb-canvas: #161936;
+    --cb-paper: #20244a;
+    --cb-surface-soft: #20244a;
+    --cb-surface-strong: #2b3060;
+    --cb-hairline: #353a6e;
+    --cb-outline: #0b0d22;
 
+    --cb-ink: #fff8ea;
+    --cb-body: #e4e2f2;
+    --cb-muted: #aeb0d4;
+    --cb-border-strong: #5d6296;
 
-    --radius-box: 1.2rem;
-    --radius-field: 1rem;
+    --cb-primary: #ff6b59;
+    --cb-primary-active: #ff5a47;
+    --cb-on-primary: #ffffff;
 
-    --animation-btn: 0;
-    --animation-input: 0;
-    --btn-focus-scale: 0.99;
+    --cb-link: #7cc8ff;
+    --cb-link-active: #b3deff;
+    --cb-info-border: #7cc8ff;
+    --cb-success: #5fdc8f;
+    --cb-error: #ff8a7a;
+
+    --color-primary: var(--cb-primary);
+    --color-primary-content: var(--cb-on-primary);
+    --color-secondary: #45b3ff;
+    --color-secondary-content: #23264a;
+    --color-neutral: var(--cb-muted);
+    --color-neutral-content: #161936;
+    --color-accent: var(--cb-surface-strong);
+    --color-accent-content: var(--cb-ink);
+    --color-base-100: var(--cb-canvas);
+    --color-base-200: var(--cb-paper);
+    --color-base-300: var(--cb-surface-strong);
+    --color-base-content: var(--cb-body);
+    --color-info: var(--cb-link);
+    --color-success: var(--cb-success);
+    --color-warning: #ffc93c;
+    --color-error: var(--cb-error);
+    --color-error-content: #161936;
+
+    --radius-box: 18px;
+    --radius-field: 14px;
+    --radius-selector: 9999px;
+    --border: 2px;
+    --depth: 0;
+    --noise: 0;
 }
 
-* {
-    @apply scroll-smooth;
+@theme inline {
+    --font-sans: var(--font-body), ui-rounded, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+    --font-display: var(--cb-font-display);
+
+    --color-ink: var(--cb-ink);
+    --color-body: var(--cb-body);
+    --color-muted: var(--cb-muted);
+    --color-canvas: var(--cb-canvas);
+    --color-paper: var(--cb-paper);
+    --color-hairline: var(--cb-hairline);
+    --color-outline: var(--cb-outline);
+    --color-border-strong: var(--cb-border-strong);
+    --color-surface-soft: var(--cb-surface-soft);
+    --color-surface-strong: var(--cb-surface-strong);
+    --color-link: var(--cb-link);
+    --color-success-border: #36c26e;
+
+    /* Crayon box — identical in both themes, always paired with fixed text */
+    --color-tomato: #ff5a47;
+    --color-sun: #ffc93c;
+    --color-sky: #45b3ff;
+    --color-grass: #36c26e;
+    --color-berry: #b467ff;
+    --color-navy: #23264a;
+    --color-cream: #fff6e3;
+    --color-peach: #ffd2bf;
+    --color-mint: #c4f0d6;
+    --color-lilac: #ead9ff;
+    --color-ice: #d9f0ff;
+    --color-butter: #fff0c2;
+
+    --radius-sm: 10px;
+    --radius-md: 18px;
+    --radius-lg: 28px;
+}
+
+/* ---------- Base ---------- */
+
+:root {
+    --cb-font-display: var(--font-fredoka), var(--font-body), ui-rounded,
+        "Arial Rounded MT Bold", sans-serif;
 }
 
 html {
     overscroll-behavior-y: none;
+    scroll-behavior: smooth;
+    scroll-padding-top: 88px;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    background: var(--cb-canvas);
+    color: var(--cb-body);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 ::selection {
-    @apply bg-primary/80 text-primary-content;
+    background: #ffc93c;
+    color: #23264a;
 }
 
-.button:focus {
-    @apply border-none
+:focus-visible {
+    outline: 3px solid var(--cb-info-border);
+    outline-offset: 2px;
 }
 
 .no-scrollbar::-webkit-scrollbar {
@@ -85,28 +193,435 @@ html {
     scrollbar-width: none;
 }
 
-.max-w-8xl {
+/* ---------- Layout ---------- */
+
+@utility container-page {
     width: 100%;
-    max-width: 85rem;
+    max-width: calc(1240px + 96px);
+    margin-inline: auto;
+    padding-inline: 16px;
+
+    @media (width >= 48rem) {
+        padding-inline: 24px;
+    }
+
+    @media (width >= 64rem) {
+        padding-inline: 48px;
+    }
 }
 
-.custom-shape-divider-bottom-1767706513 {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    overflow: hidden;
-    line-height: 0;
-    transform: rotate(180deg);
+@utility card-pad {
+    padding: 24px;
+
+    @media (width >= 48rem) {
+        padding: 48px;
+    }
 }
 
-.custom-shape-divider-bottom-1767706513 svg {
-    position: relative;
-    display: block;
-    width: calc(100% + 1.3px);
-    height: 71px;
+/* Sticker: paper card with a hard bottom edge */
+@utility sticker {
+    background: var(--cb-paper);
+    border: 2px solid var(--cb-outline);
+    border-radius: 22px;
+    box-shadow: 0 5px 0 var(--cb-outline);
 }
 
-.custom-shape-divider-bottom-1767706513 .shape-fill {
-    fill: var(--color-base-100);
+/* ---------- Typography ---------- */
+
+@utility type-display-xl {
+    font-family: var(--cb-font-display);
+    font-size: 40px;
+    font-weight: 600;
+    line-height: 1.04;
+    letter-spacing: -0.01em;
+
+    @media (width >= 48rem) {
+        font-size: 56px;
+    }
+}
+
+@utility type-display-lg {
+    font-family: var(--cb-font-display);
+    font-size: 40px;
+    font-weight: 600;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+
+    @media (width >= 64rem) {
+        font-size: 60px;
+    }
+}
+
+@utility type-display-md {
+    font-family: var(--cb-font-display);
+    font-size: 30px;
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.005em;
+
+    @media (width >= 48rem) {
+        font-size: 40px;
+    }
+}
+
+@utility type-title-lg {
+    font-family: var(--cb-font-display);
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+@utility type-title-md {
+    font-family: var(--cb-font-display);
+    font-size: 21px;
+    font-weight: 600;
+    line-height: 1.25;
+}
+
+@utility type-title-sm {
+    font-family: var(--cb-font-display);
+    font-size: 19px;
+    font-weight: 600;
+    line-height: 1.25;
+}
+
+@utility type-label {
+    font-size: 16px;
+    font-weight: 800;
+    line-height: 1.3;
+}
+
+@utility type-body {
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+@utility type-body-lg {
+    font-size: 17px;
+    font-weight: 500;
+    line-height: 1.55;
+
+    @media (width >= 48rem) {
+        font-size: 19px;
+    }
+}
+
+@utility type-caption {
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.35;
+}
+
+@utility type-eyebrow {
+    font-family: var(--cb-font-display);
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+@utility type-price {
+    font-family: var(--cb-font-display);
+    font-size: 44px;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.01em;
+    font-variant-numeric: tabular-nums;
+}
+
+@layer components {
+    /* ---------- Wordmark ---------- */
+
+    .wordmark {
+        display: inline-flex;
+        font-family: var(--cb-font-display);
+        font-weight: 700;
+        font-size: 30px;
+        line-height: 1;
+        letter-spacing: -0.02em;
+        white-space: nowrap;
+    }
+
+    .wordmark > span {
+        display: inline-block;
+        position: relative;
+    }
+
+    .wordmark > span:nth-child(1) { color: #ff5a47; transform: rotate(-6deg); }
+    .wordmark > span:nth-child(2) { color: #ffc93c; transform: translateY(-0.04em) rotate(4deg); }
+    .wordmark > span:nth-child(3) { color: #45b3ff; transform: rotate(-3deg); }
+    .wordmark > span:nth-child(4) { color: #36c26e; transform: translateY(-0.05em) rotate(5deg); }
+    .wordmark > span:nth-child(5) { color: #b467ff; transform: rotate(-4deg); }
+    .wordmark > span:nth-child(6) { color: #ff5a47; transform: translateY(-0.03em) rotate(3deg); }
+
+    /* the two o's are Boo's eyes */
+    .wordmark > .wordmark-eye {
+        color: var(--cb-ink);
+    }
+
+    .wordmark > .wordmark-eye::after {
+        content: "";
+        position: absolute;
+        width: 0.15em;
+        height: 0.15em;
+        border-radius: 50%;
+        background: currentColor;
+        left: 54%;
+        top: 58%;
+        transform: translate(-50%, -50%);
+    }
+
+    .wordmark-mono > span {
+        color: currentColor !important;
+    }
+
+    /* ---------- Buttons ---------- */
+
+    .button-primary,
+    .button-secondary,
+    .button-on-dark {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        min-height: 52px;
+        padding: 10px 26px;
+        border-radius: 9999px;
+        border: 2.5px solid var(--cb-outline);
+        box-shadow: 0 4px 0 var(--cb-outline);
+        font-family: var(--cb-font-display);
+        font-size: 18px;
+        font-weight: 600;
+        line-height: 1.2;
+        white-space: nowrap;
+        cursor: pointer;
+        user-select: none;
+        transition:
+            transform 90ms ease,
+            box-shadow 90ms ease,
+            background-color 90ms ease;
+    }
+
+    .button-primary {
+        background: var(--cb-primary);
+        color: var(--cb-on-primary);
+    }
+
+    .button-secondary {
+        background: var(--cb-paper);
+        color: var(--cb-ink);
+    }
+
+    /* White button on the coloured bands: always light, always ink */
+    .button-on-dark {
+        background: #ffffff;
+        color: #23264a;
+        border-color: #23264a;
+        box-shadow: 0 4px 0 #23264a;
+    }
+
+    .button-primary:active,
+    .button-secondary:active,
+    .button-on-dark:active {
+        transform: translateY(3px);
+        box-shadow: 0 1px 0 var(--cb-outline);
+    }
+
+    .button-on-dark:active {
+        box-shadow: 0 1px 0 #23264a;
+    }
+
+    .button-sm {
+        min-height: 42px;
+        padding: 6px 18px;
+        font-size: 16px;
+        border-width: 2px;
+        box-shadow: 0 3px 0 var(--cb-outline);
+    }
+
+    .button-danger {
+        background: var(--cb-error);
+        color: #ffffff;
+    }
+
+    .button-primary:disabled,
+    .button-secondary:disabled,
+    .button-on-dark:disabled,
+    .button-icon:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+        transform: none;
+    }
+
+    .button-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        width: 42px;
+        height: 42px;
+        border-radius: 9999px;
+        background: var(--cb-paper);
+        color: var(--cb-ink);
+        border: 2px solid var(--cb-outline);
+        box-shadow: 0 3px 0 var(--cb-outline);
+        cursor: pointer;
+        font-family: var(--cb-font-display);
+        font-weight: 600;
+        font-size: 14px;
+        transition: transform 90ms ease, box-shadow 90ms ease;
+    }
+
+    .button-icon:active {
+        transform: translateY(2px);
+        box-shadow: 0 1px 0 var(--cb-outline);
+    }
+
+    .text-link {
+        color: var(--cb-link);
+        font-weight: 700;
+        text-decoration: none;
+    }
+
+    .text-link:active {
+        color: var(--cb-link-active);
+    }
+
+    /* ---------- Inputs ---------- */
+
+    .field {
+        width: 100%;
+        height: 50px;
+        padding: 0 16px;
+        border-radius: 14px;
+        border: 2px solid var(--cb-hairline);
+        background: var(--cb-paper);
+        color: var(--cb-ink);
+        font-size: 16px; /* 16px avoids iOS zoom on focus */
+        font-weight: 600;
+        line-height: 1.25;
+        outline: none;
+        transition:
+            border-color 120ms ease,
+            box-shadow 120ms ease;
+    }
+
+    textarea.field {
+        height: auto;
+        padding: 12px 16px;
+        line-height: 1.5;
+        resize: none;
+    }
+
+    .field::placeholder {
+        color: var(--cb-border-strong);
+        font-weight: 500;
+    }
+
+    .field:focus,
+    .field:focus-visible,
+    .field[data-state="open"] {
+        border-color: var(--cb-info-border);
+        outline: none;
+        box-shadow: 0 0 0 4px rgb(69 179 255 / 0.22);
+    }
+
+    .field[aria-invalid="true"] {
+        border-color: var(--cb-error);
+    }
+
+    .field-label {
+        display: block;
+        padding-bottom: 6px;
+        font-size: 15px;
+        font-weight: 800;
+        line-height: 1.35;
+        color: var(--cb-ink);
+    }
+
+    /* ---------- Choice cards (radio) ---------- */
+
+    .choice {
+        position: relative;
+        display: flex;
+        cursor: pointer;
+        border-radius: 18px;
+        border: 2px solid var(--cb-hairline);
+        background: var(--cb-paper);
+        color: var(--cb-ink);
+        transition:
+            border-color 120ms ease,
+            box-shadow 120ms ease,
+            transform 120ms ease;
+    }
+
+    .choice:has(input:checked) {
+        border-color: var(--cb-outline);
+        background: #fff0c2;
+        color: #23264a;
+        box-shadow: 0 4px 0 var(--cb-outline);
+        transform: translateY(-2px);
+    }
+
+    .choice:has(input:focus-visible) {
+        outline: 3px solid var(--cb-info-border);
+        outline-offset: 2px;
+    }
+}
+
+/* Checked choice cards are butter-yellow in both themes, so their text stays
+   dark. !important because it must beat the `text-muted` utility. */
+.choice:has(input:checked) .text-muted {
+    color: #63668a !important;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .animate-bob {
+        animation: bob 3.2s ease-in-out infinite;
+        transform-origin: 50% 90%;
+    }
+
+    @keyframes bob {
+        0%,
+        100% {
+            transform: translateY(0) rotate(-1deg);
+        }
+        50% {
+            transform: translateY(-8px) rotate(1deg);
+        }
+    }
+
+    /* Ground shadow under a bobbing mascot: same timing as .animate-bob */
+    .animate-bob-shadow {
+        animation: bob-shadow 3.2s ease-in-out infinite;
+    }
+
+    @keyframes bob-shadow {
+        0%,
+        100% {
+            transform: scaleX(1);
+            opacity: 1;
+        }
+        50% {
+            transform: scaleX(0.8);
+            opacity: 0.6;
+        }
+    }
+
+    .animate-twinkle {
+        animation: twinkle 3.3s ease-in-out infinite;
+        transform-origin: center;
+    }
+
+    @keyframes twinkle {
+        0%,
+        100% {
+            transform: scale(1) rotate(0deg);
+        }
+        50% {
+            transform: scale(0.7) rotate(20deg);
+        }
+    }
 }

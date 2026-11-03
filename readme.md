@@ -11,35 +11,32 @@
 
 ## 🛠 Tech Stack
 
-- **Next.js**
-- **AWS**
-- **TypeScript / JavaScript**
-- **Nano Banana**
-- **GPT 5.2**
+- **Next.js** (App Router) + TypeScript
+- **AWS**: DynamoDB (single-table data + rate limits), S3/CloudFront, Lambda (book generator), managed with Pulumi
+- **Stripe** Checkout (CHF, card + TWINT)
+- **OpenRouter** (story planning + illustrations), **OpenAI** (moderation, read-aloud)
 
-## 🚀 Installation & Setup
-
-### 1️⃣ Clone the repository
+## 🚀 Local development
 
 ```bash
-git clone https://github.com/raphou00/coolbooks.git
-cd coolbooks
-```
-
-### 2️⃣ Install dependencies
-
-```bash
-npm install
-# or
 bun install
+cp .example.env .env        # fill in the values
+
+# DynamoDB Local on port 8001, then create the tables
+docker run -d --name coolbooks-dynamodb -p 8001:8000 \
+  amazon/dynamodb-local:2.5.4 -jar DynamoDBLocal.jar -sharedDb -inMemory
+bun run db:local
+
+bun run dev
 ```
 
-### 3️⃣ Start the Expo server
+Set `DYNAMODB_ENDPOINT=http://localhost:8001` in `.env` for local development; leave it empty in production.
+
+### Migrating existing Postgres data
 
 ```bash
-npm run dev
-# or
-bun run dev
+DATABASE_URL=postgres://… bun run db:migrate --dry-run   # report only
+DATABASE_URL=postgres://… bun run db:migrate             # copy into DATA_DYNAMODB_TABLE
 ```
 
 ## 🧠 Technical Highlights
