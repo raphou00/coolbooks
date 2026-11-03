@@ -1,36 +1,30 @@
-# 📚 Coolbooks
+# 📚 Bibliboo
 
-> Generate AI books for kids in under 2 minutes
+> Personalised picture books for Swiss children, written and illustrated by AI, as a PDF or a printed hardcover
 
 ## 📱 Features
 
-- Describe your child's look with name
-- Choose art style (cartoon, comics, anime, watercolor)
-- Enter prompt for the story
-- Receive the book in PDF format to your email
+- Describe the child (name, look, age) and a story idea, pick an art style
+- Free cover preview before paying; one payment in CHF (card, TWINT)
+- Story in German, French, Italian or English; 12 illustrated pages, dedication page
+- PDF by email, read online with "Boo reads" audio, 3 free page redraws
+- Book editor: titles, texts, page colours, earlier pictures
+- Printed hardcover through Gelato (Switzerland only): print preview, "Confirm & print", tracking emails
+- Review email after delivery with a one-time 15% code; approved reviews on the homepage
 
 ## 🛠 Tech Stack
 
-- **Next.js** (App Router) + TypeScript
+- **Next.js** (App Router) + TypeScript, next-intl (de, fr, it, en)
 - **AWS**: DynamoDB (single-table data + rate limits), S3/CloudFront, Lambda (book generator), managed with Pulumi
 - **Stripe** Checkout (CHF, card + TWINT)
-- **OpenRouter** (story planning + illustrations), **OpenAI** (moderation, read-aloud)
+- **OpenRouter** (story planning + Nano Banana 2 illustrations), **OpenAI** (moderation, read-aloud)
+- **Gelato** print API, **Resend** email
 
 ## 🚀 Local development
 
-```bash
-bun install
-cp .example.env .env        # fill in the values
+See **[LOCAL.md](LOCAL.md)**: `bun install`, `cp local.example.env .env`, `bun run local`. No cloud account needed.
 
-# DynamoDB Local on port 8001, then create the tables
-docker run -d --name coolbooks-dynamodb -p 8001:8000 \
-  amazon/dynamodb-local:2.5.4 -jar DynamoDBLocal.jar -sharedDb -inMemory
-bun run db:local
-
-bun run dev
-```
-
-Set `DYNAMODB_ENDPOINT=http://localhost:8001` in `.env` for local development; leave it empty in production.
+Work in progress and next steps: [todo.md](todo.md).
 
 ### Migrating existing Postgres data
 
@@ -38,18 +32,6 @@ Set `DYNAMODB_ENDPOINT=http://localhost:8001` in `.env` for local development; l
 DATABASE_URL=postgres://… bun run db:migrate --dry-run   # report only
 DATABASE_URL=postgres://… bun run db:migrate             # copy into DATA_DYNAMODB_TABLE
 ```
-
-## 🧠 Technical Highlights
-
-- State management using React hooks
-- Local persistence with AsyncStorage
-- Component-based architecture
-- Clean folder structure
-- Mobile-first responsive layout
-
-## 🔮 Possible Improvements
-
-- Print the book, then delivery
 
 ## 📄 License
 

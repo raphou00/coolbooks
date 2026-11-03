@@ -81,7 +81,7 @@ const Header: React.FC<HeaderProps> = ({ user, children }) => {
                     <div className="flex items-center gap-8 lg:gap-10">
                         <Link
                             href="/"
-                            aria-label="Coolbooks"
+                            aria-label="Bibliboo"
                             onClick={() => setSheetOpen(false)}
                         >
                             <Logo withText />

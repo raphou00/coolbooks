@@ -114,6 +114,19 @@ const hexToRgb = (hex: string) => {
         :   [255, 255, 255];
 };
 
+/** The logo from disk, or from the site when public/ isn't bundled (Vercel). */
+const readLogo = async () => {
+    try {
+        return await readFile(
+            path.join(process.cwd(), "public", "favicon-96x96.png")
+        );
+    } catch {
+        const res = await fetch(`${process.env.APP_URL}/favicon-96x96.png`);
+        if (!res.ok) throw new Error(`Logo: ${res.status}`);
+        return Buffer.from(await res.arrayBuffer());
+    }
+};
+
 const fontCache = new Map<string, string>();
 const fetchFont = async (url: string) => {
     const hit = fontCache.get(url);
@@ -198,9 +211,7 @@ export const buildPrintPDF = async ({
     );
     pdf.addFont("Poppins-Bold.ttf", "Poppins", "bold");
 
-    const logo = await readFile(
-        path.join(process.cwd(), "public", "favicon-96x96.png")
-    );
+    const logo = await readLogo();
     const logoData = `data:image/png;base64,${logo.toString("base64")}`;
 
     if (!book.title.trim()) warnings.push({ kind: "title-missing" });
