@@ -3,22 +3,26 @@
 ## Target workflow
 
 ```
-1. Create      Customer describes the child and story, pays for the digital book (as today)
+1. Create      Customer describes the child and story, then chooses the format
       ↓
-2. Generate    Lambda generates the book and the PDF is emailed (as today)
+2. Pay         ONE payment upfront, in CHF:
+      ↓          📄 Digital (e.g. CHF 9.90)
+      ↓          📕 Hardcover + digital, shipping in Switzerland included (e.g. CHF 39–49)
+      ↓        Hardcover: the address is collected now (Switzerland only)
+3. Generate    Lambda generates the book and the PDF is emailed (as today)
       ↓
-3. Edit        /book/[id]/edit: change texts, layouts, image framing,
-               limited image regenerations
+4. Edit        /book/[id]/edit: change texts, layouts, image framing,
+      ↓        3 free image regenerations included
+5. Preview     Print preview of every page, warnings, "I approve this book" checkbox
       ↓
-4. Preview     Print preview of every page, warnings, "I approve this book" checkbox
-      ↓
-5. Order       Stripe Checkout in CHF, shipping to Switzerland only
+6. Confirm     Hardcover: "Confirm & print" (no second payment, address can be changed)
+      ↓        Digital: "Upgrade to hardcover" = pay the difference (the only second payment)
       ↓        The book is locked (snapshot), so later edits don't change the order
-6. Print       Build the print PDF and cover, then create the Gelato order
+7. Print       Build the print PDF and cover, then create the Gelato order
       ↓
-7. Track       Gelato webhooks (in production, shipped with tracking, delivered)
+8. Track       Gelato webhooks (in production, shipped with tracking, delivered)
       ↓        Status emails to the customer
-8. Review      Review email ~7 days after delivery. A submitted review earns a
+9. Review      Review email ~7 days after delivery. A submitted review earns a
                15% one-time code for the next order
 ```
 
@@ -36,12 +40,18 @@
   - [ ] Confirm the file format: one PDF (cover + inner pages) or a separate cover file
   - [ ] Note the real price of printing + shipping to CH, then set the selling price of the printed book
 - [ ] Swiss VAT: check whether you go over the CHF 100k turnover threshold (registration is needed only above it)
+- [ ] **Image model test**: generate the same 3 books with Nano Banana Pro (`gemini-3-pro-image`) and
+      Nano Banana 2 (`gemini-3.1-flash-image`) at 2K and compare character consistency
+  - Nano Banana Pro 2K ≈ $0.134 / image, so a full book (13 images) ≈ $1.80 and with 3 regenerations ≈ $2.20
+  - Nano Banana 2 2K ≈ $0.101 / image, so ≈ $1.35 and ≈ $1.70
+  - Check the current prices on Google's pricing page and add a hard monthly budget limit
+- [ ] No free full-book preview (each unpaid book costs ~$2). Maybe later: a free **cover + story text** teaser
+      (~$0.20), behind a verified email, with a daily cap
 
 ## Phase 1: Print-ready book
 
-- [ ] **High-resolution images**: 20 cm at 300 DPI ≈ 2400 px, and the current images are ~1024 px
-  - Option A: upscale (e.g. Real-ESRGAN) **only when a print order is confirmed**, which keeps edits and regenerations cheap
-  - Option B: an image model with 2K/4K output (more expensive for every generation)
+- [ ] **High-resolution images**: generate at **2K** (2048 px ≈ 260 DPI at 20 cm, good for print) with the model
+      chosen in Phase 0, so no upscaler is needed. The current images are ~1024 px (≈ 130 DPI, too soft)
 - [ ] `src/lib/print.ts`: a separate print PDF generator (keep `export.ts` for the emailed PDF)
   - [ ] Single pages of 206×206 mm (200 mm + 3 mm bleed), no spreads
   - [ ] Each story spread becomes 2 pages (image page + text page), so 12 spreads = 24 pages
@@ -94,13 +104,21 @@ Recommendation: **3 free regenerations per book**, then paid packs.
 - [ ] New `PrintOrder` model: `id`, `bookId`, `userId`, `status`, `stripeSessionId`, `gelatoOrderId`,
       `snapshot` (Json: frozen title/pages/layouts), `pdfKey`, `coverKey`, `shippingAddress` (Json),
       `trackingUrl`, `shippedAt`, `deliveredAt`, `reviewEmailSentAt`, `createdAt`
-- [ ] Stripe Checkout `mode: "payment"`, currency `CHF`,
-      `shipping_address_collection: { allowed_countries: ["CH"] }`, `allow_promotion_codes: true`
+- [ ] The first checkout offers 2 products: Digital / Hardcover + digital (`mode: "payment"`, currency `CHF`,
+      `allow_promotion_codes: true`)
+- [ ] Hardcover: `shipping_address_collection: { allowed_countries: ["CH"] }`, and on payment create a
+      `PrintOrder` with `status = AWAITING_CONFIRMATION`
 - [ ] Show the price including shipping (no surprise fees)
-- [ ] On payment (`checkout.session.completed`), set `Book.status = LOCKED` and save the snapshot
+- [ ] "Confirm & print" (no payment): check/change the address, then set `Book.status = LOCKED`, save the snapshot
+      and send to Gelato
+- [ ] Not confirmed: reminder emails after 3, 7 and 14 days. Never print automatically.
+      After 60 days, refund the print part (the digital book stays)
+- [ ] Digital → hardcover upgrade: a second Checkout for the **difference only** (hardcover price − digital price),
+      then the same "Confirm & print" flow
+- [ ] Cash flow: the customer always pays before you pay Gelato, so there's no money to front
 
 ### Sending to Gelato
-- [ ] Upscale images, then generate the print PDF + cover from the **snapshot**, then upload to S3
+- [ ] Generate the print PDF + cover from the **snapshot**, then upload to S3
 - [ ] `POST order.gelatoapis.com/v4/orders`: `orderReferenceId = PrintOrder.id`, `productUid`,
       `pageCount`, `files`, shipping address (CH)
 - [ ] If Gelato rejects the order, refund automatically and email the customer (same logic as the security branch)
