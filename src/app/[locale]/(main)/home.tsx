@@ -147,48 +147,7 @@ const Hero: React.FC<BooksProps> = ({ books }) => {
                 </div>
 
                 <div className="lg:col-span-5">
-                    <div className="relative mx-auto aspect-square w-full max-w-[420px]">
-                        {first && (
-                            <div className="absolute left-0 top-[12%] w-[38%] -rotate-[8deg] overflow-hidden rounded-md border-[2.5px] border-navy bg-white p-1.5 shadow-[0_5px_0_#23264a]">
-                                <div className="aspect-square overflow-hidden rounded-[10px]">
-                                    <NextImage
-                                        src={first.cover}
-                                        width={512}
-                                        height={512}
-                                        alt={first.title}
-                                        isCover
-                                    />
-                                </div>
-                            </div>
-                        )}
-                        {second && (
-                            <div className="absolute right-0 top-[4%] w-[34%] rotate-[7deg] overflow-hidden rounded-md border-[2.5px] border-navy bg-white p-1.5 shadow-[0_5px_0_#23264a]">
-                                <div className="aspect-square overflow-hidden rounded-[10px]">
-                                    <NextImage
-                                        src={second.cover}
-                                        width={512}
-                                        height={512}
-                                        alt={second.title}
-                                        isCover
-                                    />
-                                </div>
-                            </div>
-                        )}
-                        <div className="absolute inset-x-[14%] bottom-0 top-[22%]">
-                            <Boo
-                                pose="wink"
-                                className="animate-bob"
-                                title="Boo"
-                            />
-                        </div>
-                        <p className="absolute left-[30%] top-0 max-w-[48%] -translate-x-1/2 rounded-2xl border-2 border-navy bg-white px-3 py-2 text-center font-display text-sm font-semibold leading-tight text-navy shadow-[0_3px_0_#23264a] sm:text-base">
-                            {t("hero.boo")}
-                            <span
-                                aria-hidden
-                                className="absolute -bottom-[9px] left-1/2 size-4 -translate-x-1/2 rotate-45 border-b-2 border-r-2 border-navy bg-white"
-                            />
-                        </p>
-                    </div>
+                    <HeroBoo message={t("hero.boo")} covers={[first, second]} />
                 </div>
             </div>
 
@@ -217,6 +176,117 @@ const Hero: React.FC<BooksProps> = ({ books }) => {
         </section>
     );
 };
+
+/** Four-point twinkle star, same shape as Boo's wink sparkle. */
+const Twinkle: React.FC<{ className?: string; color: string }> = ({
+    className,
+    color,
+}) => (
+    <svg viewBox="0 0 24 24" aria-hidden className={cn("absolute", className)}>
+        <path
+            d="M12 1.5 Q13.6 10.4 22.5 12 Q13.6 13.6 12 22.5 Q10.4 13.6 1.5 12 Q10.4 10.4 12 1.5 Z"
+            fill={color}
+            stroke="#23264a"
+            strokeWidth="1.8"
+            strokeLinejoin="round"
+        />
+    </svg>
+);
+
+const Cloud: React.FC<{ className?: string }> = ({ className }) => (
+    <svg viewBox="0 0 64 28" aria-hidden className={cn("absolute", className)}>
+        <path
+            d="M10 26 Q2 26 3 19 Q4 13 11 14 Q12 5 22 6 Q28 0 36 5 Q46 2 48 12 Q58 11 60 19 Q61 26 53 26 Z"
+            fill="#fff"
+            stroke="#23264a"
+            strokeWidth="2.2"
+            strokeLinejoin="round"
+        />
+    </svg>
+);
+
+const HeroCover: React.FC<{
+    book: BooksProps["books"][number];
+    className: string;
+}> = ({ book, className }) => (
+    <div
+        className={cn(
+            "absolute z-[5] overflow-hidden rounded-md border-[2.5px] border-navy bg-white p-1.5 shadow-[0_5px_0_#23264a]",
+            className
+        )}
+    >
+        <div className="aspect-square overflow-hidden rounded-[10px]">
+            <NextImage
+                src={book.cover}
+                width={512}
+                height={512}
+                alt={book.title}
+                isCover
+            />
+        </div>
+    </div>
+);
+
+/**
+ * Boo on a little sky-and-hill sticker scene, with a speech bubble aimed at
+ * his head. The two latest covers tuck in at the edges when there are any.
+ */
+const HeroBoo: React.FC<{
+    message: string;
+    covers: (BooksProps["books"][number] | undefined)[];
+}> = ({ message, covers: [first, second] }) => (
+    <div className="relative mx-auto aspect-square w-full max-w-[460px]">
+        {/* backdrop disc */}
+        <div className="absolute inset-[9%] overflow-hidden rounded-full border-[2.5px] border-navy bg-sky shadow-[0_6px_0_#23264a] dark:border-outline dark:shadow-[0_6px_0_var(--cb-outline)]">
+            <Cloud className="left-[10%] top-[30%] w-[24%] opacity-95" />
+            <Cloud className="right-[8%] top-[46%] w-[17%] opacity-95" />
+            <div className="absolute -inset-x-[15%] -bottom-[38%] h-[70%] rounded-[50%] border-[2.5px] border-navy bg-grass" />
+        </div>
+
+        {first && (
+            <HeroCover
+                book={first}
+                className="bottom-[4%] left-0 w-[30%] -rotate-[9deg]"
+            />
+        )}
+        {second && (
+            <HeroCover
+                book={second}
+                className="right-0 top-[10%] w-[27%] rotate-[8deg]"
+            />
+        )}
+
+        <Twinkle
+            color="#ffc93c"
+            className="right-[4%] top-[2%] w-[9%] animate-twinkle"
+        />
+        <Twinkle
+            color="#ff5a47"
+            className="left-[2%] top-[46%] w-[6%] animate-twinkle [animation-delay:-1.1s]"
+        />
+        <Twinkle
+            color="#ffc93c"
+            className="bottom-[2%] right-[10%] w-[7%] animate-twinkle [animation-delay:-2.2s]"
+        />
+
+        {/* ground shadow, shrinks as Boo bobs up */}
+        <div
+            aria-hidden
+            className="absolute bottom-[12.5%] left-[31%] z-[6] h-[4%] w-[38%] animate-bob-shadow rounded-[50%] bg-navy/25"
+        />
+        <div className="absolute left-[16%] top-[19%] z-10 w-[68%]">
+            <Boo pose="wink" className="animate-bob" title="Boo" />
+        </div>
+
+        <p className="absolute left-0 top-[1%] z-20 max-w-[56%] -rotate-3 rounded-2xl border-[2.5px] border-navy bg-white px-4 py-2.5 text-center font-display text-base font-semibold leading-tight text-navy shadow-[0_4px_0_#23264a] sm:text-lg">
+            {message}
+            <span
+                aria-hidden
+                className="absolute -bottom-[10px] left-[68%] size-4 rotate-45 border-b-[2.5px] border-r-[2.5px] border-navy bg-white"
+            />
+        </p>
+    </div>
+);
 
 /* ---------- How it works — sun band ---------- */
 

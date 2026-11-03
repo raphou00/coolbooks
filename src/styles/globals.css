@@ -592,4 +592,36 @@ body {
             transform: translateY(-8px) rotate(1deg);
         }
     }
+
+    /* Ground shadow under a bobbing mascot: same timing as .animate-bob */
+    .animate-bob-shadow {
+        animation: bob-shadow 3.2s ease-in-out infinite;
+    }
+
+    @keyframes bob-shadow {
+        0%,
+        100% {
+            transform: scaleX(1);
+            opacity: 1;
+        }
+        50% {
+            transform: scaleX(0.8);
+            opacity: 0.6;
+        }
+    }
+
+    .animate-twinkle {
+        animation: twinkle 3.3s ease-in-out infinite;
+        transform-origin: center;
+    }
+
+    @keyframes twinkle {
+        0%,
+        100% {
+            transform: scale(1) rotate(0deg);
+        }
+        50% {
+            transform: scale(0.7) rotate(20deg);
+        }
+    }
 }
