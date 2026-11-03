@@ -10,6 +10,7 @@ import type {
     PutObjectCommandOutput,
 } from "@aws-sdk/client-s3";
 import env from "@/lib/env";
+import { deleteLocalPrefix, isLocal, writeLocalFile } from "@/lib/local";
 
 const s3 = new S3Client({
     region: env.AWS_REGION,
@@ -41,6 +42,11 @@ export const putObject = async (
         body = file;
     }
 
+    if (isLocal) {
+        await writeLocalFile(key, body);
+        return {} as PutObjectCommandOutput;
+    }
+
     const params: PutObjectCommandInput = {
         Bucket: env.BUCKET_NAME,
         Key: key,
@@ -58,6 +64,8 @@ export const putObject = async (
 };
 
 export const deleteObject = async (prefix: string) => {
+    if (isLocal) return deleteLocalPrefix(prefix);
+
     let continuationToken: string | undefined = undefined;
 
     do {

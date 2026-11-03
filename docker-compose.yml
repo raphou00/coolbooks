@@ -1,0 +1,15 @@
+name: bibliboo
+
+# Local development only: DynamoDB Local on port 8001, data kept in a volume.
+services:
+    dynamodb:
+        image: amazon/dynamodb-local:2.5.4
+        command: -jar DynamoDBLocal.jar -sharedDb -dbPath /home/dynamodblocal/data
+        user: root
+        ports:
+            - "8001:8000"
+        volumes:
+            - dynamodb-data:/home/dynamodblocal/data
+
+volumes:
+    dynamodb-data:

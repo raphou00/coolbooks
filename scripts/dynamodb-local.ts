@@ -64,9 +64,20 @@ const tables: CreateTableCommandInput[] = [
     },
 ];
 
-const existing = new Set(
-    (await client.send(new ListTablesCommand({}))).TableNames ?? []
-);
+/** DynamoDB Local takes a few seconds to start after `docker compose up`. */
+const listTables = async () => {
+    for (let i = 0; ; i++) {
+        try {
+            return (await client.send(new ListTablesCommand({}))).TableNames;
+        } catch (err) {
+            if (i >= 30) throw err;
+            if (i === 0) console.log("Waiting for DynamoDB Local…");
+            await new Promise((r) => setTimeout(r, 1000));
+        }
+    }
+};
+
+const existing = new Set((await listTables()) ?? []);
 for (const table of tables) {
     if (existing.has(table.TableName!)) {
         console.log(`✓ ${table.TableName} already exists`);

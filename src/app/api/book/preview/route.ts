@@ -6,12 +6,13 @@ import env from "@/lib/env";
 import { routing } from "@/lib/navigation";
 import { checkRateLimit, ratelimitPreview } from "@/lib/rate-limiter";
 import { invokeCreator } from "@/lib/orders";
+import { mockAI } from "@/lib/local";
 import { previewSchema, type PreviewSchema } from "@/schema/book";
 
 /** Writing the story plan and drawing the cover takes ~30–60 s. */
 export const maxDuration = 300;
 
-const openai = new OpenAI({ apiKey: env.OPENAI_API_KEY });
+const openai = new OpenAI({ apiKey: env.OPENAI_API_KEY || "sk-local" });
 
 const localeOf = (req: NextRequest) => {
     const value = req.cookies.get("NEXT_LOCALE")?.value;
@@ -53,11 +54,17 @@ export const POST = async (req: NextRequest) => {
             });
         }
 
-        const moderation = await openai.moderations.create({
-            model: "omni-moderation-latest",
-            input: parsed.data.childName + " " + parsed.data.prompt,
-        });
-        if (moderation.results[0]?.flagged) {
+        // Local mock mode has no OpenAI key, so moderation is skipped there.
+        const flagged =
+            mockAI && !env.OPENAI_API_KEY ?
+                false
+            :   (
+                    await openai.moderations.create({
+                        model: "omni-moderation-latest",
+                        input: parsed.data.childName + " " + parsed.data.prompt,
+                    })
+                ).results[0]?.flagged;
+        if (flagged) {
             return NextResponse.json({
                 success: false,
                 message: t("messages.prompt-inappropriate"),

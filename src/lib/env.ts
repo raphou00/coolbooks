@@ -1,6 +1,21 @@
 import { createEnv } from "@t3-oss/env-nextjs";
 import { z } from "zod";
 
+/**
+ * LOCAL_MODE=true runs the whole shop on one machine: DynamoDB Local, files
+ * on disk, the book generator in-process, emails in a local inbox. Cloud
+ * keys (AWS, Resend, Google, Stripe, AI) then become optional.
+ */
+const local = process.env.LOCAL_MODE === "true";
+
+/** In local mode only, fall back to a development value. */
+const orLocal = (schema: z.ZodString, fallback: string) =>
+    local ? schema.default(fallback) : schema;
+
+/** A required string, or an optional one in local mode. */
+const need = (message: string) =>
+    local ? z.string().default("") : z.string().min(1, { message });
+
 export default createEnv({
     skipValidation: false,
     server: {
@@ -13,15 +28,28 @@ export default createEnv({
             .url({ message: "App URL is invalid" })
             .min(1, { message: "App URL is missing" }),
 
+        LOCAL_MODE: z
+            .enum(["true", "false"])
+            .default("false")
+            .transform((v) => v === "true"),
+
+        /**
+         * mock: canned story + placeholder images, no AI cost (local default).
+         * real: OpenRouter planner + image model.
+         */
+        AI_MODE: z.enum(["mock", "real"]).default(local ? "mock" : "real"),
+
+        /** mock: a local "pay" page instead of Stripe (local mode only). */
+        PAYMENTS: z.enum(["mock", "stripe"]).default("stripe"),
+
+        /** OpenRouter key; only read by the in-process generator in local mode. */
+        OPENROUTER_API_KEY: z.string().optional(),
+
         AWS_REGION: z.string().min(1, { message: "AWS Region is missing" }),
 
-        AWS_ACCESS_KEY_ID: z
-            .string()
-            .min(1, { message: "AWS Access Key ID is missing" }),
+        AWS_ACCESS_KEY_ID: need("AWS Access Key ID is missing"),
 
-        AWS_SECRET_ACCESS_KEY: z
-            .string()
-            .min(1, { message: "AWS Secret Access Key is missing" }),
+        AWS_SECRET_ACCESS_KEY: need("AWS Secret Access Key is missing"),
 
         /** Main data table (users, sessions, books, orders…). */
         DATA_DYNAMODB_TABLE: z
@@ -31,72 +59,69 @@ export default createEnv({
         /** Local development only: DynamoDB Local, e.g. http://localhost:8001 */
         DYNAMODB_ENDPOINT: z.string().url().optional(),
 
-        BUCKET_NAME: z.string().min(1, { message: "Bucket name is missing" }),
+        BUCKET_NAME: need("Bucket name is missing"),
 
-        CLOUDFRONT_URL: z
-            .string()
-            .min(1, { message: "Cloudfront URL is missing" }),
+        CLOUDFRONT_URL: need("Cloudfront URL is missing"),
 
-        BOOK_CREATOR_LAMBDA_ARN: z
-            .string()
-            .min(1, { message: "Book creator lambda ARN is missing" }),
+        BOOK_CREATOR_LAMBDA_ARN: need("Book creator lambda ARN is missing"),
 
         RATE_LIMITS_DYNAMODB_TABLE: z
             .string()
             .min(1, { message: "Rate limits DynamoDB table is missing" }),
 
-        RESEND_API_KEY: z
-            .string()
-            .min(1, { message: "Resend API key is missing" }),
+        RESEND_API_KEY: need("Resend API key is missing"),
 
-        SENDER_EMAIL: z.string().min(1, { message: "Sender Email is missing" }),
+        SENDER_EMAIL: orLocal(
+            z.string().min(1, { message: "Sender Email is missing" }),
+            "hello@bibliboo.local"
+        ),
 
-        STRIPE_SECRET_KEY: z
-            .string()
-            .min(1, { message: "Stripe Secret Key is missing" }),
+        STRIPE_SECRET_KEY: need("Stripe Secret Key is missing"),
 
-        STRIPE_WEBHOOK_SECRET: z
-            .string()
-            .min(1, { message: "Stripe Webhook Secret is missing" }),
+        STRIPE_WEBHOOK_SECRET: need("Stripe Webhook Secret is missing"),
 
-        GOOGLE_CLIENT_ID: z
-            .string()
-            .min(1, { message: "Google Client ID is missing" }),
+        GOOGLE_CLIENT_ID: need("Google Client ID is missing"),
 
-        GOOGLE_CLIENT_SECRET: z
-            .string()
-            .min(1, { message: "Google Client Secret is missing" }),
+        GOOGLE_CLIENT_SECRET: need("Google Client Secret is missing"),
 
         /** Moderation of story ideas and read-aloud audio (text-to-speech). */
-        OPENAI_API_KEY: z
-            .string()
-            .min(1, { message: "OpenAI API key is missing" }),
+        OPENAI_API_KEY: need("OpenAI API key is missing"),
 
         /** Shared with the book-creator Lambda; signs its delivery callback. */
-        LAMBDA_CALLBACK_SECRET: z.string().min(32, {
-            message: "Lambda callback secret must be at least 32 characters",
-        }),
+        LAMBDA_CALLBACK_SECRET: orLocal(
+            z.string().min(32, {
+                message:
+                    "Lambda callback secret must be at least 32 characters",
+            }),
+            "local-callback-secret-0000000000"
+        ),
 
         /** Sent by the scheduler to /api/cron/* as `Authorization: Bearer …`. */
-        CRON_SECRET: z
-            .string()
-            .min(16, { message: "Cron secret must be at least 16 characters" }),
+        CRON_SECRET: orLocal(
+            z.string().min(16, {
+                message: "Cron secret must be at least 16 characters",
+            }),
+            "local-cron-secret"
+        ),
 
         /** Receives failed-order alerts and print orders. Defaults to SENDER_EMAIL. */
         ADMIN_EMAIL: z.string().email().optional(),
     },
     client: {
-        NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: z
-            .string()
-            .min(1, { message: "Stripe Publishable Key is missing" }),
+        /** Only needed for embedded Stripe Elements (Checkout redirects need none). */
+        NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: z.string().optional(),
 
         NEXT_PUBLIC_CLOUDFRONT_URL: z
             .string()
-            .min(1, { message: "Cloudinary URL is missing" }),
+            .min(1, { message: "CloudFront URL is missing" }),
     },
     runtimeEnv: {
         NODE_ENV: process.env.VERCEL_ENV,
         APP_URL: process.env.APP_URL,
+        LOCAL_MODE: process.env.LOCAL_MODE || undefined,
+        AI_MODE: process.env.AI_MODE || undefined,
+        PAYMENTS: process.env.PAYMENTS || undefined,
+        OPENROUTER_API_KEY: process.env.OPENROUTER_API_KEY || undefined,
         AWS_REGION: process.env.AWS_REGION,
         AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID,
         AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY,

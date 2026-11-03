@@ -1,14 +1,9 @@
 import { type NextRequest, NextResponse } from "next/server";
 import type Stripe from "stripe";
 import env from "@/lib/env";
-import db from "@/lib/db";
 import { stripe } from "@/lib/stripe";
-import { startGeneration } from "@/lib/orders";
+import { markOrderPaid } from "@/lib/orders";
 
-/**
- * Mark the order paid and start its book, exactly once. Stripe can deliver
- * the same event several times; only the first PENDING → PAID flip wins.
- */
 const markPaid = async (session: Stripe.Checkout.Session) => {
     const orderId = session.metadata?.orderId;
     if (!orderId) {
@@ -17,26 +12,14 @@ const markPaid = async (session: Stripe.Checkout.Session) => {
     }
 
     const shipping = session.collected_information?.shipping_details;
-    const paymentIntentId =
-        typeof session.payment_intent === "string" ?
-            session.payment_intent
-        :   (session.payment_intent?.id ?? null);
-
-    const updated = await db.orders.transition(orderId, ["PENDING"], {
-        status: "PAID",
-        paidAt: new Date(),
+    await markOrderPaid(orderId, {
         stripeSessionId: session.id,
-        paymentIntentId,
+        paymentIntentId:
+            typeof session.payment_intent === "string" ?
+                session.payment_intent
+            :   (session.payment_intent?.id ?? null),
         shipping: shipping ? JSON.parse(JSON.stringify(shipping)) : null,
     });
-    if (!updated) return; // already handled
-
-    try {
-        await startGeneration(orderId);
-    } catch (err) {
-        // The order stays PAID; the order sweeper will start it again.
-        console.error(`Could not start book for order ${orderId}`, err);
-    }
 };
 
 export const POST = async (req: NextRequest) => {

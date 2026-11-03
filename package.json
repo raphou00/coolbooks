@@ -1,9 +1,10 @@
 {
-    "name": "coolbooks",
+    "name": "bibliboo",
     "version": "0.1.0",
     "private": true,
     "scripts": {
         "dev": "next dev",
+        "local": "docker compose up -d && bun run db:local && next dev",
         "build": "next build",
         "start": "next start",
         "wip": "bun run fmt:write && git add . && git commit -m \"WIP\" && git push",

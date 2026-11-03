@@ -5,6 +5,8 @@ const withNextIntl = createNextIntlPlugin("./src/lib/i18n.ts");
 /** @type {import("next").NextConfig} */
 const nextConfig = withNextIntl({
     images: {
+        // Local mode serves pictures from localhost, which the optimizer refuses.
+        unoptimized: process.env.LOCAL_MODE === "true",
         remotePatterns: [
             {
                 protocol: "https",

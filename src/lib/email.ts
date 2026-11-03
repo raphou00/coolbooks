@@ -1,8 +1,11 @@
 import { Resend, type CreateEmailOptions } from "resend";
+import { render } from "@react-email/components";
 import env from "@/lib/env";
+import { isLocal, saveLocalEmail } from "@/lib/local";
 import { title } from "@/config/seo";
 
-const resend = new Resend(env.RESEND_API_KEY);
+// Local mode has no Resend key; emails go to the local inbox instead.
+const resend = new Resend(env.RESEND_API_KEY || "re_local");
 
 const sendEmail = async (
     to: string,
@@ -18,6 +21,12 @@ const sendEmail = async (
         react,
         text,
     };
+
+    if (isLocal) {
+        const html = await render(react);
+        await saveLocalEmail(to, subject, html, text);
+        return;
+    }
 
     try {
         const res = await resend.emails.send(params);

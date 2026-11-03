@@ -64,7 +64,8 @@ const deps = {
     ),
     openai: new OpenAI({
         baseURL: "https://openrouter.ai/api/v1",
-        apiKey: OPENROUTER_API_KEY,
+        // Placeholder lets the module load in local mock mode without a key.
+        apiKey: OPENROUTER_API_KEY || "unset",
         defaultHeaders: {
             "HTTP-Referer": "https://bibliboo.ch",
             "X-Title": "Bibliboo",
@@ -73,16 +74,22 @@ const deps = {
     s3: new S3Client(),
     fetch: (...args) => fetch(...args),
     uuid: () => crypto.randomUUID(),
+    /** URL the image model fetches the reference (cover) from. */
+    referenceUrl: async (key) => s3Url(key),
+    /** Settings that are read from the environment by default. */
+    config: { dataTable: DATA_TABLE, callbackSecret: CALLBACK_SECRET },
 };
 
 const now = () => new Date().toISOString();
 
+const table = () => deps.config.dataTable;
+
 const getItem = async (Key) =>
-    (await deps.ddb.send(new GetCommand({ TableName: DATA_TABLE, Key }))).Item ??
+    (await deps.ddb.send(new GetCommand({ TableName: table(), Key }))).Item ??
     null;
 
 const putItem = (Item) =>
-    deps.ddb.send(new PutCommand({ TableName: DATA_TABLE, Item }));
+    deps.ddb.send(new PutCommand({ TableName: table(), Item }));
 
 /** SET the given fields on an item. */
 const setFields = (Key, fields, extra = {}) => {
@@ -95,7 +102,7 @@ const setFields = (Key, fields, extra = {}) => {
     });
     return deps.ddb.send(
         new UpdateCommand({
-            TableName: DATA_TABLE,
+            TableName: table(),
             Key,
             UpdateExpression: `SET ${sets.join(", ")}`,
             ExpressionAttributeNames: { ...names, ...(extra.names || {}) },
@@ -126,7 +133,7 @@ const updateOrder = (orderId, fields, extra) => {
 const deleteBook = async (bookId) => {
     const res = await deps.ddb.send(
         new QueryCommand({
-            TableName: DATA_TABLE,
+            TableName: table(),
             KeyConditionExpression: "pk = :b",
             ExpressionAttributeValues: { ":b": keys.book(bookId).pk },
             ProjectionExpression: "pk, sk",
@@ -137,7 +144,7 @@ const deleteBook = async (bookId) => {
         await deps.ddb.send(
             new BatchWriteCommand({
                 RequestItems: {
-                    [DATA_TABLE]: items.slice(i, i + 25).map((Key) => ({
+                    [table()]: items.slice(i, i + 25).map((Key) => ({
                         DeleteRequest: { Key },
                     })),
                 },
@@ -366,7 +373,7 @@ const runBook = async ({ orderId, appUrl }) => {
                     artStyle: topic.artStyle,
                 }),
                 key,
-                reference: s3Url(preview.cover),
+                reference: await deps.referenceUrl(preview.cover),
             });
             await putItem({
                 ...keys.page(bookId, pageId),
@@ -390,7 +397,7 @@ const runBook = async ({ orderId, appUrl }) => {
             method: "POST",
             headers: {
                 "content-type": "application/json",
-                "x-callback-secret": CALLBACK_SECRET,
+                "x-callback-secret": deps.config.callbackSecret,
             },
             body: JSON.stringify({ orderId }),
         });
@@ -427,7 +434,7 @@ const runRedraw = async ({ bookId, pageId }) => {
             artStyle: book.artStyle,
         }),
         key,
-        reference: s3Url(book.cover),
+        reference: await deps.referenceUrl(book.cover),
     });
 
     await setFields(keys.page(bookId, pageId), { image: key });

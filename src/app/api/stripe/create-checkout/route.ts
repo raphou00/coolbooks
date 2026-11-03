@@ -8,6 +8,7 @@ import { getUser } from "@/lib/auth";
 import { routing } from "@/lib/navigation";
 import { checkRateLimit, ratelimitPost } from "@/lib/rate-limiter";
 import { formatAmountForStripe } from "@/lib/utils";
+import { mockPayments } from "@/lib/local";
 import {
     currency,
     priceFor,
@@ -80,6 +81,12 @@ export const POST = async (req: NextRequest) => {
             giftTo: data.isGift ? data.giftTo : null,
             giftFrom: data.isGift ? data.giftFrom : null,
         });
+
+        if (mockPayments) {
+            return NextResponse.json({
+                redirect: `${env.APP_URL}/api/dev/pay?orderId=${order.id}`,
+            });
+        }
 
         const isPrint = data.product === "PRINT";
         const session = await stripe.checkout.sessions.create({

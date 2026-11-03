@@ -9,6 +9,7 @@ import { exportPDF } from "@/lib/export";
 import { stripe } from "@/lib/stripe";
 import { formatAmountForDisplay } from "@/lib/utils";
 import BookEmail from "@/components/emails/book";
+import { isLocal } from "@/lib/local";
 
 const lambda = new LambdaClient();
 
@@ -24,6 +25,11 @@ type CreatorEvent =
 export const invokeCreator = async <R = unknown,>(
     event: CreatorEvent
 ): Promise<R | null> => {
+    if (isLocal) {
+        const { invokeLocalCreator } = await import("@/lib/local/creator");
+        return (await invokeLocalCreator(event)) as R | null;
+    }
+
     const wait = event.mode !== "book";
     const res = await lambda.send(
         new InvokeCommand({
@@ -52,6 +58,33 @@ export const startGeneration = async (orderId: string) => {
         orderId,
         appUrl: `${env.APP_URL}/api/stripe/process-checkout`,
     });
+};
+
+/**
+ * Mark an order paid and start its book, exactly once. Stripe can deliver
+ * the same event several times; only the first PENDING → PAID flip wins.
+ */
+export const markOrderPaid = async (
+    orderId: string,
+    payment: {
+        stripeSessionId: string;
+        paymentIntentId: string | null;
+        shipping: Record<string, unknown> | null;
+    }
+) => {
+    const updated = await db.orders.transition(orderId, ["PENDING"], {
+        status: "PAID",
+        paidAt: new Date(),
+        ...payment,
+    });
+    if (!updated) return; // already handled
+
+    try {
+        await startGeneration(orderId);
+    } catch (err) {
+        // The order stays PAID; the order sweeper will start it again.
+        console.error(`Could not start book for order ${orderId}`, err);
+    }
 };
 
 /** Constant-time check of the Lambda's callback secret. */
@@ -171,14 +204,18 @@ export const refundOrder = async (orderId: string, reason: string) => {
         return;
     }
 
-    await stripe.refunds.create(
-        {
-            payment_intent: order.paymentIntentId,
-            reason: "requested_by_customer",
-            metadata: { orderId: order.id },
-        },
-        { idempotencyKey: `refund-${order.id}` }
-    );
+    if (order.paymentIntentId.startsWith("mock_")) {
+        console.log(`[local] mock refund of order ${order.id}`);
+    } else {
+        await stripe.refunds.create(
+            {
+                payment_intent: order.paymentIntentId,
+                reason: "requested_by_customer",
+                metadata: { orderId: order.id },
+            },
+            { idempotencyKey: `refund-${order.id}` }
+        );
+    }
 
     await db.orders.update(order.id, {
         status: "REFUNDED",
