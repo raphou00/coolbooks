@@ -49,26 +49,6 @@ export const exportPDF = async (book: Book) => {
         const pageWidth = pdf.internal.pageSize.getWidth();
         const pageHeight = pdf.internal.pageSize.getHeight();
 
-        const imageToBase64 = async (url: string): Promise<string> => {
-            try {
-                const response = await fetch(url);
-                if (!response.ok) {
-                    throw new Error(
-                        `Failed to fetch image: ${response.statusText}`
-                    );
-                }
-
-                const buffer = await response.buffer();
-                const base64 = buffer.toString("base64");
-
-                const ext = url.toLowerCase().endsWith(".png") ? "png" : "jpeg";
-                return `data:image/${ext};base64,${base64}`;
-            } catch (error) {
-                console.error(`Error fetching image ${url}:`, error);
-                throw error;
-            }
-        };
-
         /**
          * Book pictures are 2K PNGs (made for print). The emailed PDF gets
          * 1400 px JPEGs instead, which keeps it a few MB instead of ~60 MB.
