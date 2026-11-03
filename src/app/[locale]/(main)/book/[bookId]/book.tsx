@@ -143,35 +143,38 @@ const Book: React.FC<BookProps> = ({ book, canEdit, editKey, maxRedraws }) => {
     }, []);
 
     const readFrom = useCallback(
-        async (index: number) => {
-            // Skip the cover: start at the first slide that has text.
-            let i = index;
-            while (i < slides.length && slides[i].kind !== "page") i++;
-            if (i >= slides.length || !readingRef.current) {
-                stopReading();
-                return;
-            }
+        (start: number) => {
+            // Reads one page, then chains to the next when its audio ends.
+            const readPage = async (index: number) => {
+                // Skip the cover: start at the first slide that has text.
+                let i = index;
+                while (i < slides.length && slides[i].kind !== "page") i++;
+                if (i >= slides.length || !readingRef.current) {
+                    stopReading();
+                    return;
+                }
 
-            setImgIndex(i);
-            setLoadingAudio(true);
-            try {
-                const res = await fetch(
-                    `/api/book/audio?bookId=${book.id}&pageId=${slides[i].id}`
-                );
-                const data = (await res.json()) as { url?: string };
-                if (!res.ok || !data.url) throw new Error("audio");
-                if (!readingRef.current) return;
+                setImgIndex(i);
+                setLoadingAudio(true);
+                try {
+                    const res = await fetch(
+                        `/api/book/audio?bookId=${book.id}&pageId=${slides[i].id}`
+                    );
+                    const data = (await res.json()) as { url?: string };
+                    if (!res.ok || !data.url) throw new Error("audio");
+                    if (!readingRef.current) return;
 
-                const audio = audioRef.current ?? new Audio();
-                audioRef.current = audio;
-                audio.src = data.url;
-                audio.onended = () => void readFrom(i + 1);
-                setLoadingAudio(false);
-                await audio.play();
-            } catch {
-                toast.error(tMessages("server-error"));
-                stopReading();
-            }
+                    if (!audioRef.current) audioRef.current = new Audio();
+                    audioRef.current.src = data.url;
+                    audioRef.current.onended = () => void readPage(i + 1);
+                    setLoadingAudio(false);
+                    await audioRef.current.play();
+                } catch {
+                    toast.error(tMessages("server-error"));
+                    stopReading();
+                }
+            };
+            return readPage(start);
         },
         [book.id, slides, stopReading, tMessages]
     );

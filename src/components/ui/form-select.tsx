@@ -1,4 +1,11 @@
-import { Controller, type Control, type FieldError } from "react-hook-form";
+import {
+    Controller,
+    type Control,
+    type FieldError,
+    type FieldPath,
+    type FieldValues,
+    type PathValue,
+} from "react-hook-form";
 import {
     Select,
     SelectContent,
@@ -8,17 +15,17 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 
-type FormSelectProps = {
-    name: string;
+type FormSelectProps<T extends FieldValues> = {
+    name: FieldPath<T>;
     label: string;
     values: string[];
-    control: Control<any>;
+    control: Control<T>;
     error?: FieldError | string | null;
     defaultValue?: string;
     t?: any;
 };
 
-const FormSelect: React.FC<FormSelectProps> = ({
+const FormSelect = <T extends FieldValues>({
     name,
     label,
     values,
@@ -26,7 +33,7 @@ const FormSelect: React.FC<FormSelectProps> = ({
     error,
     defaultValue = "",
     t,
-}) => {
+}: FormSelectProps<T>) => {
     return (
         <div className="w-full">
             <label className="block w-full">
@@ -42,7 +49,9 @@ const FormSelect: React.FC<FormSelectProps> = ({
                     <Controller
                         name={name}
                         control={control}
-                        defaultValue={defaultValue}
+                        defaultValue={
+                            defaultValue as PathValue<T, FieldPath<T>>
+                        }
                         render={({ field }) => (
                             <Select
                                 value={field.value || ""}
