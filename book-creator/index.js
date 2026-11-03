@@ -23,7 +23,24 @@ const {
 const AWS_REGION = process.env.AWS_REGION || "us-east-1";
 
 const PLANNER_MODEL = "openai/gpt-5.2";
-const IMAGE_MODEL = "google/gemini-2.5-flash-image-preview";
+/**
+ * Nano Banana 2 at 2K (2048 px ≈ 260 DPI on a 20 cm page, sharp enough to
+ * print). Override with IMAGE_MODEL, e.g. "google/gemini-3-pro-image-preview".
+ */
+const IMAGE_MODEL =
+    process.env.IMAGE_MODEL || "google/gemini-3.1-flash-image-preview";
+const IMAGE_SIZE = "2K";
+/**
+ * Estimated USD per call, counted against the monthly AI budget
+ * (BUDGET#<yyyy-mm> in the data table; the app stops free previews and
+ * redraws once it is spent). Check the prices on OpenRouter now and then.
+ */
+const COST_USD = {
+    plan: 0.02,
+    "google/gemini-3.1-flash-image-preview": 0.101,
+    "google/gemini-3-pro-image-preview": 0.134,
+};
+const imageCost = () => COST_USD[IMAGE_MODEL] ?? 0.15;
 /** Pages drawn in parallel: enough to be fast, few enough to avoid rate limits. */
 const IMAGE_CONCURRENCY = 4;
 /** Books bought as a guest are attached to this account (unchanged behaviour). */
@@ -51,6 +68,7 @@ const keys = {
     order: (id) => ({ pk: `ORDER#${id}`, sk: "ORDER" }),
     userIndex: (userId) => `USER#${userId}`,
     orderStatusIndex: (status) => `ORDERS#${status}`,
+    budget: (month) => ({ pk: `BUDGET#${month}`, sk: "BUDGET" }),
 };
 
 /* ---------- dependencies (overridable in tests) ---------- */
@@ -127,6 +145,22 @@ const updateOrder = (orderId, fields, extra) => {
         },
         extra
     );
+};
+
+/** Add an AI call's estimated cost to this month's spend. Never fails a book. */
+const recordSpend = async (usd) => {
+    try {
+        await deps.ddb.send(
+            new UpdateCommand({
+                TableName: table(),
+                Key: keys.budget(now().slice(0, 7)),
+                UpdateExpression: "ADD usd :c, calls :one",
+                ExpressionAttributeValues: { ":c": usd, ":one": 1 },
+            })
+        );
+    } catch (err) {
+        console.error("Could not record AI spend", err);
+    }
 };
 
 /** Delete a book and all its pages (same partition). */
@@ -226,6 +260,7 @@ const createPlan = async (topic) => {
         input: [{ role: "developer", content: promptPlan(topic) }],
         text: { format: zodTextFormat(planSchema, "book") },
     });
+    await recordSpend(COST_USD.plan);
     const plan = result.output_parsed;
     if (!plan || plan.pages.length === 0) throw new Error("Empty story plan");
     return plan;
@@ -251,7 +286,10 @@ const createImage = async ({ prompt, key, reference }) => {
     const completion = await deps.openai.chat.completions.create({
         model: IMAGE_MODEL,
         messages: [{ role: "user", content }],
+        modalities: ["image", "text"],
+        image_config: { aspect_ratio: "1:1", image_size: IMAGE_SIZE },
     });
+    await recordSpend(imageCost());
 
     const image = completion.choices?.[0]?.message?.images?.[0]?.image_url?.url;
     if (!image) throw new Error(`No image returned for ${key}`);
@@ -456,4 +494,4 @@ const lambda_handler = async (event) => {
 
 exports.lambda_handler = lambda_handler;
 exports.__deps = deps;
-exports.__internals = { promptPlan, promptImage, mapLimit, keys };
+exports.__internals = { promptPlan, promptImage, mapLimit, keys, IMAGE_MODEL };

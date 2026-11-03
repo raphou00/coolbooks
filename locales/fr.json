@@ -411,6 +411,7 @@
         "loginLike": "Vous devez d'abord vous connecter",
         "preview-limit": "Vous avez créé beaucoup d'aperçus en peu de temps. Réessayez dans une heure.",
         "preview-failed": "Boo n'a pas réussi à dessiner votre couverture cette fois. Réessayez dans un instant.",
+        "preview-paused": "Boo fait une petite pause et ne peut pas dessiner de nouvelles images pour le moment. Réessayez plus tard.",
         "preview-expired": "Cet aperçu a expiré. Créez une nouvelle couverture.",
         "redraw-limit": "Vous avez utilisé les {max} redessins gratuits de ce livre."
     },

@@ -9,7 +9,6 @@ import { type ActionsState } from "@/lib/types";
 import { cn, formatAmountForDisplay, requestAPI } from "@/lib/utils";
 import {
     christmasPrintDeadline,
-    compareAtPrice,
     maxRedraws,
     price,
     printEnabled,
@@ -503,11 +502,6 @@ const NewBook: React.FC = () => {
                                 {t("total")}
                             </span>
                             <span className="flex items-baseline gap-2">
-                                {product === "PDF" && (
-                                    <span className="type-body text-border-strong line-through">
-                                        {formatAmountForDisplay(compareAtPrice)}
-                                    </span>
-                                )}
                                 <span className="type-price text-[32px]! text-ink md:text-[40px]!">
                                     {formatAmountForDisplay(total)}
                                 </span>

@@ -411,6 +411,7 @@
         "loginLike": "Du musst dich zuerst anmelden",
         "preview-limit": "Sie haben in kurzer Zeit viele Vorschauen erstellt. Bitte versuchen Sie es in einer Stunde wieder.",
         "preview-failed": "Boo konnte das Cover diesmal nicht zeichnen. Bitte versuchen Sie es gleich noch einmal.",
+        "preview-paused": "Boo macht gerade eine kurze Pause und kann heute keine neuen Bilder zeichnen. Bitte versuchen Sie es später noch einmal.",
         "preview-expired": "Diese Vorschau ist abgelaufen. Bitte erstellen Sie ein neues Cover.",
         "redraw-limit": "Sie haben alle {max} kostenlosen Neuzeichnungen für dieses Buch genutzt."
     },

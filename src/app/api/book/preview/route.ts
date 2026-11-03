@@ -7,6 +7,7 @@ import { routing } from "@/lib/navigation";
 import { checkRateLimit, ratelimitPreview } from "@/lib/rate-limiter";
 import { invokeCreator } from "@/lib/orders";
 import { mockAI } from "@/lib/local";
+import { isOverBudget } from "@/lib/budget";
 import { previewSchema, type PreviewSchema } from "@/schema/book";
 
 /** Writing the story plan and drawing the cover takes ~30–60 s. */
@@ -42,6 +43,13 @@ export const POST = async (req: NextRequest) => {
             return NextResponse.json({
                 success: false,
                 message: t("messages.preview-limit"),
+            });
+        }
+
+        if (await isOverBudget()) {
+            return NextResponse.json({
+                success: false,
+                message: t("messages.preview-paused"),
             });
         }
 

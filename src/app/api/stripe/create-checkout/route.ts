@@ -118,6 +118,8 @@ export const POST = async (req: NextRequest) => {
             ...(user?.user?.stripeCustomerId ?
                 { customer: user.user.stripeCustomerId }
             :   { customer_email: data.email }),
+            // Lets customers use their 15% review reward code.
+            allow_promotion_codes: true,
             success_url: `${env.APP_URL}/?payment_success=true`,
             cancel_url: `${env.APP_URL}/?payment_success=false`,
             locale: locale as Stripe.Checkout.SessionCreateParams.Locale,

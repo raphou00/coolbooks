@@ -2,17 +2,16 @@
  *  once it is enabled under Settings → Payment methods in the Stripe Dashboard. */
 export const currency = "CHF" as const;
 export const price = 14.9 as const;
-/** Regular price shown struck through next to the launch price. */
-export const compareAtPrice = 19.9 as const;
 
 /**
- * Printed hardcover (includes the PDF and Swiss shipping).
- * Off until a print partner is set up: print orders are fulfilled by hand
- * from the admin email for now.
+ * Printed hardcover (includes the PDF and Swiss shipping). Off until Gelato
+ * is set up in production; NEXT_PUBLIC_PRINT_ENABLED=true turns it on
+ * (local.example.env does, so it can be tested locally).
  */
-export const printEnabled = false as boolean;
+export const printEnabled = process.env.NEXT_PUBLIC_PRINT_ENABLED === "true";
 export const printPrice = 44.9 as const;
-export const shippingCountries = ["CH", "LI"] as const;
+/** Printed books ship to Switzerland only (Gelato prints them in CH). */
+export const shippingCountries = ["CH"] as const;
 /** Last day to order a printed book for delivery before Christmas. */
 export const christmasPrintDeadline = "2026-12-14";
 

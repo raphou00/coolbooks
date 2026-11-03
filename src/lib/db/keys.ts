@@ -12,6 +12,7 @@
  *  Page      BOOK#<bookId>      PAGE#<id>
  *  Preview   PREVIEW#<id>       PREVIEW
  *  Order     ORDER#<id>         ORDER                                       ORDERS#<status> / <updatedAt>
+ *  Budget    BUDGET#<yyyy-mm>   BUDGET         (AI spend this month: usd, calls)
  *
  * Sessions, tokens and previews carry a `ttl` (epoch seconds) so DynamoDB
  * deletes them on its own once they expire.
@@ -36,6 +37,7 @@ export const keys = {
     order: (id: string) => ({ pk: `ORDER#${id}`, sk: "ORDER" }),
     userIndex: (userId: string) => `USER#${userId}`,
     orderStatusIndex: (status: string) => `ORDERS#${status}`,
+    budget: (month: string) => ({ pk: `BUDGET#${month}`, sk: "BUDGET" }),
 };
 
 export const GSI1 = "gsi1";

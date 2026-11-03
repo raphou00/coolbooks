@@ -411,6 +411,7 @@
         "loginLike": "Devi accedere prima",
         "preview-limit": "Hai creato molte anteprime in poco tempo. Riprova tra un'ora.",
         "preview-failed": "Questa volta Boo non è riuscito a disegnare la copertina. Riprova tra un attimo.",
+        "preview-paused": "Boo si sta prendendo una piccola pausa e al momento non può disegnare nuove immagini. Riprova più tardi.",
         "preview-expired": "Questa anteprima è scaduta. Crea una nuova copertina.",
         "redraw-limit": "Hai usato tutti i {max} ridisegni gratuiti per questo libro."
     },

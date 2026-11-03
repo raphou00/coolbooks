@@ -16,7 +16,7 @@ import {
     Users,
     Wand2,
 } from "lucide-react";
-import { compareAtPrice, price } from "@/config/stripe";
+import { price } from "@/config/stripe";
 import { cn, formatAmountForDisplay } from "@/lib/utils";
 import NewBook, { artStyleImages } from "@/components/ui/new";
 import NextImage from "@/components/ui/image";
@@ -136,9 +136,6 @@ const Hero: React.FC<BooksProps> = ({ books }) => {
                     <div className="mt-6 flex flex-wrap items-center gap-x-3 gap-y-2">
                         <span className="font-display text-2xl font-bold text-ink tabular-nums">
                             {formatAmountForDisplay(price)}
-                        </span>
-                        <span className="type-body font-bold text-border-strong line-through tabular-nums">
-                            {formatAmountForDisplay(compareAtPrice)}
                         </span>
                         <span className="rounded-full bg-sun px-3 py-0.5 font-display text-sm font-semibold text-navy">
                             {t("hero.offer")}

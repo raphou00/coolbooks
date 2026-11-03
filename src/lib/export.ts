@@ -1,7 +1,9 @@
 import jsPDF from "jspdf";
+import sharp from "sharp";
+import { readFile } from "node:fs/promises";
+import path from "node:path";
 import fetch from "node-fetch";
 import env from "@/lib/env";
-import { domain } from "@/config/seo";
 import { sortPages } from "./utils";
 
 export type Book = {
@@ -67,10 +69,28 @@ export const exportPDF = async (book: Book) => {
             }
         };
 
+        /**
+         * Book pictures are 2K PNGs (made for print). The emailed PDF gets
+         * 1400 px JPEGs instead, which keeps it a few MB instead of ~60 MB.
+         */
+        const webImage = async (url: string): Promise<string> => {
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(
+                    `Failed to fetch image: ${response.statusText}`
+                );
+            }
+            const jpeg = await sharp(await response.buffer())
+                .resize({ width: 1400, height: 1400, fit: "inside" })
+                .jpeg({ quality: 85 })
+                .toBuffer();
+            return `data:image/jpeg;base64,${jpeg.toString("base64")}`;
+        };
+
         pdf.deletePage(1);
 
         try {
-            const coverBase64 = await imageToBase64(
+            const coverBase64 = await webImage(
                 env.CLOUDFRONT_URL + "/" + book.cover
             );
             pdf.addPage([PAGE_HEIGHT, PAGE_HEIGHT]);
@@ -87,9 +107,7 @@ export const exportPDF = async (book: Book) => {
             const logoY = pageHeight - logoSize - padding;
 
             try {
-                const logoBase64 = await imageToBase64(
-                    domain + "/favicon-96x96.png"
-                );
+                const logoBase64 = await logoDataUrl();
                 pdf.addImage(
                     logoBase64,
                     "PNG",
@@ -150,7 +168,7 @@ export const exportPDF = async (book: Book) => {
             const padding = 15;
 
             try {
-                const imageBase64 = await imageToBase64(
+                const imageBase64 = await webImage(
                     env.CLOUDFRONT_URL + "/" + page.image
                 );
                 pdf.addImage(imageBase64, "JPEG", 0, 0, imageWidth, pageHeight);
@@ -178,6 +196,14 @@ export const exportPDF = async (book: Book) => {
         console.error("Error generating PDF:", err);
         throw err;
     }
+};
+
+/** The logo ships with the app, so read it from disk instead of the live site. */
+const logoDataUrl = async () => {
+    const file = await readFile(
+        path.join(process.cwd(), "public", "favicon-96x96.png")
+    );
+    return `data:image/png;base64,${file.toString("base64")}`;
 };
 
 const fetchFont = async (url: string): Promise<string> => {

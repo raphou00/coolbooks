@@ -450,6 +450,7 @@
         "prompt-inappropriate": "Your story description contain inappropriate content",
         "preview-limit": "You've made a lot of previews in a short time. Please try again in an hour.",
         "preview-failed": "Boo couldn't draw your cover this time. Please try again in a moment.",
+        "preview-paused": "Boo is taking a short break and can't draw new pictures right now. Please try again later.",
         "preview-expired": "This preview has expired. Please create a new cover.",
         "redraw-limit": "You've used all {max} free redraws for this book."
     },

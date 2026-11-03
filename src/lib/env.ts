@@ -42,6 +42,12 @@ export default createEnv({
         /** mock: a local "pay" page instead of Stripe (local mode only). */
         PAYMENTS: z.enum(["mock", "stripe"]).default("stripe"),
 
+        /**
+         * Monthly AI spend cap in USD. Once reached, free cover previews and
+         * redraws stop (paid books still finish) and the admin is emailed.
+         */
+        AI_MONTHLY_BUDGET_USD: z.coerce.number().positive().default(50),
+
         /** OpenRouter key; only read by the in-process generator in local mode. */
         OPENROUTER_API_KEY: z.string().optional(),
 
@@ -122,6 +128,7 @@ export default createEnv({
         AI_MODE: process.env.AI_MODE || undefined,
         PAYMENTS: process.env.PAYMENTS || undefined,
         OPENROUTER_API_KEY: process.env.OPENROUTER_API_KEY || undefined,
+        AI_MONTHLY_BUDGET_USD: process.env.AI_MONTHLY_BUDGET_USD || undefined,
         AWS_REGION: process.env.AWS_REGION,
         AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID,
         AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY,

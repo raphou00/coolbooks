@@ -8,6 +8,7 @@ import { putObject } from "@/lib/file";
 import { invokeCreator } from "@/lib/orders";
 import { checkRateLimit, ratelimitRedraw } from "@/lib/rate-limiter";
 import { maxRedraws } from "@/config/stripe";
+import { isOverBudget } from "@/lib/budget";
 
 export const maxDuration = 120;
 
@@ -43,6 +44,13 @@ export const POST = async (req: NextRequest) => {
             return NextResponse.json({
                 success: false,
                 message: t("messages.unauthorized"),
+            });
+        }
+
+        if (await isOverBudget()) {
+            return NextResponse.json({
+                success: false,
+                message: t("messages.preview-paused"),
             });
         }
 
