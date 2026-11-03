@@ -48,6 +48,9 @@ export default createEnv({
          */
         AI_MONTHLY_BUDGET_USD: z.coerce.number().positive().default(50),
 
+        /** Days after delivery before the review email (0 to test locally). */
+        REVIEW_DELAY_DAYS: z.coerce.number().min(0).default(7),
+
         /** Gelato print API. Without a key, print orders are a dry run. */
         GELATO_API_KEY: z.string().optional(),
         /**
@@ -145,6 +148,7 @@ export default createEnv({
         OPENROUTER_API_KEY: process.env.OPENROUTER_API_KEY || undefined,
         AI_MONTHLY_BUDGET_USD: process.env.AI_MONTHLY_BUDGET_USD || undefined,
         GELATO_API_KEY: process.env.GELATO_API_KEY || undefined,
+        REVIEW_DELAY_DAYS: process.env.REVIEW_DELAY_DAYS || undefined,
         GELATO_ORDER_TYPE: process.env.GELATO_ORDER_TYPE || undefined,
         GELATO_PRODUCT_UID: process.env.GELATO_PRODUCT_UID || undefined,
         GELATO_WEBHOOK_SECRET: process.env.GELATO_WEBHOOK_SECRET || undefined,

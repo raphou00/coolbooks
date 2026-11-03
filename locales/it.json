@@ -426,6 +426,22 @@
             "back": "Torna al libro",
             "chars": "{count} / {max}",
             "locked": "Questo libro è stato inviato in stampa e non può più essere modificato."
+        },
+        "review": {
+            "title": "Valuta il tuo libro",
+            "heading": "Ti piace «{title}»?",
+            "intro": "La tua opinione sincera aiuta altri genitori e ci aiuta a migliorare. Come ringraziamento ricevi un codice del {percent}% per il prossimo libro, qualunque cosa scrivi.",
+            "rating": "Il tuo voto",
+            "text": "Cosa ne pensate tu e tuo figlio? (facoltativo)",
+            "submit": "Invia recensione",
+            "thanks": "Grazie per la tua recensione!",
+            "code": "Il tuo codice del {percent}% per il prossimo libro:",
+            "valid": "Valido una volta, fino al {until}.",
+            "new": "Crea un nuovo libro",
+            "invalid": "Questo link di recensione non è valido.",
+            "not-yet": "Potrai valutare il tuo libro una volta consegnato.",
+            "verified": "Acquisto verificato · sconto ricevuto per la recensione",
+            "section": "Cosa dicono i genitori"
         }
     },
     "messages": {

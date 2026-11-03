@@ -426,6 +426,22 @@
             "back": "Retour au livre",
             "chars": "{count} / {max}",
             "locked": "Ce livre a été envoyé à l'impression et ne peut plus être modifié."
+        },
+        "review": {
+            "title": "Évaluer votre livre",
+            "heading": "Que pensez-vous de « {title} » ?",
+            "intro": "Votre avis sincère aide d'autres parents et nous aide à nous améliorer. Pour vous remercier, vous recevez un code de {percent} % pour votre prochain livre, quoi que vous écriviez.",
+            "rating": "Votre note",
+            "text": "Qu'en avez-vous pensé, vous et votre enfant ? (facultatif)",
+            "submit": "Envoyer l'avis",
+            "thanks": "Merci pour votre avis !",
+            "code": "Votre code de {percent} % pour le prochain livre :",
+            "valid": "Valable une fois, jusqu'au {until}.",
+            "new": "Créer un nouveau livre",
+            "invalid": "Ce lien d'évaluation n'est pas valide.",
+            "not-yet": "Vous pourrez évaluer votre livre une fois livré.",
+            "verified": "Achat vérifié · réduction reçue pour l'avis",
+            "section": "Ce qu'en disent les parents"
         }
     },
     "messages": {

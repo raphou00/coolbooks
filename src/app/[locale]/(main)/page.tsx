@@ -1,5 +1,6 @@
 import db from "@/lib/db";
 import { expo } from "@/config/book";
+import Reviews from "@/components/ui/reviews";
 import Home from "./home";
 
 const Page = async () => {
@@ -13,6 +14,7 @@ const Page = async () => {
     return (
         <main>
             <Home books={books} />
+            <Reviews />
         </main>
     );
 };

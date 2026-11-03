@@ -426,6 +426,22 @@
             "back": "Zurück zum Buch",
             "chars": "{count} / {max}",
             "locked": "Dieses Buch wurde bereits gedruckt und kann nicht mehr geändert werden."
+        },
+        "review": {
+            "title": "Buch bewerten",
+            "heading": "Wie gefällt dir «{title}»?",
+            "intro": "Deine ehrliche Meinung hilft anderen Eltern und uns, besser zu werden. Als Dankeschön erhältst du einen {percent}%-Code für dein nächstes Buch, egal was du schreibst.",
+            "rating": "Deine Bewertung",
+            "text": "Was haben du und dein Kind gedacht? (optional)",
+            "submit": "Bewertung senden",
+            "thanks": "Danke für deine Bewertung!",
+            "code": "Dein {percent}%-Code für das nächste Buch:",
+            "valid": "Einmal gültig, bis {until}.",
+            "new": "Neues Buch erstellen",
+            "invalid": "Dieser Bewertungslink ist ungültig.",
+            "not-yet": "Du kannst dein Buch bewerten, sobald es zugestellt wurde.",
+            "verified": "Verifizierter Kauf · Rabatt für die Bewertung erhalten",
+            "section": "Das sagen Eltern"
         }
     },
     "messages": {

@@ -426,6 +426,22 @@
             "back": "Back to the book",
             "chars": "{count} / {max}",
             "locked": "This book has been sent to print and can no longer be changed."
+        },
+        "review": {
+            "title": "Review your book",
+            "heading": "How do you like \"{title}\"?",
+            "intro": "Your honest opinion helps other parents and helps us improve. As a thank-you you get a {percent}% code for your next book, whatever you write.",
+            "rating": "Your rating",
+            "text": "What did you and your child think? (optional)",
+            "submit": "Send review",
+            "thanks": "Thank you for your review!",
+            "code": "Your {percent}% code for the next book:",
+            "valid": "Valid once, until {until}.",
+            "new": "Create a new book",
+            "invalid": "This review link is not valid.",
+            "not-yet": "You can review your book once it has been delivered.",
+            "verified": "Verified buyer · received a discount for reviewing",
+            "section": "What parents say"
         }
     },
     "emails": {

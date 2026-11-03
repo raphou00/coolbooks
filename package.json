@@ -16,7 +16,8 @@
         "deploy:dev": "bun run pulumi:login && cd aws && pulumi up --stack dev -y",
         "destroy:dev": "bun run pulumi:login && cd aws && pulumi down --stack dev -y",
         "db:local": "bun scripts/dynamodb-local.ts",
-        "db:migrate": "bun scripts/migrate-postgres-to-dynamodb.ts"
+        "db:migrate": "bun scripts/migrate-postgres-to-dynamodb.ts",
+        "make-admin": "bun scripts/make-admin.ts"
     },
     "dependencies": {
         "@aws-sdk/client-dynamodb": "^3.1161.0",

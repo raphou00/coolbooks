@@ -338,3 +338,77 @@ export const applyGelatoUpdate = async (u: {
     }
     return { ok: true };
 };
+
+/* ---------- reviews ---------- */
+
+export const REVIEW_PERCENT = 15;
+/** Days after delivery (or 10 after shipping) before asking for a review. */
+const reviewDelayDays = () => env.REVIEW_DELAY_DAYS;
+
+export const reviewUrl = (token: string) => `${env.APP_URL}/review/${token}`;
+
+/** Ask for a review about a week after delivery, once per print order. */
+export const sweepReviews = async () => {
+    const day = 24 * 3600 * 1000;
+    const delay = reviewDelayDays();
+    const due = [
+        ...(await db.prints.byStatus("DELIVERED")).filter(
+            (p) =>
+                p.deliveredAt &&
+                Date.now() - p.deliveredAt.getTime() >= delay * day
+        ),
+        // Gelato doesn't always report delivery: fall back to shipping + 3 days.
+        ...(await db.prints.byStatus("SHIPPED")).filter(
+            (p) =>
+                p.shippedAt &&
+                Date.now() - p.shippedAt.getTime() >= (delay + 3) * day
+        ),
+    ].filter((p) => !p.reviewEmailSentAt);
+
+    for (const p of due) {
+        const book = await db.books.get(p.bookId);
+        await db.prints.update(p.id, { reviewEmailSentAt: new Date() });
+        await notice(
+            p,
+            "review-request",
+            { title: book?.title ?? "", percent: REVIEW_PERCENT },
+            reviewUrl(p.reviewToken)
+        );
+    }
+    return { reviewRequests: due.length };
+};
+
+const COUPON_ID = `REVIEW${REVIEW_PERCENT}`;
+
+/**
+ * A one-time 15% code for the next order. Earned for ANY review: it must
+ * never depend on the rating (misleading for customers, illegal in places).
+ */
+export const createRewardCode = async (printId: string) => {
+    const code = `BOO-${printId.replaceAll("-", "").slice(0, 6).toUpperCase()}`;
+    const expires = new Date(Date.now() + 90 * 24 * 3600 * 1000);
+    const stripeOff = env.STRIPE_SECRET_KEY === "" || env.PAYMENTS === "mock";
+    if (stripeOff) return { code, expires };
+
+    try {
+        await stripe.coupons.retrieve(COUPON_ID);
+    } catch {
+        await stripe.coupons.create({
+            id: COUPON_ID,
+            percent_off: REVIEW_PERCENT,
+            duration: "once",
+            name: `Review thank-you (${REVIEW_PERCENT}%)`,
+        });
+    }
+    await stripe.promotionCodes.create(
+        {
+            promotion: { type: "coupon", coupon: COUPON_ID },
+            code,
+            max_redemptions: 1,
+            expires_at: Math.floor(expires.getTime() / 1000),
+            metadata: { printId },
+        },
+        { idempotencyKey: `review-code-${printId}` }
+    );
+    return { code, expires };
+};

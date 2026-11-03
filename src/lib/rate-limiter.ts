@@ -7,7 +7,10 @@ export const checkRateLimit = async (
     identifier: string,
     props: { maxRequests: number; windowSeconds: number }
 ): Promise<{ allowed: boolean; remaining: number; resetAt: number }> => {
-    const { maxRequests, windowSeconds } = props;
+    const { windowSeconds } = props;
+    // Local testing repeats flows a lot; keep limits but much looser.
+    const maxRequests =
+        env.LOCAL_MODE ? props.maxRequests * 20 : props.maxRequests;
     const now = Math.floor(Date.now() / 1000);
     const windowKey = `${identifier}:${Math.floor(now / windowSeconds)}`;
     const resetAt = (Math.floor(now / windowSeconds) + 1) * windowSeconds;
