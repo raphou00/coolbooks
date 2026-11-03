@@ -21,6 +21,9 @@ import type {
     OrderStatus,
     Page,
     Preview,
+    PrintOrder,
+    PrintStatus,
+    Review,
     Session,
     Token,
     User,
@@ -158,6 +161,7 @@ const toPage = (i: Item): Page => ({
     image: (i.image as string) ?? "",
     color: (i.color as string) ?? "#ffffff",
     audio: (i.audio as string) ?? null,
+    previousImages: (i.previousImages as string[]) ?? [],
 });
 
 const toPreview = (i: Item): Preview => ({
@@ -187,6 +191,7 @@ const toOrder = (i: Item): Order => ({
     giftTo: (i.giftTo as string) ?? null,
     giftFrom: (i.giftFrom as string) ?? null,
     shipping: (i.shipping as Order["shipping"]) ?? null,
+    printId: (i.printId as string) ?? null,
     attempts: (i.attempts as number) ?? 0,
     error: (i.error as string) ?? null,
     paidAt: date(i.paidAt),
@@ -653,6 +658,43 @@ const books = {
         return i ? toPage(i) : null;
     },
 
+    /** Editor: title and dedication. */
+    update: async (
+        id: string,
+        patch: { title?: string; dedication?: string | null }
+    ) => {
+        await ddb.send(
+            new UpdateCommand({
+                TableName,
+                Key: keys.book(id),
+                ConditionExpression: "attribute_exists(pk)",
+                ...setExpression({ ...patch, updatedAt: now() }),
+            })
+        );
+    },
+
+    /**
+     * Editor: page text, colour or picture. Changing the text drops the
+     * cached read-aloud audio so it is spoken again.
+     */
+    updatePage: async (
+        bookId: string,
+        pageId: string,
+        patch: { text?: string; color?: string; image?: string }
+    ) => {
+        await ddb.send(
+            new UpdateCommand({
+                TableName,
+                Key: keys.page(bookId, pageId),
+                ConditionExpression: "attribute_exists(pk)",
+                ...setExpression({
+                    ...patch,
+                    ...(patch.text !== undefined ? { audio: null } : {}),
+                }),
+            })
+        );
+    },
+
     setPageAudio: async (bookId: string, pageId: string, audio: string) => {
         await ddb.send(
             new UpdateCommand({
@@ -827,6 +869,278 @@ const orders = {
         ).map(toOrder),
 };
 
-const db = { users, sessions, tokens, books, previews, orders };
+/* ---------- print orders ---------- */
+
+const toPrint = (i: Item): PrintOrder => ({
+    id: i.id as string,
+    status: i.status as PrintStatus,
+    orderId: i.orderId as string,
+    bookId: i.bookId as string,
+    email: i.email as string,
+    locale: (i.locale as string) ?? "de",
+    amount: (i.amount as number) ?? 0,
+    shipping: (i.shipping as PrintOrder["shipping"]) ?? null,
+    snapshot: (i.snapshot as PrintOrder["snapshot"]) ?? null,
+    pdfKey: (i.pdfKey as string) ?? null,
+    innerPages: (i.innerPages as number) ?? null,
+    gelatoOrderId: (i.gelatoOrderId as string) ?? null,
+    trackingUrl: (i.trackingUrl as string) ?? null,
+    remindersSent: (i.remindersSent as number) ?? 0,
+    reviewToken: i.reviewToken as string,
+    reviewEmailSentAt: date(i.reviewEmailSentAt),
+    error: (i.error as string) ?? null,
+    confirmedAt: date(i.confirmedAt),
+    shippedAt: date(i.shippedAt),
+    deliveredAt: date(i.deliveredAt),
+    createdAt: date(i.createdAt)!,
+    updatedAt: date(i.updatedAt)!,
+});
+
+type PrintPatch = Partial<Omit<PrintOrder, "id" | "createdAt" | "updatedAt">>;
+
+const printIndex = (status: PrintStatus | undefined, updatedAt: string) => ({
+    ...(status ? { status, gsi2pk: keys.printStatusIndex(status) } : {}),
+    gsi2sk: updatedAt,
+    updatedAt,
+});
+
+const prints = {
+    /** Create the print order for a paid order (once) and link it. */
+    create: async (data: {
+        orderId: string;
+        bookId: string;
+        email: string;
+        locale: string;
+        amount: number;
+        shipping: PrintOrder["shipping"];
+    }) => {
+        const id = randomUUID();
+        const ts = now();
+        const reviewToken = randomUUID().replaceAll("-", "");
+        const item = {
+            ...keys.print(id),
+            type: "Print",
+            id,
+            ...data,
+            snapshot: null,
+            pdfKey: null,
+            innerPages: null,
+            gelatoOrderId: null,
+            trackingUrl: null,
+            remindersSent: 0,
+            reviewToken,
+            reviewEmailSentAt: null,
+            error: null,
+            confirmedAt: null,
+            shippedAt: null,
+            deliveredAt: null,
+            createdAt: ts,
+            ...printIndex("AWAITING_CONFIRMATION", ts),
+        };
+        await ddb.send(
+            new TransactWriteCommand({
+                TransactItems: [
+                    {
+                        Put: {
+                            TableName,
+                            Item: item,
+                            ConditionExpression: "attribute_not_exists(pk)",
+                        },
+                    },
+                    {
+                        Put: {
+                            TableName,
+                            Item: {
+                                ...keys.reviewToken(reviewToken),
+                                printId: id,
+                            },
+                        },
+                    },
+                    {
+                        // One print order per order.
+                        Update: {
+                            TableName,
+                            Key: keys.order(data.orderId),
+                            UpdateExpression: "SET printId = :p",
+                            ConditionExpression:
+                                "attribute_not_exists(printId) OR printId = :null",
+                            ExpressionAttributeValues: {
+                                ":p": id,
+                                ":null": null,
+                            },
+                        },
+                    },
+                ],
+            })
+        );
+        return toPrint(item);
+    },
+
+    get: async (id: string) => {
+        const i = await getItem(keys.print(id));
+        return i ? toPrint(i) : null;
+    },
+
+    byReviewToken: async (token: string) => {
+        const guard = await getItem(keys.reviewToken(token));
+        return guard ? prints.get(guard.printId as string) : null;
+    },
+
+    update: async (id: string, patch: PrintPatch) => {
+        await ddb.send(
+            new UpdateCommand({
+                TableName,
+                Key: keys.print(id),
+                ConditionExpression: "attribute_exists(pk)",
+                ...setExpression({
+                    ...patch,
+                    ...printIndex(patch.status, now()),
+                }),
+            })
+        );
+    },
+
+    /** Change status only from one of `from`; false if someone else did. */
+    transition: async (
+        id: string,
+        from: PrintStatus[],
+        patch: PrintPatch & { status: PrintStatus }
+    ) => {
+        const expr = setExpression({
+            ...patch,
+            ...printIndex(patch.status, now()),
+        });
+        const fromValues = Object.fromEntries(
+            from.map((s, i) => [`:from${i}`, s])
+        );
+        try {
+            await ddb.send(
+                new UpdateCommand({
+                    TableName,
+                    Key: keys.print(id),
+                    ...expr,
+                    ConditionExpression: `#st IN (${Object.keys(fromValues).join(", ")})`,
+                    ExpressionAttributeNames: {
+                        ...expr.ExpressionAttributeNames,
+                        "#st": "status",
+                    },
+                    ExpressionAttributeValues: {
+                        ...expr.ExpressionAttributeValues,
+                        ...fromValues,
+                    },
+                })
+            );
+            return true;
+        } catch (err) {
+            if (isConditionFailure(err)) return false;
+            throw err;
+        }
+    },
+
+    byStatus: async (status: PrintStatus, before: Date = new Date()) =>
+        (
+            await queryAll({
+                IndexName: GSI2,
+                KeyConditionExpression: "gsi2pk = :s AND gsi2sk < :t",
+                ExpressionAttributeValues: {
+                    ":s": keys.printStatusIndex(status),
+                    ":t": before.toISOString(),
+                },
+            })
+        ).map(toPrint),
+};
+
+/* ---------- reviews ---------- */
+
+const toReview = (i: Item): Review => ({
+    id: i.id as string,
+    printId: i.printId as string,
+    bookId: i.bookId as string,
+    email: i.email as string,
+    locale: (i.locale as string) ?? "de",
+    rating: i.rating as number,
+    text: (i.text as string) ?? "",
+    approved: Boolean(i.approved),
+    promoCode: (i.promoCode as string) ?? "",
+    createdAt: date(i.createdAt)!,
+});
+
+const reviews = {
+    get: async (printId: string) => {
+        const i = await getItem(keys.review(printId));
+        return i ? toReview(i) : null;
+    },
+
+    /** One review per print order; returns null if one already exists. */
+    create: async (data: Omit<Review, "id" | "approved" | "createdAt">) => {
+        const ts = now();
+        const item = {
+            ...keys.review(data.printId),
+            type: "Review",
+            id: data.printId,
+            ...data,
+            approved: false,
+            createdAt: ts,
+            gsi2pk: keys.reviewIndex(false),
+            gsi2sk: ts,
+        };
+        try {
+            await ddb.send(
+                new PutCommand({
+                    TableName,
+                    Item: item,
+                    ConditionExpression: "attribute_not_exists(pk)",
+                })
+            );
+            return toReview(item);
+        } catch (err) {
+            if (isConditionFailure(err)) return null;
+            throw err;
+        }
+    },
+
+    setApproved: async (printId: string, approved: boolean) => {
+        const r = await reviews.get(printId);
+        if (!r) return;
+        await ddb.send(
+            new UpdateCommand({
+                TableName,
+                Key: keys.review(printId),
+                ...setExpression({
+                    approved,
+                    gsi2pk: keys.reviewIndex(approved),
+                }),
+            })
+        );
+    },
+
+    /** Newest first. */
+    list: async (approved: boolean, limit = 50) =>
+        (
+            await ddb.send(
+                new QueryCommand({
+                    TableName,
+                    IndexName: GSI2,
+                    KeyConditionExpression: "gsi2pk = :s",
+                    ExpressionAttributeValues: {
+                        ":s": keys.reviewIndex(approved),
+                    },
+                    ScanIndexForward: false,
+                    Limit: limit,
+                })
+            )
+        ).Items?.map(toReview) ?? [],
+};
+
+const db = {
+    users,
+    sessions,
+    tokens,
+    books,
+    previews,
+    orders,
+    prints,
+    reviews,
+};
 
 export default db;

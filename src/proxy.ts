@@ -12,7 +12,11 @@ const intlMiddleware = createMiddleware({
     localePrefix: routing.localePrefix,
 });
 
-const allowedPaths = ["/api/stripe/webhook", "/api/stripe/process-checkout"];
+const allowedPaths = [
+    "/api/stripe/webhook",
+    "/api/stripe/process-checkout",
+    "/api/gelato/webhook",
+];
 
 export const proxy = async (req: NextRequest) => {
     const { pathname } = req.nextUrl;

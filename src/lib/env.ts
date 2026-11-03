@@ -48,6 +48,21 @@ export default createEnv({
          */
         AI_MONTHLY_BUDGET_USD: z.coerce.number().positive().default(50),
 
+        /** Gelato print API. Without a key, print orders are a dry run. */
+        GELATO_API_KEY: z.string().optional(),
+        /**
+         * draft: orders appear in the Gelato dashboard but are not printed
+         * until you approve them there (default). order: printed right away.
+         */
+        GELATO_ORDER_TYPE: z.enum(["draft", "order"]).default("draft"),
+        GELATO_PRODUCT_UID: z
+            .string()
+            .default(
+                "photobooks-hardcover_pf_200x200-mm-8x8-inch_pt_170-gsm-65lb-coated-silk_cl_4-4_ccl_4-4_bt_glued-left_ct_matt-lamination_prt_1-0_cpt_130-gsm-65-lb-cover-coated-silk_ver"
+            ),
+        /** Shared secret in the Gelato webhook URL (?secret=…). */
+        GELATO_WEBHOOK_SECRET: z.string().optional(),
+
         /** OpenRouter key; only read by the in-process generator in local mode. */
         OPENROUTER_API_KEY: z.string().optional(),
 
@@ -129,6 +144,10 @@ export default createEnv({
         PAYMENTS: process.env.PAYMENTS || undefined,
         OPENROUTER_API_KEY: process.env.OPENROUTER_API_KEY || undefined,
         AI_MONTHLY_BUDGET_USD: process.env.AI_MONTHLY_BUDGET_USD || undefined,
+        GELATO_API_KEY: process.env.GELATO_API_KEY || undefined,
+        GELATO_ORDER_TYPE: process.env.GELATO_ORDER_TYPE || undefined,
+        GELATO_PRODUCT_UID: process.env.GELATO_PRODUCT_UID || undefined,
+        GELATO_WEBHOOK_SECRET: process.env.GELATO_WEBHOOK_SECRET || undefined,
         AWS_REGION: process.env.AWS_REGION,
         AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID,
         AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY,

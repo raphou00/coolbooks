@@ -2,9 +2,7 @@ import { type NextRequest, NextResponse } from "next/server";
 import { getTranslations } from "next-intl/server";
 import db from "@/lib/db";
 import env from "@/lib/env";
-import { canEditBook } from "@/lib/books";
-import { exportPDF } from "@/lib/export";
-import { putObject } from "@/lib/file";
+import { canEditBook, isBookLocked, refreshEmailedPDF } from "@/lib/books";
 import { invokeCreator } from "@/lib/orders";
 import { checkRateLimit, ratelimitRedraw } from "@/lib/rate-limiter";
 import { maxRedraws } from "@/config/stripe";
@@ -40,7 +38,11 @@ export const POST = async (req: NextRequest) => {
 
         const page =
             bookId && pageId ? await db.books.getPage(bookId, pageId) : null;
-        if (!page || !(await canEditBook(page.bookId, key))) {
+        if (
+            !page ||
+            !(await canEditBook(page.bookId, key)) ||
+            (await isBookLocked(page.bookId))
+        ) {
             return NextResponse.json({
                 success: false,
                 message: t("messages.unauthorized"),
@@ -77,23 +79,10 @@ export const POST = async (req: NextRequest) => {
         }
 
         // Refresh the emailed PDF so its link has the new page too.
-        const book = await db.books.getWithPages(page.bookId);
-        if (book) {
-            const order =
-                book.orderId ? await db.orders.get(book.orderId) : null;
-            const blob = await exportPDF({
-                bookId: book.id,
-                email: order?.email ?? "",
-                locale,
-                title: book.title,
-                cover: book.cover,
-                dedication: book.dedication,
-                pages: book.pages,
-            });
-            await putObject(blob, `${book.id}/${book.id}.pdf`).catch((e) =>
-                console.error("PDF refresh failed", e)
-            );
-        }
+        await refreshEmailedPDF(page.bookId, locale).catch((e) =>
+            console.error("PDF refresh failed", e)
+        );
+        const book = await db.books.get(page.bookId);
 
         return NextResponse.json({
             success: true,

@@ -9,6 +9,8 @@ import {
     ChevronRight,
     Download,
     Loader2,
+    Pencil,
+    Printer,
     RefreshCw,
     Square,
     Trash2,
@@ -21,6 +23,8 @@ import Title from "@/components/ui/title";
 import NextImage from "@/components/ui/image";
 import DeleteBook from "@/components/ui/delete-book";
 import { BooFace } from "@/components/ui/boo";
+import Link from "next/link";
+import type { PrintStatus } from "@/lib/db/types";
 
 type Page = {
     id: string;
@@ -45,6 +49,8 @@ type BookProps = {
     canEdit: boolean;
     editKey: string | null;
     maxRedraws: number;
+    /** Hardcover orders: where the print order stands. */
+    printStatus: PrintStatus | null;
 };
 
 const DRAG_BUFFER = 25;
@@ -56,8 +62,18 @@ const SPRING_OPTIONS = {
     damping: 50,
 } as const;
 
-const Book: React.FC<BookProps> = ({ book, canEdit, editKey, maxRedraws }) => {
+const Book: React.FC<BookProps> = ({
+    book,
+    canEdit,
+    editKey,
+    maxRedraws,
+    printStatus,
+}) => {
     const t = useTranslations("pages.book");
+    const tPrint = useTranslations("pages.print");
+    const keyQuery = editKey ? `?key=${editKey}` : "";
+    const locked =
+        printStatus !== null && printStatus !== "AWAITING_CONFIRMATION";
     const tMessages = useTranslations("messages");
     const router = useRouter();
     const [imgIndex, setImgIndex] = useState(0);
@@ -259,6 +275,26 @@ const Book: React.FC<BookProps> = ({ book, canEdit, editKey, maxRedraws }) => {
                         :   <Download className="size-4" />}
                         {t("download-pdf")}
                     </button>
+                    {canEdit && !locked && (
+                        <Link
+                            href={`/book/${book.id}/edit${keyQuery}`}
+                            className="button-secondary button-sm"
+                        >
+                            <Pencil className="size-4" />
+                            {tPrint("edit")}
+                        </Link>
+                    )}
+                    {canEdit && printStatus && (
+                        <Link
+                            href={`/book/${book.id}/print${keyQuery}`}
+                            className="button-secondary button-sm"
+                        >
+                            <Printer className="size-4" />
+                            {printStatus === "AWAITING_CONFIRMATION" ?
+                                tPrint("confirm")
+                            :   tPrint(`status.${printStatus}`)}
+                        </Link>
+                    )}
                     {canEdit && (
                         <button
                             onClick={() => setOpen(true)}

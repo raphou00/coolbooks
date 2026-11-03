@@ -1,11 +1,6 @@
 export type Role = "USER" | "ADMIN";
 export type OrderStatus =
-    | "PENDING"
-    | "PAID"
-    | "GENERATING"
-    | "DELIVERED"
-    | "FAILED"
-    | "REFUNDED";
+    "PENDING" | "PAID" | "GENERATING" | "DELIVERED" | "FAILED" | "REFUNDED";
 export type Product = "PDF" | "PRINT";
 
 export type User = {
@@ -56,6 +51,8 @@ export type Page = {
     image: string;
     color: string;
     audio: string | null;
+    /** Earlier pictures of this page (before redraws), oldest first. */
+    previousImages: string[];
 };
 
 export type Book = {
@@ -105,10 +102,74 @@ export type Order = {
     giftTo: string | null;
     giftFrom: string | null;
     shipping: ShippingDetails;
+    /** The print order, for hardcover orders once the book exists. */
+    printId: string | null;
     attempts: number;
     error: string | null;
     paidAt: Date | null;
     deliveredAt: Date | null;
     createdAt: Date;
     updatedAt: Date;
+};
+
+export type PrintStatus =
+    /** Paid and the book exists: waiting for the customer to check and confirm. */
+    | "AWAITING_CONFIRMATION"
+    /** Confirmed; the print file is being built and sent to Gelato. */
+    | "SUBMITTING"
+    /** Gelato accepted the order. */
+    | "SUBMITTED"
+    | "IN_PRODUCTION"
+    | "SHIPPED"
+    | "DELIVERED"
+    /** Gelato refused it or it could not be sent; the print part is refunded. */
+    | "FAILED"
+    /** Never confirmed within 60 days; the print part is refunded. */
+    | "CANCELED";
+
+/** What gets printed, frozen when the customer confirms. */
+export type PrintSnapshot = {
+    title: string;
+    cover: string;
+    dedication: string | null;
+    pages: { text: string; image: string; color: string; number: number }[];
+};
+
+export type PrintOrder = {
+    id: string;
+    status: PrintStatus;
+    orderId: string;
+    bookId: string;
+    email: string;
+    locale: string;
+    /** Amount of the print part in cents, refunded if printing fails. */
+    amount: number;
+    shipping: ShippingDetails;
+    snapshot: PrintSnapshot | null;
+    pdfKey: string | null;
+    innerPages: number | null;
+    gelatoOrderId: string | null;
+    trackingUrl: string | null;
+    remindersSent: number;
+    reviewToken: string;
+    reviewEmailSentAt: Date | null;
+    error: string | null;
+    confirmedAt: Date | null;
+    shippedAt: Date | null;
+    deliveredAt: Date | null;
+    createdAt: Date;
+    updatedAt: Date;
+};
+
+export type Review = {
+    id: string;
+    printId: string;
+    bookId: string;
+    email: string;
+    locale: string;
+    rating: number;
+    text: string;
+    approved: boolean;
+    promoCode: string;
+    createdAt: Date;
 };

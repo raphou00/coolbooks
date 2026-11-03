@@ -370,6 +370,62 @@
             "responsible": "Responsible for content",
             "disclaimer-title": "Liability",
             "disclaimer": "We check the content of this website carefully but cannot guarantee that it is always complete and up to date. Links to other websites are the responsibility of their operators."
+        },
+        "print": {
+            "title": "Print preview: {title}",
+            "heading": "Check your book before printing",
+            "intro": "This is exactly what will be printed: a 20 × 20 cm hardcover. The thin outer edge of each page is trimmed off. Take your time; nothing is printed until you confirm.",
+            "loading": "Preparing the print preview…",
+            "download": "Open the print file",
+            "warnings": "Please have a look",
+            "title-missing": "The book has no title.",
+            "text-too-long": "The text on page {page} is long and is printed quite small. You may want to shorten it.",
+            "image-low-res": "The picture on page {page} has a low resolution and may look soft in print.",
+            "edit": "Change texts",
+            "address": "Shipping address (Switzerland only)",
+            "name": "Name",
+            "line1": "Street and number",
+            "line2": "Address line 2 (optional)",
+            "postalCode": "Postcode",
+            "city": "City",
+            "approve": "I have checked the texts and pictures. The book will be printed exactly as shown.",
+            "confirm": "Confirm and print",
+            "must-approve": "Please tick the box to confirm you've checked the book.",
+            "bad-address": "Please enter a complete Swiss address (4-digit postcode).",
+            "already": "This book has already been sent to print.",
+            "sent": "Thank you! Your book is on its way to the printer.",
+            "failed": "We couldn't send the book to print. We've refunded the print part and sent you an email.",
+            "back": "Back to the book",
+            "status-title": "Your printed book",
+            "track": "Track the parcel",
+            "status": {
+                "AWAITING_CONFIRMATION": "Waiting for your confirmation",
+                "SUBMITTING": "Sending to the printer…",
+                "SUBMITTED": "At the printer",
+                "IN_PRODUCTION": "Being printed",
+                "SHIPPED": "Shipped",
+                "DELIVERED": "Delivered",
+                "FAILED": "Could not be printed (refunded)",
+                "CANCELED": "Canceled (refunded)"
+            }
+        },
+        "edit": {
+            "title": "Edit: {title}",
+            "heading": "Edit your book",
+            "intro": "Change the title, the dedication and any text. You can also pick a page colour, or switch back to an earlier picture after a redraw. Changes are free.",
+            "book-title": "Title",
+            "dedication": "Dedication (optional)",
+            "page": "Page {n}",
+            "text": "Text",
+            "color": "Page colour",
+            "picture": "Picture",
+            "earlier": "Earlier pictures: tap one to use it again",
+            "save": "Save changes",
+            "saved": "Saved. Your PDF has been updated too.",
+            "print-preview": "Print preview",
+            "back": "Back to the book",
+            "chars": "{count} / {max}",
+            "locked": "This book has been sent to print and can no longer be changed."
         }
     },
     "emails": {
@@ -409,6 +465,44 @@
         "refund": {
             "title": "We're sorry, your book couldn't be created",
             "body": "Something went wrong while creating your book and we couldn't fix it. We've refunded the full amount ({amount}); it can take a few days to show up. Please try again, or reply to this email and we'll help."
+        },
+        "print-confirm": {
+            "title": "Check your book before we print it",
+            "body": "\"{title}\" is ready. Please flip through the print preview, fix anything you'd like, then confirm. We only print after you confirm.",
+            "button": "Check and confirm"
+        },
+        "print-reminder": {
+            "title": "Your book is waiting for your OK",
+            "body": "\"{title}\" hasn't been printed yet because we're waiting for you to confirm it. It only takes a minute.",
+            "button": "Check and confirm"
+        },
+        "print-printing": {
+            "title": "Your book is being printed",
+            "body": "Thank you! \"{title}\" is now with our print shop in Switzerland. We'll email you the tracking link as soon as it ships.",
+            "button": "View your book"
+        },
+        "print-shipped": {
+            "title": "Your book is on its way",
+            "body": "\"{title}\" has shipped and should arrive in a few days.",
+            "button": "Track the parcel"
+        },
+        "print-failed": {
+            "title": "We couldn't print your book",
+            "body": "Something went wrong while sending \"{title}\" to print. We've refunded the print part ({amount}); your digital book stays yours. Reply to this email and we'll help."
+        },
+        "print-canceled": {
+            "title": "We've refunded your printed book",
+            "body": "\"{title}\" was never confirmed for printing, so we've refunded the print part ({amount}). Your digital book stays yours."
+        },
+        "review-request": {
+            "title": "How do you like your book?",
+            "body": "We hope \"{title}\" is a bedtime favourite! Tell us what you think in one minute and get {percent}% off your next book. Any honest review counts, good or bad.",
+            "button": "Write a review"
+        },
+        "review-reward": {
+            "title": "Thank you! Here's your {percent}% code",
+            "body": "Thanks for your review. Use this code at checkout for {percent}% off your next book. It works once and is valid until {until}.",
+            "button": "Create a new book"
         }
     },
     "messages": {
@@ -481,5 +575,11 @@
         "language": "Language",
         "product": "Product",
         "impressum": "Legal notice"
+    },
+    "print": {
+        "belongs-to": "This book belongs to",
+        "the-end": "The End",
+        "made-with": "Made with love with Bibliboo · bibliboo.ch",
+        "back-blurb": "A story written and drawn just for you."
     }
 }

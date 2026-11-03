@@ -122,7 +122,7 @@ const setFields = (Key, fields, extra = {}) => {
         new UpdateCommand({
             TableName: table(),
             Key,
-            UpdateExpression: `SET ${sets.join(", ")}`,
+            UpdateExpression: `SET ${[...sets, ...(extra.set ? [extra.set] : [])].join(", ")}`,
             ExpressionAttributeNames: { ...names, ...(extra.names || {}) },
             ExpressionAttributeValues: { ...values, ...(extra.values || {}) },
             ...(extra.condition ? { ConditionExpression: extra.condition } : {}),
@@ -475,7 +475,16 @@ const runRedraw = async ({ bookId, pageId }) => {
         reference: await deps.referenceUrl(book.cover),
     });
 
-    await setFields(keys.page(bookId, pageId), { image: key });
+    // Keep the old picture so the customer can switch back for free.
+    await setFields(
+        keys.page(bookId, pageId),
+        { image: key },
+        {
+            names: { "#prev": "previousImages" },
+            values: { ":old": [page.image], ":empty": [] },
+            set: "#prev = list_append(if_not_exists(#prev, :empty), :old)",
+        }
+    );
     return { image: key };
 };
 

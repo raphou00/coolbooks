@@ -12,7 +12,7 @@ button{background:#6a4cff;color:#fff;border:0;border-radius:8px;padding:.6rem 1.
 input{padding:.4rem;border:1px solid #ccc;border-radius:6px;width:100%;box-sizing:border-box;margin:.2rem 0 .6rem}
 code{background:#f3f0ff;padding:0 .3rem;border-radius:4px}
 </style></head><body>
-<nav><a href="/">Shop</a><a href="/api/dev/emails">Inbox</a><a href="/api/dev/cron">Run order sweeper</a></nav>
+<nav><a href="/">Shop</a><a href="/api/dev/emails">Inbox</a><a href="/api/dev/gelato">Gelato simulator</a><a href="/api/dev/cron">Run cron jobs</a></nav>
 <h1>${title}</h1>${body}</body></html>`,
         { headers: { "content-type": "text/html; charset=utf-8" } }
     );

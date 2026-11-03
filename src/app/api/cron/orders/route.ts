@@ -8,6 +8,7 @@ import {
     refundOrder,
     startGeneration,
 } from "@/lib/orders";
+import { sweepPrints } from "@/lib/printing";
 
 export const maxDuration = 300;
 
@@ -80,6 +81,13 @@ export const GET = async (req: NextRequest) => {
         });
     }
 
+    // Print orders: confirmation reminders and the 60-day refund.
+    const prints = await sweepPrints().catch((err) => {
+        summary.errors++;
+        console.error("Print sweeper:", err);
+        return null;
+    });
+
     if (summary.errors > 0) {
         await notifyAdmin("Order sweeper errors", [
             `The order sweeper hit ${summary.errors} error(s). Check the logs.`,
@@ -87,5 +95,5 @@ export const GET = async (req: NextRequest) => {
         ]).catch(() => undefined);
     }
 
-    return NextResponse.json(summary);
+    return NextResponse.json({ ...summary, prints });
 };

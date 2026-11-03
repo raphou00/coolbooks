@@ -6,6 +6,7 @@ import { title } from "@/config/seo";
 import Main from "@/components/layout/main";
 import { canEditBook } from "@/lib/books";
 import { maxRedraws } from "@/config/stripe";
+import { printOfBook } from "@/lib/printing";
 import Book from "./book";
 
 type PageProps = {
@@ -47,6 +48,7 @@ const Page = async ({ params, searchParams }: PageProps) => {
     }
 
     const canEdit = await canEditBook(book.id, key);
+    const print = canEdit ? await printOfBook(book.id) : null;
 
     return (
         <Main>
@@ -68,6 +70,7 @@ const Page = async ({ params, searchParams }: PageProps) => {
                 canEdit={canEdit}
                 editKey={canEdit ? (key ?? null) : null}
                 maxRedraws={maxRedraws}
+                printStatus={print?.status ?? null}
             />
         </Main>
     );

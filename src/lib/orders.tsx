@@ -186,14 +186,9 @@ export const deliverOrder = async (orderId: string) => {
     });
 
     if (order.product === "PRINT") {
-        await notifyAdmin(`Print order ${order.id}`, [
-            `A printed book was ordered and needs to be produced and shipped.`,
-            ``,
-            `Title: ${book.title}`,
-            `Print file: ${pdf}`,
-            `Buyer: ${order.email}`,
-            `Ship to: ${JSON.stringify(order.shipping, null, 2)}`,
-        ]);
+        // Ask the customer to check and confirm before anything is printed.
+        const { openPrintOrder } = await import("@/lib/printing");
+        await openPrintOrder(order.id);
     }
 };
 

@@ -370,6 +370,62 @@
             "responsible": "Verantwortlich für den Inhalt",
             "disclaimer-title": "Haftung",
             "disclaimer": "Wir prüfen die Inhalte dieser Website sorgfältig, können aber nicht garantieren, dass sie jederzeit vollständig und aktuell sind. Für verlinkte Websites sind deren Betreiber verantwortlich."
+        },
+        "print": {
+            "title": "Druckvorschau: {title}",
+            "heading": "Prüfe dein Buch vor dem Druck",
+            "intro": "So wird dein Buch gedruckt: ein Hardcover im Format 20 × 20 cm. Der schmale äussere Rand jeder Seite wird abgeschnitten. Lass dir Zeit; gedruckt wird erst nach deiner Bestätigung.",
+            "loading": "Die Druckvorschau wird vorbereitet…",
+            "download": "Druckdatei öffnen",
+            "warnings": "Bitte schau dir das an",
+            "title-missing": "Das Buch hat keinen Titel.",
+            "text-too-long": "Der Text auf Seite {page} ist lang und wird recht klein gedruckt. Vielleicht möchtest du ihn kürzen.",
+            "image-low-res": "Das Bild auf Seite {page} hat eine geringe Auflösung und könnte im Druck unscharf wirken.",
+            "edit": "Texte ändern",
+            "address": "Lieferadresse (nur Schweiz)",
+            "name": "Name",
+            "line1": "Strasse und Nummer",
+            "line2": "Adresszusatz (optional)",
+            "postalCode": "PLZ",
+            "city": "Ort",
+            "approve": "Ich habe Texte und Bilder geprüft. Das Buch wird genau so gedruckt, wie es hier zu sehen ist.",
+            "confirm": "Bestätigen und drucken",
+            "must-approve": "Bitte setze das Häkchen, um zu bestätigen, dass du das Buch geprüft hast.",
+            "bad-address": "Bitte gib eine vollständige Schweizer Adresse ein (4-stellige PLZ).",
+            "already": "Dieses Buch wurde bereits zum Druck geschickt.",
+            "sent": "Danke! Dein Buch ist auf dem Weg zur Druckerei.",
+            "failed": "Wir konnten das Buch nicht zum Druck senden. Wir haben den Druckanteil erstattet und dir eine E-Mail geschickt.",
+            "back": "Zurück zum Buch",
+            "status-title": "Dein gedrucktes Buch",
+            "track": "Sendung verfolgen",
+            "status": {
+                "AWAITING_CONFIRMATION": "Wartet auf deine Bestätigung",
+                "SUBMITTING": "Wird an die Druckerei gesendet…",
+                "SUBMITTED": "Bei der Druckerei",
+                "IN_PRODUCTION": "Wird gedruckt",
+                "SHIPPED": "Verschickt",
+                "DELIVERED": "Zugestellt",
+                "FAILED": "Konnte nicht gedruckt werden (erstattet)",
+                "CANCELED": "Storniert (erstattet)"
+            }
+        },
+        "edit": {
+            "title": "Bearbeiten: {title}",
+            "heading": "Buch bearbeiten",
+            "intro": "Ändere Titel, Widmung und jeden Text. Du kannst auch eine Seitenfarbe wählen oder nach dem Neuzeichnen zu einem früheren Bild zurückkehren. Änderungen sind kostenlos.",
+            "book-title": "Titel",
+            "dedication": "Widmung (optional)",
+            "page": "Seite {n}",
+            "text": "Text",
+            "color": "Seitenfarbe",
+            "picture": "Bild",
+            "earlier": "Frühere Bilder: tippe auf eines, um es wieder zu verwenden",
+            "save": "Änderungen speichern",
+            "saved": "Gespeichert. Dein PDF wurde ebenfalls aktualisiert.",
+            "print-preview": "Druckvorschau",
+            "back": "Zurück zum Buch",
+            "chars": "{count} / {max}",
+            "locked": "Dieses Buch wurde bereits gedruckt und kann nicht mehr geändert werden."
         }
     },
     "messages": {
@@ -480,6 +536,50 @@
         "refund": {
             "title": "Es tut uns leid: Dein Buch konnte nicht erstellt werden",
             "body": "Beim Erstellen deines Buches ist etwas schiefgelaufen, und wir konnten es nicht beheben. Wir haben dir den vollen Betrag ({amount}) zurückerstattet; es kann einige Tage dauern, bis er sichtbar ist. Versuche es gerne noch einmal oder antworte auf diese E-Mail, wir helfen dir."
+        },
+        "print-confirm": {
+            "title": "Bitte prüfe dein Buch vor dem Druck",
+            "body": "«{title}» ist fertig. Blättere bitte durch die Druckvorschau, ändere, was du möchtest, und bestätige dann. Wir drucken erst nach deiner Bestätigung.",
+            "button": "Prüfen und bestätigen"
+        },
+        "print-reminder": {
+            "title": "Dein Buch wartet auf dein OK",
+            "body": "«{title}» wurde noch nicht gedruckt, weil wir auf deine Bestätigung warten. Das dauert nur eine Minute.",
+            "button": "Prüfen und bestätigen"
+        },
+        "print-printing": {
+            "title": "Dein Buch wird gedruckt",
+            "body": "Danke! «{title}» ist jetzt bei unserer Druckerei in der Schweiz. Sobald es verschickt wird, senden wir dir den Sendungslink.",
+            "button": "Buch ansehen"
+        },
+        "print-shipped": {
+            "title": "Dein Buch ist unterwegs",
+            "body": "«{title}» wurde verschickt und sollte in wenigen Tagen ankommen.",
+            "button": "Sendung verfolgen"
+        },
+        "print-failed": {
+            "title": "Wir konnten dein Buch nicht drucken",
+            "body": "Beim Senden von «{title}» an die Druckerei ist etwas schiefgelaufen. Wir haben den Druckanteil ({amount}) zurückerstattet; das digitale Buch bleibt deins. Antworte auf diese E-Mail, wir helfen gerne."
+        },
+        "print-canceled": {
+            "title": "Wir haben dein gedrucktes Buch erstattet",
+            "body": "«{title}» wurde nie zum Druck bestätigt, darum haben wir den Druckanteil ({amount}) zurückerstattet. Das digitale Buch bleibt deins."
+        },
+        "review-request": {
+            "title": "Wie gefällt dir dein Buch?",
+            "body": "Wir hoffen, «{title}» ist ein Gutenacht-Liebling! Sag uns in einer Minute, wie du es findest, und erhalte {percent}% Rabatt auf dein nächstes Buch. Jede ehrliche Bewertung zählt, ob gut oder schlecht.",
+            "button": "Bewertung schreiben"
+        },
+        "review-reward": {
+            "title": "Danke! Hier ist dein {percent}%-Code",
+            "body": "Danke für deine Bewertung. Mit diesem Code erhältst du an der Kasse {percent}% Rabatt auf dein nächstes Buch. Er gilt einmal und bis {until}.",
+            "button": "Neues Buch erstellen"
         }
+    },
+    "print": {
+        "belongs-to": "Dieses Buch gehört",
+        "the-end": "Ende",
+        "made-with": "Mit Liebe gemacht mit Bibliboo · bibliboo.ch",
+        "back-blurb": "Eine Geschichte, die nur für dich geschrieben und gezeichnet wurde."
     }
 }

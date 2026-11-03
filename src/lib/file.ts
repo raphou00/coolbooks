@@ -10,7 +10,12 @@ import type {
     PutObjectCommandOutput,
 } from "@aws-sdk/client-s3";
 import env from "@/lib/env";
-import { deleteLocalPrefix, isLocal, writeLocalFile } from "@/lib/local";
+import {
+    deleteLocalPrefix,
+    isLocal,
+    readLocalFile,
+    writeLocalFile,
+} from "@/lib/local";
 
 const s3 = new S3Client({
     region: env.AWS_REGION,
@@ -22,6 +27,14 @@ const s3 = new S3Client({
 
 export const getObject = (key: string) => {
     return `${env.CLOUDFRONT_URL}/${key}`;
+};
+
+/** The bytes of a stored file (local store, or through CloudFront). */
+export const readObject = async (key: string): Promise<Buffer> => {
+    if (isLocal) return readLocalFile(key);
+    const res = await fetch(getObject(key));
+    if (!res.ok) throw new Error(`Could not read ${key}: ${res.status}`);
+    return Buffer.from(await res.arrayBuffer());
 };
 
 export const putObject = async (

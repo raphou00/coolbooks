@@ -370,6 +370,62 @@
             "responsible": "Responsable du contenu",
             "disclaimer-title": "Responsabilité",
             "disclaimer": "Nous vérifions soigneusement le contenu de ce site, mais ne pouvons garantir qu'il soit toujours complet et à jour. Les sites liés relèvent de la responsabilité de leurs exploitants."
+        },
+        "print": {
+            "title": "Aperçu d'impression : {title}",
+            "heading": "Vérifiez votre livre avant l'impression",
+            "intro": "Voici exactement ce qui sera imprimé : un livre relié de 20 × 20 cm. La fine bordure extérieure de chaque page est coupée. Prenez votre temps ; rien n'est imprimé avant votre confirmation.",
+            "loading": "Préparation de l'aperçu d'impression…",
+            "download": "Ouvrir le fichier d'impression",
+            "warnings": "Merci de vérifier",
+            "title-missing": "Le livre n'a pas de titre.",
+            "text-too-long": "Le texte de la page {page} est long et sera imprimé assez petit. Vous pourriez le raccourcir.",
+            "image-low-res": "L'image de la page {page} a une faible résolution et pourrait paraître floue à l'impression.",
+            "edit": "Modifier les textes",
+            "address": "Adresse de livraison (Suisse uniquement)",
+            "name": "Nom",
+            "line1": "Rue et numéro",
+            "line2": "Complément d'adresse (facultatif)",
+            "postalCode": "NPA",
+            "city": "Localité",
+            "approve": "J'ai vérifié les textes et les images. Le livre sera imprimé exactement comme affiché.",
+            "confirm": "Confirmer et imprimer",
+            "must-approve": "Cochez la case pour confirmer que vous avez vérifié le livre.",
+            "bad-address": "Veuillez saisir une adresse suisse complète (NPA à 4 chiffres).",
+            "already": "Ce livre a déjà été envoyé à l'impression.",
+            "sent": "Merci ! Votre livre part chez l'imprimeur.",
+            "failed": "Nous n'avons pas pu envoyer le livre à l'impression. Nous avons remboursé la partie impression et vous avons envoyé un e-mail.",
+            "back": "Retour au livre",
+            "status-title": "Votre livre imprimé",
+            "track": "Suivre le colis",
+            "status": {
+                "AWAITING_CONFIRMATION": "En attente de votre confirmation",
+                "SUBMITTING": "Envoi à l'imprimeur…",
+                "SUBMITTED": "Chez l'imprimeur",
+                "IN_PRODUCTION": "En cours d'impression",
+                "SHIPPED": "Expédié",
+                "DELIVERED": "Livré",
+                "FAILED": "Impression impossible (remboursé)",
+                "CANCELED": "Annulé (remboursé)"
+            }
+        },
+        "edit": {
+            "title": "Modifier : {title}",
+            "heading": "Modifier votre livre",
+            "intro": "Changez le titre, la dédicace et chaque texte. Vous pouvez aussi choisir une couleur de page ou revenir à une image précédente après un nouveau dessin. Les modifications sont gratuites.",
+            "book-title": "Titre",
+            "dedication": "Dédicace (facultatif)",
+            "page": "Page {n}",
+            "text": "Texte",
+            "color": "Couleur de la page",
+            "picture": "Image",
+            "earlier": "Images précédentes : touchez-en une pour la réutiliser",
+            "save": "Enregistrer",
+            "saved": "Enregistré. Votre PDF a aussi été mis à jour.",
+            "print-preview": "Aperçu d'impression",
+            "back": "Retour au livre",
+            "chars": "{count} / {max}",
+            "locked": "Ce livre a été envoyé à l'impression et ne peut plus être modifié."
         }
     },
     "messages": {
@@ -480,6 +536,50 @@
         "refund": {
             "title": "Désolés, votre livre n'a pas pu être créé",
             "body": "Un problème est survenu lors de la création de votre livre et nous n'avons pas pu le résoudre. Nous vous avons remboursé le montant total ({amount}) ; il peut falloir quelques jours pour qu'il apparaisse. Réessayez, ou répondez à cet e-mail et nous vous aiderons."
+        },
+        "print-confirm": {
+            "title": "Vérifiez votre livre avant l'impression",
+            "body": "« {title} » est prêt. Feuilletez l'aperçu d'impression, corrigez ce que vous voulez, puis confirmez. Nous n'imprimons qu'après votre confirmation.",
+            "button": "Vérifier et confirmer"
+        },
+        "print-reminder": {
+            "title": "Votre livre attend votre accord",
+            "body": "« {title} » n'est pas encore imprimé car nous attendons votre confirmation. Cela ne prend qu'une minute.",
+            "button": "Vérifier et confirmer"
+        },
+        "print-printing": {
+            "title": "Votre livre est en cours d'impression",
+            "body": "Merci ! « {title} » est maintenant chez notre imprimeur en Suisse. Nous vous enverrons le lien de suivi dès l'expédition.",
+            "button": "Voir votre livre"
+        },
+        "print-shipped": {
+            "title": "Votre livre est en route",
+            "body": "« {title} » a été expédié et devrait arriver dans quelques jours.",
+            "button": "Suivre le colis"
+        },
+        "print-failed": {
+            "title": "Nous n'avons pas pu imprimer votre livre",
+            "body": "Un problème est survenu lors de l'envoi de « {title} » à l'impression. Nous avons remboursé la partie impression ({amount}) ; le livre numérique reste à vous. Répondez à cet e-mail et nous vous aiderons."
+        },
+        "print-canceled": {
+            "title": "Nous avons remboursé votre livre imprimé",
+            "body": "« {title} » n'a jamais été confirmé pour l'impression, nous avons donc remboursé la partie impression ({amount}). Le livre numérique reste à vous."
+        },
+        "review-request": {
+            "title": "Que pensez-vous de votre livre ?",
+            "body": "Nous espérons que « {title} » est devenu un favori du soir ! Donnez-nous votre avis en une minute et recevez {percent} % de réduction sur votre prochain livre. Tout avis honnête compte, bon ou mauvais.",
+            "button": "Donner mon avis"
+        },
+        "review-reward": {
+            "title": "Merci ! Voici votre code de {percent} %",
+            "body": "Merci pour votre avis. Utilisez ce code au paiement pour {percent} % de réduction sur votre prochain livre. Il est valable une fois, jusqu'au {until}.",
+            "button": "Créer un nouveau livre"
         }
+    },
+    "print": {
+        "belongs-to": "Ce livre appartient à",
+        "the-end": "Fin",
+        "made-with": "Fait avec amour avec Bibliboo · bibliboo.ch",
+        "back-blurb": "Une histoire écrite et dessinée rien que pour toi."
     }
 }

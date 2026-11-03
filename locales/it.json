@@ -370,6 +370,62 @@
             "responsible": "Responsabile dei contenuti",
             "disclaimer-title": "Responsabilità",
             "disclaimer": "Controlliamo con cura i contenuti di questo sito, ma non possiamo garantire che siano sempre completi e aggiornati. I siti collegati sono responsabilità dei rispettivi gestori."
+        },
+        "print": {
+            "title": "Anteprima di stampa: {title}",
+            "heading": "Controlla il tuo libro prima della stampa",
+            "intro": "Ecco esattamente cosa verrà stampato: un libro rilegato di 20 × 20 cm. Il sottile bordo esterno di ogni pagina viene rifilato. Prenditi il tuo tempo; nulla viene stampato prima della tua conferma.",
+            "loading": "Preparazione dell'anteprima di stampa…",
+            "download": "Apri il file di stampa",
+            "warnings": "Dai un'occhiata",
+            "title-missing": "Il libro non ha un titolo.",
+            "text-too-long": "Il testo a pagina {page} è lungo e verrà stampato piuttosto piccolo. Potresti accorciarlo.",
+            "image-low-res": "L'immagine a pagina {page} ha una bassa risoluzione e potrebbe risultare sfocata in stampa.",
+            "edit": "Modifica i testi",
+            "address": "Indirizzo di spedizione (solo Svizzera)",
+            "name": "Nome",
+            "line1": "Via e numero",
+            "line2": "Complemento d'indirizzo (facoltativo)",
+            "postalCode": "NPA",
+            "city": "Località",
+            "approve": "Ho controllato testi e immagini. Il libro verrà stampato esattamente come mostrato.",
+            "confirm": "Conferma e stampa",
+            "must-approve": "Spunta la casella per confermare di aver controllato il libro.",
+            "bad-address": "Inserisci un indirizzo svizzero completo (NPA a 4 cifre).",
+            "already": "Questo libro è già stato inviato in stampa.",
+            "sent": "Grazie! Il tuo libro è in viaggio verso la tipografia.",
+            "failed": "Non siamo riusciti a inviare il libro in stampa. Abbiamo rimborsato la parte di stampa e ti abbiamo inviato un'e-mail.",
+            "back": "Torna al libro",
+            "status-title": "Il tuo libro stampato",
+            "track": "Traccia il pacco",
+            "status": {
+                "AWAITING_CONFIRMATION": "In attesa della tua conferma",
+                "SUBMITTING": "Invio alla tipografia…",
+                "SUBMITTED": "In tipografia",
+                "IN_PRODUCTION": "In stampa",
+                "SHIPPED": "Spedito",
+                "DELIVERED": "Consegnato",
+                "FAILED": "Stampa non riuscita (rimborsato)",
+                "CANCELED": "Annullato (rimborsato)"
+            }
+        },
+        "edit": {
+            "title": "Modifica: {title}",
+            "heading": "Modifica il tuo libro",
+            "intro": "Cambia il titolo, la dedica e ogni testo. Puoi anche scegliere un colore di pagina o tornare a un'immagine precedente dopo un nuovo disegno. Le modifiche sono gratuite.",
+            "book-title": "Titolo",
+            "dedication": "Dedica (facoltativa)",
+            "page": "Pagina {n}",
+            "text": "Testo",
+            "color": "Colore della pagina",
+            "picture": "Immagine",
+            "earlier": "Immagini precedenti: tocca una per riutilizzarla",
+            "save": "Salva le modifiche",
+            "saved": "Salvato. Anche il tuo PDF è stato aggiornato.",
+            "print-preview": "Anteprima di stampa",
+            "back": "Torna al libro",
+            "chars": "{count} / {max}",
+            "locked": "Questo libro è stato inviato in stampa e non può più essere modificato."
         }
     },
     "messages": {
@@ -480,6 +536,50 @@
         "refund": {
             "title": "Ci dispiace, non è stato possibile creare il tuo libro",
             "body": "Qualcosa è andato storto durante la creazione del tuo libro e non siamo riusciti a risolverlo. Ti abbiamo rimborsato l'intero importo ({amount}); potrebbero volerci alcuni giorni prima che sia visibile. Riprova, oppure rispondi a questa e-mail e ti aiuteremo."
+        },
+        "print-confirm": {
+            "title": "Controlla il tuo libro prima della stampa",
+            "body": "«{title}» è pronto. Sfoglia l'anteprima di stampa, correggi ciò che vuoi e poi conferma. Stampiamo solo dopo la tua conferma.",
+            "button": "Controlla e conferma"
+        },
+        "print-reminder": {
+            "title": "Il tuo libro aspetta il tuo OK",
+            "body": "«{title}» non è ancora stato stampato perché aspettiamo la tua conferma. Ci vuole solo un minuto.",
+            "button": "Controlla e conferma"
+        },
+        "print-printing": {
+            "title": "Il tuo libro è in stampa",
+            "body": "Grazie! «{title}» è ora nella nostra tipografia in Svizzera. Ti invieremo il link di tracciamento appena verrà spedito.",
+            "button": "Vedi il tuo libro"
+        },
+        "print-shipped": {
+            "title": "Il tuo libro è in viaggio",
+            "body": "«{title}» è stato spedito e dovrebbe arrivare tra pochi giorni.",
+            "button": "Traccia il pacco"
+        },
+        "print-failed": {
+            "title": "Non siamo riusciti a stampare il tuo libro",
+            "body": "Qualcosa è andato storto nell'invio di «{title}» in stampa. Abbiamo rimborsato la parte di stampa ({amount}); il libro digitale resta tuo. Rispondi a questa e-mail e ti aiuteremo."
+        },
+        "print-canceled": {
+            "title": "Abbiamo rimborsato il tuo libro stampato",
+            "body": "«{title}» non è mai stato confermato per la stampa, quindi abbiamo rimborsato la parte di stampa ({amount}). Il libro digitale resta tuo."
+        },
+        "review-request": {
+            "title": "Ti piace il tuo libro?",
+            "body": "Speriamo che «{title}» sia diventato un preferito della buonanotte! Dicci cosa ne pensi in un minuto e ricevi il {percent}% di sconto sul prossimo libro. Ogni recensione sincera conta, positiva o negativa.",
+            "button": "Scrivi una recensione"
+        },
+        "review-reward": {
+            "title": "Grazie! Ecco il tuo codice del {percent}%",
+            "body": "Grazie per la tua recensione. Usa questo codice al pagamento per il {percent}% di sconto sul prossimo libro. Vale una volta, fino al {until}.",
+            "button": "Crea un nuovo libro"
         }
+    },
+    "print": {
+        "belongs-to": "Questo libro appartiene a",
+        "the-end": "Fine",
+        "made-with": "Fatto con amore con Bibliboo · bibliboo.ch",
+        "back-blurb": "Una storia scritta e disegnata solo per te."
     }
 }

@@ -12,6 +12,9 @@
  *  Page      BOOK#<bookId>      PAGE#<id>
  *  Preview   PREVIEW#<id>       PREVIEW
  *  Order     ORDER#<id>         ORDER                                       ORDERS#<status> / <updatedAt>
+ *  Print     PRINT#<id>         PRINT                                       PRINTS#<status> / <updatedAt>
+ *  Review    REVIEW#<printId>   REVIEW                                      REVIEWS#<approved> / <createdAt>
+ *  ReviewKey REVIEWTOKEN#<tok>  REVIEWTOKEN    (→ printId)
  *  Budget    BUDGET#<yyyy-mm>   BUDGET         (AI spend this month: usd, calls)
  *
  * Sessions, tokens and previews carry a `ttl` (epoch seconds) so DynamoDB
@@ -37,6 +40,14 @@ export const keys = {
     order: (id: string) => ({ pk: `ORDER#${id}`, sk: "ORDER" }),
     userIndex: (userId: string) => `USER#${userId}`,
     orderStatusIndex: (status: string) => `ORDERS#${status}`,
+    print: (id: string) => ({ pk: `PRINT#${id}`, sk: "PRINT" }),
+    printStatusIndex: (status: string) => `PRINTS#${status}`,
+    review: (printId: string) => ({ pk: `REVIEW#${printId}`, sk: "REVIEW" }),
+    reviewIndex: (approved: boolean) => `REVIEWS#${approved ? "1" : "0"}`,
+    reviewToken: (token: string) => ({
+        pk: `REVIEWTOKEN#${token}`,
+        sk: "REVIEWTOKEN",
+    }),
     budget: (month: string) => ({ pk: `BUDGET#${month}`, sk: "BUDGET" }),
 };
 
